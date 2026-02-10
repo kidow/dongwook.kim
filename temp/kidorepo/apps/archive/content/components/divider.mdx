@@ -1,0 +1,58 @@
+---
+title: Divider
+description: 콘텐츠를 시각적으로 혹은 의미적으로 구분합니다.
+keywords: Divider, Reactjs, Nextjs, TailwindCSS, Typescript
+---
+
+## Example
+
+<Storybook url="https://workshop.dongwook.kim/?path=/docs/components-divider-v1--docs" />
+
+## Steps
+
+<Steps>
+
+<Step>Prerequisite</Step>
+
+<Blocks>
+  <LinkBlock icon="utils" name="cn" slug="/utils/cn" />
+</Blocks>
+
+<Step>Copy Code</Step>
+
+```tsx title="components/Divider/index.tsx"
+import { cn } from 'utils'
+
+export interface Props {
+  title?: string
+}
+
+function Divider({ title }: Props) {
+  return (
+    <div className={cn({ relative: !!title })}>
+      <hr className={cn({ 'my-8': !!title })} />
+      {!!title && (
+        <p className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 bg-white px-4">
+          {title}
+        </p>
+      )}
+    </div>
+  )
+}
+
+export default Divider
+```
+
+<Step>Usage</Step>
+
+```tsx
+<Divider title="Title" />
+```
+
+</Steps>
+
+### Props
+
+| Name      |  Type  | Default |
+| :-------- | :----: | :-----: |
+| **title** | string |         |

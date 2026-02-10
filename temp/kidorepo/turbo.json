@@ -1,0 +1,47 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "env": [
+        "BASE_URL",
+        "SPOTIFY_CLIENT_ID",
+        "SPOTIFY_CLIENT_SECRET",
+        "NODE_ENV",
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+        "GOOGLE_ANALYTICS_PRIVATE_KEY",
+        "GOOGLE_ANAYLTICS_PROJECT_ID",
+        "GOOGLE_ANALYTICS_CLIENT_EMAIL",
+        "GOOGLE_ANALYTICS_PROPERTY_ID",
+        "GOOGLE_CALENDAR_CLIENT_ID",
+        "GOOGLE_CALENDAR_CLIENT_SECRET",
+        "GOOGLE_CALENDAR_REFRESH_TOKEN",
+        "SLACK_WEBHOOK_URL",
+        "NOTION_SECRET_KEY",
+        "NOTION_DATABASE_ID",
+        "GITHUB_TOKEN",
+        "NEXT_PUBLIC_DISCORD_WEBHOOK_URL"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "dist/**",
+        "storybook-static/**"
+      ]
+    },
+    "lint": {
+      "cache": false,
+      "outputs": []
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "test": {},
+    "test:watch": {
+      "cache": false
+    }
+  }
+}

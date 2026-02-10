@@ -1,0 +1,83 @@
+---
+title: Tabs
+description: 한 번에 하나씩 표시되는 콘텐츠의 계층화된 섹션 세트입니다.
+keywords: Tabs, Reactjs, Nextjs, TailwindCSS, Typescript
+---
+
+## Example
+
+<Storybook url="https://workshop.dongwook.kim/?path=/docs/components-tabs-v1--docs" />
+
+## Steps
+
+<Steps>
+
+<Step>Prerequisite</Step>
+
+<Blocks>
+  <LinkBlock icon="utils" name="cn" slug="/utils/cn" />
+</Blocks>
+
+<Step>Copy Code</Step>
+
+```tsx title="components/Tabs/index.tsx"
+import { cn } from 'utils'
+
+export interface Props {
+  list: string[]
+  value: number
+  onChange: (tab: number) => void
+  size?: 'xs' | 'sm' | 'md'
+}
+
+function Tabs({ list, value, onChange, size = 'md' }: Props) {
+  return (
+    <div className="relative border-b border-neutral-200 dark:border-neutral-700">
+      <div className="flex gap-8">
+        {list.map((item, key) => (
+          <div
+            key={key}
+            className={cn(
+              'cursor-pointer font-medium transition duration-150 ease-in-out',
+              value === key ? 'text-primary' : 'text-neutral-600',
+              {
+                'border-primary border-b-2': value === key,
+                'py-6': size === 'md',
+                'py-3 text-sm': size === 'sm',
+                'py-1 text-xs': size === 'xs'
+              }
+            )}
+            onClick={() => onChange(key)}
+          >
+            {item}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default Tabs
+```
+
+<Step>Usage</Step>
+
+```tsx
+<Tabs
+  value={0}
+  list={['Components', 'Hooks', 'Utils', 'Settings']}
+  onChange={(value) => setState({ value })}
+  size="md"
+/>
+```
+
+</Steps>
+
+### Props
+
+| Name                     |         Type          | Default |
+| :----------------------- | :-------------------: | :-----: |
+| **list**<Required />     |       string[]        |         |
+| **value**<Required />    |        number         |         |
+| **onChange**<Required /> | (tab: number) => void |         |
+| **size**                 |    `xs` `sm` `md`     |  `md`   |

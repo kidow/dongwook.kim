@@ -1,0 +1,102 @@
+---
+title: Accordion
+description: 각각 콘텐츠 섹션을 표시하는 세로로 쌓인 대화형 제목 집합입니다.
+keywords: Accordion, Reactjs, Nextjs, Tailwindcss, Typescript
+---
+
+## Example
+
+<Storybook url="https://workshop.dongwook.kim/?path=/docs/components-accordion-v1--docs" />
+
+## Steps
+
+<Steps>
+
+<Step>Prerequisite</Step>
+
+<Blocks>
+  <LinkBlock icon="utils" name="cn" slug="/utils/cn" />
+</Blocks>
+
+<Step>Install Pacakge</Step>
+
+```bash
+npm install lucide-react classnames
+```
+
+<Step>Copy Code</Step>
+
+```tsx title="components/Accordion/index.tsx"
+'use client'
+
+import { memo, useState } from 'react'
+import { ChevronUpIcon } from 'lucide-react'
+import { cn } from 'utils'
+
+export interface Props {
+  title: string
+  content: string
+}
+
+function Accordion({ title, content }: Props) {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [height, setHeight] = useState<number>(0)
+  return (
+    <li className="select-none rounded-2xl border border-neutral-200 bg-neutral-50 px-6 dark:border-neutral-800 dark:bg-neutral-900">
+      <div
+        onClick={() => setIsOpen(() => !isOpen)}
+        className="flex cursor-pointer items-center justify-between py-6"
+      >
+        <h3 className="text-lg font-medium text-neutral-900 dark:text-white">
+          {title}
+        </h3>
+        <button className="text-neutral-400">
+          <ChevronUpIcon
+            className={cn('h-6 w-6 duration-150', {
+              '-rotate-180': isOpen
+            })}
+          />
+        </button>
+      </div>
+      <section
+        style={{ maxHeight: isOpen ? height : 0 }}
+        className={cn(
+          'overflow-hidden transition-[max-height] duration-150',
+          isOpen ? 'ease-in' : 'ease-in-out'
+        )}
+      >
+        <div
+          ref={(ref) => {
+            const height = ref?.scrollHeight
+            if (height) setHeight(height)
+          }}
+          className="border-t border-neutral-200 py-6 dark:border-neutral-800"
+        >
+          {content}
+        </div>
+      </section>
+    </li>
+  )
+}
+
+export default memo(Accordion)
+```
+
+<Step>Usage</Step>
+
+```tsx
+<ul className="space-y-4">
+  <Accordion title="JavaScript" content="자바스크립트란..." />
+  <Accordion title="Python" content="파이썬이란..." />
+  <Accordion title="Kotlin" content="코틀린이란..." />
+</ul>
+```
+
+</Steps>
+
+### Props
+
+| Name                    |  Type  | Default |
+| :---------------------- | :----: | :-----: |
+| **title**<Required />   | string |         |
+| **content**<Required /> | string |         |

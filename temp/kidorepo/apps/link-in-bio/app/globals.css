@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes slide-in {
+  from {
+    transform: translateY(50px);
+  }
+}
+
+@keyframes slide-out {
+  to {
+    transform: translateY(-50px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+::view-transition-old(root) {
+  animation: 100ms linear both fade-out, 300ms linear both slide-out;
+}
+
+::view-transition-new(root) {
+  animation: 100ms linear both fade-in, 300ms linear both slide-in;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+details > summary {
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+@layer utilities {
+  .notion-code {
+    @apply rounded-[3px] bg-gray-100 px-[5.44px] py-[2.72px] text-[85%] text-red-500;
+  }
+}

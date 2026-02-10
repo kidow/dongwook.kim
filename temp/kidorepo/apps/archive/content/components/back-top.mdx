@@ -1,0 +1,49 @@
+---
+title: BackTop
+description: 페이지 상단으로 쉽게 돌아갈 수 있는 버튼입니다.
+keywords: BackTop, Reactjs, Nextjs, TailwindCSS, Typescript
+---
+
+## Example
+
+<Storybook url="https://workshop.dongwook.kim/?path=/docs/components-backtop-v1--docs" />
+
+## Steps
+
+<Steps>
+
+<Step>Install Package</Step>
+
+```bash
+npm install lucide-react
+```
+
+<Step>Copy Code</Step>
+
+```tsx title="components/BackTop/index.tsx"
+'use client'
+
+import { memo } from 'react'
+import { ArrowUpIcon } from 'lucide-react'
+
+function BackTop() {
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      className="fixed bottom-4 right-4 inline-flex h-10 w-10 items-center justify-center rounded-[10px] border"
+    >
+      <ArrowUpIcon className="h-5 w-5" />
+    </button>
+  )
+}
+
+export default memo(BackTop)
+```
+
+<Step>Usage</Step>
+
+```tsx
+<BackTop />
+```
+
+</Steps>
