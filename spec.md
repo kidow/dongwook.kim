@@ -55,17 +55,26 @@
    - `next/font/google`의 `Inter` 의존 제거
    - 시스템/로컬 폴백 기반 `font-sans` 토큰으로 빌드 실패 이슈 해소
 
+12. **동적 API 연동 설계 문서 초안 작성**
+   - API 활성화 순서/공통 인터페이스/환경변수 스키마 정의
+   - 위젯 실패 fallback 정책 및 단계별 완료 기준(DoD) 수립
+
 ## 현재 남은 작업 (우선순위 순)
 
 ### P0 (다음 작업)
-1. **동적 로직 단계적 활성화 준비**
-   - Notion/Github/Spotify/Analytics/Meeting API 순차 연동을 위한 인터페이스 정리
-   - 환경변수 스키마/실패 fallback 정책 문서화
+1. **Notion 동적 연동 시작**
+   - 블로그 목록/상세의 샘플 데이터 영역을 Notion 데이터 소스로 교체
+   - env 누락 시 fallback UI를 유지하도록 안전하게 분기
+
+### P1
+2. **Github/Spotify 동적 위젯 활성화**
+   - 홈 placeholder를 실제 API 데이터 카드로 단계적 교체
+   - API 실패 시 placeholder로 자동 fallback
 
 ### P2
-2. **동적 로직 단계적 활성화**
-   - Notion, Github, Spotify, Analytics, Meeting API 순으로 활성화
-   - 환경변수/외부 의존 검증은 마지막 단계에서 집중 수행
+3. **Analytics/Meeting API 활성화 및 통합 검증**
+   - Scheduling/Map/Analytics 카드 연결
+   - 최종 env 점검 + 빌드/런타임 안정성 확인
 
 ## 작업 원칙
 - 매 작업은 작은 범위(컴포넌트/페이지 단위)로 진행한다.
@@ -82,5 +91,5 @@
 - [x] `Widget` 공통 props 규약 초안 문서화
 - [x] 홈 동적 placeholder 카드 4종(Spotify/Analytics/Scheduling/Map) 분리
 
-- [ ] 동적 API 연동 설계 문서(환경변수/실패 fallback) 작성
+- [x] 동적 API 연동 설계 문서(환경변수/실패 fallback) 작성
 - [x] 빌드 안정성 확인 (`pnpm build`)
