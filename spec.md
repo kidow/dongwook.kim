@@ -27,6 +27,14 @@
 4. **PR 호환성 보완**
    - 바이너리 avatar(`png`) 대신 텍스트 기반 `public/avatar.svg` 사용
 
+5. **홈 정적 카드 2차 이식 + 동적 카드 placeholder 추가**
+   - 정적 외부 링크 카드(Gumroad/LinkedIn/Dev.to/ProductHunt/Tistory/Disquiet) 반영
+   - 동적 위젯(Spotify/Analytics/Scheduling/Map)은 placeholder 카드로 우선 대체
+
+6. **Tools/Skills 아이콘형 UI 개선**
+   - 텍스트 약어 배지에서 색상 아이콘 배지로 전환
+   - 바이너리 이미지 없이 텍스트 기반 렌더링 컴포넌트로 구성
+
 ## 현재 남은 작업 (우선순위 순)
 
 ### P0 (다음 작업)
@@ -59,6 +67,6 @@
 - 이 문서(`spec.md`)를 매 작업마다 갱신한다.
 
 ## 다음 작업 체크리스트 (바로 실행용)
-- [ ] 홈의 남은 정적 링크 카드 추가 (WidgetLink 확장)
-- [ ] Tools/Skills를 텍스트 배지 → 아이콘 기반으로 개선
+- [x] 홈의 남은 정적 링크 카드 추가 (WidgetLink 확장)
+- [x] Tools/Skills를 텍스트 배지 → 아이콘 기반으로 개선
 - [ ] `/blog` 페이지 정적 UI 스켈레톤 시작

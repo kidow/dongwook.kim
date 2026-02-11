@@ -5,6 +5,14 @@ import Tools from '@/components/Tools'
 import * as Icon from '@/components/icons'
 import { WidgetLink, WidgetQuote } from '@/components/Widget'
 
+function CardIcon({ label }: { label: string }) {
+  return (
+    <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border bg-white text-xs font-semibold">
+      {label}
+    </span>
+  )
+}
+
 export default function Home() {
   return (
     <ul className="duration-400 grid grid-cols-2 gap-6 xl:grid-cols-4 xl:gap-10">
@@ -26,16 +34,7 @@ export default function Home() {
         className="xl:hover:rotate-2"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="/resume"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border bg-white">
-            <svg aria-hidden viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M7 18h10" />
-              <path d="M7 14h10" />
-              <path d="M9 10h6" />
-              <path d="M6 4h9l3 3v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
-            </svg>
-          </span>
-        }
+        icon={<CardIcon label="CV" />}
         title="Résumé"
         description="/resume"
       />
@@ -43,14 +42,7 @@ export default function Home() {
         className="xl:hover:rotate-2"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="mailto:wcgo2ling@gmail.com"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border bg-white">
-            <svg aria-hidden viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="5" width="18" height="14" rx="2" />
-              <path d="m3 7 9 6 9-6" />
-            </svg>
-          </span>
-        }
+        icon={<CardIcon label="@" />}
         title="Gmail"
         description="wcgo2ling@gmail.com"
       />
@@ -94,7 +86,85 @@ export default function Home() {
         description="@__kidow__"
       />
 
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
+        href="https://kidow.gumroad.com"
+        icon={<Icon.Gumroad />}
+        target="_blank"
+        title="Gumroad"
+        description="kidow.gumroad.com"
+      />
+
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] bg-[#F0F6F9] xl:w-[175px] hover:bg-[#E9F4FA]"
+        href="https://www.linkedin.com/in/kidow/"
+        icon={<Icon.LinkedIn />}
+        target="_blank"
+        title="LinkedIn"
+        description="/in/kidow"
+      />
+
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
+        href="https://dev.to/kidow"
+        icon={<Icon.DevTo />}
+        target="_blank"
+        title="Dev.to"
+        description="/kidow"
+      />
+
       <WidgetQuote />
+
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
+        href="https://www.producthunt.com/@kidow"
+        icon={<Icon.ProductHunt />}
+        target="_blank"
+        title="ProductHunt"
+        description="@kidow"
+      />
+
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
+        href="https://wcgo2ling.tistory.com"
+        icon={<CardIcon label="T" />}
+        target="_blank"
+        title="Tistory"
+        description="wcgo2ling"
+      />
+
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
+        href="https://disquiet.io/@kidow"
+        icon={<CardIcon label="DQ" />}
+        target="_blank"
+        title="Disquiet"
+        description="@kidow"
+      />
+
+      <WidgetLink
+        className="xl:col-span-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[390px] bg-emerald-50 hover:bg-emerald-100"
+        href="#"
+        icon={<CardIcon label="♪" />}
+        title="Spotify"
+        description="플레이리스트 위젯은 다음 단계에서 연결됩니다"
+      />
+
+      <WidgetLink
+        className="xl:col-span-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[390px] bg-slate-50 hover:bg-slate-100"
+        href="#"
+        icon={<CardIcon label="GA" />}
+        title="Analytics / Scheduling / Map"
+        description="동적 API 위젯은 placeholder로 대체되었습니다"
+      />
     </ul>
   )
 }
