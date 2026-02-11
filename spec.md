@@ -27,30 +27,54 @@
 4. **PR 호환성 보완**
    - 바이너리 avatar(`png`) 대신 텍스트 기반 `public/avatar.svg` 사용
 
+5. **홈 정적 카드 2차 이식 + 동적 카드 placeholder 추가**
+   - 정적 외부 링크 카드(Gumroad/LinkedIn/Dev.to/ProductHunt/Tistory/Disquiet) 반영
+   - 동적 위젯(Spotify/Analytics/Scheduling/Map)은 placeholder 카드로 우선 대체
+
+6. **Tools/Skills 아이콘형 UI 개선**
+   - 텍스트 약어 배지에서 색상 아이콘 배지로 전환
+   - 바이너리 이미지 없이 텍스트 기반 렌더링 컴포넌트로 구성
+
+7. **블로그 페이지 정적 UI 스켈레톤 시작**
+   - `/blog` 목록 페이지와 `/blog/[id]` 상세 페이지의 정적 레이아웃 추가
+   - 동적 데이터/본문 렌더러 연결 전, 샘플 데이터 기반 구조를 먼저 반영
+
+8. **이력서(`/resume`) 페이지 정적 UI 스켈레톤 시작**
+   - 소개/경력/스킬 섹션 중심의 정적 레이아웃 반영
+   - 데이터 연동 없이 샘플 데이터 기반으로 구조 확정
+
+9. **블로그 상세 UI placeholder 보강**
+   - `/blog/[id]`에 heading/list/code block placeholder 반영
+   - Share/Comments 비활성 placeholder 섹션 추가
+
+10. **Widget 규약 문서화 + 홈 placeholder 카드 세분화**
+   - `components/Widget/README.md`에 `WidgetLink` props/패턴 초안 문서화
+   - 홈의 동적 placeholder를 Spotify/Analytics/Scheduling/Map 개별 카드로 분리
+
+11. **빌드 안정성 보강 (Google Font 네트워크 의존 제거)**
+   - `next/font/google`의 `Inter` 의존 제거
+   - 시스템/로컬 폴백 기반 `font-sans` 토큰으로 빌드 실패 이슈 해소
+
+12. **동적 API 연동 설계 문서 초안 작성**
+   - API 활성화 순서/공통 인터페이스/환경변수 스키마 정의
+   - 위젯 실패 fallback 정책 및 단계별 완료 기준(DoD) 수립
+
 ## 현재 남은 작업 (우선순위 순)
 
 ### P0 (다음 작업)
-1. **홈 카드 정적 이식 확대**
-   - 원본 홈의 남은 정적 카드들(외부 링크 카드들)을 `WidgetLink` 기반으로 순차 추가
-   - 동적 데이터 의존 카드(spotify/github/analytics/scheduling/map)는 placeholder 또는 fallback 카드로 우선 대체
-
-2. **Tools/Skills 시각 품질 개선**
-   - 현재 텍스트 배지 형태를 원본 시각에 가깝게 보강
-   - 바이너리 제약이 있으면 SVG 아이콘 우선으로 반영
+1. **Notion 동적 연동 시작**
+   - 블로그 목록/상세의 샘플 데이터 영역을 Notion 데이터 소스로 교체
+   - env 누락 시 fallback UI를 유지하도록 안전하게 분기
 
 ### P1
-3. **블로그/이력서 페이지 UI 스켈레톤 이식**
-   - `/blog`, `/blog/[id]`, `/resume`의 정적 UI 먼저 반영
-   - 데이터 바인딩은 후순위
-
-4. **공통 위젯 정리**
-   - `Widget` 컴포넌트 구조 확장 (필요한 정적 위젯 우선)
-   - 재사용 가능한 스타일/props 규약 정리
+2. **Github/Spotify 동적 위젯 활성화**
+   - 홈 placeholder를 실제 API 데이터 카드로 단계적 교체
+   - API 실패 시 placeholder로 자동 fallback
 
 ### P2
-5. **동적 로직 단계적 활성화**
-   - Notion, Github, Spotify, Analytics, Meeting API 순으로 활성화
-   - 환경변수/외부 의존 검증은 마지막 단계에서 집중 수행
+3. **Analytics/Meeting API 활성화 및 통합 검증**
+   - Scheduling/Map/Analytics 카드 연결
+   - 최종 env 점검 + 빌드/런타임 안정성 확인
 
 ## 작업 원칙
 - 매 작업은 작은 범위(컴포넌트/페이지 단위)로 진행한다.
@@ -58,7 +82,14 @@
 - UI 변경이 있는 경우 가능한 한 스크린샷을 남긴다.
 - 이 문서(`spec.md`)를 매 작업마다 갱신한다.
 
-## 다음 작업 체크리스트 (바로 실행용)
-- [ ] 홈의 남은 정적 링크 카드 추가 (WidgetLink 확장)
-- [ ] Tools/Skills를 텍스트 배지 → 아이콘 기반으로 개선
-- [ ] `/blog` 페이지 정적 UI 스켈레톤 시작
+## 다음 작업 체크리스트 (지속 갱신용)
+> 작업이 끝날 때마다 아래 체크리스트 상태를 즉시 갱신한다.
+
+- [x] `/resume` 페이지 정적 UI 스켈레톤 시작
+- [x] `/blog/[id]` 본문 스타일 placeholder 확장 (heading/list/code)
+- [x] `/blog/[id]` 공유/댓글 placeholder 섹션 추가
+- [x] `Widget` 공통 props 규약 초안 문서화
+- [x] 홈 동적 placeholder 카드 4종(Spotify/Analytics/Scheduling/Map) 분리
+
+- [x] 동적 API 연동 설계 문서(환경변수/실패 fallback) 작성
+- [x] 빌드 안정성 확인 (`pnpm build`)
