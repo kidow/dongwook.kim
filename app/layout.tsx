@@ -1,16 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { Toast } from '@/shared/ui'
 import { cn } from '@/shared/utils'
 
 import './globals.css'
-
-const inter = Inter({
-  subsets: ['latin']
-})
 
 export const metadata: Metadata = {
   title: 'Kidow',
@@ -20,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<ReactProps>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
+      <body className="font-sans">
         <main className="flex min-h-screen flex-col items-center justify-center">
           <div className="flex min-h-screen w-full max-w-[1728px] flex-col">
             <div className="relative flex min-h-screen w-full flex-1 flex-col items-center">

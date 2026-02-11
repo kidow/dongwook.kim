@@ -2,19 +2,26 @@
 
 import { useMemo } from 'react'
 
+import BrandIcon from '@/components/brand-icons'
 import { Tooltip } from '@/shared/ui'
 
+interface ToolItem {
+  name: string
+  mark: string
+  color: string
+}
+
 export default function Tools() {
-  const list: string[] = useMemo(
+  const list: ToolItem[] = useMemo(
     () => [
-      'supabase',
-      'vercel',
-      'notion',
-      'figma',
-      'slack',
-      'trello',
-      'github',
-      'todoist'
+      { name: 'supabase', mark: 'SB', color: '#3ECF8E' },
+      { name: 'vercel', mark: 'V', color: '#111827' },
+      { name: 'notion', mark: 'N', color: '#18181B' },
+      { name: 'figma', mark: 'F', color: '#A259FF' },
+      { name: 'slack', mark: 'SL', color: '#4A154B' },
+      { name: 'trello', mark: 'TR', color: '#0052CC' },
+      { name: 'github', mark: 'GH', color: '#0F172A' },
+      { name: 'todoist', mark: 'TD', color: '#E44332' }
     ],
     []
   )
@@ -22,9 +29,9 @@ export default function Tools() {
   return (
     <ul className="flex flex-wrap gap-4">
       {list.map((item) => (
-        <Tooltip.v1 key={item} content={item} className="capitalize">
-          <li className="flex h-10 min-w-10 items-center justify-center rounded-[10px] border px-2 text-xs font-semibold uppercase">
-            {item.slice(0, 2)}
+        <Tooltip.v1 key={item.name} content={item.name} className="capitalize">
+          <li>
+            <BrandIcon label={item.mark} bgColor={item.color} />
           </li>
         </Tooltip.v1>
       ))}
