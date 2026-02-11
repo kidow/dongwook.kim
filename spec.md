@@ -51,6 +51,10 @@
    - `components/Widget/README.md`에 `WidgetLink` props/패턴 초안 문서화
    - 홈의 동적 placeholder를 Spotify/Analytics/Scheduling/Map 개별 카드로 분리
 
+11. **빌드 안정성 보강 (Google Font 네트워크 의존 제거)**
+   - `next/font/google`의 `Inter` 의존 제거
+   - 시스템/로컬 폴백 기반 `font-sans` 토큰으로 빌드 실패 이슈 해소
+
 ## 현재 남은 작업 (우선순위 순)
 
 ### P0 (다음 작업)
@@ -79,3 +83,4 @@
 - [x] 홈 동적 placeholder 카드 4종(Spotify/Analytics/Scheduling/Map) 분리
 
 - [ ] 동적 API 연동 설계 문서(환경변수/실패 fallback) 작성
+- [x] 빌드 안정성 확인 (`pnpm build`)
