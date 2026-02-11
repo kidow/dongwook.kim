@@ -13,6 +13,33 @@ function CardIcon({ label }: { label: string }) {
   )
 }
 
+function PlaceholderWidget({
+  title,
+  description,
+  label,
+  className,
+  size,
+  bgClassName
+}: {
+  title: string
+  description: string
+  label: string
+  className: string
+  size: string
+  bgClassName: string
+}) {
+  return (
+    <WidgetLink
+      className={className}
+      size={`${size} ${bgClassName}`}
+      href="#"
+      icon={<CardIcon label={label} />}
+      title={title}
+      description={description}
+    />
+  )
+}
+
 export default function Home() {
   return (
     <ul className="duration-400 grid grid-cols-2 gap-6 xl:grid-cols-4 xl:gap-10">
@@ -148,22 +175,40 @@ export default function Home() {
         description="@kidow"
       />
 
-      <WidgetLink
+      <PlaceholderWidget
         className="xl:col-span-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[390px] bg-emerald-50 hover:bg-emerald-100"
-        href="#"
-        icon={<CardIcon label="♪" />}
+        size="h-[178px] w-full xl:h-[175px] xl:w-[390px]"
+        bgClassName="bg-emerald-50 hover:bg-emerald-100"
+        label="♪"
         title="Spotify"
         description="플레이리스트 위젯은 다음 단계에서 연결됩니다"
       />
 
-      <WidgetLink
-        className="xl:col-span-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[390px] bg-slate-50 hover:bg-slate-100"
-        href="#"
-        icon={<CardIcon label="GA" />}
-        title="Analytics / Scheduling / Map"
-        description="동적 API 위젯은 placeholder로 대체되었습니다"
+      <PlaceholderWidget
+        className="xl:hover:rotate-1"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        bgClassName="bg-slate-50 hover:bg-slate-100"
+        label="GA"
+        title="Analytics"
+        description="트래픽 통계 위젯은 placeholder 상태입니다"
+      />
+
+      <PlaceholderWidget
+        className="xl:hover:rotate-1"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        bgClassName="bg-blue-50 hover:bg-blue-100"
+        label="SC"
+        title="Scheduling"
+        description="미팅 예약 위젯은 placeholder 상태입니다"
+      />
+
+      <PlaceholderWidget
+        className="xl:hover:rotate-1"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        bgClassName="bg-orange-50 hover:bg-orange-100"
+        label="MAP"
+        title="Map"
+        description="위치 위젯은 placeholder 상태입니다"
       />
     </ul>
   )
