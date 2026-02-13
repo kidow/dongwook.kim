@@ -63,22 +63,21 @@
    - `prefers-color-scheme: dark` 대응 제거
    - 사이트 전체를 라이트 팔레트로 고정
 
-14. **`/memo` 경로 1차 마이그레이션 (LocalStorage 에디터 우선)**
+14. **`/memo` 경로 1차 마이그레이션 + Tiptap 전환 보강**
    - `app/memo` 라우트 및 메타데이터 이식
    - route 전용 스타일(`app/memo/index.css`) 적용
    - 입력 내용의 LocalStorage 저장/복원 동작 확인
-   - 참고: 현재 환경의 패키지 레지스트리 제약으로 Tiptap 의존성 설치가 불가하여, 1차는 textarea 기반으로 진행
+   - 패키지 설치 제약 환경을 고려해, Tiptap을 런타임 동적 로드(esm.sh)로 전환하고 실패 시 textarea fallback 유지
 
 
 ## 현재 남은 작업 (우선순위 순)
 
 ### P0 (다음 작업)
-1. **`/memo` 경로 1차 마이그레이션 (완료, Tiptap 대기)**
+1. **`/memo` 경로 1차 마이그레이션 + Tiptap 전환 (완료)**
    - `temp/kidorepo/apps/link-in-bio/app/memo`를 기준으로 `app/memo` 라우트 신설 완료
    - 페이지 메타데이터와 route 전용 스타일(`index.css`) 이식 완료
    - LocalStorage 저장/복원 검증 완료 (입력 → 새로고침 후 유지)
-   - 패키지 레지스트리 제약으로 Tiptap 의존성 설치가 막혀 textarea 기반 에디터로 1차 대체
-   - 후속: 레지스트리 접근 가능 시 Tiptap 에디터로 교체
+   - Tiptap 런타임 로드 적용 및 로드 실패 시 textarea fallback 유지
 
 2. **Notion 동적 연동 시작**
    - 블로그 목록/상세의 샘플 데이터 영역을 Notion 데이터 소스로 교체
@@ -106,7 +105,7 @@
 - [x] `/memo` 페이지 1차 이식 (`app/memo` + LocalStorage, textarea 기반)
 - [x] `/memo` route 스타일(`app/memo/index.css`) 이식
 - [x] `/memo` 동작 검증 (입력 → 새로고침 후 내용 유지)
-- [ ] `/memo` Tiptap 에디터 전환 (레지스트리 접근 복구 후)
+- [x] `/memo` Tiptap 에디터 전환 (런타임 동적 로드 + fallback)
 
 - [x] `/resume` 페이지 정적 UI 스켈레톤 시작
 - [x] `/blog/[id]` 본문 스타일 placeholder 확장 (heading/list/code)
