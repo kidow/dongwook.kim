@@ -66,7 +66,14 @@
 ## 현재 남은 작업 (우선순위 순)
 
 ### P0 (다음 작업)
-1. **Notion 동적 연동 시작**
+1. **`/memo` 경로 1차 마이그레이션 (API 없는 에디터 우선)**
+   - `temp/kidorepo/apps/link-in-bio/app/memo`를 기준으로 `app/memo` 라우트 신설
+   - 페이지 메타데이터와 route 전용 스타일(`index.css`)을 먼저 이식
+   - 초기 범위는 **Tiptap + LocalStorage 저장**으로 제한하고, 외부 API 연동은 제외
+   - 기존 레이아웃(Header/Footer) 안에서 레이아웃 깨짐 없이 동작하도록 최소 스타일 보정
+   - 검증: `/memo` 진입, 입력/새로고침 후 로컬 저장 유지 확인
+
+2. **Notion 동적 연동 시작**
    - 블로그 목록/상세의 샘플 데이터 영역을 Notion 데이터 소스로 교체
    - env 누락 시 fallback UI를 유지하도록 안전하게 분기
 
@@ -88,6 +95,10 @@
 
 ## 다음 작업 체크리스트 (지속 갱신용)
 > 작업이 끝날 때마다 아래 체크리스트 상태를 즉시 갱신한다.
+
+- [ ] `/memo` 페이지 1차 이식 (`app/memo` + Tiptap + LocalStorage)
+- [ ] `/memo` route 스타일(`app/memo/index.css`) 이식
+- [ ] `/memo` 동작 검증 (입력 → 새로고침 후 내용 유지)
 
 - [x] `/resume` 페이지 정적 UI 스켈레톤 시작
 - [x] `/blog/[id]` 본문 스타일 placeholder 확장 (heading/list/code)
