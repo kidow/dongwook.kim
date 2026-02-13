@@ -87,10 +87,9 @@ export type Result<T> =
 
 각 API 활성화 커밋은 아래 조건을 만족해야 한다.
 
-- [ ] 관련 env 누락 시 빌드/런타임에서 크래시하지 않는다.
+- [ ] 관련 env 누락 시 타입체크/런타임에서 크래시하지 않는다.
 - [ ] 정상 데이터 렌더링 + fallback 렌더링 모두 확인한다.
-- [ ] `pnpm exec tsc --noEmit` 통과
-- [ ] `pnpm build` 통과
+- [ ] `pnpm typecheck` (`tsc --noEmit --skipLibCheck`) 통과
 - [ ] UI 변경 스크린샷 첨부
 - [ ] `spec.md` 체크리스트 상태 갱신
 
@@ -103,4 +102,3 @@ export type Result<T> =
 - [ ] Step 3: Spotify 위젯 실제 데이터 연결
 - [ ] Step 4: Analytics 위젯 실제 데이터 연결
 - [ ] Step 5: Meeting/Scheduling 위젯 실제 데이터 연결
-

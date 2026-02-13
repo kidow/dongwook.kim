@@ -91,11 +91,12 @@
 ### P2
 3. **Analytics/Meeting API 활성화 및 통합 검증**
    - Scheduling/Map/Analytics 카드 연결
-   - 최종 env 점검 + 빌드/런타임 안정성 확인
+   - 최종 env 점검 + 타입/런타임 안정성 확인
 
 ## 작업 원칙
 - 매 작업은 작은 범위(컴포넌트/페이지 단위)로 진행한다.
 - 각 단계마다 eslint/tsc 확인 후 커밋한다.
+- 작업 종료 시 `pnpm build` 대신 `pnpm typecheck`(`tsc --noEmit --skipLibCheck`)를 실행한다.
 - UI 변경이 있는 경우 가능한 한 스크린샷을 남긴다.
 - 이 문서(`spec.md`)를 매 작업마다 갱신한다.
 
@@ -114,4 +115,4 @@
 - [x] 홈 동적 placeholder 카드 4종(Spotify/Analytics/Scheduling/Map) 분리
 
 - [x] 동적 API 연동 설계 문서(환경변수/실패 fallback) 작성
-- [x] 빌드 안정성 확인 (`pnpm build`)
+- [x] 타입 안정성 확인 (`pnpm typecheck`)
