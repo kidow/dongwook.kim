@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 
-const experiences = [
+import { getNotionResumeData } from '@/shared/utils/api/notion'
+
+const fallbackExperiences = [
   {
     company: 'Freelance / Side Project',
     role: 'Frontend Engineer',
@@ -17,7 +19,7 @@ const experiences = [
   }
 ]
 
-const skillGroups = [
+const fallbackSkillGroups = [
   {
     title: 'Frontend',
     items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS']
@@ -34,25 +36,59 @@ const skillGroups = [
 
 export const metadata: Metadata = {
   title: 'Résumé | Dongwook Kim',
-  description: '동적 데이터 연결 전 단계의 정적 이력서 UI 스켈레톤입니다.'
+  description: 'Notion 데이터 연동 이력서 페이지입니다. 실패 시 정적 fallback을 표시합니다.'
 }
 
-export default function ResumePage() {
+export default async function ResumePage() {
+  const resumeResult = await getNotionResumeData()
+
+  if (resumeResult.ok) {
+    const { title, description, updatedAt, sections } = resumeResult.data
+
+    return (
+      <section className="space-y-8">
+        <header className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm xl:p-8">
+          <p className="text-xs uppercase tracking-wide text-neutral-400">Résumé (Notion)</p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight xl:text-4xl">{title}</h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600 xl:text-base">
+            {description || 'Notion에서 불러온 이력서 데이터입니다.'}
+          </p>
+          <p className="mt-2 text-xs text-neutral-400">마지막 업데이트: {updatedAt}</p>
+        </header>
+
+        {sections.map((section) => (
+          <section
+            key={section.title}
+            className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm xl:p-8"
+          >
+            <h2 className="text-xl font-semibold">{section.title}</h2>
+            <ul className="mt-5 space-y-3">
+              {section.items.map((item, index) => (
+                <li key={`${section.title}-${index}`} className="rounded-2xl border border-neutral-200 p-4 text-sm text-neutral-700">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </section>
+    )
+  }
+
   return (
     <section className="space-y-8">
       <header className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm xl:p-8">
         <p className="text-xs uppercase tracking-wide text-neutral-400">Résumé Skeleton</p>
         <h1 className="mt-2 text-3xl font-bold tracking-tight xl:text-4xl">Dongwook Kim</h1>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600 xl:text-base">
-          비즈니스 문제를 기술로 해결하는 웹 개발자입니다. 현재는 Link-in-bio 프로젝트를 기반으로 UI
-          중심 마이그레이션을 단계적으로 진행하고 있습니다.
+          Notion 연동이 비활성화되어 정적 fallback 이력서를 표시하고 있습니다.
         </p>
       </header>
 
       <section className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm xl:p-8">
         <h2 className="text-xl font-semibold">Experience</h2>
         <ul className="mt-5 space-y-4">
-          {experiences.map((item) => (
+          {fallbackExperiences.map((item) => (
             <li key={`${item.company}-${item.period}`} className="rounded-2xl border border-neutral-200 p-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <h3 className="text-base font-semibold text-neutral-900">{item.role}</h3>
@@ -68,7 +104,7 @@ export default function ResumePage() {
       <section className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm xl:p-8">
         <h2 className="text-xl font-semibold">Skills</h2>
         <div className="mt-5 grid gap-4 xl:grid-cols-3">
-          {skillGroups.map((group) => (
+          {fallbackSkillGroups.map((group) => (
             <article key={group.title} className="rounded-2xl border border-neutral-200 p-4">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-600">{group.title}</h3>
               <ul className="mt-3 flex flex-wrap gap-2">
