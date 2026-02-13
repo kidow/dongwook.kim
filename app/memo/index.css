@@ -1,0 +1,7 @@
+.memo-editor {
+  background: #fff;
+}
+
+.memo-editor::placeholder {
+  color: #a8a29e;
+}
