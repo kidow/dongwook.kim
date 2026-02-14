@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 
 import Editor from '@/components/Editor'
 
@@ -29,5 +30,9 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <Editor />
+  return (
+    <Suspense fallback={<div className="text-sm text-stone-400">에디터를 불러오는 중...</div>}>
+      <Editor />
+    </Suspense>
+  )
 }
