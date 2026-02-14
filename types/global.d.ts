@@ -13,12 +13,7 @@ declare namespace NodeJS {
     GOOGLE_CALENDAR_CLIENT_ID: string
     GOOGLE_CALENDAR_CLIENT_SECRET: string
 
-    BASE_URL: string
-
-    KV_URL: string
-    KV_REST_API_URL: string
-    KV_REST_API_TOKEN: string
-    KV_REST_API_READ_ONLY_TOKEN: string
+    NEXT_PUBLIC_BASE_URL: string
 
     GOOGLE_ANALYTICS_PROPERTY_ID: string
     GOOGLE_ANAYLTICS_PROJECT_ID: string
