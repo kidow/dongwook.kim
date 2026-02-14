@@ -2,6 +2,7 @@ import Image from 'next/image'
 
 import Skills from '@/components/Skills'
 import Tools from '@/components/Tools'
+import WidgetGithub from '@/components/Widget/widget-github'
 import * as Icon from '@/components/icons'
 import { WidgetLink, WidgetQuote } from '@/components/Widget'
 
@@ -55,7 +56,9 @@ export default function Home() {
             Follow
           </button>
         }
-      />
+      >
+        <WidgetGithub />
+      </WidgetLink>
 
       <WidgetLink
         className="xl:hover:rotate-2"
