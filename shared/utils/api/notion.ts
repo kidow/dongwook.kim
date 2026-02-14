@@ -4,7 +4,7 @@ import type {
   PageObjectResponse,
   PartialPageObjectResponse,
   PropertyItemObjectResponse,
-  QueryDatabaseResponse,
+  QueryDataSourceResponse,
   RichTextItemResponse
 } from '@notionhq/client/build/src/api-endpoints'
 
@@ -95,9 +95,9 @@ function asText(richText: RichTextItemResponse[] = []): string {
 }
 
 function isFullPage(
-  page: QueryDatabaseResponse['results'][number]
+  page: QueryDataSourceResponse['results'][number]
 ): page is PageObjectResponse {
-  return 'properties' in page
+  return page.object === 'page' && 'properties' in page
 }
 
 function normalizeSlug(value: string): string {
@@ -414,8 +414,8 @@ export async function getNotionBlogPosts(limit = 20): Promise<ApiResult<BlogPost
   }
 
   try {
-    const response = await clientResult.data.databases.query({
-      database_id: databaseResult.data,
+    const response = await clientResult.data.dataSources.query({
+      data_source_id: databaseResult.data,
       sorts: [{ timestamp: 'created_time', direction: 'descending' }],
       page_size: limit
     })
