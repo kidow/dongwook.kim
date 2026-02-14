@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import Image from 'next/image'
-import { FileTextIcon, MailIcon } from 'lucide-react'
+import { FileTextIcon, MailIcon, StickyNoteIcon } from 'lucide-react'
 
 import WidgetGithub from '@/components/Widget/widget-github'
 import * as Icon from '@/components/icons'
@@ -129,6 +129,22 @@ export default async function Home() {
       <Suspense fallback={<li className="col-span-2" />}>
         <WidgetAnalytics />
       </Suspense>
+
+      <li className="col-span-2 p-4 xl:col-span-4">
+        <h3 className="px-2 font-semibold uppercase">Side Projects 👨🏻‍💻</h3>
+      </li>
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        href="/memo"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-neutral-200 bg-white">
+            <StickyNoteIcon className="h-5 w-5" />
+          </span>
+        }
+        title="MEMO"
+        description="내용이 사라지지 않는"
+      />
     </ul>
   )
 }
