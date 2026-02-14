@@ -86,6 +86,18 @@ export default function Home() {
       />
 
       <WidgetMap />
+      <li className="row-span-2 h-[178px] w-[178px] overflow-hidden rounded-3xl border border-neutral-200 shadow-sm xl:col-span-2 xl:h-[390px] xl:w-[390px]">
+        <iframe
+          src="https://giphy.com/embed/fWrDTtdw9nDVWmWrlq"
+          className="giphy-embed h-full w-full"
+          allowFullScreen
+        />
+        <p>
+          <a href="https://giphy.com/gifs/BoschGlobal-coding-home-office-remote-working-fWrDTtdw9nDVWmWrlq">
+            via GIPHY
+          </a>
+        </p>
+      </li>
 
       <li className="col-span-2 rounded-3xl border p-6 shadow-sm xl:col-span-2">
         <h3 className="mb-4 px-2 font-semibold uppercase">Skills ✨</h3>
