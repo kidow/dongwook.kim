@@ -1,11 +1,10 @@
-import Image from 'next/image'
 import { FileTextIcon, MailIcon } from 'lucide-react'
 
 import Skills from '@/components/Skills'
 import Tools from '@/components/Tools'
 import WidgetGithub from '@/components/Widget/widget-github'
 import * as Icon from '@/components/icons'
-import { WidgetLink, WidgetQuote } from '@/components/Widget'
+import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
 
 function CardIcon({ label }: { label: string }) {
   return (
@@ -86,15 +85,7 @@ export default function Home() {
         description="wcgo2ling@gmail.com"
       />
 
-      <li className="col-span-2 overflow-hidden rounded-3xl border shadow-sm xl:col-span-2 xl:h-[390px] xl:w-[390px]">
-        <Image
-          src="/avatar.svg"
-          alt="Kidow avatar"
-          width={600}
-          height={600}
-          className="h-full w-full object-cover"
-        />
-      </li>
+      <WidgetMap />
 
       <li className="col-span-2 rounded-3xl border p-6 shadow-sm xl:col-span-2">
         <h3 className="mb-4 px-2 font-semibold uppercase">Skills ✨</h3>
