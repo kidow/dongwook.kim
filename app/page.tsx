@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { FileTextIcon, MailIcon } from 'lucide-react'
 
 import Skills from '@/components/Skills'
@@ -98,6 +99,18 @@ export default function Home() {
           </a>
         </p>
       </li>
+      <WidgetLink
+        className="xl:col-span-2 xl:hover:rotate-1"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[390px] hover:bg-neutral-50"
+        href="/blog"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-neutral-200 bg-white p-1">
+            <Image src="/blog.png" alt="blog" width={20} height={20} />
+          </span>
+        }
+        title="Blog"
+        description="/blog"
+      />
 
       <li className="col-span-2 rounded-3xl border p-6 shadow-sm xl:col-span-2">
         <h3 className="mb-4 px-2 font-semibold uppercase">Skills ✨</h3>
@@ -108,15 +121,6 @@ export default function Home() {
         <h3 className="mb-4 px-2 font-semibold uppercase">Favorite Tools 🎉</h3>
         <Tools />
       </li>
-
-      <WidgetLink
-        className="xl:col-span-2 xl:hover:rotate-1"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[390px] hover:bg-neutral-50"
-        href="/blog"
-        icon={<Icon.Link />}
-        title="Blog"
-        description="/blog"
-      />
 
       <WidgetLink
         className="xl:hover:rotate-1"
