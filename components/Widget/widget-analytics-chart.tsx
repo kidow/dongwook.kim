@@ -10,8 +10,8 @@ type Props = {
 
 export default function WidgetAnalyticsChart({ total, percent, list }: Props) {
   return (
-    <li className="col-span-2 xl:col-span-4">
-      <Card className="shadow-none ring-neutral-200">
+    <li className="col-span-2">
+      <Card className="rounded-3xl shadow-none ring-neutral-200">
         <Text>총 방문자 수</Text>
         <Flex className="space-x-3 truncate" justifyContent="start" alignItems="baseline">
           <Metric>{total.toLocaleString()}</Metric>
@@ -23,7 +23,6 @@ export default function WidgetAnalyticsChart({ total, percent, list }: Props) {
           className="mt-6 h-28"
           data={list}
           index="date"
-          valueFormatter={(number: number) => Intl.NumberFormat('us').format(number).toString()}
           categories={['방문자 수']}
           colors={['blue']}
           showXAxis

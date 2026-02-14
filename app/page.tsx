@@ -126,7 +126,7 @@ export default async function Home() {
       />
 
       <WidgetQuote />
-      <Suspense fallback={<li className="col-span-2 xl:col-span-4" />}>
+      <Suspense fallback={<li className="col-span-2" />}>
         <WidgetAnalytics />
       </Suspense>
     </ul>
