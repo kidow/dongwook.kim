@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { FileTextIcon, MailIcon } from 'lucide-react'
 
 import Skills from '@/components/Skills'
 import Tools from '@/components/Tools'
@@ -64,7 +65,11 @@ export default function Home() {
         className="xl:hover:rotate-2"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="/resume"
-        icon={<CardIcon label="CV" />}
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-neutral-200 bg-white">
+            <FileTextIcon className="h-5 w-5" />
+          </span>
+        }
         title="Résumé"
         description="/resume"
       />
@@ -72,7 +77,11 @@ export default function Home() {
         className="xl:hover:rotate-2"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="mailto:wcgo2ling@gmail.com"
-        icon={<CardIcon label="@" />}
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-neutral-200 bg-white">
+            <MailIcon className="h-5 w-5" />
+          </span>
+        }
         title="Gmail"
         description="wcgo2ling@gmail.com"
       />
