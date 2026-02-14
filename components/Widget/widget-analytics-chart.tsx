@@ -29,11 +29,14 @@ export default function WidgetAnalyticsChart({ total, percent, list }: Props) {
           className="mt-6 h-28"
           data={list}
           index="date"
+          valueFormatter={(number: number) =>
+            Intl.NumberFormat('us').format(number).toString()
+          }
           categories={['방문자 수']}
           colors={['blue']}
-          showXAxis
+          showXAxis={true}
           showGridLines={false}
-          startEndOnly
+          startEndOnly={true}
           showYAxis={false}
           showLegend={false}
         />

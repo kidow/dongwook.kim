@@ -1,7 +1,6 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data'
 import type { google } from '@google-analytics/data/build/protos/protos'
 import dayjs from 'dayjs'
-
 import WidgetAnalyticsChart from './widget-analytics-chart'
 
 export default async function WidgetAnalytics() {
@@ -30,7 +29,12 @@ export default async function WidgetAnalytics() {
   const reports = await Promise.all([
     analyticsDataClient.runReport({
       ...request,
-      dateRanges: [{ startDate: dayjs().add(-1, 'month').format('YYYY-MM-DD'), endDate: 'today' }]
+      dateRanges: [
+        {
+          startDate: dayjs().add(-1, 'month').format('YYYY-MM-DD'),
+          endDate: 'today'
+        }
+      ]
     }),
     analyticsDataClient.runReport({
       ...request,
@@ -62,7 +66,10 @@ export default async function WidgetAnalytics() {
     acc += Number(cur.metricValues?.[0]?.value ?? 0)
     return acc
   }, 0)
-  const percent = lastTotal === 0 ? 0 : Number((((latestTotal - lastTotal) / lastTotal) * 100).toFixed(1))
+  const percent =
+    lastTotal === 0
+      ? 0
+      : Number((((latestTotal - lastTotal) / lastTotal) * 100).toFixed(1))
   const list = (latestPageViews.rows ?? []).map((item) => ({
     date: dayjs(item.dimensionValues?.[0]?.value).format('M월 D일'),
     '방문자 수': item.metricValues?.[0]?.value ?? '0'
