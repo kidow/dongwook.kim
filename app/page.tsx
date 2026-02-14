@@ -1,11 +1,13 @@
+import { Suspense } from 'react'
 import Image from 'next/image'
 import { FileTextIcon, MailIcon } from 'lucide-react'
 
 import WidgetGithub from '@/components/Widget/widget-github'
 import * as Icon from '@/components/icons'
 import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
+import WidgetAnalytics from '@/components/Widget/widget-analytics'
 
-export default function Home() {
+export default async function Home() {
   return (
     <ul className="duration-400 grid grid-cols-2 gap-6 xl:grid-cols-4 xl:gap-10">
       <WidgetLink
@@ -124,7 +126,9 @@ export default function Home() {
       />
 
       <WidgetQuote />
-
+      <Suspense fallback={<li className="col-span-2 xl:col-span-4" />}>
+        <WidgetAnalytics />
+      </Suspense>
     </ul>
   )
 }
