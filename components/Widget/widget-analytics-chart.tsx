@@ -11,11 +11,17 @@ type Props = {
 export default function WidgetAnalyticsChart({ total, percent, list }: Props) {
   return (
     <li className="col-span-2">
-      <Card className="rounded-3xl shadow-none ring-neutral-200">
+      <Card className="shadow-none ring-neutral-200">
         <Text>총 방문자 수</Text>
-        <Flex className="space-x-3 truncate" justifyContent="start" alignItems="baseline">
+        <Flex
+          className="space-x-3 truncate"
+          justifyContent="start"
+          alignItems="baseline"
+        >
           <Metric>{total.toLocaleString()}</Metric>
-          <BadgeDelta deltaType={percent > 0 ? 'moderateIncrease' : 'moderateDecrease'}>
+          <BadgeDelta
+            deltaType={percent > 0 ? 'moderateIncrease' : 'moderateDecrease'}
+          >
             {percent}%
           </BadgeDelta>
         </Flex>
