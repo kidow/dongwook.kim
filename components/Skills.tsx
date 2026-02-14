@@ -1,38 +1,39 @@
 'use client'
 
 import { useMemo } from 'react'
+import Image from 'next/image'
 
-import BrandIcon from '@/components/brand-icons'
 import { Tooltip } from '@/shared/ui'
 
-interface SkillItem {
-  name: string
-  mark: string
-  color: string
-}
-
 export default function Skills() {
-  const list: SkillItem[] = useMemo(
+  const list: string[] = useMemo(
     () => [
-      { name: 'react', mark: 'R', color: '#149ECA' },
-      { name: 'nextjs', mark: 'NX', color: '#111827' },
-      { name: 'typescript', mark: 'TS', color: '#3178C6' },
-      { name: 'tailwindcss', mark: 'TW', color: '#06B6D4' },
-      { name: 'zustand', mark: 'ZS', color: '#8B5CF6' },
-      { name: 'nodejs', mark: 'ND', color: '#3C873A' },
-      { name: 'postgresql', mark: 'PG', color: '#336791' },
-      { name: 'chrome extension', mark: 'CR', color: '#EA4335' },
-      { name: 'pnpm', mark: 'PN', color: '#F59E0B' }
+      'react',
+      'nextjs',
+      'typescript',
+      'tailwindcss',
+      'zustand',
+      'nodejs',
+      'postgresql',
+      'chrome extension',
+      'pnpm'
     ],
     []
   )
 
   return (
     <ul className="flex flex-wrap gap-4">
-      {list.map((item) => (
-        <Tooltip.v1 key={item.name} content={item.name} className="capitalize">
-          <li>
-            <BrandIcon label={item.mark} bgColor={item.color} />
+      {list.map((item, key) => (
+        <Tooltip.v1 key={key} content={item} className="capitalize">
+          <li className="flex h-10 w-10 items-center justify-center rounded-[10px] border p-1">
+            <Image
+              src={`/skills/${item}.png`}
+              alt={item}
+              draggable={false}
+              width={40}
+              height={40}
+              className="select-none"
+            />
           </li>
         </Tooltip.v1>
       ))}

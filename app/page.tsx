@@ -112,16 +112,6 @@ export default function Home() {
         description="/blog"
       />
 
-      <li className="col-span-2 rounded-3xl border p-6 shadow-sm xl:col-span-2">
-        <h3 className="mb-4 px-2 font-semibold uppercase">Skills ✨</h3>
-        <Skills />
-      </li>
-
-      <li className="col-span-2 rounded-3xl border p-6 shadow-sm xl:col-span-4">
-        <h3 className="mb-4 px-2 font-semibold uppercase">Favorite Tools 🎉</h3>
-        <Tools />
-      </li>
-
       <WidgetLink
         className="xl:hover:rotate-1"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] bg-[#F5FAFE] hover:bg-[#F0F7FD]"
@@ -193,6 +183,16 @@ export default function Home() {
         title="Disquiet"
         description="@kidow"
       />
+
+      <li className="col-span-2 rounded-3xl border p-6 shadow-sm xl:col-span-2">
+        <h3 className="mb-4 px-2 font-semibold uppercase">Skills ✨</h3>
+        <Skills />
+      </li>
+
+      <li className="col-span-2 rounded-3xl border p-6 shadow-sm xl:col-span-4">
+        <h3 className="mb-4 px-2 font-semibold uppercase">Favorite Tools 🎉</h3>
+        <Tools />
+      </li>
 
       <PlaceholderWidget
         className="xl:col-span-2"
