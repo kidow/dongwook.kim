@@ -44,16 +44,16 @@ export default function Home() {
   return (
     <ul className="duration-400 grid grid-cols-2 gap-6 xl:grid-cols-4 xl:gap-10">
       <WidgetLink
-        className="col-span-2 xl:col-span-4"
-        size="flex h-[178px] w-full items-center justify-between hover:bg-neutral-50 xl:h-[175px] xl:w-[820px]"
+        className="col-span-2 xl:col-span-4 xl:hover:rotate-1"
+        size="h-[178px] w-full hover:bg-neutral-50 xl:h-[175px] xl:w-[820px]"
         href="https://github.com/kidow"
         target="_blank"
         icon={<Icon.Github />}
         title="Github"
         button={
-          <span className="rounded-md border bg-slate-50 px-[21px] py-[7px] text-xs font-bold text-neutral-600">
+          <button className="rounded-md border border-neutral-200 bg-slate-50 px-[21px] py-[7px] text-xs font-bold text-neutral-600">
             Follow
-          </span>
+          </button>
         }
       />
 
