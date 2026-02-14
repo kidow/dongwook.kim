@@ -76,7 +76,9 @@ export default function Editor() {
     >
       <h1>메모</h1>
       {editor && <EditorBubbleMenu editor={editor} />}
-      <EditorContent editor={editor} />
+      <div className="prose-lg prose-stone prose-headings:font-display font-default focus:outline-none max-w-full">
+        <EditorContent editor={editor} />
+      </div>
       <div className="mt-4 flex items-center gap-2 text-sm">
         <span className="rounded-lg bg-stone-100 px-2 py-1 text-stone-400">
           {saveStatus}
