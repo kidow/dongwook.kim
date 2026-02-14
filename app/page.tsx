@@ -126,7 +126,9 @@ export default function Home() {
           </button>
         }
       />
-      <li className="col-span-2 row-span-2 h-[178px] w-full rounded-3xl border border-neutral-200 bg-emerald-50 shadow-sm xl:h-[390px] xl:w-[390px]" />
+      <li className="col-span-2 row-span-2">
+        <div className="h-[390px] w-full rounded-3xl border border-neutral-200 bg-emerald-50 shadow-sm" />
+      </li>
 
       <WidgetLink
         className="xl:hover:rotate-2"
