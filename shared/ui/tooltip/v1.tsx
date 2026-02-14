@@ -21,12 +21,12 @@ const POSITION_CLASS: Record<Position, string> = {
 }
 
 const ARROW_CLASS: Record<Position, string> = {
-  top: 'after:bottom-[calc(100%-2px)] after:top-auto after:border-t-neutral-800 dark:after:border-t-neutral-700 after:left-1/2 after:-translate-x-1/2 after:right-auto',
+  top: 'after:bottom-[calc(100%-2px)] after:top-auto after:border-t-neutral-800 after:left-1/2 after:-translate-x-1/2 after:right-auto',
   right:
-    'after:left-[calc(100%-1px)] after:border-r-neutral-800 dark:after:border-r-neutral-700 after:right-auto after:top-1/2 after:-translate-y-1/2 after:bottom-auto',
+    'after:left-[calc(100%-1px)] after:border-r-neutral-800 after:right-auto after:top-1/2 after:-translate-y-1/2 after:bottom-auto',
   bottom:
-    'after:top-[calc(100%-2px)] after:border-b-neutral-800 dark:after:border-b-neutral-700 after:left-1/2 after:-translate-x-1/2 after:right-auto after:bottom-auto',
-  left: 'after:left-auto after:right-[calc(100%-1px)] after:border-l-neutral-800 dark:after:border-l-neutral-700 after:top-1/2 after:-translate-y-1/2 after:bottom-auto'
+    'after:top-[calc(100%-2px)] after:border-b-neutral-800 after:left-1/2 after:-translate-x-1/2 after:right-auto after:bottom-auto',
+  left: 'after:left-auto after:right-[calc(100%-1px)] after:border-l-neutral-800 after:top-1/2 after:-translate-y-1/2 after:bottom-auto'
 }
 
 export default function TooltipV1({
@@ -39,7 +39,7 @@ export default function TooltipV1({
   return (
     <div
       className={cn(
-        'relative inline-block text-center before:pointer-events-none before:absolute before:z-[9999] before:w-max before:max-w-xs before:rounded before:bg-neutral-800 before:px-2 before:py-1 before:text-xs before:text-neutral-50 before:opacity-0 before:delay-100 before:duration-200 before:ease-in-out before:content-[attr(data-tip)] hover:before:opacity-100 hover:before:delay-75 dark:before:bg-neutral-700',
+        'relative inline-block text-center before:pointer-events-none before:absolute before:z-[9999] before:w-max before:max-w-xs before:rounded before:bg-neutral-800 before:px-2 before:py-1 before:text-xs before:text-neutral-50 before:opacity-0 before:delay-100 before:duration-200 before:ease-in-out before:content-[attr(data-tip)] hover:before:opacity-100 hover:before:delay-75',
         POSITION_CLASS[position],
         arrow
           ? cn(

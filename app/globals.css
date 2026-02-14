@@ -31,24 +31,6 @@
   --color-tremor-content-strong: #111827;
   --color-tremor-content-inverted: #ffffff;
 
-  --color-dark-tremor-brand-faint: #0b1229;
-  --color-dark-tremor-brand-muted: #172554;
-  --color-dark-tremor-brand-subtle: #1e40af;
-  --color-dark-tremor-brand: #3b82f6;
-  --color-dark-tremor-brand-emphasis: #60a5fa;
-  --color-dark-tremor-brand-inverted: #030712;
-  --color-dark-tremor-background-muted: #131a2b;
-  --color-dark-tremor-background-subtle: #1f2937;
-  --color-dark-tremor-background: #111827;
-  --color-dark-tremor-background-emphasis: #d1d5db;
-  --color-dark-tremor-border: #1f2937;
-  --color-dark-tremor-ring: #1f2937;
-  --color-dark-tremor-content-subtle: #4b5563;
-  --color-dark-tremor-content: #6b7280;
-  --color-dark-tremor-content-emphasis: #e5e7eb;
-  --color-dark-tremor-content-strong: #f9fafb;
-  --color-dark-tremor-content-inverted: #000000;
-
   --radius-tremor-small: 0.375rem;
   --radius-tremor-default: 0.5rem;
   --radius-tremor-full: 9999px;
@@ -58,13 +40,6 @@
     0 1px 3px 0 rgb(0 0 0 / 0.1),
     0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-tremor-dropdown:
-    0 4px 6px -1px rgb(0 0 0 / 0.1),
-    0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-dark-tremor-input: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-dark-tremor-card:
-    0 1px 3px 0 rgb(0 0 0 / 0.1),
-    0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-dark-tremor-dropdown:
     0 4px 6px -1px rgb(0 0 0 / 0.1),
     0 2px 4px -2px rgb(0 0 0 / 0.1);
 
@@ -99,6 +74,10 @@
 
 .animate-toast-open {
   animation: toast-open 0.6s linear;
+}
+
+html {
+  color-scheme: light;
 }
 
 body {

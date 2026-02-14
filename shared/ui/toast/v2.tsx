@@ -46,7 +46,7 @@ function ToastV2() {
             onClick={() =>
               setList((prev) => prev.filter((currentItem) => currentItem.id !== item.id))
             }
-            className="animate-toast-open relative w-80 cursor-pointer select-none rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900"
+            className="animate-toast-open relative w-80 cursor-pointer select-none rounded-lg border border-neutral-200 bg-white p-4"
             role="alert"
           >
             <button className="absolute right-2 top-2" type="button" aria-label="Close toast">
@@ -59,7 +59,7 @@ function ToastV2() {
                 {item.type === 'warn' && '⚠️'}
                 {item.type === 'error' && '⛔'}
               </span>
-              <p className="flex-1 break-keep pr-4 text-neutral-900 dark:text-neutral-200">
+              <p className="flex-1 break-keep pr-4 text-neutral-900">
                 {item.message}
               </p>
             </div>
