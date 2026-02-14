@@ -120,7 +120,13 @@ export default function Home() {
         target="_blank"
         title="Twitter"
         description="@__kidow__"
+        button={
+          <button className="flex items-center justify-center gap-1 rounded-full bg-[#55acee] px-4 py-[7px] text-xs hover:bg-[#4698d7]">
+            <span className="font-bold text-white">Follow</span>
+          </button>
+        }
       />
+      <li className="col-span-2 row-span-2 h-[178px] w-full rounded-3xl border border-neutral-200 bg-emerald-50 shadow-sm xl:h-[390px] xl:w-[390px]" />
 
       <WidgetLink
         className="xl:hover:rotate-2"
@@ -193,15 +199,6 @@ export default function Home() {
         <h3 className="mb-4 px-2 font-semibold uppercase">Favorite Tools 🎉</h3>
         <Tools />
       </li>
-
-      <PlaceholderWidget
-        className="xl:col-span-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[390px]"
-        bgClassName="bg-emerald-50 hover:bg-emerald-100"
-        label="♪"
-        title="Spotify"
-        description="플레이리스트 위젯은 다음 단계에서 연결됩니다"
-      />
 
       <PlaceholderWidget
         className="xl:hover:rotate-1"
