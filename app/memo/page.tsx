@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import MemoEditor from '@/components/MemoEditor'
+import Editor from '@/components/Editor'
 
 import './index.css'
 
@@ -12,7 +12,7 @@ const BASE_URL = 'https://dongwook.kim/memo'
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ['memo', 'editor', 'localstorage'],
+  keywords: ['memo', 'tiptap', 'novel'],
   alternates: {
     canonical: BASE_URL
   },
@@ -28,6 +28,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL)
 }
 
-export default function MemoPage() {
-  return <MemoEditor />
+export default function Page() {
+  return <Editor />
 }
