@@ -39,28 +39,34 @@ export type Result<T> =
 ## 3) 환경변수 스키마 (초안)
 
 ### Notion
+
 - `NOTION_SECRET_KEY`
 - `NOTION_DATABASE_ID`
 
 ### Github
+
 - `GITHUB_TOKEN` (선택: unauthenticated fallback 허용)
 - `GITHUB_USERNAME`
 
 ### Spotify
+
 - `SPOTIFY_CLIENT_ID`
 - `SPOTIFY_CLIENT_SECRET`
 - `SPOTIFY_REFRESH_TOKEN`
 
 ### Analytics
+
 - `GA_PROPERTY_ID` 또는 내부 analytics source key
 - `GA_CLIENT_EMAIL`
 - `GA_PRIVATE_KEY`
 
 ### Meeting API
+
 - `MEETING_API_KEY`
 - `MEETING_API_URL`
 
 ### 공통
+
 - 누락/빈 문자열/형식 오류 시 해당 위젯은 즉시 fallback 모드로 전환
 - 민감 정보는 서버 전용 경로에서만 접근
 
@@ -75,10 +81,12 @@ export type Result<T> =
 3. **Hard fallback**: 외부 API가 장시간 실패해도 정적 링크 카드로 유지
 
 ### 사용자 메시지 원칙
+
 - 내부 에러를 직접 노출하지 않는다.
 - 한국어 한 줄 요약 + 재시도/대체 링크 제공.
 
 예시:
+
 - "현재 Github 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해주세요."
 
 ---
@@ -89,7 +97,7 @@ export type Result<T> =
 
 - [ ] 관련 env 누락 시 타입체크/런타임에서 크래시하지 않는다.
 - [ ] 정상 데이터 렌더링 + fallback 렌더링 모두 확인한다.
-- [ ] `pnpm typecheck` (`tsc --noEmit --skipLibCheck`) 통과
+- [ ] `pnpm type-check` (`tsc --noEmit --skipLibCheck`) 통과
 - [ ] UI 변경 스크린샷 첨부
 - [ ] `spec.md` 체크리스트 상태 갱신
 
