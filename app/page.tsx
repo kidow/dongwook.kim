@@ -1,46 +1,9 @@
 import Image from 'next/image'
 import { FileTextIcon, MailIcon } from 'lucide-react'
 
-import Skills from '@/components/Skills'
-import Tools from '@/components/Tools'
 import WidgetGithub from '@/components/Widget/widget-github'
 import * as Icon from '@/components/icons'
 import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
-
-function CardIcon({ label }: { label: string }) {
-  return (
-    <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border bg-white text-xs font-semibold">
-      {label}
-    </span>
-  )
-}
-
-function PlaceholderWidget({
-  title,
-  description,
-  label,
-  className,
-  size,
-  bgClassName
-}: {
-  title: string
-  description: string
-  label: string
-  className: string
-  size: string
-  bgClassName: string
-}) {
-  return (
-    <WidgetLink
-      className={className}
-      size={`${size} ${bgClassName}`}
-      href="#"
-      icon={<CardIcon label={label} />}
-      title={title}
-      description={description}
-    />
-  )
-}
 
 export default function Home() {
   return (
@@ -162,72 +125,6 @@ export default function Home() {
 
       <WidgetQuote />
 
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="https://www.producthunt.com/@kidow"
-        icon={<Icon.ProductHunt />}
-        target="_blank"
-        title="ProductHunt"
-        description="@kidow"
-      />
-
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="https://wcgo2ling.tistory.com"
-        icon={<CardIcon label="T" />}
-        target="_blank"
-        title="Tistory"
-        description="wcgo2ling"
-      />
-
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="https://disquiet.io/@kidow"
-        icon={<CardIcon label="DQ" />}
-        target="_blank"
-        title="Disquiet"
-        description="@kidow"
-      />
-
-      <li className="col-span-2 rounded-3xl border p-6 shadow-sm xl:col-span-2">
-        <h3 className="mb-4 px-2 font-semibold uppercase">Skills ✨</h3>
-        <Skills />
-      </li>
-
-      <li className="col-span-2 rounded-3xl border p-6 shadow-sm xl:col-span-4">
-        <h3 className="mb-4 px-2 font-semibold uppercase">Favorite Tools 🎉</h3>
-        <Tools />
-      </li>
-
-      <PlaceholderWidget
-        className="xl:hover:rotate-1"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        bgClassName="bg-slate-50 hover:bg-slate-100"
-        label="GA"
-        title="Analytics"
-        description="트래픽 통계 위젯은 placeholder 상태입니다"
-      />
-
-      <PlaceholderWidget
-        className="xl:hover:rotate-1"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        bgClassName="bg-blue-50 hover:bg-blue-100"
-        label="SC"
-        title="Scheduling"
-        description="미팅 예약 위젯은 placeholder 상태입니다"
-      />
-
-      <PlaceholderWidget
-        className="xl:hover:rotate-1"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        bgClassName="bg-orange-50 hover:bg-orange-100"
-        label="MAP"
-        title="Map"
-        description="위치 위젯은 placeholder 상태입니다"
-      />
     </ul>
   )
 }
