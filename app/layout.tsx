@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
+import { Agentation } from 'agentation'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { Toast } from '@/shared/ui'
 import { cn } from '@/shared/utils'
-
+import { Inter } from 'next/font/google'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -11,9 +12,13 @@ export const metadata: Metadata = {
   description: '비즈니스에 관심이 많은 웹 개발자'
 }
 
+const inter = Inter({
+  subsets: ['latin']
+})
+
 export default function RootLayout({ children }: Readonly<ReactProps>) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning className={inter.className}>
       <body className="font-sans">
         <main className="flex min-h-screen flex-col items-center justify-center">
           <div className="flex min-h-screen w-full max-w-[1728px] flex-col">
@@ -25,12 +30,15 @@ export default function RootLayout({ children }: Readonly<ReactProps>) {
                 )}
               >
                 <div className="mb-10 flex flex-col px-4 xl:mb-0 xl:mr-20 xl:flex-1 xl:px-0" />
-                <div className="relative flex-1 xl:w-[820px] xl:flex-none">{children}</div>
+                <div className="relative flex-1 xl:w-[820px] xl:flex-none">
+                  {children}
+                </div>
               </div>
             </div>
           </div>
           <Footer />
         </main>
+        <Agentation />
         <Toast.v2 />
       </body>
     </html>
