@@ -190,10 +190,10 @@
 미완성 라우트를 운영 코드(`app/*`)로 순차 이전한다. 범위는 `temp/`를 수정하지 않고, `temp/` 구현을 참조해 현재 코드베이스로 이식하는 작업이다.
 
 #### 7-1. `/lunch` 라우트 이전 (1순위)
-- [ ] `app/lunch/page.tsx` 신규 구성 (서버/클라이언트 경계 포함)
-- [ ] 필요한 컴포넌트는 `components/*`로 분리하고 shadcn/ui 패턴 적용
-- [ ] 외부 연동/환경 변수 필요 시 `utils/env.ts` 검증 및 fallback UI 유지
-- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [x] `app/lunch/page.tsx` 신규 구성 (서버/클라이언트 경계 포함)
+- [x] 필요한 컴포넌트는 `components/*`로 분리하고 shadcn/ui 패턴 적용
+- [x] 외부 연동/환경 변수 필요 시 `utils/env.ts` 검증 및 fallback UI 유지
+- [x] `pnpm lint` / `pnpm type-check` 통과
 
 #### 7-2. `/resume` 라우트 완성 (2순위)
 - [ ] `app/resume/page.tsx`의 미완성 섹션 식별 및 기능 완료
@@ -256,16 +256,11 @@ dongwook.kim/
 
 ### 진행 중 (Phase 7 우선)
 
-1. **`/lunch` 라우트 이전 시작**
-   - `temp` 구현 참조 범위 확정
-   - `app/lunch/page.tsx` 초기 이식 및 fallback 설계
-   - lint/type-check 기준선 확보
-
-2. **`/resume` 라우트 미완성 구간 정리**
+1. **`/resume` 라우트 미완성 구간 정리**
    - 데이터/표현 계층 분리
    - Notion 실패 경로 회귀 점검
 
-3. **`/blog` 라우트 완성 및 안정화**
+2. **`/blog` 라우트 완성 및 안정화**
    - 목록/상세 동작 일치
    - 빈 상태/오류 상태 UI 마감
 
@@ -302,4 +297,4 @@ dongwook.kim/
 ---
 
 **최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 7 준비 완료 (`/lunch` → `/resume` → `/blog` 순차 이전)
+**현재 Phase**: Phase 7 진행 중 (`/lunch` 완료, 다음 `/resume`)
