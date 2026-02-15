@@ -179,7 +179,6 @@ const getSuggestionItems = ({ query }: { query: string }): SuggestionItem[] => {
         input.accept = 'image/*'
         input.onchange = async () => {
           if (input.files?.length) {
-            const _file = input.files[0]
             // image upload logic can be wired here in a follow-up step
           }
         }
@@ -236,6 +235,7 @@ export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
 const CommandListView = ({ items, command }: SuggestionRenderProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const commandListContainer = useRef<HTMLDivElement>(null)
+  const activeIndex = items.length > 0 ? Math.min(selectedIndex, items.length - 1) : 0
 
   const selectItem = useCallback(
     (index: number) => {
@@ -256,38 +256,43 @@ const CommandListView = ({ items, command }: SuggestionRenderProps) => {
       event.preventDefault()
 
       if (event.key === 'ArrowUp') {
+        if (items.length === 0) {
+          return
+        }
         setSelectedIndex((prev) => (prev + items.length - 1) % items.length)
         return
       }
 
       if (event.key === 'ArrowDown') {
+        if (items.length === 0) {
+          return
+        }
         setSelectedIndex((prev) => (prev + 1) % items.length)
         return
       }
 
       if (event.key === 'Enter') {
-        selectItem(selectedIndex)
+        selectItem(activeIndex)
       }
     }
 
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
-  }, [items, selectedIndex, selectItem])
-
-  useEffect(() => {
-    setSelectedIndex(0)
-  }, [items])
+  }, [activeIndex, items, selectItem])
 
   useLayoutEffect(() => {
     const container = commandListContainer.current
-    const item = container?.children[selectedIndex] as HTMLElement | undefined
+    const item = container?.children[activeIndex] as HTMLElement | undefined
     if (container && item) {
       updateScrollView(container, item)
     }
-  }, [selectedIndex])
+  }, [activeIndex])
 
   return (
-    <Command className="z-50 w-80 rounded-md border border-border shadow-md">
+    <Command
+      id="slash-command"
+      className="z-50 w-80 rounded-md border border-border shadow-md"
+    >
       <CommandList ref={commandListContainer} className="max-h-[330px] p-1">
         {items.length === 0 ? (
           <CommandEmpty className="text-muted-foreground">No command found.</CommandEmpty>
@@ -296,7 +301,7 @@ const CommandListView = ({ items, command }: SuggestionRenderProps) => {
             {items.map((item, index) => (
               <CommandItem
                 key={item.title}
-                data-selected={index === selectedIndex}
+                data-selected={index === activeIndex}
                 onClick={() => selectItem(index)}
                 className="h-auto items-start gap-2 px-2 py-2 text-left"
               >

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Inter } from 'next/font/google'
 import localFont from 'next/font/local'
 import { EditorContent, useEditor, type Content } from '@tiptap/react'
@@ -10,6 +10,14 @@ import { toast } from '@/utils'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card'
 import { EditorBubbleMenu } from './bubble-menu'
 import { TiptapExtensions } from './extensions'
 import { TiptapEditorProps } from './props'
@@ -35,7 +43,8 @@ export default function Editor() {
     initialDoc
   )
   const [saveStatus, setSaveStatus] = useState('저장됨')
-  const [hydrated, setHydrated] = useState(false)
+  const initialContentAppliedRef = useRef(false)
+  const isHydratingRef = useRef(true)
 
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
     const json = editor.getJSON()
@@ -51,7 +60,7 @@ export default function Editor() {
     editorProps: TiptapEditorProps,
     immediatelyRender: false,
     onUpdate: (e) => {
-      if (!storageReady || !hydrated) {
+      if (!storageReady || isHydratingRef.current) {
         return
       }
       setSaveStatus('작성 중...')
@@ -71,38 +80,53 @@ export default function Editor() {
   }
 
   useEffect(() => {
-    if (editor && storageReady && content && !hydrated) {
+    if (editor && storageReady && content && !initialContentAppliedRef.current) {
+      initialContentAppliedRef.current = true
+      isHydratingRef.current = true
       editor.commands.setContent(content)
-      setHydrated(true)
+      isHydratingRef.current = false
     }
-  }, [editor, storageReady, content, hydrated])
+  }, [editor, storageReady, content])
+
+  const statusLabel = storageReady ? saveStatus : '불러오는 중...'
+  const isEditorReady = Boolean(editor) && storageReady
+
   return (
-    <div
-      className={cn(
-        'prose relative min-h-[500px] pb-80',
-        cal.variable,
-        inter.variable
-      )}
-    >
-      <h1>메모</h1>
-      {editor && <EditorBubbleMenu editor={editor} />}
-      <div className="prose-lg prose-stone prose-headings:font-display font-default focus:outline-none max-w-full">
-        <EditorContent editor={editor} />
-      </div>
-      <div className="mt-4 flex items-center gap-2 text-sm">
-        <Badge variant="secondary">{saveStatus}</Badge>
-        <Button variant="outline" size="sm" onClick={onShareLink}>
-          링크 공유
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => editor?.commands.clearContent()}
-          disabled={!editor}
-        >
-          비우기
-        </Button>
-      </div>
+    <div className={cn('relative pb-24', cal.variable, inter.variable)}>
+      <Card className="gap-0 overflow-hidden border-0">
+        <CardHeader className="border-b border-border py-4">
+          <CardTitle className="font-display text-2xl">메모</CardTitle>
+          <CardAction>
+            <Badge variant="secondary">{statusLabel}</Badge>
+          </CardAction>
+        </CardHeader>
+        <CardContent className="relative px-0">
+          {editor && <EditorBubbleMenu editor={editor} />}
+          <div className="min-h-[500px] px-6 py-5">
+            <EditorContent editor={editor} />
+          </div>
+        </CardContent>
+        <CardFooter className="border-t border-border py-4">
+          <div className="flex items-center gap-2 text-sm">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onShareLink}
+              disabled={!isEditorReady}
+            >
+              링크 공유
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => editor?.commands.clearContent()}
+              disabled={!isEditorReady}
+            >
+              비우기
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
     </div>
   )
 }

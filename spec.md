@@ -160,6 +160,7 @@
 - [ ] `Editor/index.tsx` → shadcn-tiptap 기반 재작성
   - ToolbarProvider 적용
   - shadcn/ui 컴포넌트 활용
+  - 진행: shadcn Card 레이아웃 적용 + localStorage hydration race-condition 보완
 - [ ] `Editor/bubble-menu.tsx` → shadcn-tiptap BubbleMenu
 - [x] `Editor/node-selector.tsx` → shadcn-tiptap NodeSelector 또는 shadcn Select
 - [x] `Editor/color-selector.tsx` → shadcn-tiptap ColorSelector 또는 shadcn Popover
@@ -271,4 +272,4 @@ dongwook.kim/
 ---
 
 **최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 5 진행 중 (Editor selector 컴포넌트 shadcn 패턴 전환 + type-check 통과)
+**현재 Phase**: Phase 5 진행 중 (Editor index 레이아웃 개선 및 hydration 안정화 완료)
