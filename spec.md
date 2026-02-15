@@ -1,129 +1,260 @@
-# Link-in-bio 마이그레이션 진행 스펙
+# dongwook.kim 코드베이스 최신화 스펙
 
-이 문서는 `temp/kidorepo/apps/link-in-bio`를 `dongwook.kim`으로 이식하는 현재 진행 상황과 남은 작업을 관리하기 위한 단일 기준 문서입니다.
+이 문서는 `dongwook.kim` 프로젝트를 최신 기술 스택으로 현대화하는 작업을 관리하기 위한 단일 기준 문서입니다.
 
 ## 목표
 
-- 동적 로직보다 **UI 이식 우선**으로 페이지를 단계적으로 마이그레이션한다.
-- 한 번에 전체 이전하지 않고, 작은 커밋 단위로 안전하게 진행한다.
-- 바이너리 파일로 인한 PR 도구 문제를 피하기 위해 필요 시 텍스트 기반 자산(SVG/코드) 우선 전략을 사용한다.
+- **shadcn/ui 기반 컴포넌트 시스템 구축**: 현재 레거시 컴포넌트들을 shadcn/ui 패턴으로 전환
+- **일관된 디자인 시스템 확립**: Tailwind CSS v4 + shadcn/ui를 활용한 통일된 UI/UX
+- **재사용 가능한 컴포넌트 라이브러리**: 타입 안전성과 접근성을 갖춘 모던 컴포넌트 구조
+- **점진적 마이그레이션**: 기존 기능을 유지하면서 단계적으로 전환
+- **프로젝트 구조 정리**: `shared` 폴더 제거, `components`와 `utils` 폴더로 통합
 
-## 현재 진행 상황
+## 현재 상태
 
-### 완료됨
+### 기존 컴포넌트 구조
 
-1. **공통 기반 레이어 구성**
-   - `shared/utils` 생성 (`cn`, event-listener, toast 등)
-   - `shared/ui` 생성 (`Tooltip.v1`, `Spinner.v1`, `BackTop.v1`, `Toast.v2`)
-   - 타입 선언 추가 (`types/index.d.ts`)
+1. **shared/ui**: 공통 UI 컴포넌트 → **components로 이전 예정**
+   - `Tooltip`, `Spinner`, `BackTop`, `Toast`
 
-2. **앱 공통 레이아웃 전환**
-   - 기본 Next starter 레이아웃에서 link-in-bio 스타일 레이아웃으로 교체
-   - `Header`, `Footer` 추가
+2. **shared/utils**: 공통 유틸리티 함수 → **utils 폴더로 이전 예정**
+   - `cn`, `event-listener`, `toast`, `env`, `api/notion`
 
-3. **홈 화면 1차 이식**
-   - 홈 그리드 UI 도입
-   - `Tools`, `Skills` 섹션 추가
-   - 공통 카드 컴포넌트 `WidgetLink`, `WidgetQuote` 도입 및 일부 카드 전환
+3. **components**: 페이지/기능별 컴포넌트
+   - `Header`, `Footer`, `Tools`, `Skills`
+   - `Widget/*`: 다양한 위젯 컴포넌트
+   - `Editor/*`: Tiptap 기반 에디터 컴포넌트
+   - `MemoEditor`: 메모 에디터
 
-4. **PR 호환성 보완**
-   - 바이너리 avatar(`png`) 대신 텍스트 기반 `public/avatar.svg` 사용
+4. **기술 스택**
+   - Next.js 16.1.6
+   - React 19.2.3
+   - Tailwind CSS v4
+   - TypeScript 5
+   - 의존성: @tremor/react, lucide-react, class-variance-authority, clsx, tailwind-merge
 
-5. **홈 정적 카드 2차 이식 + 동적 카드 placeholder 추가**
-   - 정적 외부 링크 카드(Gumroad/LinkedIn/Dev.to/ProductHunt/Tistory/Disquiet) 반영
-   - 동적 위젯(Spotify/Analytics/Scheduling/Map)은 placeholder 카드로 우선 대체
+### shadcn/ui 미설치 상태
 
-6. **Tools/Skills 아이콘형 UI 개선**
-   - 텍스트 약어 배지에서 색상 아이콘 배지로 전환
-   - 바이너리 이미지 없이 텍스트 기반 렌더링 컴포넌트로 구성
+- `components/ui` 디렉토리 없음
+- `components.json` 설정 파일 없음
 
-7. **블로그 페이지 정적 UI 스켈레톤 시작**
-   - `/blog` 목록 페이지와 `/blog/[id]` 상세 페이지의 정적 레이아웃 추가
-   - 동적 데이터/본문 렌더러 연결 전, 샘플 데이터 기반 구조를 먼저 반영
+## 작업 계획 (단계별)
 
-8. **이력서(`/resume`) 페이지 정적 UI 스켈레톤 시작**
-   - 소개/경력/스킬 섹션 중심의 정적 레이아웃 반영
-   - 데이터 연동 없이 샘플 데이터 기반으로 구조 확정
+### Phase 0: 프로젝트 구조 정리 (P0)
 
-9. **블로그 상세 UI placeholder 보강**
-   - `/blog/[id]`에 heading/list/code block placeholder 반영
-   - Share/Comments 비활성 placeholder 섹션 추가
+#### 0-1. 유틸리티 함수 이전
+- [ ] `utils` 폴더 생성
+- [ ] `shared/utils/index.ts` → `utils/cn.ts` (cn 함수)
+- [ ] `shared/utils/event-listener.ts` → `utils/event-listener.ts`
+- [ ] `shared/utils/env.ts` → `utils/env.ts`
+- [ ] `shared/utils/api/notion.ts` → `utils/api/notion.ts`
+- [ ] 모든 import 경로 업데이트
 
-10. **Widget 규약 문서화 + 홈 placeholder 카드 세분화**
+#### 0-2. shared 폴더 제거 준비
+- [ ] `shared/ui` 컴포넌트들의 사용처 파악
+- [ ] 마이그레이션 계획 수립
 
-- `components/Widget/README.md`에 `WidgetLink` props/패턴 초안 문서화
-- 홈의 동적 placeholder를 Spotify/Analytics/Scheduling/Map 개별 카드로 분리
+### Phase 1: shadcn/ui 기반 환경 구축 (P0)
 
-11. **빌드 안정성 보강 (Google Font 네트워크 의존 제거)**
+#### 1-1. shadcn/ui 초기 설정
+- [ ] `components.json` 설정 파일 생성
+  - Tailwind CSS v4 호환 설정
+  - `components/ui` 경로 지정
+  - 별칭 설정: `@/components`, `@/utils`
+- [ ] `lib/utils.ts` 생성 (cn 함수)
+  - `utils/cn.ts`와 통합 또는 재사용
 
-- `next/font/google`의 `Inter` 의존 제거
-- 시스템/로컬 폴백 기반 `font-sans` 토큰으로 빌드 실패 이슈 해소
+#### 1-2. 기본 컴포넌트 설치
+- [ ] Button 컴포넌트 설치 및 검증
+- [ ] Card 컴포넌트 설치 및 검증
+- [ ] Badge 컴포넌트 설치 및 검증
+- [ ] Tooltip 컴포넌트 설치 및 검증
+- [ ] Spinner/Loading 컴포넌트 설치 및 검증
 
-12. **동적 API 연동 설계 문서 초안 작성**
+### Phase 2: 공통 UI 컴포넌트 마이그레이션 (P0)
 
-- API 활성화 순서/공통 인터페이스/환경변수 스키마 정의
-- 위젯 실패 fallback 정책 및 단계별 완료 기준(DoD) 수립
+#### 2-1. shared/ui 컴포넌트 전환 (components로 이전)
+- [ ] `shared/ui/tooltip.tsx` → `components/ui/tooltip.tsx` (shadcn)
+  - 기존 사용처 마이그레이션
+  - 레거시 컴포넌트 제거
 
-13. **다크모드 비활성화 (고정 라이트 테마)**
+- [ ] `shared/ui/spinner.tsx` → `components/ui/spinner.tsx` (shadcn 기반 커스텀)
+  - 로딩 상태 표시 통일
 
-- `prefers-color-scheme: dark` 대응 제거
-- 사이트 전체를 라이트 팔레트로 고정
+- [ ] `shared/ui/toast.tsx` → `components/ui/toast.tsx` + Sonner 또는 shadcn toast
+  - 토스트 알림 시스템 현대화
 
-14. **`/memo` 경로 1차 마이그레이션 + Tiptap 전환 보강**
+- [ ] `shared/ui/back-top.tsx` → `components/ui/back-to-top.tsx` (shadcn Button 활용)
 
-- `app/memo` 라우트 및 메타데이터 이식
-- route 전용 스타일(`app/memo/index.css`) 적용
-- 입력 내용의 LocalStorage 저장/복원 동작 확인
-- 패키지 설치 제약 환경을 고려해, Tiptap을 런타임 동적 로드(esm.sh)로 전환하고 실패 시 textarea fallback 유지
+#### 2-2. 공통 컴포넌트 추가 설치
+- [ ] Input 컴포넌트 (폼 입력용)
+- [ ] Select/Dropdown 컴포넌트
+- [ ] Dialog/Modal 컴포넌트
+- [ ] Sheet 컴포넌트 (사이드 패널)
 
-## 현재 남은 작업 (우선순위 순)
+#### 2-3. shared 폴더 제거
+- [ ] `shared/ui` 폴더 제거
+- [ ] `shared/utils` 폴더 제거
+- [ ] `shared` 폴더 완전 제거
 
-### P0 (다음 작업)
+### Phase 3: 레이아웃 컴포넌트 리팩토링 (P1)
 
-1. **`/memo` 경로 1차 마이그레이션 + Tiptap 전환 (완료)**
-   - `temp/kidorepo/apps/link-in-bio/app/memo`를 기준으로 `app/memo` 라우트 신설 완료
-   - 페이지 메타데이터와 route 전용 스타일(`index.css`) 이식 완료
-   - LocalStorage 저장/복원 검증 완료 (입력 → 새로고침 후 유지)
-   - Tiptap 런타임 로드 적용 및 로드 실패 시 textarea fallback 유지
+#### 3-1. Header 컴포넌트 현대화
+- [ ] `components/Header.tsx` shadcn 기반 재작성
+  - Button, Badge 컴포넌트 활용
+  - 반응형 네비게이션 개선
+  - 타입 안전성 강화
 
-2. **Notion 동적 연동 시작**
-   - 블로그 목록/상세의 샘플 데이터 영역을 Notion 데이터 소스로 교체
-   - env 누락 시 fallback UI를 유지하도록 안전하게 분기
+#### 3-2. Footer 컴포넌트 현대화
+- [ ] `components/Footer.tsx` shadcn 기반 재작성
+  - 링크 스타일 통일
+  - 아이콘 처리 개선
 
-### P1
+### Phase 4: Widget 컴포넌트 리팩토링 (P1)
 
-2. **Github/Spotify 동적 위젯 활성화**
-   - 홈 placeholder를 실제 API 데이터 카드로 단계적 교체
-   - API 실패 시 placeholder로 자동 fallback
+#### 4-1. 기본 Widget 컴포넌트 전환
+- [ ] `widget-link.tsx` → shadcn Card + Button 기반
+- [ ] `widget-quote.tsx` → shadcn Card + Blockquote 스타일
+- [ ] Widget 공통 타입 및 인터페이스 정의
 
-### P2
+#### 4-2. 동적 Widget 컴포넌트 전환
+- [ ] `widget-github.tsx` → shadcn Card 기반
+- [ ] `widget-github-calendar.tsx` → shadcn Card 기반
+- [ ] `widget-analytics.tsx` → shadcn Card + Chart (Tremor 대체 고려)
+- [ ] `widget-analytics-chart.tsx` → 차트 라이브러리 통합
+- [ ] `widget-scheduling.tsx` → shadcn Card 기반
+- [ ] `widget-map.tsx` → shadcn Card 기반
 
-3. **Analytics/Meeting API 활성화 및 통합 검증**
-   - Scheduling/Map/Analytics 카드 연결
-   - 최종 env 점검 + 타입/런타임 안정성 확인
+### Phase 5: 페이지 특화 컴포넌트 리팩토링 (P2)
+
+#### 5-1. Tools & Skills 컴포넌트
+- [ ] `components/Tools.tsx` → shadcn Badge, Card 기반
+- [ ] `components/Skills.tsx` → shadcn Badge, Card 기반
+- [ ] 아이콘 시스템 정리 (`icons.tsx`, `brand-icons.tsx`)
+
+#### 5-2. Editor 컴포넌트 현대화 (shadcn-tiptap 활용)
+- [ ] shadcn-tiptap 설치 및 설정
+  - `npx shadcn add https://tiptap.niazmorshed.dev/r/toolbar-provider.json`
+  - ToolbarProvider 컴포넌트 통합
+  - 에디터 스타일 globals.css에 추가
+- [ ] `Editor/index.tsx` → shadcn-tiptap 기반 재작성
+  - ToolbarProvider 적용
+  - shadcn/ui 컴포넌트 활용
+- [ ] `Editor/bubble-menu.tsx` → shadcn-tiptap BubbleMenu
+- [ ] `Editor/node-selector.tsx` → shadcn-tiptap NodeSelector 또는 shadcn Select
+- [ ] `Editor/color-selector.tsx` → shadcn-tiptap ColorSelector 또는 shadcn Popover
+- [ ] `Editor/link-selector.tsx` → shadcn-tiptap LinkSelector 또는 shadcn Popover + Input
+- [ ] `Editor/slash-command.tsx` → shadcn Command 컴포넌트
+
+### Phase 6: 최종 정리 및 최적화 (P2)
+
+#### 6-1. 레거시 코드 정리
+- [ ] 중복 컴포넌트 제거
+- [ ] 미사용 의존성 정리 (@tremor/react 사용 여부 확인)
+- [ ] import 경로 최종 점검
+
+#### 6-2. 문서화 및 테스트
+- [ ] Storybook 또는 컴포넌트 문서 작성 (선택사항)
+- [ ] 컴포넌트 사용 가이드 작성
+- [ ] 접근성 검증 (a11y)
+- [ ] 타입 안전성 최종 검증 (`pnpm type-check`)
+
+#### 6-3. 성능 최적화
+- [ ] 컴포넌트 번들 사이즈 분석
+- [ ] 불필요한 리렌더링 최적화
+- [ ] 코드 스플리팅 적용
+
+## 새로운 프로젝트 구조
+
+```
+dongwook.kim/
+├── app/                    # Next.js 앱 라우터
+├── components/
+│   ├── ui/                # shadcn/ui 컴포넌트 (자동 생성)
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   ├── badge.tsx
+│   │   ├── tooltip.tsx
+│   │   ├── spinner.tsx
+│   │   └── ...
+│   ├── Widget/            # 위젯 컴포넌트
+│   ├── Editor/            # 에디터 컴포넌트
+│   ├── Header.tsx
+│   ├── Footer.tsx
+│   └── ...
+├── utils/                 # 유틸리티 함수 (shared/utils 이전)
+│   ├── cn.ts
+│   ├── event-listener.ts
+│   ├── env.ts
+│   └── api/
+│       └── notion.ts
+├── lib/                   # shadcn/ui 라이브러리 코드
+│   └── utils.ts           # cn 함수 등
+├── public/
+├── types/
+└── ...
+```
 
 ## 작업 원칙
 
-- 매 작업은 작은 범위(컴포넌트/페이지 단위)로 진행한다.
-- 각 단계마다 eslint/tsc 확인 후 커밋한다.
-- 작업 종료 시 `pnpm build` 대신 `pnpm type-check`(`tsc --noEmit --skipLibCheck`)를 실행한다.
-- UI 변경이 있는 경우 가능한 한 스크린샷을 남긴다.
-- 이 문서(`spec.md`)를 매 작업마다 갱신한다.
+1. **하나씩 단계적으로**: 한 번에 하나의 컴포넌트 또는 컴포넌트 그룹만 전환
+2. **타입 안전성 우선**: 모든 변경 후 `pnpm type-check` 실행
+3. **기존 기능 보존**: 마이그레이션 중에도 기능이 동작하도록 유지
+4. **작은 커밋**: 각 컴포넌트 전환마다 커밋
+5. **문서 업데이트**: 매 작업 후 이 spec.md 갱신
+6. **스타일 일관성**: shadcn/ui 디자인 토큰 및 패턴 준수
 
-## 다음 작업 체크리스트 (지속 갱신용)
+## 다음 작업 (Next Steps)
 
-> 작업이 끝날 때마다 아래 체크리스트 상태를 즉시 갱신한다.
+### 즉시 시작 (Phase 0)
 
-- [x] `/memo` 페이지 1차 이식 (`app/memo` + LocalStorage, textarea 기반)
-- [x] `/memo` route 스타일(`app/memo/index.css`) 이식
-- [x] `/memo` 동작 검증 (입력 → 새로고침 후 내용 유지)
-- [x] `/memo` Tiptap 에디터 전환 (런타임 동적 로드 + fallback)
+1. **utils 폴더 생성 및 마이그레이션**
+   - `shared/utils/*` → `utils/*`로 이동
+   - 모든 import 경로 업데이트
 
-- [x] `/resume` 페이지 정적 UI 스켈레톤 시작
-- [x] `/blog/[id]` 본문 스타일 placeholder 확장 (heading/list/code)
-- [x] `/blog/[id]` 공유/댓글 placeholder 섹션 추가
-- [x] `Widget` 공통 props 규약 초안 문서화
-- [x] 홈 동적 placeholder 카드 4종(Spotify/Analytics/Scheduling/Map) 분리
+2. **shadcn/ui 초기 설정 (Phase 1)**
+   - `npx shadcn@latest init` 실행
+   - Tailwind CSS v4 호환 확인
+   - 기본 설정 완료
 
-- [x] 동적 API 연동 설계 문서(환경변수/실패 fallback) 작성
-- [x] 타입 안정성 확인 (`pnpm type-check`)
+3. **핵심 컴포넌트 5개 설치**
+   - Button, Card, Badge, Tooltip, Spinner
+   - 각 컴포넌트 동작 검증
+
+4. **첫 번째 마이그레이션 대상**
+   - `shared/ui/tooltip.tsx` → `components/ui/tooltip.tsx`
+   - 가장 간단하고 의존성이 적은 컴포넌트부터 시작
+
+## 참고 사항
+
+- **Tremor React**: 현재 설치되어 있으나, shadcn/ui로 대체 가능 여부 검토 필요
+- **Tailwind CSS v4**: 최신 버전이므로 shadcn/ui 호환성 주의
+- **React 19**: 최신 React 버전 사용 중 - shadcn/ui 호환 확인됨
+- **Lucide React**: 아이콘 라이브러리로 유지 (shadcn/ui 권장)
+- **프로젝트 구조**: `shared` 폴더 제거, `utils`와 `components`로 통합
+- **shadcn-tiptap**: Tiptap 에디터의 shadcn/ui 통합 라이브러리 활용 가능
+  - 저장소: https://github.com/NiazMorshed2007/shadcn-tiptap
+  - 문서: https://tiptap.niazmorshed.dev/docs
+  - shadcn CLI를 통한 간편한 설치 지원
+
+## 완료 기준 (Definition of Done)
+
+각 Phase 완료 시:
+- [ ] 모든 타입 에러 해결 (`pnpm type-check` 통과)
+- [ ] ESLint 경고 없음
+- [ ] 기존 기능 정상 동작 확인
+- [ ] 커밋 메시지 작성 및 푸시
+- [ ] spec.md 업데이트
+
+프로젝트 완료 시:
+- [ ] 모든 컴포넌트가 shadcn/ui 패턴 준수
+- [ ] `shared` 폴더 완전 제거
+- [ ] 프로젝트 구조 정리 완료 (`utils`, `components`, `lib`)
+- [ ] 문서화 완료
+- [ ] 빌드 성공 (`pnpm build`)
+- [ ] 성능 이슈 없음
+
+---
+
+**최종 업데이트**: 2026-02-15
+**현재 Phase**: Phase 0 (프로젝트 구조 정리)
