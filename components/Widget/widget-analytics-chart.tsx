@@ -23,19 +23,35 @@ function AnalyticsTooltip({ active, payload, label }: AnalyticsTooltipProps) {
   const value = Number(payload[0]?.value ?? 0)
 
   return (
-    <div className="min-w-[108px] rounded-lg border border-border bg-card shadow-sm">
-      <div className="px-3 py-2 text-lg font-semibold tracking-tight text-foreground">{label}</div>
-      <div className="flex items-center gap-1.5 border-t border-border px-3 py-2 text-foreground">
-        <span className="size-3 rounded-full border border-white bg-[#3B82F6] shadow-sm" aria-hidden />
-        <span className="text-base leading-none text-muted-foreground">방문자 수</span>
-        <span className="ml-auto text-xl leading-none font-semibold">{value.toLocaleString()}</span>
+    <div className="min-w-[96px] rounded-lg border border-border bg-card shadow-sm">
+      <div className="px-2.5 py-2 text-sm font-medium tracking-tight text-foreground">
+        {label}
+      </div>
+      <div className="flex items-center gap-1.5 border-t border-border p-3 text-foreground">
+        <span
+          className="size-2.5 rounded-full border border-white bg-[#3B82F6] shadow-sm"
+          aria-hidden
+        />
+        <span className="text-sm leading-none text-muted-foreground">
+          방문자 수
+        </span>
+        <span className="ml-auto text-sm leading-none font-medium">
+          {value.toLocaleString()}
+        </span>
       </div>
     </div>
   )
 }
 
-export default function WidgetAnalyticsChart({ total, percent, list }: AnalyticsChartProps) {
-  const edgeTicks = list.length > 1 ? [list[0]?.date, list[list.length - 1]?.date] : list.map((item) => item.date)
+export default function WidgetAnalyticsChart({
+  total,
+  percent,
+  list
+}: AnalyticsChartProps) {
+  const edgeTicks =
+    list.length > 1
+      ? [list[0]?.date, list[list.length - 1]?.date]
+      : list.map((item) => item.date)
 
   return (
     <li className="col-span-2">
@@ -46,7 +62,15 @@ export default function WidgetAnalyticsChart({ total, percent, list }: Analytics
             <CardTitle className="text-3xl font-semibold tracking-tight">
               {total.toLocaleString()}
             </CardTitle>
-            <Badge variant={percent > 0 ? 'default' : 'secondary'}>
+            <Badge
+              className={
+                percent > 0
+                  ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-100'
+                  : percent < 0
+                    ? 'bg-rose-100 text-rose-700 hover:bg-rose-100'
+                    : 'bg-muted text-muted-foreground hover:bg-muted'
+              }
+            >
               {percent > 0 ? '↑' : '↓'} {Math.abs(percent)}%
             </Badge>
           </div>
@@ -56,8 +80,16 @@ export default function WidgetAnalyticsChart({ total, percent, list }: Analytics
             <AreaChart data={list}>
               <defs>
                 <linearGradient id="colorVisitors" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                  <stop
+                    offset="5%"
+                    stopColor="hsl(var(--primary))"
+                    stopOpacity={0.3}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="hsl(var(--primary))"
+                    stopOpacity={0}
+                  />
                 </linearGradient>
               </defs>
               <XAxis
