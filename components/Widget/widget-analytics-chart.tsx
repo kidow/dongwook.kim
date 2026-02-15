@@ -10,7 +10,7 @@ import type { AnalyticsChartProps } from './types'
 export default function WidgetAnalyticsChart({ total, percent, list }: AnalyticsChartProps) {
   return (
     <li className="col-span-2">
-      <Card className="rounded-3xl border-neutral-200 py-0 shadow-sm">
+      <Card className="rounded-3xl border-border py-0 shadow-sm">
         <CardHeader className="px-5 pt-5 xl:px-6 xl:pt-6">
           <p className="text-sm text-muted-foreground">총 방문자 수</p>
           <div className="flex items-baseline gap-3">

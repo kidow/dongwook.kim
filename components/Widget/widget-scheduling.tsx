@@ -17,7 +17,7 @@ export default function WidgetScheduling() {
       className="col-span-3 row-span-3 hidden h-[605px] w-full overflow-hidden xl:flex"
       aria-label="화상 미팅 스케줄링 미리보기"
     >
-      <Card className="w-full rounded-3xl border-neutral-200 py-0 shadow-sm">
+      <Card className="w-full rounded-3xl border-border py-0 shadow-sm">
         <CardContent className="flex h-full divide-x divide-border p-0">
           <div className="flex w-1/2 flex-col p-10">
             <span className="flex h-20 w-20 items-center justify-center rounded-xl border border-border">

@@ -40,7 +40,7 @@
 
 ## 스타일 가이드
 
-- 카드 기본 외형: `rounded-3xl border border-neutral-200 shadow-sm`
+- 카드 기본 외형: `rounded-3xl border border-border shadow-sm`
 - hover/rotation 효과는 **페이지 레벨 클래스(`className`)** 로 제어
 - 카드 크기/배경은 **`size` props** 에서 관리
 - 새 카드 추가 시 가능한 `WidgetLink` 우선, 특수 레이아웃만 별도 위젯으로 분리

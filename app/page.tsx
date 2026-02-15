@@ -55,7 +55,7 @@ export default async function Home() {
 
       <WidgetMap />
       <li className="row-span-2 h-[178px] w-[178px] overflow-hidden xl:col-span-2 xl:h-[390px] xl:w-[390px]">
-        <Card className="h-full w-full overflow-hidden rounded-3xl border-neutral-200 py-0 shadow-sm">
+        <Card className="h-full w-full overflow-hidden rounded-3xl border-border py-0 shadow-sm">
           <iframe
             src="https://giphy.com/embed/fWrDTtdw9nDVWmWrlq"
             className="giphy-embed h-full w-full"
@@ -95,7 +95,7 @@ export default async function Home() {
         }
       />
       <li className="col-span-2 row-span-2">
-        <Card className="h-[390px] w-full rounded-3xl border-neutral-200 bg-emerald-50 py-0 shadow-sm" />
+        <Card className="h-[390px] w-full rounded-3xl border-border bg-emerald-50 py-0 shadow-sm" />
       </li>
 
       <WidgetLink

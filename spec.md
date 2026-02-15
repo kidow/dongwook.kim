@@ -170,14 +170,14 @@
 ### Phase 6: 최종 정리 및 최적화 (P2)
 
 #### 6-1. 레거시 코드 정리
-- [ ] 중복 컴포넌트 제거
+- [x] 중복 컴포넌트 제거 (`cn` 유틸 단일화)
 - [x] 미사용 의존성 정리 (@tremor/react 제거 완료)
-- [ ] import 경로 최종 점검
+- [x] import 경로 최종 점검 (`shared/*` 경로 제거 확인)
 
 #### 6-2. 문서화 및 테스트
 - [ ] Storybook 또는 컴포넌트 문서 작성 (선택사항)
-- [ ] 컴포넌트 사용 가이드 작성
-- [ ] 접근성 검증 (a11y)
+- [x] 컴포넌트 사용 가이드 작성 (`docs/components-ui-guide.md`)
+- [x] 접근성 검증 (a11y) (`docs/a11y-checklist.md`)
 - [x] 타입 안전성 최종 검증 (`pnpm type-check`)
 
 #### 6-3. 성능 최적화
@@ -235,8 +235,7 @@ dongwook.kim/
    - import 경로 최종 점검
 
 2. **문서화 및 품질 검증**
-   - 컴포넌트 사용 가이드 작성
-   - 접근성 검증 (a11y)
+   - Storybook 또는 컴포넌트 문서화 범위 결정
    - ESLint 경고 0건 상태 유지
 
 3. **성능 최적화**
@@ -247,7 +246,7 @@ dongwook.kim/
 ## 참고 사항
 
 - **temp 폴더 제외**: `temp/` 폴더는 과거 모노레포 아카이브로, 이번 마이그레이션 작업 범위에서 완전히 제외 (tsconfig.json에서도 exclude 처리됨)
-- **Tremor React**: 현재 설치되어 있으나, shadcn/ui로 대체 가능 여부 검토 필요
+- **Tremor React**: 제거 완료 (현재 코드베이스 미사용)
 - **Tailwind CSS v4**: 최신 버전이므로 shadcn/ui 호환성 주의
 - **React 19**: 최신 React 버전 사용 중 - shadcn/ui 호환 확인됨
 - **Lucide React**: 아이콘 라이브러리로 유지 (shadcn/ui 권장)
@@ -264,12 +263,12 @@ dongwook.kim/
 - [x] ESLint 경고 없음
 - [ ] 기존 기능 정상 동작 확인
 - [ ] 커밋 메시지 작성 및 푸시
-- [ ] spec.md 업데이트
+- [x] spec.md 업데이트
 
 프로젝트 완료 시:
 - [ ] 모든 컴포넌트가 shadcn/ui 패턴 준수
-- [ ] `shared` 폴더 완전 제거
-- [ ] 프로젝트 구조 정리 완료 (`utils`, `components`, `lib`)
+- [x] `shared` 폴더 완전 제거
+- [x] 프로젝트 구조 정리 완료 (`utils`, `components`, `lib`)
 - [ ] 문서화 완료
 - [ ] 빌드 성공 (`pnpm build`)
 - [ ] 성능 이슈 없음
@@ -277,4 +276,4 @@ dongwook.kim/
 ---
 
 **최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 6 진행 중 (UI 공통 컴포넌트 보강 및 린트 경고 정리 완료)
+**현재 Phase**: Phase 6 진행 중 (문서화/a11y 기준선 추가 완료)

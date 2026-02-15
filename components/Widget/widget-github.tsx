@@ -16,6 +16,9 @@ async function getGithubContributions(): Promise<GithubContributionMap | null> {
       return null
     }
 
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 5000)
+
     const response = await fetch('https://api.github.com/graphql', {
       method: 'POST',
       headers: {
@@ -42,7 +45,10 @@ async function getGithubContributions(): Promise<GithubContributionMap | null> {
         `,
         variables: { userName: 'kidow' }
       }),
-      cache: 'no-store'
+      cache: 'no-store',
+      signal: controller.signal
+    }).finally(() => {
+      clearTimeout(timeout)
     })
 
     if (!response.ok) {
@@ -79,7 +85,7 @@ export default async function WidgetGithub() {
   const values = await getGithubContributions()
   if (!values) {
     return (
-      <Card className="rounded-3xl border-neutral-200 py-0 shadow-sm">
+      <Card className="rounded-3xl border-border py-0 shadow-sm">
         <CardContent className="p-5 xl:p-6">
           <p className="text-xs text-muted-foreground">
             Contribution data is unavailable.

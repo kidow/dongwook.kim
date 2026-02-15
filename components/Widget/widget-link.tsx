@@ -33,7 +33,7 @@ export default function WidgetLink({
           size
         )}
       >
-        <Card className="w-full rounded-3xl border-neutral-200 py-0 shadow-sm">
+        <Card className="w-full rounded-3xl border-border py-0 shadow-sm">
           <CardContent className="flex h-full p-5 xl:p-6">
             <div className="flex flex-col items-start">
               {icon}
