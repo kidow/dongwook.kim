@@ -225,12 +225,7 @@ export default async function BlogPage() {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-4">
-        <h1 className="text-4xl font-bold tracking-tight xl:text-5xl">블로그</h1>
-        <Link href="https://legacy.dongwook.kim" target="_blank">
-          <span className="text-lg font-medium text-slate-500 hover:underline">이전 블로그</span>
-        </Link>
-      </div>
+      <h1 className="text-4xl font-bold tracking-tight xl:text-5xl">블로그</h1>
 
       <hr className="my-8 border-neutral-200" />
 
