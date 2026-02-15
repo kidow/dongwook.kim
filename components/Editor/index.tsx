@@ -8,6 +8,8 @@ import { useDebouncedCallback } from 'use-debounce'
 import { cn } from '@/lib/utils'
 import { toast } from '@/utils'
 
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { EditorBubbleMenu } from './bubble-menu'
 import { TiptapExtensions } from './extensions'
 import { TiptapEditorProps } from './props'
@@ -81,22 +83,18 @@ export default function Editor() {
         <EditorContent editor={editor} />
       </div>
       <div className="mt-4 flex items-center gap-2 text-sm">
-        <span className="rounded-lg bg-stone-100 px-2 py-1 text-stone-400">
-          {saveStatus}
-        </span>
-        <button
-          onClick={onShareLink}
-          className="rounded-lg border px-2 py-1 text-stone-500"
-        >
+        <Badge variant="secondary">{saveStatus}</Badge>
+        <Button variant="outline" size="sm" onClick={onShareLink}>
           링크 공유
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
           onClick={() => editor?.commands.clearContent()}
           disabled={!editor}
-          className="rounded-lg border px-2 py-1 text-stone-500"
         >
           비우기
-        </button>
+        </Button>
       </div>
     </div>
   )

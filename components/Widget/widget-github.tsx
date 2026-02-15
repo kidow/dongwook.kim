@@ -1,5 +1,7 @@
 import dynamic from 'next/dynamic'
 
+import { Card, CardContent } from '@/components/ui/card'
+
 type GithubContributionMap = Record<string, number>
 
 const GithubCalendarClient = dynamic(() =>
@@ -77,9 +79,13 @@ export default async function WidgetGithub() {
   const values = await getGithubContributions()
   if (!values) {
     return (
-      <div className="text-xs text-neutral-400">
-        Contribution data is unavailable.
-      </div>
+      <Card className="rounded-3xl border-neutral-200 py-0 shadow-sm">
+        <CardContent className="p-5 xl:p-6">
+          <p className="text-xs text-muted-foreground">
+            Contribution data is unavailable.
+          </p>
+        </CardContent>
+      </Card>
     )
   }
 

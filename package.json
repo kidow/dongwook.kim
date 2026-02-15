@@ -57,6 +57,7 @@
     "react-kakao-maps-sdk": "^1.2.0",
     "react-notion-x": "^7.7.3",
     "react-textarea-autosize": "^8.5.9",
+    "recharts": "^3.7.0",
     "request": "^2.88.2",
     "retry-request": "^8.0.2",
     "tailwind-merge": "^3.4.0",

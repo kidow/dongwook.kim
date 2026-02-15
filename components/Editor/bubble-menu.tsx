@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+import { Button } from '@/components/ui/button'
 import { ColorSelector } from './color-selector'
 import { LinkSelector } from './link-selector'
 import { NodeSelector } from './node-selector'
@@ -65,7 +66,6 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuComponentProps> = (props) => {
   const bubbleMenuProps: EditorBubbleMenuProps = {
     ...props,
     shouldShow: ({ editor }) => {
-      // don't show if image is selected
       if (editor.isActive('image')) {
         return false
       }
@@ -102,17 +102,19 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuComponentProps> = (props) => {
       />
       <div className="flex">
         {items.map((item, index) => (
-          <button
+          <Button
             key={index}
+            variant="ghost"
+            size="icon"
             onClick={item.command}
-            className="p-2 text-stone-600 hover:bg-stone-100 active:bg-stone-200"
+            className="h-8 w-8 rounded-none"
           >
             <item.icon
               className={cn('h-4 w-4', {
                 'text-blue-500': item.isActive()
               })}
             />
-          </button>
+          </Button>
         ))}
       </div>
       <ColorSelector

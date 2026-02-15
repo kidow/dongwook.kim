@@ -11,6 +11,14 @@ import { Editor } from '@tiptap/core'
 import { Check, Trash } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from '@/components/ui/popover'
+
 interface LinkSelectorProps {
   editor: Editor
   isOpen: boolean
@@ -24,29 +32,35 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
-  // Autofocus on input by default
   useEffect(() => {
-    inputRef.current && inputRef.current?.focus()
-  })
+    if (isOpen) {
+      inputRef.current?.focus()
+    }
+  }, [isOpen])
 
   return (
-    <div className="relative">
-      <button
-        className="flex h-full items-center space-x-2 px-3 py-1.5 text-sm font-medium text-stone-600 hover:bg-stone-100 active:bg-stone-200"
-        onClick={() => {
-          setIsOpen(!isOpen)
-        }}
-      >
-        <p className="text-base">↗</p>
-        <p
-          className={cn('underline decoration-stone-400 underline-offset-4', {
-            'text-blue-500': editor.isActive('link')
-          })}
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="gap-2 rounded-none font-medium"
         >
-          Link
-        </p>
-      </button>
-      {isOpen && (
+          <p className="text-base">↗</p>
+          <p
+            className={cn('underline decoration-stone-400 underline-offset-4', {
+              'text-blue-500': editor.isActive('link')
+            })}
+          >
+            Link
+          </p>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        align="start"
+        className="w-60 p-1"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <form
           onSubmit={(e) => {
             e.preventDefault()
@@ -54,32 +68,40 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
             editor.chain().focus().setLink({ href: input.value }).run()
             setIsOpen(false)
           }}
-          className="animate-in fade-in slide-in-from-top-1 fixed top-full z-[99999] mt-1 flex w-60 overflow-hidden rounded border border-stone-200 bg-white p-1 shadow-xl"
+          className="flex items-center"
         >
-          <input
+          <Input
             ref={inputRef}
             type="url"
             placeholder="Paste a link"
-            className="flex-1 bg-white p-1 text-sm outline-none"
+            className="h-8 flex-1 border-0 bg-transparent text-sm shadow-none focus-visible:ring-0"
             defaultValue={editor.getAttributes('link').href || ''}
           />
           {editor.getAttributes('link').href ? (
-            <button
-              className="flex items-center rounded-sm p-1 text-red-600 transition-all hover:bg-red-100"
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-red-600 hover:bg-red-100"
               onClick={() => {
                 editor.chain().focus().unsetLink().run()
                 setIsOpen(false)
               }}
             >
               <Trash className="h-4 w-4" />
-            </button>
+            </Button>
           ) : (
-            <button className="flex items-center rounded-sm p-1 text-stone-600 transition-all hover:bg-stone-100">
+            <Button
+              type="submit"
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+            >
               <Check className="h-4 w-4" />
-            </button>
+            </Button>
           )}
         </form>
-      )}
-    </div>
+      </PopoverContent>
+    </Popover>
   )
 }

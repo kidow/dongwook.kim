@@ -3,6 +3,7 @@
 import type { ReactNode, HTMLAttributeAnchorTarget } from 'react'
 import Link from 'next/link'
 
+import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
 interface WidgetLinkProps {
@@ -36,23 +37,27 @@ export default function WidgetLink({
         rel="noopener noreferrer"
         draggable={false}
         className={cn(
-          'flex rounded-3xl border border-neutral-200 p-5 shadow-sm transition-all duration-150 xl:p-6',
+          'flex transition-all duration-150',
           size
         )}
       >
-        <div className="flex flex-col items-start">
-          {icon}
-          <div className="mt-3 flex-1">
-            <div className="text-sm uppercase">{title}</div>
-            {!!description && (
-              <p className="mt-1 line-clamp-1 text-xs text-neutral-400 xl:mt-0">
-                {description}
-              </p>
-            )}
-          </div>
-          {button}
-        </div>
-        <div className="ml-6 flex-1">{children}</div>
+        <Card className="w-full rounded-3xl border-neutral-200 py-0 shadow-sm">
+          <CardContent className="flex h-full p-5 xl:p-6">
+            <div className="flex flex-col items-start">
+              {icon}
+              <div className="mt-3 flex-1">
+                <div className="text-sm uppercase">{title}</div>
+                {!!description && (
+                  <p className="mt-1 line-clamp-1 text-xs text-neutral-400 xl:mt-0">
+                    {description}
+                  </p>
+                )}
+              </div>
+              {button}
+            </div>
+            <div className="ml-6 flex-1">{children}</div>
+          </CardContent>
+        </Card>
       </Link>
     </li>
   )
