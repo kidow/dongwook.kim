@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import Image from 'next/image'
-import { FileTextIcon, MailIcon, StickyNoteIcon } from 'lucide-react'
+import { FileTextIcon, MailIcon, StickyNoteIcon, UtensilsCrossedIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -147,6 +147,18 @@ export default async function Home() {
         }
         title="MEMO"
         description="내용이 사라지지 않는"
+      />
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        href="/lunch"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <UtensilsCrossedIcon className="size-5" />
+          </span>
+        }
+        title="Lunch"
+        description="점심 뭐 먹지?"
       />
     </ul>
   )

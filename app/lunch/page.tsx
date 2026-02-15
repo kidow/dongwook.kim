@@ -162,7 +162,7 @@ export default function LunchPage() {
     return (
       <section className="space-y-4">
         <h1 className="text-3xl font-bold tracking-tight xl:text-4xl">점심 뭐 먹지?</h1>
-        <Card className="rounded-3xl border-border">
+        <Card className="rounded-none border-border">
           <CardHeader>
             <CardTitle>카카오 지도 API 키가 필요합니다</CardTitle>
           </CardHeader>
@@ -182,15 +182,15 @@ export default function LunchPage() {
         async
         strategy="afterInteractive"
       />
-      <section className="space-y-6">
+      <section>
         <header className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight xl:text-4xl">점심 뭐 먹지?</h1>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground mb-4 text-sm">
             현재 위치 기준 반경 500m 내 식당을 빠르게 탐색합니다.
           </p>
         </header>
 
-        <Card className="overflow-hidden rounded-3xl border-border py-0 shadow-sm">
+        <Card className="overflow-hidden rounded-none border-border py-0 shadow-sm">
           <Map
             center={center}
             onCreate={setMap}
@@ -207,7 +207,7 @@ export default function LunchPage() {
           </Map>
         </Card>
 
-        <div className="grid gap-4 xl:grid-cols-[1fr_260px]">
+        <div className="grid xl:grid-cols-[1fr_260px]">
           <div className="grid grid-cols-3 border border-border">
             {MENU_BOARD.map((group, rowIndex) => (
               <div
@@ -240,7 +240,7 @@ export default function LunchPage() {
             ))}
           </div>
 
-          <Card className="rounded-3xl border-border py-0 shadow-sm">
+          <Card className="rounded-none border-border py-0 shadow-sm">
             <div className="flex items-center gap-2 border-b border-border px-3 py-3">
               <Input
                 value={searchQuery}
