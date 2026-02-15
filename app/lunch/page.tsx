@@ -25,11 +25,41 @@ import { cn } from '@/lib/utils'
 import { toast } from '@/utils'
 
 const MENU_BOARD: string[][] = [
-  ['찌개', '국밥', '고깃집', '족발,보쌈', '국수', '찜', '해물,생선', '쌈밥', '돈까스'],
+  [
+    '찌개',
+    '국밥',
+    '고깃집',
+    '족발,보쌈',
+    '국수',
+    '찜',
+    '해물,생선',
+    '쌈밥',
+    '돈까스'
+  ],
   ['짜장면', '짬뽕', '마라탕', '양꼬치', '훠궈', '', '', '', ''],
-  ['초밥,스시', '라멘', '우동', '돈가츠', '오마카세', '샤브샤브', '텐동', '', ''],
+  [
+    '초밥,스시',
+    '라멘',
+    '우동',
+    '돈가츠',
+    '오마카세',
+    '샤브샤브',
+    '텐동',
+    '',
+    ''
+  ],
   ['파스타', '피자', '스테이크', '샐러드', '뷔페', '멕시칸,브라질', '', '', ''],
-  ['한식', '중식', '일식', '양식', '혼밥', '아시아음식', '분식', '패스트푸드', '술집'],
+  [
+    '한식',
+    '중식',
+    '일식',
+    '양식',
+    '혼밥',
+    '아시아음식',
+    '분식',
+    '패스트푸드',
+    '술집'
+  ],
   ['베트남음식', '태국음식', '인도음식', '', '', '', '', '', ''],
   ['떡볶이', '김밥', '라면', '만두', '도시락', '', '', '', '편의점'],
   ['버거', '토스트', '샌드위치', '타코', '핫도그', '도넛', '빵', '카페', ''],
@@ -68,7 +98,8 @@ const DIRECTION_ICONS: Record<number, ReactNode> = {
 
 export default function LunchPage() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [results, setResults] = useState<kakao.maps.services.PlacesSearchResult>([])
+  const [results, setResults] =
+    useState<kakao.maps.services.PlacesSearchResult>([])
   const [hasNextPage, setHasNextPage] = useState(false)
   const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
@@ -79,7 +110,12 @@ export default function LunchPage() {
   const hasMapKey = useMemo(() => Boolean(KAKAO_MAP_KEY), [])
 
   const searchPlaces = (keyword: string, page = 1) => {
-    if (!map || !keyword.trim() || typeof window === 'undefined' || !window.kakao?.maps?.services) {
+    if (
+      !map ||
+      !keyword.trim() ||
+      typeof window === 'undefined' ||
+      !window.kakao?.maps?.services
+    ) {
       return
     }
 
@@ -141,7 +177,10 @@ export default function LunchPage() {
       return
     }
 
-    if (typeof window.navigator === 'undefined' || !window.navigator.geolocation) {
+    if (
+      typeof window.navigator === 'undefined' ||
+      !window.navigator.geolocation
+    ) {
       toast.warn('현재 브라우저에서 위치 기능을 사용할 수 없습니다.')
       return
     }
@@ -150,7 +189,9 @@ export default function LunchPage() {
       ({ coords }) => {
         const nextCenter = { lat: coords.latitude, lng: coords.longitude }
         setCenter(nextCenter)
-        map.setCenter(new window.kakao.maps.LatLng(nextCenter.lat, nextCenter.lng))
+        map.setCenter(
+          new window.kakao.maps.LatLng(nextCenter.lat, nextCenter.lng)
+        )
       },
       () => {
         toast.info('위치 접근 권한이 없어 기본 위치로 표시합니다.')
@@ -161,13 +202,18 @@ export default function LunchPage() {
   if (!hasMapKey) {
     return (
       <section className="space-y-4">
-        <h1 className="text-3xl font-bold tracking-tight xl:text-4xl">점심 뭐 먹지?</h1>
+        <h1 className="text-3xl font-bold tracking-tight xl:text-4xl">
+          점심 뭐 먹지?
+        </h1>
         <Card className="rounded-none border-border">
           <CardHeader>
             <CardTitle>카카오 지도 API 키가 필요합니다</CardTitle>
           </CardHeader>
           <CardContent className="text-muted-foreground text-sm">
-            <p>`NEXT_PUBLIC_KAKAO_MAP_API_KEY`를 설정하면 점심 탐색 지도를 사용할 수 있습니다.</p>
+            <p>
+              `NEXT_PUBLIC_KAKAO_MAP_API_KEY`를 설정하면 점심 탐색 지도를 사용할
+              수 있습니다.
+            </p>
           </CardContent>
         </Card>
       </section>
@@ -184,7 +230,9 @@ export default function LunchPage() {
       />
       <section>
         <header className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight xl:text-4xl">점심 뭐 먹지?</h1>
+          <h1 className="text-3xl font-bold tracking-tight xl:text-4xl">
+            점심 뭐 먹지?
+          </h1>
           <p className="text-muted-foreground mb-4 text-sm">
             현재 위치 기준 반경 500m 내 식당을 빠르게 탐색합니다.
           </p>
@@ -229,7 +277,9 @@ export default function LunchPage() {
                     }}
                     className={cn(
                       'relative min-h-16 border-r border-b border-border px-2 text-center text-sm',
-                      menu ? 'hover:bg-muted/60' : 'cursor-default bg-transparent'
+                      menu
+                        ? 'hover:bg-muted/60'
+                        : 'cursor-default bg-transparent'
                     )}
                   >
                     {menu}
@@ -240,7 +290,7 @@ export default function LunchPage() {
             ))}
           </div>
 
-          <Card className="rounded-none border-border py-0 shadow-sm">
+          <Card className="gap-0 rounded-none border-border py-0 shadow-sm">
             <div className="flex items-center gap-2 border-b border-border px-3 py-3">
               <Input
                 value={searchQuery}
@@ -270,7 +320,7 @@ export default function LunchPage() {
               </Badge>
             </div>
 
-            <ul className="max-h-[420px] overflow-auto overscroll-contain">
+            <ul className="max-h-[478px] overflow-auto overscroll-contain">
               {results.map((item) => (
                 <li
                   key={item.id}
@@ -283,7 +333,9 @@ export default function LunchPage() {
                       {item.distance}m
                     </span>
                   </div>
-                  <p className="text-muted-foreground mt-1 text-xs">{item.category_name}</p>
+                  <p className="text-muted-foreground mt-1 text-xs">
+                    {item.category_name}
+                  </p>
                   <div className="mt-2 flex items-center gap-2">
                     <Link
                       href={item.place_url}
@@ -295,12 +347,16 @@ export default function LunchPage() {
                     >
                       <ExternalLinkIcon className="size-4" />
                     </Link>
-                    <span className="text-muted-foreground text-xs">{item.phone || '전화번호 없음'}</span>
+                    <span className="text-muted-foreground text-xs">
+                      {item.phone || '전화번호 없음'}
+                    </span>
                   </div>
                 </li>
               ))}
               {!results.length && !isSearching ? (
-                <li className="text-muted-foreground px-3 py-6 text-center text-sm">검색 결과가 없습니다.</li>
+                <li className="text-muted-foreground px-3 py-6 text-center text-sm">
+                  검색 결과가 없습니다.
+                </li>
               ) : null}
               {hasNextPage ? (
                 <li className="p-2">
