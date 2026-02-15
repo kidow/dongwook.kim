@@ -66,23 +66,85 @@ function getClient(): ApiResult<Client> {
   }
 }
 
-function getDatabaseId(): ApiResult<string> {
-  const notionEnv = getNotionEnv()
-  console.log('[Notion] NOTION_DATABASE_ID:', notionEnv.databaseId)
-  const envResult = requireEnv(
-    {
-      NOTION_DATABASE_ID: notionEnv.databaseId
-    },
-    'notion'
-  )
-
-  if (!envResult.ok) {
-    return envResult
+function getDataSourceIdFromDatabaseResponse(database: unknown): string | null {
+  if (!database || typeof database !== 'object') {
+    return null
   }
 
-  return {
-    ok: true,
-    data: envResult.data.NOTION_DATABASE_ID
+  const dataSources = (database as { data_sources?: Array<{ id?: string }> })
+    .data_sources
+  if (!Array.isArray(dataSources) || dataSources.length === 0) {
+    return null
+  }
+
+  const firstId = dataSources[0]?.id
+  return typeof firstId === 'string' && firstId.length > 0 ? firstId : null
+}
+
+async function getDataSourceId(client: Client): Promise<ApiResult<string>> {
+  const notionEnv = getNotionEnv()
+  console.log('[Notion] NOTION_DATABASE_ID:', notionEnv.databaseId)
+  console.log('[Notion] NOTION_DATA_SOURCE_ID:', notionEnv.dataSourceId)
+
+  if (notionEnv.dataSourceId) {
+    return {
+      ok: true,
+      data: notionEnv.dataSourceId
+    }
+  }
+
+  if (!notionEnv.databaseId) {
+    return {
+      ok: false,
+      source: 'notion',
+      error: 'Missing required env: NOTION_DATA_SOURCE_ID or NOTION_DATABASE_ID'
+    }
+  }
+
+  const databaseOrDataSourceId = notionEnv.databaseId
+
+  // If NOTION_DATABASE_ID is already a data source ID, this query succeeds.
+  try {
+    await client.dataSources.query({
+      data_source_id: databaseOrDataSourceId,
+      page_size: 1
+    })
+
+    return {
+      ok: true,
+      data: databaseOrDataSourceId
+    }
+  } catch {
+    // Otherwise treat it as a database ID and resolve the first data source ID.
+  }
+
+  try {
+    const database = await client.databases.retrieve({
+      database_id: databaseOrDataSourceId
+    })
+
+    const dataSourceId = getDataSourceIdFromDatabaseResponse(database)
+    if (!dataSourceId) {
+      return {
+        ok: false,
+        source: 'notion',
+        error: 'Failed to resolve data source ID from NOTION_DATABASE_ID'
+      }
+    }
+
+    return {
+      ok: true,
+      data: dataSourceId
+    }
+  } catch (error) {
+    return {
+      ok: false,
+      source: 'notion',
+      error:
+        error instanceof Error
+          ? `Failed to resolve data source from NOTION_DATABASE_ID: ${error.message}`
+          : 'Failed to resolve data source from NOTION_DATABASE_ID'
+    }
   }
 }
 
@@ -91,7 +153,10 @@ function getResumePageId(): string {
 }
 
 function asText(richText: RichTextItemResponse[] = []): string {
-  return richText.map((item) => item.plain_text).join('').trim()
+  return richText
+    .map((item) => item.plain_text)
+    .join('')
+    .trim()
 }
 
 function isFullPage(
@@ -101,10 +166,16 @@ function isFullPage(
 }
 
 function normalizeSlug(value: string): string {
-  return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
 }
 
-function getTitleProperty(properties: PageObjectResponse['properties']): string {
+function getTitleProperty(
+  properties: PageObjectResponse['properties']
+): string {
   const preferredKeys = ['이름', 'Name', 'title', '제목', 'Title']
 
   for (const key of preferredKeys) {
@@ -128,7 +199,10 @@ function getTitleProperty(properties: PageObjectResponse['properties']): string 
   return 'Untitled'
 }
 
-function getRichTextProperty(properties: PageObjectResponse['properties'], keys: string[]): string {
+function getRichTextProperty(
+  properties: PageObjectResponse['properties'],
+  keys: string[]
+): string {
   for (const key of keys) {
     const property = properties[key]
     if (property?.type === 'rich_text') {
@@ -166,7 +240,9 @@ function getDateProperty(
   return page.created_time.slice(0, 10)
 }
 
-function getTagProperty(properties: PageObjectResponse['properties']): string[] {
+function getTagProperty(
+  properties: PageObjectResponse['properties']
+): string[] {
   const preferredKeys = ['태그', 'Tags', 'Tag']
 
   for (const key of preferredKeys) {
@@ -187,7 +263,10 @@ function getTagProperty(properties: PageObjectResponse['properties']): string[] 
   return []
 }
 
-function getSlugProperty(page: PageObjectResponse, properties: PageObjectResponse['properties']): string {
+function getSlugProperty(
+  page: PageObjectResponse,
+  properties: PageObjectResponse['properties']
+): string {
   const preferredKeys = ['slug', 'Slug', '아이디', 'id']
 
   for (const key of preferredKeys) {
@@ -250,14 +329,21 @@ function mapPostSummary(page: PageObjectResponse): BlogPostSummary {
     slug: getSlugProperty(page, properties),
     title,
     description:
-      getRichTextProperty(properties, ['설명', 'Description', '요약', 'Summary']) ||
-      `${title} 포스트`,
+      getRichTextProperty(properties, [
+        '설명',
+        'Description',
+        '요약',
+        'Summary'
+      ]) || `${title} 포스트`,
     date: getDateProperty(page, properties),
     tags: getTagProperty(properties)
   }
 }
 
-async function getAllBlocks(client: Client, blockId: string): Promise<BlockObjectResponse[]> {
+async function getAllBlocks(
+  client: Client,
+  blockId: string
+): Promise<BlockObjectResponse[]> {
   const blocks: BlockObjectResponse[] = []
   let cursor: string | undefined
 
@@ -273,7 +359,7 @@ async function getAllBlocks(client: Client, blockId: string): Promise<BlockObjec
       }
     }
 
-    cursor = response.has_more ? response.next_cursor ?? undefined : undefined
+    cursor = response.has_more ? (response.next_cursor ?? undefined) : undefined
   } while (cursor)
 
   return blocks
@@ -394,7 +480,9 @@ function mapResumeSections(blocks: BlockObjectResponse[]): ResumeSection[] {
   return sections.filter((section) => section.items.length > 0)
 }
 
-function getPageTitleFromRetrieveResult(data: PropertyItemObjectResponse | PageObjectResponse): string {
+function getPageTitleFromRetrieveResult(
+  data: PropertyItemObjectResponse | PageObjectResponse
+): string {
   if ('properties' in data) {
     return getTitleProperty(data.properties)
   }
@@ -402,20 +490,22 @@ function getPageTitleFromRetrieveResult(data: PropertyItemObjectResponse | PageO
   return 'Résumé'
 }
 
-export async function getNotionBlogPosts(limit = 20): Promise<ApiResult<BlogPostSummary[]>> {
+export async function getNotionBlogPosts(
+  limit = 20
+): Promise<ApiResult<BlogPostSummary[]>> {
   const clientResult = getClient()
   if (!clientResult.ok) {
     return clientResult
   }
 
-  const databaseResult = getDatabaseId()
-  if (!databaseResult.ok) {
-    return databaseResult
+  const dataSourceResult = await getDataSourceId(clientResult.data)
+  if (!dataSourceResult.ok) {
+    return dataSourceResult
   }
 
   try {
     const response = await clientResult.data.dataSources.query({
-      data_source_id: databaseResult.data,
+      data_source_id: dataSourceResult.data,
       sorts: [{ timestamp: 'created_time', direction: 'descending' }],
       page_size: limit
     })
@@ -433,12 +523,15 @@ export async function getNotionBlogPosts(limit = 20): Promise<ApiResult<BlogPost
     return {
       ok: false,
       source: 'notion',
-      error: error instanceof Error ? error.message : 'Failed to fetch Notion posts'
+      error:
+        error instanceof Error ? error.message : 'Failed to fetch Notion posts'
     }
   }
 }
 
-export async function getNotionBlogPostBySlug(slug: string): Promise<ApiResult<BlogPostDetail>> {
+export async function getNotionBlogPostBySlug(
+  slug: string
+): Promise<ApiResult<BlogPostDetail>> {
   const postsResult = await getNotionBlogPosts(100)
   if (!postsResult.ok) {
     return postsResult
@@ -481,7 +574,10 @@ export async function getNotionBlogPostBySlug(slug: string): Promise<ApiResult<B
     return {
       ok: false,
       source: 'notion',
-      error: error instanceof Error ? error.message : 'Failed to fetch Notion post detail'
+      error:
+        error instanceof Error
+          ? error.message
+          : 'Failed to fetch Notion post detail'
     }
   }
 }
@@ -501,12 +597,15 @@ export async function getNotionResumeData(): Promise<ApiResult<ResumeData>> {
     ])
 
     const sections = mapResumeSections(blocks)
-    const description = sections.find((section) => section.title === 'Summary')?.items[0] ?? ''
+    const description =
+      sections.find((section) => section.title === 'Summary')?.items[0] ?? ''
 
     return {
       ok: true,
       data: {
-        title: getPageTitleFromRetrieveResult(pageResponse as PropertyItemObjectResponse | PageObjectResponse),
+        title: getPageTitleFromRetrieveResult(
+          pageResponse as PropertyItemObjectResponse | PageObjectResponse
+        ),
         description,
         updatedAt:
           'last_edited_time' in pageResponse
@@ -519,7 +618,8 @@ export async function getNotionResumeData(): Promise<ApiResult<ResumeData>> {
     return {
       ok: false,
       source: 'notion',
-      error: error instanceof Error ? error.message : 'Failed to fetch Notion resume'
+      error:
+        error instanceof Error ? error.message : 'Failed to fetch Notion resume'
     }
   }
 }

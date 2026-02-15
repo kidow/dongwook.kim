@@ -5,6 +5,7 @@ export type Result<T> =
 export interface NotionEnv {
   secretKey?: string
   databaseId?: string
+  dataSourceId?: string
   resumePageId?: string
 }
 
@@ -22,6 +23,7 @@ export function getNotionEnv(): NotionEnv {
   return {
     secretKey: readEnv('NOTION_SECRET_KEY'),
     databaseId: readEnv('NOTION_DATABASE_ID'),
+    dataSourceId: readEnv('NOTION_DATA_SOURCE_ID'),
     resumePageId: readEnv('NOTION_RESUME_PAGE_ID')
   }
 }

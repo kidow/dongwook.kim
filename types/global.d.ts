@@ -6,6 +6,7 @@ declare namespace NodeJS {
 
     NOTION_SECRET_KEY: string
     NOTION_DATABASE_ID: string
+    NOTION_DATA_SOURCE_ID: string
 
     SLACK_WEBHOOK_URL: string
 
