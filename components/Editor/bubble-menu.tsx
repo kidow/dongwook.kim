@@ -30,6 +30,7 @@ type EditorBubbleMenuComponentProps = Omit<EditorBubbleMenuProps, 'editor'> & {
 }
 
 export const EditorBubbleMenu: FC<EditorBubbleMenuComponentProps> = (props) => {
+  const { className, shouldShow, ...restProps } = props
   const items: BubbleMenuItem[] = [
     {
       name: 'bold',
@@ -64,12 +65,16 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuComponentProps> = (props) => {
   ]
 
   const bubbleMenuProps: EditorBubbleMenuProps = {
-    ...props,
-    shouldShow: ({ editor }) => {
+    ...restProps,
+    shouldShow: (params) => {
+      const { editor } = params
       if (editor.isActive('image')) {
         return false
       }
-      return editor.view.state.selection.content().size > 0
+      if (editor.view.state.selection.empty) {
+        return false
+      }
+      return shouldShow ? shouldShow(params) : true
     }
   }
 
@@ -104,7 +109,10 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuComponentProps> = (props) => {
   return (
     <BubbleMenu
       {...bubbleMenuProps}
-      className="bg-popover not-prose flex w-fit divide-x divide-border rounded-md border border-border shadow-md"
+      className={cn(
+        'bg-popover not-prose flex w-fit divide-x divide-border rounded-md border border-border shadow-md',
+        className
+      )}
     >
       <NodeSelector
         editor={props.editor}

@@ -161,7 +161,7 @@
   - ToolbarProvider 적용
   - shadcn/ui 컴포넌트 활용
   - 진행: shadcn Card 레이아웃 적용 + localStorage hydration race-condition 보완
-- [ ] `Editor/bubble-menu.tsx` → shadcn-tiptap BubbleMenu
+- [x] `Editor/bubble-menu.tsx` → shadcn-tiptap BubbleMenu
 - [x] `Editor/node-selector.tsx` → shadcn-tiptap NodeSelector 또는 shadcn Select
 - [x] `Editor/color-selector.tsx` → shadcn-tiptap ColorSelector 또는 shadcn Popover
 - [x] `Editor/link-selector.tsx` → shadcn-tiptap LinkSelector 또는 shadcn Popover + Input
