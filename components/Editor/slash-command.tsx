@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable no-unused-vars */
 
 import React, { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Extension, type Editor, type Range } from '@tiptap/core'
@@ -32,14 +33,14 @@ interface SuggestionItem {
   description: string
   searchTerms?: string[]
   icon: ReactNode
-  command: (props: CommandProps) => void
+  command: (...args: [CommandProps]) => void
 }
 
 interface SuggestionRenderProps {
   editor: Editor
   clientRect?: DOMRect | null
   items: SuggestionItem[]
-  command: (item: SuggestionItem) => void
+  command: (...args: [SuggestionItem]) => void
   range: Range
 }
 

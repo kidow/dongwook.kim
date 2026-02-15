@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 export const add = (
   type: string,
   listener: EventListenerOrEventListenerObject
@@ -8,7 +10,7 @@ export const remove = (
   listener: EventListenerOrEventListenerObject
 ) => window.removeEventListener(type, listener)
 
-export const once = (type: string, listener: (event: Event) => void) => {
+export const once = (type: string, listener: (...args: [Event]) => void) => {
   const emitOnce = (event: Event) => {
     listener(event)
     remove(type, emitOnce)

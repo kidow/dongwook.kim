@@ -1,6 +1,6 @@
 'use client'
 
-import type { FC } from 'react'
+import type { ComponentProps, FC } from 'react'
 import { Editor } from '@tiptap/core'
 import {
   Check,
@@ -26,7 +26,7 @@ import { BubbleMenuItem } from './bubble-menu'
 interface NodeSelectorProps {
   editor: Editor
   isOpen: boolean
-  onOpenChange: (open: boolean) => void
+  onOpenChange: NonNullable<ComponentProps<typeof Popover>['onOpenChange']>
 }
 
 export const NodeSelector: FC<NodeSelectorProps> = ({

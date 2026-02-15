@@ -3,6 +3,7 @@
 import {
   useEffect,
   useRef,
+  type ComponentProps,
   type FC,
   type FormEvent
 } from 'react'
@@ -21,7 +22,7 @@ import {
 interface LinkSelectorProps {
   editor: Editor
   isOpen: boolean
-  onOpenChange: (open: boolean) => void
+  onOpenChange: NonNullable<ComponentProps<typeof Popover>['onOpenChange']>
 }
 
 export const LinkSelector: FC<LinkSelectorProps> = ({

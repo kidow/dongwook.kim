@@ -1,25 +1,26 @@
 'use client'
+/* eslint-disable no-unused-vars */
 
 import { useEffect, useState } from 'react'
 
 type TiptapLib = {
   EditorContent: React.ComponentType<{ editor: unknown }>
-  useEditor: (options: {
+  useEditor: (...args: [{
     extensions: unknown[]
     content: unknown
     editorProps?: {
       attributes?: Record<string, string>
     }
-    onUpdate?: (payload: { editor: { getJSON: () => unknown } }) => void
-  }) => {
+    onUpdate?: (...args: [{ editor: { getJSON: () => unknown } }]) => void
+  }]) => {
     commands: {
-      setContent: (content: unknown) => void
-      clearContent: (emitUpdate?: boolean) => void
+      setContent: (...args: [unknown]) => void
+      clearContent: (...args: [boolean?]) => void
     }
   } | null
   StarterKit: unknown
   Placeholder: {
-    configure: (options: { placeholder: string }) => unknown
+    configure: (...args: [{ placeholder: string }]) => unknown
   }
 }
 
@@ -63,7 +64,7 @@ const loadTiptap = async (): Promise<TiptapLib> => {
   const dynamicImport = new Function(
     'u',
     'return import(/* webpackIgnore: true */ u)'
-  ) as (moduleUrl: string) => Promise<unknown>
+  ) as (...args: [string]) => Promise<unknown>
 
   const [reactModule, starterKitModule, placeholderModule] = await Promise.all([
     dynamicImport('https://esm.sh/@tiptap/react@2.11.5?external=react,react-dom'),
@@ -91,7 +92,7 @@ function TiptapMemoEditor({
   setSaveStatus
 }: {
   tiptap: TiptapLib
-  setSaveStatus: (status: string) => void
+  setSaveStatus: React.Dispatch<React.SetStateAction<string>>
 }) {
   const editor = tiptap.useEditor({
     extensions: [

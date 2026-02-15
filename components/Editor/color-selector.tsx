@@ -1,6 +1,6 @@
 'use client'
 
-import type { FC } from 'react'
+import type { ComponentProps, FC } from 'react'
 import { Editor } from '@tiptap/core'
 import { Check, ChevronDown } from 'lucide-react'
 
@@ -19,7 +19,7 @@ export interface BubbleColorMenuItem {
 interface ColorSelectorProps {
   editor: Editor
   isOpen: boolean
-  onOpenChange: (open: boolean) => void
+  onOpenChange: NonNullable<ComponentProps<typeof Popover>['onOpenChange']>
 }
 
 const TEXT_COLORS: BubbleColorMenuItem[] = [
