@@ -196,10 +196,10 @@
 - [x] `pnpm lint` / `pnpm type-check` 통과
 
 #### 7-2. `/resume` 라우트 완성 (2순위)
-- [ ] `app/resume/page.tsx`의 미완성 섹션 식별 및 기능 완료
-- [ ] Notion 연동 실패 시 기존 fallback 동작 유지
-- [ ] SEO/메타데이터/접근성(heading 구조, 링크 속성) 점검
-- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [x] `app/resume/page.tsx`의 미완성 섹션 식별 및 기능 완료
+- [x] Notion 연동 실패 시 기존 fallback 동작 유지
+- [x] SEO/메타데이터/접근성(heading 구조, 링크 속성) 점검
+- [x] `pnpm lint` / `pnpm type-check` 통과
 
 #### 7-3. `/blog` 라우트 완성 (3순위)
 - [ ] `app/blog/page.tsx`와 `app/blog/[id]/page.tsx` 미완성 영역 완료
@@ -256,11 +256,7 @@ dongwook.kim/
 
 ### 진행 중 (Phase 7 우선)
 
-1. **`/resume` 라우트 미완성 구간 정리**
-   - 데이터/표현 계층 분리
-   - Notion 실패 경로 회귀 점검
-
-2. **`/blog` 라우트 완성 및 안정화**
+1. **`/blog` 라우트 완성 및 안정화**
    - 목록/상세 동작 일치
    - 빈 상태/오류 상태 UI 마감
 
@@ -297,4 +293,4 @@ dongwook.kim/
 ---
 
 **최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 7 진행 중 (`/lunch` 완료, 다음 `/resume`)
+**현재 Phase**: Phase 7 진행 중 (`/lunch`, `/resume` 완료, 다음 `/blog`)

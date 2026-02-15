@@ -1,126 +1,376 @@
 import type { Metadata } from 'next'
+import { Fragment, type ReactNode } from 'react'
+import { Client } from '@notionhq/client'
+import type {
+  BlockObjectResponse,
+  BulletedListItemBlockObjectResponse,
+  GetPageResponse,
+  Heading3BlockObjectResponse,
+  PageObjectResponse,
+  ParagraphBlockObjectResponse,
+  RichTextItemResponse
+} from '@notionhq/client/build/src/api-endpoints'
 
-import { getNotionResumeData } from '@/utils/api/notion'
+import { getNotionEnv } from '@/utils/env'
 
-const fallbackExperiences = [
-  {
-    company: 'Freelance / Side Project',
-    role: 'Frontend Engineer',
-    period: '2024 - Present',
-    summary:
-      'Next.js 기반 제품 UI를 설계하고, 공통 컴포넌트와 디자인 시스템 규칙을 정리했습니다.'
-  },
-  {
-    company: 'Product Team A',
-    role: 'Web Developer',
-    period: '2022 - 2024',
-    summary:
-      '운영 서비스의 기능 개선과 성능 최적화, 실험 기반 UI 개선을 반복적으로 수행했습니다.'
-  }
-]
+const TITLE = '이력서 | Kidow'
+const BASE_URL = 'https://dongwook.kim/resume'
+const FALLBACK_RESUME_PAGE_ID = '81617e74c35e4a98956c89717ace443b'
 
-const fallbackSkillGroups = [
+const FALLBACK_UPDATED_AT = '2026-02-15'
+
+const FALLBACK_BLOCKS: BlockObjectResponse[] = [
   {
-    title: 'Frontend',
-    items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS']
-  },
+    object: 'block',
+    id: 'fallback-heading-summary',
+    parent: { type: 'page_id', page_id: FALLBACK_RESUME_PAGE_ID },
+    created_time: '',
+    last_edited_time: '',
+    created_by: { object: 'user', id: '' },
+    last_edited_by: { object: 'user', id: '' },
+    has_children: false,
+    archived: false,
+    in_trash: false,
+    type: 'heading_2',
+    heading_2: {
+      rich_text: [{ type: 'text', text: { content: 'Summary', link: null }, annotations: { bold: false, italic: false, strikethrough: false, underline: false, code: false, color: 'default' }, plain_text: 'Summary', href: null }],
+      is_toggleable: false,
+      color: 'default'
+    }
+  } as BlockObjectResponse,
   {
-    title: 'Backend / Infra',
-    items: ['Node.js', 'PostgreSQL', 'Vercel', 'Supabase']
-  },
-  {
-    title: 'Collaboration',
-    items: ['Figma', 'Notion', 'Slack', 'GitHub']
-  }
+    object: 'block',
+    id: 'fallback-summary-1',
+    parent: { type: 'page_id', page_id: FALLBACK_RESUME_PAGE_ID },
+    created_time: '',
+    last_edited_time: '',
+    created_by: { object: 'user', id: '' },
+    last_edited_by: { object: 'user', id: '' },
+    has_children: false,
+    archived: false,
+    in_trash: false,
+    type: 'paragraph',
+    paragraph: {
+      rich_text: [{ type: 'text', text: { content: 'Next.js 기반 서비스 UI를 설계하고 컴포넌트 시스템을 운영해온 프론트엔드 개발자입니다.', link: null }, annotations: { bold: false, italic: false, strikethrough: false, underline: false, code: false, color: 'default' }, plain_text: 'Next.js 기반 서비스 UI를 설계하고 컴포넌트 시스템을 운영해온 프론트엔드 개발자입니다.', href: null }],
+      color: 'default'
+    }
+  } as BlockObjectResponse
 ]
 
 export const metadata: Metadata = {
-  title: 'Résumé | Dongwook Kim',
-  description: 'Notion 데이터 연동 이력서 페이지입니다. 실패 시 정적 fallback을 표시합니다.'
+  title: TITLE,
+  keywords: ['resume'],
+  alternates: {
+    canonical: BASE_URL
+  },
+  openGraph: {
+    title: TITLE,
+    url: BASE_URL
+  },
+  twitter: {
+    title: TITLE
+  },
+  metadataBase: new URL(BASE_URL)
+}
+
+export const revalidate = 60 * 60 * 24 * 7
+
+function formatUpdatedAt(value: string): string {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) {
+    return value
+  }
+
+  return new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric'
+  })
+    .format(date)
+    .replace(/\.$/, '')
+}
+
+function renderRichText(items: RichTextItemResponse[]): ReactNode {
+  return items.map((item, index) => {
+    const key = `${item.plain_text}-${index}`
+    let node: ReactNode = item.plain_text
+
+    if (item.annotations.code) {
+      node = <code>{node}</code>
+    }
+    if (item.annotations.bold) {
+      node = <strong>{node}</strong>
+    }
+    if (item.annotations.italic) {
+      node = <em>{node}</em>
+    }
+    if (item.annotations.strikethrough) {
+      node = <s>{node}</s>
+    }
+    if (item.annotations.underline) {
+      node = <u>{node}</u>
+    }
+
+    const link = item.href ?? (item.type === 'text' ? item.text.link?.url : null)
+    if (link) {
+      node = (
+        <a href={link} target="_blank" rel="noopener noreferrer">
+          {node}
+        </a>
+      )
+    }
+
+    return <Fragment key={key}>{node}</Fragment>
+  })
+}
+
+async function listChildren(client: Client, blockId: string): Promise<BlockObjectResponse[]> {
+  const blocks: BlockObjectResponse[] = []
+  let cursor: string | undefined
+
+  do {
+    const response = await client.blocks.children.list({
+      block_id: blockId,
+      start_cursor: cursor
+    })
+
+    for (const block of response.results) {
+      if ('type' in block) {
+        blocks.push(block as BlockObjectResponse)
+      }
+    }
+
+    cursor = response.has_more ? response.next_cursor ?? undefined : undefined
+  } while (cursor)
+
+  return blocks
+}
+
+async function listChildBullets(
+  client: Client,
+  blockId: string
+): Promise<BulletedListItemBlockObjectResponse[]> {
+  const blocks = await listChildren(client, blockId)
+  return blocks.filter(
+    (block): block is BulletedListItemBlockObjectResponse =>
+      block.type === 'bulleted_list_item'
+  )
+}
+
+async function getResumeData(): Promise<{
+  title: string
+  updatedAt: string
+  blocks: BlockObjectResponse[]
+  client: Client | null
+}> {
+  const notionEnv = getNotionEnv()
+
+  if (!notionEnv.secretKey) {
+    return {
+      title: '이력서',
+      updatedAt: FALLBACK_UPDATED_AT,
+      blocks: FALLBACK_BLOCKS,
+      client: null
+    }
+  }
+
+  const pageId = notionEnv.resumePageId ?? FALLBACK_RESUME_PAGE_ID
+  const client = new Client({ auth: notionEnv.secretKey })
+
+  try {
+    const [page, blocks] = await Promise.all([
+      client.pages.retrieve({ page_id: pageId }),
+      listChildren(client, pageId)
+    ])
+
+    const fullPage = isPageObjectResponse(page) ? page : null
+
+    return {
+      title:
+        fullPage
+          ? (
+              Object.values(fullPage.properties).find(
+                (property) => property.type === 'title'
+              ) as { type: 'title'; title: RichTextItemResponse[] } | undefined
+            )?.title?.map((item) => item.plain_text).join('') || '이력서'
+          : '이력서',
+      updatedAt:
+        fullPage?.last_edited_time ?? FALLBACK_UPDATED_AT,
+      blocks,
+      client
+    }
+  } catch {
+    return {
+      title: '이력서',
+      updatedAt: FALLBACK_UPDATED_AT,
+      blocks: FALLBACK_BLOCKS,
+      client: null
+    }
+  }
+}
+
+function isPageObjectResponse(page: GetPageResponse): page is PageObjectResponse {
+  return page.object === 'page' && 'properties' in page
+}
+
+async function renderResumeBlocks(
+  blocks: BlockObjectResponse[],
+  client: Client | null
+): Promise<ReactNode[]> {
+  const items: ReactNode[] = []
+
+  for (const block of blocks) {
+    if (block.type === 'column_list' && block.has_children && client) {
+      const columns = await listChildren(client, block.id)
+      const columnBlocks = await Promise.all(columns.map((column) => listChildren(client, column.id)))
+
+      if (columnBlocks.length === 3) {
+        items.push(
+          <section className="flex gap-6" key={block.id}>
+            {columnBlocks.map((results, index) => {
+              const heading = results[0] as Heading3BlockObjectResponse | undefined
+              const bullets = results.slice(1) as BulletedListItemBlockObjectResponse[]
+
+              return (
+                <section className="flex-1" key={`${block.id}-${index}`}>
+                  <h3 className="!mt-0">
+                    {heading?.type === 'heading_3' ? renderRichText(heading.heading_3.rich_text) : null}
+                  </h3>
+                  <ul>
+                    {bullets.map((bullet) => (
+                      <li key={bullet.id}>{renderRichText(bullet.bulleted_list_item.rich_text)}</li>
+                    ))}
+                  </ul>
+                </section>
+              )
+            })}
+          </section>
+        )
+        continue
+      }
+
+      if (columnBlocks.length === 2) {
+        const periodColumn = columnBlocks[0] as ParagraphBlockObjectResponse[]
+        const contentColumn = columnBlocks[1]
+        const contentItems: ReactNode[] = []
+        let bulletBuffer: ReactNode[] = []
+
+        const flushBulletBuffer = () => {
+          if (!bulletBuffer.length) {
+            return
+          }
+
+          contentItems.push(
+            <ul key={`bullets-${contentItems.length}`}>
+              {bulletBuffer}
+            </ul>
+          )
+          bulletBuffer = []
+        }
+
+        for (const subBlock of contentColumn) {
+          if (subBlock.type === 'heading_2') {
+            flushBulletBuffer()
+            contentItems.push(
+              <h2 className="!mt-0" key={subBlock.id}>
+                {renderRichText(subBlock.heading_2.rich_text)}
+              </h2>
+            )
+            continue
+          }
+
+          if (subBlock.type === 'heading_3') {
+            flushBulletBuffer()
+            contentItems.push(
+              <h3 key={subBlock.id}>
+                {renderRichText(subBlock.heading_3.rich_text)}
+              </h3>
+            )
+            continue
+          }
+
+          if (subBlock.type === 'paragraph') {
+            flushBulletBuffer()
+            contentItems.push(
+              <p key={subBlock.id}>
+                {renderRichText(subBlock.paragraph.rich_text)}
+              </p>
+            )
+            continue
+          }
+
+          if (subBlock.type === 'bulleted_list_item') {
+            if (subBlock.has_children) {
+              const children = await listChildBullets(client, subBlock.id)
+              bulletBuffer.push(
+                <li key={subBlock.id}>
+                  {renderRichText(subBlock.bulleted_list_item.rich_text)}
+                  {children.length ? (
+                    <ul>
+                      {children.map((child) => (
+                        <li key={child.id}>{renderRichText(child.bulleted_list_item.rich_text)}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </li>
+              )
+            } else {
+              bulletBuffer.push(
+                <li key={subBlock.id}>{renderRichText(subBlock.bulleted_list_item.rich_text)}</li>
+              )
+            }
+            continue
+          }
+
+          // table 블록(스킬 툴팁 이미지)은 요청에 따라 렌더하지 않음
+        }
+
+        flushBulletBuffer()
+
+        items.push(
+          <section className="mb-10 gap-10 xl:flex" key={block.id}>
+            <div className="mb-2 min-w-[140px] text-neutral-700 xl:text-neutral-400">
+              {periodColumn.map((period) => (
+                <div key={period.id}>{renderRichText(period.paragraph.rich_text)}</div>
+              ))}
+            </div>
+            <div className="flex-1">{contentItems}</div>
+          </section>
+        )
+      }
+
+      continue
+    }
+
+    if (block.type === 'paragraph') {
+      items.push(<p key={block.id}>{renderRichText(block.paragraph.rich_text)}</p>)
+      continue
+    }
+
+    if (block.type === 'heading_2') {
+      items.push(<h2 key={block.id}>{renderRichText(block.heading_2.rich_text)}</h2>)
+      continue
+    }
+
+    if (block.type === 'heading_3') {
+      items.push(<h3 key={block.id}>{renderRichText(block.heading_3.rich_text)}</h3>)
+    }
+  }
+
+  return items
 }
 
 export default async function ResumePage() {
-  const resumeResult = await getNotionResumeData()
-
-  if (resumeResult.ok) {
-    const { title, description, updatedAt, sections } = resumeResult.data
-
-    return (
-      <section className="space-y-8">
-        <header className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm xl:p-8">
-          <p className="text-xs uppercase tracking-wide text-neutral-400">Résumé (Notion)</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight xl:text-4xl">{title}</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600 xl:text-base">
-            {description || 'Notion에서 불러온 이력서 데이터입니다.'}
-          </p>
-          <p className="mt-2 text-xs text-neutral-400">마지막 업데이트: {updatedAt}</p>
-        </header>
-
-        {sections.map((section) => (
-          <section
-            key={section.title}
-            className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm xl:p-8"
-          >
-            <h2 className="text-xl font-semibold">{section.title}</h2>
-            <ul className="mt-5 space-y-3">
-              {section.items.map((item, index) => (
-                <li key={`${section.title}-${index}`} className="rounded-2xl border border-neutral-200 p-4 text-sm text-neutral-700">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </section>
-    )
-  }
+  const { title, updatedAt, blocks, client } = await getResumeData()
+  const renderedBlocks = await renderResumeBlocks(blocks, client)
 
   return (
-    <section className="space-y-8">
-      <header className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm xl:p-8">
-        <p className="text-xs uppercase tracking-wide text-neutral-400">Résumé Skeleton</p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight xl:text-4xl">Dongwook Kim</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600 xl:text-base">
-          Notion 연동이 비활성화되어 정적 fallback 이력서를 표시하고 있습니다.
-        </p>
-      </header>
-
-      <section className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm xl:p-8">
-        <h2 className="text-xl font-semibold">Experience</h2>
-        <ul className="mt-5 space-y-4">
-          {fallbackExperiences.map((item) => (
-            <li key={`${item.company}-${item.period}`} className="rounded-2xl border border-neutral-200 p-4">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-base font-semibold text-neutral-900">{item.role}</h3>
-                <span className="text-xs text-neutral-500">{item.period}</span>
-              </div>
-              <p className="mt-1 text-sm text-neutral-500">{item.company}</p>
-              <p className="mt-3 text-sm leading-6 text-neutral-700">{item.summary}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm xl:p-8">
-        <h2 className="text-xl font-semibold">Skills</h2>
-        <div className="mt-5 grid gap-4 xl:grid-cols-3">
-          {fallbackSkillGroups.map((group) => (
-            <article key={group.title} className="rounded-2xl border border-neutral-200 p-4">
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-600">{group.title}</h3>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {group.items.map((skill) => (
-                  <li
-                    key={skill}
-                    className="rounded-md border border-neutral-200 bg-neutral-50 px-2.5 py-1 text-xs text-neutral-600"
-                  >
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
-    </section>
+    <div className="prose-sm prose-neutral !max-w-none xl:prose">
+      <p className="text-sm italic text-neutral-400">
+        {formatUpdatedAt(updatedAt)} 업데이트됨.
+      </p>
+      <h1>{title}</h1>
+      {renderedBlocks}
+    </div>
   )
 }
