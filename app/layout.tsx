@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Agentation } from 'agentation'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
-import { Toast } from '@/shared/ui'
+import { CustomToast } from '@/components/ui/custom-toast'
 import { cn } from '@/utils'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: Readonly<ReactProps>) {
           <Footer />
         </main>
         <Agentation />
-        <Toast.v2 />
+        <CustomToast />
       </body>
     </html>
   )

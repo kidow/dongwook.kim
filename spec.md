@@ -127,10 +127,7 @@
 
 ### Phase 5: 페이지 특화 컴포넌트 리팩토링 (P2)
 
-#### 5-1. Tools & Skills 컴포넌트
-- [ ] `components/Tools.tsx` → shadcn Badge, Card 기반
-- [ ] `components/Skills.tsx` → shadcn Badge, Card 기반
-- [ ] 아이콘 시스템 정리 (`icons.tsx`, `brand-icons.tsx`)
+#### 5-1. ~~Tools & Skills 컴포넌트~~ (삭제됨 - 미사용)
 
 #### 5-2. Editor 컴포넌트 현대화 (shadcn-tiptap 활용)
 - [ ] shadcn-tiptap 설치 및 설정
@@ -227,6 +224,7 @@ dongwook.kim/
 
 ## 참고 사항
 
+- **temp 폴더 제외**: `temp/` 폴더는 과거 모노레포 아카이브로, 이번 마이그레이션 작업 범위에서 완전히 제외 (tsconfig.json에서도 exclude 처리됨)
 - **Tremor React**: 현재 설치되어 있으나, shadcn/ui로 대체 가능 여부 검토 필요
 - **Tailwind CSS v4**: 최신 버전이므로 shadcn/ui 호환성 주의
 - **React 19**: 최신 React 버전 사용 중 - shadcn/ui 호환 확인됨
