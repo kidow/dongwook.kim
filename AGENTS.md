@@ -43,7 +43,6 @@
 - `utils/`: 범용 유틸리티 및 Notion API 연동
 - `lib/`: 공용 helper (`lib/utils.ts`)
 - `types/`: 글로벌 타입
-- `temp/`: 아카이브 영역. **작업 대상에서 제외** (`tsconfig` exclude)
 
 ## 4) 실행 및 검증 명령
 
@@ -61,12 +60,14 @@ pnpm build
 기준 파일: `.env.example`
 
 주요 연동 키:
+
 - Notion: `NOTION_SECRET_KEY`, `NOTION_DATABASE_ID`, `NOTION_DATA_SOURCE_ID`, `NOTION_RESUME_PAGE_ID`
 - GitHub Widget: `GITHUB_TOKEN`
 - GA4 Widget: `GOOGLE_ANALYTICS_PROPERTY_ID`, `GOOGLE_ANAYLTICS_PROJECT_ID`, `GOOGLE_ANALYTICS_CLIENT_EMAIL`, `GOOGLE_ANALYTICS_PRIVATE_KEY`
 - Client: `NEXT_PUBLIC_BASE_URL`, `NEXT_PUBLIC_KAKAO_MAP_API_KEY`
 
 Notion 블로그 조회 우선순위:
+
 - `NOTION_DATA_SOURCE_ID`가 있으면 해당 값을 우선 사용
 - 없으면 `NOTION_DATABASE_ID`를 기준으로 Data Source ID를 해석해 조회
 
@@ -80,7 +81,6 @@ Notion 블로그 조회 우선순위:
   - UI는 `components/ui`의 shadcn 컴포넌트 우선 활용
 - 변경 범위 최소화:
   - 요청 범위를 벗어난 리팩터링 금지
-  - `temp/` 및 무관 파일 수정 금지
 - 데이터 연동:
   - 서버 컴포넌트/유틸의 실패 경로(fallback) 유지
   - 외부 API 실패 시 사용자 UI가 깨지지 않도록 처리
@@ -108,6 +108,7 @@ Notion 블로그 조회 우선순위:
 ```
 
 예시:
+
 - `docs(agents): add repository-specific working guide`
 - `feat(blog): render notion fallback cards on missing credentials`
 - `fix(editor): preserve local content hydration order`
