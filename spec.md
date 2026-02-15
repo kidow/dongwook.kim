@@ -1,296 +1,444 @@
-# dongwook.kim 코드베이스 최신화 스펙
+# dongwook.kim Side Projects 확장 스펙
 
-이 문서는 `dongwook.kim` 프로젝트를 최신 기술 스택으로 현대화하는 작업을 관리하기 위한 단일 기준 문서입니다.
+이 문서는 `dongwook.kim` 프로젝트에 10개의 새로운 Side Project 도구를 추가하는 작업을 관리하기 위한 단일 기준 문서입니다.
 
 ## 목표
 
-- **shadcn/ui 기반 컴포넌트 시스템 구축**: 현재 레거시 컴포넌트들을 shadcn/ui 패턴으로 전환
-- **일관된 디자인 시스템 확립**: Tailwind CSS v4 + shadcn/ui를 활용한 통일된 UI/UX
-- **재사용 가능한 컴포넌트 라이브러리**: 타입 안전성과 접근성을 갖춘 모던 컴포넌트 구조
-- **점진적 마이그레이션**: 기존 기능을 유지하면서 단계적으로 전환
-- **프로젝트 구조 정리**: `shared` 폴더 제거, `components`와 `utils` 폴더로 통합
+- **Side Projects 섹션에 10개의 유틸리티 도구 추가**: 각 도구는 독립된 라우트(`/kanban`, `/archive`, `/url-shortner`, `/code-editor`, `/image-converter`, `/canvas`, `/qrcode-generator`, `/invoice-generator`, `/api-client`, `/mindmap`)로 제공
+- **일관된 UI/UX**: shadcn/ui 기반 컴포넌트 시스템 유지
+- **홈페이지 위젯 연동**: 각 도구는 `app/page.tsx`의 Side Projects 섹션에 `WidgetLink` 위젯으로 노출
+- **점진적 개발**: 라우트 단위로 독립적으로 개발 및 배포 가능
 
 ## 현재 상태
 
-### 기존 컴포넌트 구조
+### 기술 스택
 
-1. **shared/ui**: 공통 UI 컴포넌트 → **components로 이전 예정**
-   - `Tooltip`, `Spinner`, `BackTop`, `Toast`
+- Next.js 16.1.6 (App Router)
+- React 19.2.3
+- TypeScript 5
+- Tailwind CSS v4
+- shadcn/ui (New York 스타일)
+- pnpm
 
-2. **shared/utils**: 공통 유틸리티 함수 → **utils 폴더로 이전 예정**
-   - `cn`, `event-listener`, `toast`, `env`, `api/notion`
+### Side Projects 현황
 
-3. **components**: 페이지/기능별 컴포넌트
-   - `Header`, `Footer`, `Tools`, `Skills`
-   - `Widget/*`: 다양한 위젯 컴포넌트
-   - `Editor/*`: Tiptap 기반 에디터 컴포넌트
-   - `MemoEditor`: 메모 에디터
+- `/memo`: Tiptap 기반 메모 에디터 (localStorage 저장)
+- `/lunch`: Kakao Maps 기반 점심 메뉴 추천
 
-4. **기술 스택**
-   - Next.js 16.1.6
-   - React 19.2.3
-   - Tailwind CSS v4
-   - TypeScript 5
-  - 의존성: lucide-react, class-variance-authority, clsx, tailwind-merge
+---
 
-### shadcn/ui 설치 상태
+## 작업 계획
 
-- `components/ui` 디렉토리 구성 완료
-- `components.json` 설정 파일 생성 완료
+### Phase 1: `/kanban` — 칸반 보드
 
-## 작업 계획 (단계별)
+Trello 스타일 칸반 보드. 드래그 앤 드롭으로 카드를 이동하며, localStorage에 데이터를 저장하여 새로고침에도 유지.
 
-### Phase 0: 프로젝트 구조 정리 (P0)
+#### 1-1. 프로젝트 셋업
+- [ ] `app/kanban/page.tsx` 생성
+- [ ] 칸반 관련 타입 정의 (`Board`, `Column`, `Card`)
+- [ ] localStorage 훅 구현 (기존 `use-local-storage.ts` 활용 또는 확장)
 
-#### 0-1. 유틸리티 함수 이전
-- [x] `utils` 폴더 생성
-- [x] `shared/utils/index.ts` → `utils/cn.ts` (cn 함수)
-- [x] `shared/utils/event-listener.ts` → `utils/event-listener.ts`
-- [x] `shared/utils/env.ts` → `utils/env.ts`
-- [x] `shared/utils/api/notion.ts` → `utils/api/notion.ts`
-- [x] 모든 import 경로 업데이트
+#### 1-2. 핵심 UI 구현
+- [ ] 보드 레이아웃 (수평 스크롤 가능한 컬럼 리스트)
+- [ ] 컬럼 컴포넌트 (제목, 카드 수, 추가 버튼)
+- [ ] 카드 컴포넌트 (제목, 설명, 라벨/색상)
+- [ ] 카드 추가/편집 Dialog (shadcn Dialog + Input + Textarea)
+- [ ] 컬럼 추가/편집/삭제 기능
 
-#### 0-2. shared 폴더 제거 준비
-- [x] `shared/ui` 컴포넌트들의 사용처 파악
-- [x] 마이그레이션 계획 수립
+#### 1-3. 드래그 앤 드롭
+- [ ] `@dnd-kit/core` + `@dnd-kit/sortable` 설치
+- [ ] 카드 간 드래그 앤 드롭 (같은 컬럼 내, 다른 컬럼 간)
+- [ ] 컬럼 순서 변경 드래그 앤 드롭
 
-### Phase 1: shadcn/ui 기반 환경 구축 (P0)
+#### 1-4. 위젯 등록
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `KanbanIcon` 등)
 
-#### 1-1. shadcn/ui 초기 설정
-- [x] `components.json` 설정 파일 생성
-  - Tailwind CSS v4 호환 설정
-  - `components/ui` 경로 지정
-  - 별칭 설정: `@/components`, `@/utils`
-- [x] `lib/utils.ts` 생성 (cn 함수)
-  - `utils/cn.ts`와 통합 또는 재사용
+#### 1-5. 마무리
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [ ] 반응형 레이아웃 검증
 
-#### 1-2. 기본 컴포넌트 설치
-- [x] Button 컴포넌트 설치 및 검증
-- [x] Card 컴포넌트 설치 및 검증
-- [x] Badge 컴포넌트 설치 및 검증
-- [x] Tooltip 컴포넌트 설치 및 검증
-- [x] Spinner/Loading 컴포넌트 설치 및 검증
+**참고 라이브러리**: `@dnd-kit/core`, `@dnd-kit/sortable`
 
-### Phase 2: 공통 UI 컴포넌트 마이그레이션 (P0)
+---
 
-#### 2-1. shared/ui 컴포넌트 전환 (components로 이전)
-- [x] `shared/ui/tooltip.tsx` → `components/ui/tooltip.tsx` (shadcn)
-  - 기존 사용처 마이그레이션
-  - 레거시 컴포넌트 제거
+### Phase 2: `/archive` — 코드 아카이브
 
-- [x] `shared/ui/spinner.tsx` → `components/ui/spinner.tsx` (shadcn 기반 커스텀)
-  - 로딩 상태 표시 통일
+Fumadocs 프레임워크 기반 코드 스니펫/문서 보관소. 사전 검토 필요.
 
-- [x] `shared/ui/toast.tsx` → `components/ui/toast.tsx` + Sonner 또는 shadcn toast
-  - 토스트 알림 시스템 현대화
+#### 2-1. Fumadocs 호환성 조사
+- [ ] Fumadocs(https://fumadocs.dev)와 기존 Next.js 16 / App Router 호환성 확인
+- [ ] Fumadocs를 서브 라우트(`/archive`)로 통합하는 방법 조사
+- [ ] 기존 shadcn/ui 테마와의 충돌 여부 확인
+- [ ] 호환 불가 시 대안 검토 (MDX 직접 구현, Contentlayer 등)
 
-- [x] `shared/ui/back-top.tsx` → `components/ui/back-to-top.tsx` (shadcn Button 활용)
+#### 2-2. Fumadocs 셋업 (호환 확인 후)
+- [ ] `fumadocs-core`, `fumadocs-ui` 설치
+- [ ] `app/archive/` 라우트 구성 (Fumadocs layout 적용)
+- [ ] MDX 콘텐츠 디렉토리 구조 설계 (`content/archive/`)
+- [ ] 코드 하이라이팅 설정 (Shiki 등)
 
-#### 2-2. 공통 컴포넌트 추가 설치
-- [x] Input 컴포넌트 (폼 입력용)
-- [x] Select/Dropdown 컴포넌트
-- [x] Dialog/Modal 컴포넌트
-- [x] Sheet 컴포넌트 (사이드 패널)
+#### 2-3. 콘텐츠 구조
+- [ ] 카테고리별 분류 체계 정의 (예: React, TypeScript, CSS, Utilities 등)
+- [ ] 코드 스니펫 템플릿 MDX 작성
+- [ ] 검색 기능 연동 (Fumadocs 내장 검색)
 
-#### 2-3. shared 폴더 제거
-- [x] `shared/ui` 폴더 제거
-- [x] `shared/utils` 폴더 제거
-- [x] `shared` 폴더 완전 제거
+#### 2-4. 위젯 등록
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `ArchiveIcon` 등)
 
-### Phase 3: 레이아웃 컴포넌트 리팩토링 (P1) ✅
+#### 2-5. 마무리
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [ ] 빌드 검증 (`pnpm build`)
 
-#### 3-1. Header 컴포넌트 현대화
-- [x] `components/Header.tsx` shadcn 기반 재작성
-  - Badge 컴포넌트 활용 (설명 영역 이모지 뱃지)
-  - 접근성 강화 (role="banner", aria-label, 시맨틱 태그 h1/p)
-  - 타입 안전성 강화 (상수 추출, isBlogDetail 변수 분리)
-  - focus-visible 링 스타일 추가
+**참고**: https://fumadocs.dev — 호환성 사전 검증 필수
 
-#### 3-2. Footer 컴포넌트 현대화
-- [x] `components/Footer.tsx` shadcn 기반 재작성
-  - Button (variant="link") 컴포넌트 활용
-  - 접근성 강화 (role="contentinfo", rel="noopener noreferrer")
-  - shadcn 디자인 토큰 적용 (text-muted-foreground)
+---
 
-### Phase 4: Widget 컴포넌트 리팩토링 (P1) ✅
+### Phase 3: `/url-shortner` — URL 단축기
 
-#### 4-1. 기본 Widget 컴포넌트 전환
-- [x] `widget-link.tsx` → shadcn Card + Button 기반
-  - 접근성 강화 (aria-label, focus-visible, 조건부 rel)
-  - shadcn 디자인 토큰 적용 (text-muted-foreground, border-border)
-  - 공통 타입 import로 전환
-- [x] `widget-quote.tsx` → shadcn Card + Blockquote 스타일
-  - `<blockquote>` 시맨틱 태그 적용
-  - shadcn 디자인 토큰 적용 (border-border, text-muted-foreground)
-  - 상수 추출 (QUOTE_TEXT)
-- [x] Widget 공통 타입 및 인터페이스 정의
-  - `components/Widget/types.ts` 생성
-  - WidgetLinkProps, WidgetCardProps, GithubContributionMap, AnalyticsChartProps 등
+Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자동 만료.
 
-#### 4-2. 동적 Widget 컴포넌트 전환
-- [x] `widget-github.tsx` → 공통 타입 적용
-- [x] `widget-github-calendar.tsx` → 공통 타입 적용
-- [x] `widget-analytics-chart.tsx` → 공통 타입 적용 (AnalyticsChartProps)
-- [x] `widget-scheduling.tsx` → shadcn Button 활용, 디자인 토큰 적용
-  - Button (variant="ghost") 네비게이션 버튼
-  - 상수 추출 (TIMES, WEEKDAYS, PAST_DAYS, FUTURE_DAYS)
-  - 접근성 강화 (aria-label)
-  - shadcn 디자인 토큰 (bg-primary, bg-secondary, border-border 등)
-- [x] `widget-map.tsx` → shadcn Badge 활용
-  - Badge (variant="outline") 위치 라벨
-  - 상수 추출 (LOCATION)
-  - 접근성 강화 (aria-label)
+#### 3-1. Supabase 셋업
+- [ ] Supabase 프로젝트 연결 (환경변수 설정)
+- [ ] `@supabase/supabase-js` 설치
+- [ ] `urls` 테이블 스키마 정의 (`id`, `short_code`, `original_url`, `created_at`, `expires_at`)
+- [ ] 24시간 만료 로직 (Supabase Edge Function 또는 Row Level Policy + cron)
 
-#### 4-3. page.tsx 인라인 요소 전환
-- [x] 인라인 `<button>` → shadcn Button 컴포넌트
-- [x] 인라인 `<div>` 카드 → shadcn Card 컴포넌트
-- [x] `border-neutral-200` → `border-border` 디자인 토큰 통일
-- [x] `h-5 w-5` → `size-5` 클래스 통일
-- [x] iframe에 `title` 속성 추가 (접근성)
+#### 3-2. API 구현
+- [ ] `app/api/shorten/route.ts` — URL 생성 API (POST)
+- [ ] `app/api/shorten/[code]/route.ts` — URL 리다이렉트 API (GET)
+- [ ] 단축 코드 생성 로직 (nanoid 등)
+- [ ] URL 유효성 검증
 
-### Phase 5: 페이지 특화 컴포넌트 리팩토링 (P2)
+#### 3-3. UI 구현
+- [ ] `app/url-shortner/page.tsx` 생성
+- [ ] URL 입력 폼 (shadcn Input + Button)
+- [ ] 생성된 단축 URL 표시 및 복사 버튼
+- [ ] 최근 생성 목록 (만료 시간 표시)
 
-#### 5-1. ~~Tools & Skills 컴포넌트~~ (삭제됨 - 미사용)
+#### 3-4. 위젯 등록
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `LinkIcon` 등)
 
-#### 5-2. Editor 컴포넌트 현대화 (shadcn-tiptap 활용)
-- [x] shadcn-tiptap 설치 및 설정
-  - `npx shadcn add https://tiptap.niazmorshed.dev/r/toolbar-provider.json`
-  - ToolbarProvider 컴포넌트 통합
-  - 에디터 스타일 globals.css에 추가
-- [x] `Editor/index.tsx` → shadcn-tiptap 기반 재작성
-  - ToolbarProvider 적용
-  - shadcn/ui 컴포넌트 활용
-  - 진행: shadcn Card 레이아웃 적용 + localStorage hydration race-condition 보완
-- [x] `Editor/bubble-menu.tsx` → shadcn-tiptap BubbleMenu
-- [x] `Editor/node-selector.tsx` → shadcn-tiptap NodeSelector 또는 shadcn Select
-- [x] `Editor/color-selector.tsx` → shadcn-tiptap ColorSelector 또는 shadcn Popover
-- [x] `Editor/link-selector.tsx` → shadcn-tiptap LinkSelector 또는 shadcn Popover + Input
-- [x] `Editor/slash-command.tsx` → shadcn Command 컴포넌트
+#### 3-5. 마무리
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [ ] Supabase 환경변수 fallback UI 구현
 
-### Phase 6: 최종 정리 및 최적화 (P2)
+**참고 라이브러리**: `@supabase/supabase-js`, `nanoid`
 
-#### 6-1. 레거시 코드 정리
-- [x] 중복 컴포넌트 제거 (`cn` 유틸 단일화)
-- [x] 미사용 의존성 정리 (@tremor/react 제거 완료)
-- [x] import 경로 최종 점검 (`shared/*` 경로 제거 확인)
+---
 
-#### 6-2. 문서화 및 테스트
-- [ ] Storybook 또는 컴포넌트 문서 작성 (선택사항)
-- [x] 컴포넌트 사용 가이드 작성 (`docs/components-ui-guide.md`)
-- [x] 접근성 검증 (a11y) (`docs/a11y-checklist.md`)
-- [x] 타입 안전성 최종 검증 (`pnpm type-check`)
+### Phase 4: `/code-editor` — 실행 가능한 코드 에디터
 
-#### 6-3. 성능 최적화
-- [ ] 컴포넌트 번들 사이즈 분석
-- [ ] 불필요한 리렌더링 최적화
-- [ ] 코드 스플리팅 적용
+브라우저에서 코드를 작성하고 실행할 수 있는 에디터. Sandpack 또는 Codapi 활용.
 
-### Phase 7: 라우트 이전 (P0)
+#### 4-1. 기술 선택 및 셋업
+- [ ] Sandpack(https://sandpack.codesandbox.io)과 Codapi(https://codapi.org) 비교 검토
+- [ ] 선택한 라이브러리 설치 (`@codesandbox/sandpack-react` 또는 Codapi embed)
+- [ ] 지원 언어 범위 결정 (JavaScript/TypeScript 최우선)
 
-미완성 라우트를 운영 코드(`app/*`)로 순차 이전한다. 범위는 `temp/`를 수정하지 않고, `temp/` 구현을 참조해 현재 코드베이스로 이식하는 작업이다.
+#### 4-2. UI 구현
+- [ ] `app/code-editor/page.tsx` 생성
+- [ ] 코드 에디터 영역 (구문 강조, 줄 번호)
+- [ ] 실행 버튼 및 실행 결과 출력 패널
+- [ ] 언어 선택 드롭다운 (shadcn Select)
+- [ ] 에디터 테마 설정 (라이트/다크)
 
-#### 7-1. `/lunch` 라우트 이전 (1순위)
-- [x] `app/lunch/page.tsx` 신규 구성 (서버/클라이언트 경계 포함)
-- [x] 필요한 컴포넌트는 `components/*`로 분리하고 shadcn/ui 패턴 적용
-- [x] 외부 연동/환경 변수 필요 시 `utils/env.ts` 검증 및 fallback UI 유지
-- [x] `pnpm lint` / `pnpm type-check` 통과
+#### 4-3. 추가 기능
+- [ ] 코드 공유 (URL 파라미터 또는 클립보드 복사)
+- [ ] 코드 템플릿/예제 프리셋
 
-#### 7-2. `/resume` 라우트 완성 (2순위)
-- [x] `app/resume/page.tsx`의 미완성 섹션 식별 및 기능 완료
-- [x] Notion 연동 실패 시 기존 fallback 동작 유지
-- [x] SEO/메타데이터/접근성(heading 구조, 링크 속성) 점검
-- [x] `pnpm lint` / `pnpm type-check` 통과
+#### 4-4. 위젯 등록
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `CodeIcon` 등)
 
-#### 7-3. `/blog` 라우트 완성 (3순위)
-- [ ] `app/blog/page.tsx`와 `app/blog/[id]/page.tsx` 미완성 영역 완료
-- [ ] 목록/상세 간 데이터 모델 일치 및 오류 fallback 유지
-- [ ] 로딩/빈 상태/오류 상태 UI 정리
+#### 4-5. 마무리
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [ ] 반응형 레이아웃 검증
+
+**참고**: https://codapi.org, https://sandpack.codesandbox.io
+
+---
+
+### Phase 5: `/image-converter` — 이미지 파일 확장자 변환기
+
+브라우저 내에서 이미지 파일의 확장자를 변환. JPEG, PNG, WebP, AVIF 지원. 서버 없이 클라이언트 사이드 처리.
+
+#### 5-1. 핵심 변환 로직
+- [ ] Canvas API 기반 이미지 변환 유틸리티 구현
+- [ ] 지원 포맷: JPEG ↔ PNG ↔ WebP ↔ AVIF
+- [ ] 품질 설정 옵션 (0-100%)
+- [ ] AVIF 변환은 브라우저 호환성 확인 필요
+
+#### 5-2. UI 구현
+- [ ] `app/image-converter/page.tsx` 생성
+- [ ] 드래그 앤 드롭 파일 업로드 영역
+- [ ] 이미지 미리보기 (원본/변환 결과 비교)
+- [ ] 출력 포맷 선택 (shadcn Select)
+- [ ] 품질 슬라이더 (shadcn Slider)
+- [ ] 변환 및 다운로드 버튼
+- [ ] 복수 파일 일괄 변환 지원
+
+#### 5-3. 위젯 등록
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `ImageIcon` 등)
+
+#### 5-4. 마무리
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [ ] 파일 크기 제한 및 에러 핸들링
+
+**참고**: https://floo.app — 클라이언트 사이드 변환, 서버 불필요
+
+---
+
+### Phase 6: `/canvas` — 가상 화이트보드
+
+Excalidraw와 유사한 무한 캔버스 화이트보드.
+
+#### 6-1. 라이브러리 셋업
+- [ ] `@excalidraw/excalidraw` 설치 및 호환성 확인
+- [ ] 또는 대안 라이브러리 검토 (tldraw 등)
+
+#### 6-2. UI 구현
+- [ ] `app/canvas/page.tsx` 생성
+- [ ] Excalidraw 컴포넌트 임베드 (dynamic import + SSR 비활성화)
+- [ ] 전체 화면 레이아웃 (헤더/푸터 최소화 또는 숨김)
+- [ ] 테마 연동 (shadcn 디자인 토큰 활용)
+
+#### 6-3. 데이터 저장
+- [ ] localStorage에 캔버스 상태 저장/복원
+- [ ] PNG/SVG 내보내기 기능
+
+#### 6-4. 위젯 등록
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `PenToolIcon` 등)
+
+#### 6-5. 마무리
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [ ] 번들 사이즈 확인 (Excalidraw는 대형 라이브러리)
+
+**참고**: `@excalidraw/excalidraw` (대안: `tldraw`)
+
+---
+
+### Phase 7: `/qrcode-generator` — QR코드 생성기
+
+URL 문자열을 입력하면 QR코드를 생성하는 도구.
+
+#### 7-1. 셋업
+- [ ] `qrcode.react` 설치
+
+#### 7-2. UI 구현
+- [ ] `app/qrcode-generator/page.tsx` 생성
+- [ ] URL 입력 필드 (shadcn Input)
+- [ ] QR코드 실시간 미리보기 (`QRCodeSVG` 컴포넌트)
+- [ ] QR코드 크기 조절 옵션
+- [ ] 색상 커스터마이징 (전경/배경)
+- [ ] PNG/SVG 다운로드 버튼
+
+#### 7-3. 위젯 등록
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `QrCodeIcon` 등)
+
+#### 7-4. 마무리
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 
-#### 7-4. 라우트 이전 공통 체크
-- [ ] 각 라우트 완료 후 수동 동작 검증 (`pnpm dev`)
-- [ ] 라우트 단위로 작은 커밋 유지 (Conventional Commits)
-- [ ] 각 단계 완료 시 `spec.md` 진행률 즉시 갱신
+**참고**: https://www.npmjs.com/package/qrcode.react
 
-## 새로운 프로젝트 구조
+---
+
+### Phase 8: `/invoice-generator` — 인보이스 생성기
+
+인보이스를 작성하고 PDF로 출력하는 도구.
+
+#### 8-1. 셋업
+- [ ] PDF 생성 라이브러리 선택 (`@react-pdf/renderer` 또는 브라우저 `window.print()`)
+- [ ] 인보이스 데이터 타입 정의 (`Invoice`, `InvoiceItem`, `CompanyInfo`)
+
+#### 8-2. UI 구현
+- [ ] `app/invoice-generator/page.tsx` 생성
+- [ ] 발신자/수신자 정보 입력 폼
+- [ ] 항목 테이블 (품목, 수량, 단가, 금액) — 동적 행 추가/삭제
+- [ ] 소계/세금/합계 자동 계산
+- [ ] 인보이스 번호, 발행일, 만기일 입력
+- [ ] 통화 선택 (KRW, USD 등)
+
+#### 8-3. PDF 출력
+- [ ] 인보이스 미리보기 레이아웃
+- [ ] PDF 다운로드/인쇄 기능
+
+#### 8-4. 위젯 등록
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `ReceiptIcon` 등)
+
+#### 8-5. 마무리
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+
+**참고**: https://github.com/tuanpham-dev/react-invoice-generator
+
+---
+
+### Phase 9: `/api-client` — API 클라이언트
+
+Postman/Bruno 스타일의 브라우저 내 HTTP API 테스트 도구.
+
+#### 9-1. 핵심 기능 구현
+- [ ] HTTP 메서드 지원 (GET, POST, PUT, PATCH, DELETE)
+- [ ] 요청 URL 입력
+- [ ] 요청 헤더 편집 (키-값 쌍, 동적 추가/삭제)
+- [ ] 요청 바디 편집 (JSON, Form Data)
+- [ ] `fetch` API를 통한 요청 실행
+
+#### 9-2. UI 구현
+- [ ] `app/api-client/page.tsx` 생성
+- [ ] 메서드 선택 드롭다운 (shadcn Select) + URL 입력 바
+- [ ] 탭 UI: Headers, Body, Params (shadcn Tabs)
+- [ ] 응답 뷰어: Status, Headers, Body (JSON 구문 강조)
+- [ ] 응답 시간 및 크기 표시
+
+#### 9-3. 추가 기능
+- [ ] 요청 히스토리 (localStorage 저장)
+- [ ] 요청 컬렉션 저장/불러오기
+
+#### 9-4. 위젯 등록
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `SendIcon` 등)
+
+#### 9-5. 마무리
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [ ] CORS 제한 사항 안내 UI
+
+**참고**: https://github.com/usebruno/bruno
+
+---
+
+### Phase 10: `/mindmap` — 마인드맵 생성기
+
+노드 기반 마인드맵 에디터. `@xyflow/react`를 활용하며, localStorage에 저장.
+
+#### 10-1. 셋업
+- [ ] `@xyflow/react` 설치
+- [ ] 마인드맵 데이터 타입 정의 (`MindMapNode`, `MindMapEdge`)
+- [ ] localStorage 저장/복원 훅 구현
+
+#### 10-2. 핵심 UI 구현
+- [ ] `app/mindmap/page.tsx` 생성
+- [ ] React Flow 캔버스 (줌, 팬, 미니맵)
+- [ ] 커스텀 노드 컴포넌트 (텍스트 입력, 색상, 크기 조절)
+- [ ] 노드 추가/삭제/편집
+- [ ] 엣지(연결선) 추가/삭제
+- [ ] 자동 레이아웃 정렬 (dagre 또는 elkjs)
+
+#### 10-3. 추가 기능
+- [ ] 노드 색상 커스터마이징
+- [ ] PNG/SVG 내보내기
+- [ ] 키보드 단축키 (노드 추가, 삭제, 포커스 이동)
+
+#### 10-4. 위젯 등록
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `NetworkIcon` 등)
+
+#### 10-5. 마무리
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [ ] 반응형 레이아웃 검증
+
+**참고**: https://www.npmjs.com/package/@xyflow/react
+
+---
+
+### Phase 11: 홈페이지 위젯 통합 및 최종 정리
+
+#### 11-1. Side Projects 섹션 레이아웃 조정
+- [ ] 12개 위젯(기존 2 + 신규 10)에 맞는 그리드 레이아웃 검토
+- [ ] 위젯 순서 및 배치 최적화
+- [ ] 반응형 그리드 검증 (모바일/태블릿/데스크탑)
+
+#### 11-2. 공통 정리
+- [ ] 미사용 의존성 정리
+- [ ] 번들 사이즈 분석 및 최적화 (대형 라이브러리: Excalidraw, Sandpack, React Flow)
+- [ ] `pnpm build` 전체 빌드 성공 확인
+- [ ] 각 라우트 수동 동작 검증
+
+---
+
+## 프로젝트 구조 (예상)
 
 ```
-dongwook.kim/
-├── app/                    # Next.js 앱 라우터
-├── components/
-│   ├── ui/                # shadcn/ui 컴포넌트 (자동 생성)
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── badge.tsx
-│   │   ├── tooltip.tsx
-│   │   ├── spinner.tsx
-│   │   └── ...
-│   ├── Widget/            # 위젯 컴포넌트
-│   ├── Editor/            # 에디터 컴포넌트
-│   ├── Header.tsx
-│   ├── Footer.tsx
+app/
+├── page.tsx                  # 홈 (Side Projects 위젯 12개)
+├── memo/                     # 기존 - 메모 에디터
+├── lunch/                    # 기존 - 점심 추천
+├── kanban/                   # Phase 1 - 칸반 보드
+│   └── page.tsx
+├── archive/                  # Phase 2 - 코드 아카이브 (Fumadocs)
 │   └── ...
-├── utils/                 # 유틸리티 함수 (shared/utils 이전)
-│   ├── cn.ts
-│   ├── event-listener.ts
-│   ├── env.ts
-│   └── api/
-│       └── notion.ts
-├── lib/                   # shadcn/ui 라이브러리 코드
-│   └── utils.ts           # cn 함수 등
-├── public/
-├── types/
-└── ...
+├── url-shortner/             # Phase 3 - URL 단축기
+│   └── page.tsx
+├── code-editor/              # Phase 4 - 코드 에디터
+│   └── page.tsx
+├── image-converter/          # Phase 5 - 이미지 변환기
+│   └── page.tsx
+├── canvas/                   # Phase 6 - 화이트보드
+│   └── page.tsx
+├── qrcode-generator/         # Phase 7 - QR코드 생성기
+│   └── page.tsx
+├── invoice-generator/        # Phase 8 - 인보이스 생성기
+│   └── page.tsx
+├── api-client/               # Phase 9 - API 클라이언트
+│   └── page.tsx
+├── mindmap/                  # Phase 10 - 마인드맵
+│   └── page.tsx
+└── api/
+    └── shorten/              # Phase 3 - URL 단축 API
+        ├── route.ts
+        └── [code]/
+            └── route.ts
 ```
+
+## 신규 의존성 목록 (예상)
+
+| Phase | 라이브러리 | 용도 |
+|-------|-----------|------|
+| 1 | `@dnd-kit/core`, `@dnd-kit/sortable` | 칸반 드래그 앤 드롭 |
+| 2 | `fumadocs-core`, `fumadocs-ui` | 코드 아카이브 문서 프레임워크 |
+| 3 | `@supabase/supabase-js`, `nanoid` | URL 단축 DB, 코드 생성 |
+| 4 | `@codesandbox/sandpack-react` 또는 Codapi | 코드 에디터/실행 |
+| 5 | (없음 — Canvas API 활용) | 이미지 변환 |
+| 6 | `@excalidraw/excalidraw` | 화이트보드 |
+| 7 | `qrcode.react` | QR코드 생성 |
+| 8 | `@react-pdf/renderer` (선택) | PDF 생성 |
+| 9 | (없음 — fetch API 활용) | API 클라이언트 |
+| 10 | `@xyflow/react`, `dagre` | 마인드맵 |
 
 ## 작업 원칙
 
-1. **하나씩 단계적으로**: 한 번에 하나의 컴포넌트 또는 컴포넌트 그룹만 전환
-2. **타입 안전성 우선**: 모든 변경 후 `pnpm type-check` 실행
-3. **기존 기능 보존**: 마이그레이션 중에도 기능이 동작하도록 유지
-4. **작은 커밋**: 각 컴포넌트 전환마다 커밋
-5. **문서 업데이트**: 매 작업 후 이 spec.md 갱신
-6. **스타일 일관성**: shadcn/ui 디자인 토큰 및 패턴 준수
-
-## 다음 작업 (Next Steps)
-
-### 진행 중 (Phase 7 우선)
-
-1. **`/blog` 라우트 완성 및 안정화**
-   - 목록/상세 동작 일치
-   - 빈 상태/오류 상태 UI 마감
-
-## 참고 사항
-
-- **temp 폴더 제외**: `temp/` 폴더는 과거 모노레포 아카이브로, 이번 마이그레이션 작업 범위에서 완전히 제외 (tsconfig.json에서도 exclude 처리됨)
-- **Tremor React**: 제거 완료 (현재 코드베이스 미사용)
-- **Tailwind CSS v4**: 최신 버전이므로 shadcn/ui 호환성 주의
-- **React 19**: 최신 React 버전 사용 중 - shadcn/ui 호환 확인됨
-- **Lucide React**: 아이콘 라이브러리로 유지 (shadcn/ui 권장)
-- **프로젝트 구조**: `shared` 폴더 제거, `utils`와 `components`로 통합
-- **shadcn-tiptap**: Tiptap 에디터의 shadcn/ui 통합 라이브러리 활용 가능
-  - 저장소: https://github.com/NiazMorshed2007/shadcn-tiptap
-  - 문서: https://tiptap.niazmorshed.dev/docs
-  - shadcn CLI를 통한 간편한 설치 지원
+1. **라우트 단위 독립 개발**: 각 Phase는 독립적으로 개발 및 배포 가능
+2. **shadcn/ui 패턴 준수**: 모든 UI는 shadcn/ui 컴포넌트 기반
+3. **타입 안전성 우선**: 모든 변경 후 `pnpm type-check` 실행
+4. **작은 커밋**: Phase 내 작업 단위로 Conventional Commits
+5. **문서 업데이트**: 매 Phase 완료 후 이 spec.md 갱신
+6. **번들 최적화**: 대형 라이브러리는 dynamic import + lazy loading 적용
+7. **클라이언트 우선**: 가능한 한 서버 의존성 최소화 (URL 단축기 제외)
 
 ## 완료 기준 (Definition of Done)
 
 각 Phase 완료 시:
-- [x] 모든 타입 에러 해결 (`pnpm type-check` 통과)
-- [x] ESLint 경고 없음
-- [ ] 기존 기능 정상 동작 확인
-- [ ] 커밋 메시지 작성 및 푸시
-- [x] spec.md 업데이트
+- [ ] `pnpm lint` 통과
+- [ ] `pnpm type-check` 통과
+- [ ] 기능 정상 동작 확인 (`pnpm dev`)
+- [ ] 반응형 레이아웃 검증
+- [ ] 홈페이지 위젯 등록 완료
+- [ ] Conventional Commit 작성
+- [ ] spec.md 갱신
 
-프로젝트 완료 시:
-- [ ] 모든 컴포넌트가 shadcn/ui 패턴 준수
-- [x] `shared` 폴더 완전 제거
-- [x] 프로젝트 구조 정리 완료 (`utils`, `components`, `lib`)
-- [ ] 문서화 완료
-- [ ] 빌드 성공 (`pnpm build`)
-- [ ] 성능 이슈 없음
+프로젝트 전체 완료 시:
+- [ ] 모든 10개 라우트 정상 동작
+- [ ] `pnpm build` 성공
+- [ ] 번들 사이즈 적정 수준
+- [ ] Side Projects 섹션 UI/UX 일관성
 
 ---
 
-**최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 7 진행 중 (`/lunch`, `/resume` 완료, 다음 `/blog`)
+**최종 업데이트**: 2026-02-16
+**현재 Phase**: 시작 전 (계획 수립 완료)
