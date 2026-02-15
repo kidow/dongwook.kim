@@ -144,7 +144,7 @@ export const TiptapExtensions = [
       }
       return "명령어는 '/' 입력"
     },
-    includeChildren: true
+    includeChildren: false
   }),
   SlashCommand,
   TiptapUnderline,
