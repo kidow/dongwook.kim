@@ -185,6 +185,33 @@
 - [ ] 불필요한 리렌더링 최적화
 - [ ] 코드 스플리팅 적용
 
+### Phase 7: 라우트 이전 (P0)
+
+미완성 라우트를 운영 코드(`app/*`)로 순차 이전한다. 범위는 `temp/`를 수정하지 않고, `temp/` 구현을 참조해 현재 코드베이스로 이식하는 작업이다.
+
+#### 7-1. `/lunch` 라우트 이전 (1순위)
+- [ ] `app/lunch/page.tsx` 신규 구성 (서버/클라이언트 경계 포함)
+- [ ] 필요한 컴포넌트는 `components/*`로 분리하고 shadcn/ui 패턴 적용
+- [ ] 외부 연동/환경 변수 필요 시 `utils/env.ts` 검증 및 fallback UI 유지
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+
+#### 7-2. `/resume` 라우트 완성 (2순위)
+- [ ] `app/resume/page.tsx`의 미완성 섹션 식별 및 기능 완료
+- [ ] Notion 연동 실패 시 기존 fallback 동작 유지
+- [ ] SEO/메타데이터/접근성(heading 구조, 링크 속성) 점검
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+
+#### 7-3. `/blog` 라우트 완성 (3순위)
+- [ ] `app/blog/page.tsx`와 `app/blog/[id]/page.tsx` 미완성 영역 완료
+- [ ] 목록/상세 간 데이터 모델 일치 및 오류 fallback 유지
+- [ ] 로딩/빈 상태/오류 상태 UI 정리
+- [ ] `pnpm lint` / `pnpm type-check` 통과
+
+#### 7-4. 라우트 이전 공통 체크
+- [ ] 각 라우트 완료 후 수동 동작 검증 (`pnpm dev`)
+- [ ] 라우트 단위로 작은 커밋 유지 (Conventional Commits)
+- [ ] 각 단계 완료 시 `spec.md` 진행률 즉시 갱신
+
 ## 새로운 프로젝트 구조
 
 ```
@@ -227,21 +254,20 @@ dongwook.kim/
 
 ## 다음 작업 (Next Steps)
 
-### 진행 중 (Phase 6)
+### 진행 중 (Phase 7 우선)
 
-1. **레거시 코드 정리**
-   - 중복 컴포넌트 제거
-   - 미사용 의존성 정리 (정기 점검)
-   - import 경로 최종 점검
+1. **`/lunch` 라우트 이전 시작**
+   - `temp` 구현 참조 범위 확정
+   - `app/lunch/page.tsx` 초기 이식 및 fallback 설계
+   - lint/type-check 기준선 확보
 
-2. **문서화 및 품질 검증**
-   - Storybook 또는 컴포넌트 문서화 범위 결정
-   - ESLint 경고 0건 상태 유지
+2. **`/resume` 라우트 미완성 구간 정리**
+   - 데이터/표현 계층 분리
+   - Notion 실패 경로 회귀 점검
 
-3. **성능 최적화**
-   - 컴포넌트 번들 사이즈 분석
-   - 불필요한 리렌더링 최적화
-   - 코드 스플리팅 적용
+3. **`/blog` 라우트 완성 및 안정화**
+   - 목록/상세 동작 일치
+   - 빈 상태/오류 상태 UI 마감
 
 ## 참고 사항
 
@@ -276,4 +302,4 @@ dongwook.kim/
 ---
 
 **최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 6 진행 중 (문서화/a11y 기준선 추가 완료)
+**현재 Phase**: Phase 7 준비 완료 (`/lunch` → `/resume` → `/blog` 순차 이전)
