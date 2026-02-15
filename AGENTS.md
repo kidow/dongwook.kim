@@ -9,6 +9,7 @@
 - 패키지 매니저: `pnpm` (lockfile: `pnpm-lock.yaml`)
 - 핵심 기능:
   - 홈 위젯 대시보드 (`app/page.tsx` + `components/Widget/*`)
+  - 점심 추천 지도 (`app/lunch/page.tsx`)
   - 블로그 목록/상세 (`app/blog/page.tsx`, `app/blog/[id]/page.tsx`)
   - 이력서 (`app/resume/page.tsx`)
   - 메모 에디터 (`app/memo/page.tsx`, `components/Editor/*`)
@@ -18,6 +19,7 @@
 - 라우팅/레이아웃
   - `app/layout.tsx`
   - `app/page.tsx`
+  - `app/lunch/page.tsx`
   - `app/blog/page.tsx`
   - `app/blog/[id]/page.tsx`
   - `app/resume/page.tsx`
@@ -28,6 +30,7 @@
   - `app/api/posts/route.ts`
 - UI 규약
   - `components/Widget/README.md`
+  - `components/Widget/widget-analytics-chart.tsx`
   - `spec.md`
 
 ## 3) 디렉터리 가이드
@@ -58,10 +61,14 @@ pnpm build
 기준 파일: `.env.example`
 
 주요 연동 키:
-- Notion: `NOTION_SECRET_KEY`, `NOTION_DATABASE_ID`, `NOTION_RESUME_PAGE_ID`
+- Notion: `NOTION_SECRET_KEY`, `NOTION_DATABASE_ID`, `NOTION_DATA_SOURCE_ID`, `NOTION_RESUME_PAGE_ID`
 - GitHub Widget: `GITHUB_TOKEN`
 - GA4 Widget: `GOOGLE_ANALYTICS_PROPERTY_ID`, `GOOGLE_ANAYLTICS_PROJECT_ID`, `GOOGLE_ANALYTICS_CLIENT_EMAIL`, `GOOGLE_ANALYTICS_PRIVATE_KEY`
 - Client: `NEXT_PUBLIC_BASE_URL`, `NEXT_PUBLIC_KAKAO_MAP_API_KEY`
+
+Notion 블로그 조회 우선순위:
+- `NOTION_DATA_SOURCE_ID`가 있으면 해당 값을 우선 사용
+- 없으면 `NOTION_DATABASE_ID`를 기준으로 Data Source ID를 해석해 조회
 
 연동 키 누락 시 일부 페이지/위젯은 fallback UI 또는 `null` 렌더링이 정상 동작입니다. 누락 자체를 에러로 간주하지 말고, 회귀 여부만 판단합니다.
 
@@ -84,6 +91,11 @@ pnpm build
 - 관련 타입/린트 오류 없음
 - 기존 fallback 동작 유지
 - 필요한 경우 문서(`spec.md`, 컴포넌트 README) 업데이트
+
+## 9) 현재 스펙 문서 상태
+
+- 현재 `spec.md`는 **Side Projects 확장 계획(신규 라우트 10개)** 중심 문서입니다.
+- 따라서 스펙 업데이트 시 기존 UI 마이그레이션 맥락이 아니라, Side Projects 단계(Phase 1~11) 진행 상태를 기준으로 갱신합니다.
 
 ## 8) 커밋 메시지 규칙 (필수)
 
