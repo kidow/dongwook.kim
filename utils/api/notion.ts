@@ -68,6 +68,7 @@ function getClient(): ApiResult<Client> {
 
 function getDatabaseId(): ApiResult<string> {
   const notionEnv = getNotionEnv()
+  console.log('[Notion] NOTION_DATABASE_ID:', notionEnv.databaseId)
   const envResult = requireEnv(
     {
       NOTION_DATABASE_ID: notionEnv.databaseId

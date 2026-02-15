@@ -1,17 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Client } from '@notionhq/client'
-import type { PageObjectResponse, QueryDataSourceResponse, RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
 
-interface BlogPostSummary {
-  id: string
-  notionPageId: string
-  slug: string
-  title: string
-  description: string
-  date: string
-  tags: string[]
-}
+import { getNotionBlogPosts, type BlogPostSummary } from '@/utils/api/notion'
 
 const fallbackPosts: BlogPostSummary[] = [
   {
@@ -48,184 +38,43 @@ export const metadata: Metadata = {
   description: '웹 개발자의 이야기들을 다룹니다.'
 }
 
-function asText(richText: RichTextItemResponse[] = []): string {
-  return richText.map((item) => item.plain_text).join('').trim()
-}
-
-function normalizeSlug(value: string): string {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-}
-
-function getTitle(properties: PageObjectResponse['properties']): string {
-  const keys = ['이름', 'Name', 'title', '제목', 'Title']
-
-  for (const key of keys) {
-    const property = properties[key]
-    if (property?.type === 'title') {
-      const text = asText(property.title)
-      if (text) {
-        return text
-      }
-    }
-  }
-
-  const fallback = Object.values(properties).find((property) => property.type === 'title')
-  return fallback?.type === 'title' ? asText(fallback.title) || 'Untitled' : 'Untitled'
-}
-
-function getDescription(properties: PageObjectResponse['properties'], title: string): string {
-  const keys = ['설명', 'Description', '요약', 'Summary']
-
-  for (const key of keys) {
-    const property = properties[key]
-    if (property?.type === 'rich_text') {
-      const text = asText(property.rich_text)
-      if (text) {
-        return text
-      }
-    }
-  }
-
-  return `${title} 포스트`
-}
-
-function getDate(page: PageObjectResponse, properties: PageObjectResponse['properties']): string {
-  const keys = ['생성일', '게시일', 'Date', 'date', 'Published']
-
-  for (const key of keys) {
-    const property = properties[key]
-    if (property?.type === 'date' && property.date?.start) {
-      return property.date.start.slice(0, 10)
-    }
-  }
-
-  return page.created_time.slice(0, 10)
-}
-
-function getTags(properties: PageObjectResponse['properties']): string[] {
-  const keys = ['태그', 'Tags', 'Tag']
-
-  for (const key of keys) {
-    const property = properties[key]
-    if (property?.type === 'multi_select') {
-      return property.multi_select.map((item) => item.name)
-    }
-  }
-
-  return []
-}
-
-function getSlug(page: PageObjectResponse, properties: PageObjectResponse['properties']): string {
-  const keys = ['slug', 'Slug', '아이디', 'id']
-
-  for (const key of keys) {
-    const property = properties[key]
-    if (!property) {
-      continue
-    }
-
-    if (property.type === 'rich_text') {
-      const text = asText(property.rich_text)
-      if (text) {
-        return normalizeSlug(text)
-      }
-    }
-
-    if (property.type === 'title') {
-      const text = asText(property.title)
-      if (text) {
-        return normalizeSlug(text)
-      }
-    }
-
-    if (property.type === 'select' && property.select?.name) {
-      return normalizeSlug(property.select.name)
-    }
-
-    if (property.type === 'url' && property.url) {
-      return normalizeSlug(property.url.split('/').pop() ?? property.url)
-    }
-  }
-
-  const titleSlug = normalizeSlug(getTitle(properties))
-  if (titleSlug) {
-    return titleSlug
-  }
-
-  return page.id.replace(/-/g, '').slice(0, 12)
-}
-
-function isPublished(properties: PageObjectResponse['properties']): boolean {
-  const keys = ['배포', 'published', 'Published', '공개']
-
-  for (const key of keys) {
-    const property = properties[key]
-    if (property?.type === 'checkbox') {
-      return property.checkbox
-    }
-  }
-
-  return true
-}
-
-function mapPageToPost(page: PageObjectResponse): BlogPostSummary {
-  const title = getTitle(page.properties)
-  return {
-    id: page.id,
-    notionPageId: page.id,
-    slug: getSlug(page, page.properties),
-    title,
-    description: getDescription(page.properties, title),
-    date: getDate(page, page.properties),
-    tags: getTags(page.properties)
-  }
-}
-
-function isFullPage(
-  page: QueryDataSourceResponse['results'][number]
-): page is PageObjectResponse {
-  return page.object === 'page' && 'properties' in page
-}
-
-async function getBlogPostsFromNotion(): Promise<BlogPostSummary[]> {
-  const secretKey = process.env.NOTION_SECRET_KEY?.trim()
-  const databaseId = process.env.NOTION_DATABASE_ID?.trim()
-
-  if (!secretKey || !databaseId) {
-    return fallbackPosts
-  }
-
-  try {
-    const notion = new Client({ auth: secretKey })
-    const response = await notion.dataSources.query({
-      data_source_id: databaseId,
-      sorts: [{ timestamp: 'created_time', direction: 'descending' }],
-      page_size: 20
-    })
-
-    const posts = response.results
-      .filter(isFullPage)
-      .filter((page) => isPublished(page.properties))
-      .map(mapPageToPost)
-
-    return posts.length > 0 ? posts : fallbackPosts
-  } catch {
-    return fallbackPosts
-  }
-}
-
 export const dynamic = 'force-dynamic'
 
+function getTroubleshootingSteps(errorMessage: string): string[] {
+  if (errorMessage.includes('Missing required env')) {
+    return [
+      '.env.local 파일에 NOTION_SECRET_KEY, NOTION_DATABASE_ID 값을 설정하세요.',
+      '서버를 재시작해 환경변수를 다시 로드하세요. (pnpm dev 재실행)',
+      'Notion Integration을 대상 데이터베이스에 연결(Share)했는지 확인하세요.'
+    ]
+  }
+
+  return [
+    'NOTION_SECRET_KEY가 유효한 Internal Integration Token인지 확인하세요.',
+    'NOTION_DATABASE_ID가 블로그 데이터베이스 ID와 일치하는지 확인하세요.',
+    'Notion 데이터베이스에서 게시글의 공개(checkbox) 속성이 의도대로 설정되어 있는지 확인하세요.'
+  ]
+}
+
 export default async function BlogPage() {
-  const posts = await getBlogPostsFromNotion()
+  const postResult = await getNotionBlogPosts(20)
+  const posts = postResult.ok && postResult.data.length > 0 ? postResult.data : fallbackPosts
+  const showNotice = !postResult.ok
 
   return (
     <>
       <h1 className="text-4xl font-bold tracking-tight xl:text-5xl">블로그</h1>
+      {showNotice ? (
+        <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+          <p className="font-semibold">Notion API 연동에 실패해 fallback 목록을 표시 중입니다.</p>
+          <p className="mt-1 break-all">원인: {postResult.error}</p>
+          <ul className="mt-2 list-disc pl-5">
+            {getTroubleshootingSteps(postResult.error).map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       <hr className="my-8 border-neutral-200" />
 
