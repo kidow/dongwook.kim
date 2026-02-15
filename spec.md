@@ -31,71 +31,71 @@
    - React 19.2.3
    - Tailwind CSS v4
    - TypeScript 5
-   - 의존성: @tremor/react, lucide-react, class-variance-authority, clsx, tailwind-merge
+  - 의존성: lucide-react, class-variance-authority, clsx, tailwind-merge
 
-### shadcn/ui 미설치 상태
+### shadcn/ui 설치 상태
 
-- `components/ui` 디렉토리 없음
-- `components.json` 설정 파일 없음
+- `components/ui` 디렉토리 구성 완료
+- `components.json` 설정 파일 생성 완료
 
 ## 작업 계획 (단계별)
 
 ### Phase 0: 프로젝트 구조 정리 (P0)
 
 #### 0-1. 유틸리티 함수 이전
-- [ ] `utils` 폴더 생성
-- [ ] `shared/utils/index.ts` → `utils/cn.ts` (cn 함수)
-- [ ] `shared/utils/event-listener.ts` → `utils/event-listener.ts`
-- [ ] `shared/utils/env.ts` → `utils/env.ts`
-- [ ] `shared/utils/api/notion.ts` → `utils/api/notion.ts`
-- [ ] 모든 import 경로 업데이트
+- [x] `utils` 폴더 생성
+- [x] `shared/utils/index.ts` → `utils/cn.ts` (cn 함수)
+- [x] `shared/utils/event-listener.ts` → `utils/event-listener.ts`
+- [x] `shared/utils/env.ts` → `utils/env.ts`
+- [x] `shared/utils/api/notion.ts` → `utils/api/notion.ts`
+- [x] 모든 import 경로 업데이트
 
 #### 0-2. shared 폴더 제거 준비
-- [ ] `shared/ui` 컴포넌트들의 사용처 파악
-- [ ] 마이그레이션 계획 수립
+- [x] `shared/ui` 컴포넌트들의 사용처 파악
+- [x] 마이그레이션 계획 수립
 
 ### Phase 1: shadcn/ui 기반 환경 구축 (P0)
 
 #### 1-1. shadcn/ui 초기 설정
-- [ ] `components.json` 설정 파일 생성
+- [x] `components.json` 설정 파일 생성
   - Tailwind CSS v4 호환 설정
   - `components/ui` 경로 지정
   - 별칭 설정: `@/components`, `@/utils`
-- [ ] `lib/utils.ts` 생성 (cn 함수)
+- [x] `lib/utils.ts` 생성 (cn 함수)
   - `utils/cn.ts`와 통합 또는 재사용
 
 #### 1-2. 기본 컴포넌트 설치
-- [ ] Button 컴포넌트 설치 및 검증
-- [ ] Card 컴포넌트 설치 및 검증
-- [ ] Badge 컴포넌트 설치 및 검증
-- [ ] Tooltip 컴포넌트 설치 및 검증
-- [ ] Spinner/Loading 컴포넌트 설치 및 검증
+- [x] Button 컴포넌트 설치 및 검증
+- [x] Card 컴포넌트 설치 및 검증
+- [x] Badge 컴포넌트 설치 및 검증
+- [x] Tooltip 컴포넌트 설치 및 검증
+- [x] Spinner/Loading 컴포넌트 설치 및 검증
 
 ### Phase 2: 공통 UI 컴포넌트 마이그레이션 (P0)
 
 #### 2-1. shared/ui 컴포넌트 전환 (components로 이전)
-- [ ] `shared/ui/tooltip.tsx` → `components/ui/tooltip.tsx` (shadcn)
+- [x] `shared/ui/tooltip.tsx` → `components/ui/tooltip.tsx` (shadcn)
   - 기존 사용처 마이그레이션
   - 레거시 컴포넌트 제거
 
-- [ ] `shared/ui/spinner.tsx` → `components/ui/spinner.tsx` (shadcn 기반 커스텀)
+- [x] `shared/ui/spinner.tsx` → `components/ui/spinner.tsx` (shadcn 기반 커스텀)
   - 로딩 상태 표시 통일
 
-- [ ] `shared/ui/toast.tsx` → `components/ui/toast.tsx` + Sonner 또는 shadcn toast
+- [x] `shared/ui/toast.tsx` → `components/ui/toast.tsx` + Sonner 또는 shadcn toast
   - 토스트 알림 시스템 현대화
 
-- [ ] `shared/ui/back-top.tsx` → `components/ui/back-to-top.tsx` (shadcn Button 활용)
+- [x] `shared/ui/back-top.tsx` → `components/ui/back-to-top.tsx` (shadcn Button 활용)
 
 #### 2-2. 공통 컴포넌트 추가 설치
-- [ ] Input 컴포넌트 (폼 입력용)
-- [ ] Select/Dropdown 컴포넌트
-- [ ] Dialog/Modal 컴포넌트
-- [ ] Sheet 컴포넌트 (사이드 패널)
+- [x] Input 컴포넌트 (폼 입력용)
+- [x] Select/Dropdown 컴포넌트
+- [x] Dialog/Modal 컴포넌트
+- [x] Sheet 컴포넌트 (사이드 패널)
 
 #### 2-3. shared 폴더 제거
-- [ ] `shared/ui` 폴더 제거
-- [ ] `shared/utils` 폴더 제거
-- [ ] `shared` 폴더 완전 제거
+- [x] `shared/ui` 폴더 제거
+- [x] `shared/utils` 폴더 제거
+- [x] `shared` 폴더 완전 제거
 
 ### Phase 3: 레이아웃 컴포넌트 리팩토링 (P1) ✅
 
@@ -171,14 +171,14 @@
 
 #### 6-1. 레거시 코드 정리
 - [ ] 중복 컴포넌트 제거
-- [ ] 미사용 의존성 정리 (@tremor/react 사용 여부 확인)
+- [x] 미사용 의존성 정리 (@tremor/react 제거 완료)
 - [ ] import 경로 최종 점검
 
 #### 6-2. 문서화 및 테스트
 - [ ] Storybook 또는 컴포넌트 문서 작성 (선택사항)
 - [ ] 컴포넌트 사용 가이드 작성
 - [ ] 접근성 검증 (a11y)
-- [ ] 타입 안전성 최종 검증 (`pnpm type-check`)
+- [x] 타입 안전성 최종 검증 (`pnpm type-check`)
 
 #### 6-3. 성능 최적화
 - [ ] 컴포넌트 번들 사이즈 분석
@@ -227,17 +227,22 @@ dongwook.kim/
 
 ## 다음 작업 (Next Steps)
 
-### 즉시 시작 (Phase 5)
+### 진행 중 (Phase 6)
 
-1. **Editor 컴포넌트 현대화 (shadcn-tiptap 활용)**
-   - shadcn-tiptap 설치 및 설정
-   - Editor/index.tsx → shadcn-tiptap 기반 재작성
-   - BubbleMenu, NodeSelector, ColorSelector, LinkSelector, SlashCommand 전환
-
-2. **Phase 6: 최종 정리 및 최적화**
-   - 레거시 코드 정리 (중복 컴포넌트, 미사용 의존성)
+1. **레거시 코드 정리**
+   - 중복 컴포넌트 제거
+   - 미사용 의존성 정리 (정기 점검)
    - import 경로 최종 점검
-   - 타입 안전성 최종 검증
+
+2. **문서화 및 품질 검증**
+   - 컴포넌트 사용 가이드 작성
+   - 접근성 검증 (a11y)
+   - ESLint 경고 0건 상태 유지
+
+3. **성능 최적화**
+   - 컴포넌트 번들 사이즈 분석
+   - 불필요한 리렌더링 최적화
+   - 코드 스플리팅 적용
 
 ## 참고 사항
 
@@ -255,8 +260,8 @@ dongwook.kim/
 ## 완료 기준 (Definition of Done)
 
 각 Phase 완료 시:
-- [ ] 모든 타입 에러 해결 (`pnpm type-check` 통과)
-- [ ] ESLint 경고 없음
+- [x] 모든 타입 에러 해결 (`pnpm type-check` 통과)
+- [x] ESLint 경고 없음
 - [ ] 기존 기능 정상 동작 확인
 - [ ] 커밋 메시지 작성 및 푸시
 - [ ] spec.md 업데이트
@@ -272,4 +277,4 @@ dongwook.kim/
 ---
 
 **최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 5 진행 중 (Editor index 레이아웃 개선 및 hydration 안정화 완료)
+**현재 Phase**: Phase 6 진행 중 (UI 공통 컴포넌트 보강 및 린트 경고 정리 완료)

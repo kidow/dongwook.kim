@@ -30,9 +30,9 @@ export type Result<T> =
 
 ### 최소 구현 가이드
 
-- 데이터 fetch 레이어: `app/api` 또는 `shared/utils/api/*`
+- 데이터 fetch 레이어: `app/api` 또는 `utils/api/*`
 - UI 레이어: `components/Widget/*`
-- 환경변수 파싱/검증: `shared/utils/env.ts` (추후 생성)
+- 환경변수 파싱/검증: `utils/env.ts`
 
 ---
 

@@ -2,7 +2,6 @@ import { Client } from '@notionhq/client'
 import type {
   BlockObjectResponse,
   PageObjectResponse,
-  PartialPageObjectResponse,
   PropertyItemObjectResponse,
   QueryDataSourceResponse,
   RichTextItemResponse

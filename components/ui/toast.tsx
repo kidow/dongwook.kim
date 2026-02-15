@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom'
 
 import { EventListener } from '@/utils'
 
-export function CustomToast() {
+export function Toast() {
   const [list, setList] = useState<NToast.Item[]>([])
 
   useEffect(() => {
@@ -39,17 +39,17 @@ export function CustomToast() {
 
   return createPortal(
     <div role="alertdialog">
-      <ul className="fixed right-4 top-4 z-50 space-y-4">
+      <ul className="fixed top-4 right-4 z-50 space-y-4">
         {list.map((item) => (
           <li
             key={item.id}
             onClick={() =>
               setList((prev) => prev.filter((currentItem) => currentItem.id !== item.id))
             }
-            className="animate-toast-open relative w-80 cursor-pointer select-none rounded-lg border border-neutral-200 bg-white p-4"
+            className="animate-toast-open bg-card text-card-foreground relative w-80 cursor-pointer select-none rounded-lg border border-border p-4"
             role="alert"
           >
-            <button className="absolute right-2 top-2" type="button" aria-label="Close toast">
+            <button className="absolute top-2 right-2" type="button" aria-label="Close toast">
               ×
             </button>
             <div className="flex items-start gap-3">
@@ -59,9 +59,7 @@ export function CustomToast() {
                 {item.type === 'warn' && '⚠️'}
                 {item.type === 'error' && '⛔'}
               </span>
-              <p className="flex-1 break-keep pr-4 text-neutral-900">
-                {item.message}
-              </p>
+              <p className="text-foreground flex-1 break-keep pr-4">{item.message}</p>
             </div>
           </li>
         ))}

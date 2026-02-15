@@ -15,7 +15,7 @@ export const TiptapEditorProps: EditorProps = {
       }
     }
   },
-  handlePaste: (view, event) => {
+  handlePaste: (_view, event) => {
     if (
       event.clipboardData &&
       event.clipboardData.files &&
@@ -23,15 +23,13 @@ export const TiptapEditorProps: EditorProps = {
     ) {
       event.preventDefault()
       const file = event.clipboardData.files[0]
-      const pos = view.state.selection.from
-
       console.log('file', file)
-      //   startImageUpload(file, view, pos)
+      //   startImageUpload(file, _view, _view.state.selection.from)
       return true
     }
     return false
   },
-  handleDrop: (view, event, _slice, moved) => {
+  handleDrop: (_view, event, _slice, moved) => {
     if (
       !moved &&
       event.dataTransfer &&
@@ -40,13 +38,12 @@ export const TiptapEditorProps: EditorProps = {
     ) {
       event.preventDefault()
       const file = event.dataTransfer.files[0]
-      const coordinates = view.posAtCoords({
-        left: event.clientX,
-        top: event.clientY
-      })
-
       console.log('file', file)
-      //   startImageUpload(file, view, coordinates.pos - 1)
+      //   startImageUpload(
+      //     file,
+      //     _view,
+      //     _view.posAtCoords({ left: event.clientX, top: event.clientY })?.pos - 1
+      //   )
       return true
     }
     return false
