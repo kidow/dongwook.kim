@@ -2,6 +2,8 @@ import { Suspense } from 'react'
 import Image from 'next/image'
 import { FileTextIcon, MailIcon, StickyNoteIcon } from 'lucide-react'
 
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import WidgetGithub from '@/components/Widget/widget-github'
 import * as Icon from '@/components/icons'
 import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
@@ -18,9 +20,9 @@ export default async function Home() {
         icon={<Icon.Github />}
         title="Github"
         button={
-          <button className="rounded-md border border-neutral-200 bg-slate-50 px-[21px] py-[7px] text-xs font-bold text-neutral-600">
+          <Button variant="outline" size="sm" className="pointer-events-none text-xs font-bold">
             Follow
-          </button>
+          </Button>
         }
       >
         <WidgetGithub />
@@ -31,8 +33,8 @@ export default async function Home() {
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="/resume"
         icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-neutral-200 bg-white">
-            <FileTextIcon className="h-5 w-5" />
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <FileTextIcon className="size-5" />
           </span>
         }
         title="Résumé"
@@ -43,8 +45,8 @@ export default async function Home() {
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="mailto:wcgo2ling@gmail.com"
         icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-neutral-200 bg-white">
-            <MailIcon className="h-5 w-5" />
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <MailIcon className="size-5" />
           </span>
         }
         title="Gmail"
@@ -52,24 +54,22 @@ export default async function Home() {
       />
 
       <WidgetMap />
-      <li className="row-span-2 h-[178px] w-[178px] overflow-hidden rounded-3xl border border-neutral-200 shadow-sm xl:col-span-2 xl:h-[390px] xl:w-[390px]">
-        <iframe
-          src="https://giphy.com/embed/fWrDTtdw9nDVWmWrlq"
-          className="giphy-embed h-full w-full"
-          allowFullScreen
-        />
-        <p>
-          <a href="https://giphy.com/gifs/BoschGlobal-coding-home-office-remote-working-fWrDTtdw9nDVWmWrlq">
-            via GIPHY
-          </a>
-        </p>
+      <li className="row-span-2 h-[178px] w-[178px] overflow-hidden xl:col-span-2 xl:h-[390px] xl:w-[390px]">
+        <Card className="h-full w-full overflow-hidden rounded-3xl border-neutral-200 py-0 shadow-sm">
+          <iframe
+            src="https://giphy.com/embed/fWrDTtdw9nDVWmWrlq"
+            className="giphy-embed h-full w-full"
+            title="Coding GIF"
+            allowFullScreen
+          />
+        </Card>
       </li>
       <WidgetLink
         className="xl:col-span-2 xl:hover:rotate-1"
         size="h-[178px] w-full xl:h-[175px] xl:w-[390px] hover:bg-neutral-50"
         href="/blog"
         icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-neutral-200 bg-white p-1">
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white p-1">
             <Image src="/blog.png" alt="blog" width={20} height={20} />
           </span>
         }
@@ -86,13 +86,16 @@ export default async function Home() {
         title="Twitter"
         description="@__kidow__"
         button={
-          <button className="flex items-center justify-center gap-1 rounded-full bg-[#55acee] px-4 py-[7px] text-xs hover:bg-[#4698d7]">
-            <span className="font-bold text-white">Follow</span>
-          </button>
+          <Button
+            size="sm"
+            className="pointer-events-none rounded-full bg-[#55acee] text-xs font-bold text-white hover:bg-[#4698d7]"
+          >
+            Follow
+          </Button>
         }
       />
       <li className="col-span-2 row-span-2">
-        <div className="h-[390px] w-full rounded-3xl border border-neutral-200 bg-emerald-50 shadow-sm" />
+        <Card className="h-[390px] w-full rounded-3xl border-neutral-200 bg-emerald-50 py-0 shadow-sm" />
       </li>
 
       <WidgetLink
@@ -138,8 +141,8 @@ export default async function Home() {
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
         href="/memo"
         icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-neutral-200 bg-white">
-            <StickyNoteIcon className="h-5 w-5" />
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <StickyNoteIcon className="size-5" />
           </span>
         }
         title="MEMO"

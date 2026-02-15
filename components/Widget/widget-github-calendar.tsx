@@ -3,9 +3,9 @@
 import dayjs from 'dayjs'
 import Calendar from 'react-github-contribution-calendar'
 
-type GithubContributionMap = Record<string, number>
+import type { GithubContributionMap } from './types'
 
-type Props = {
+interface Props {
   values: GithubContributionMap
 }
 

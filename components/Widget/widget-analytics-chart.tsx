@@ -5,13 +5,9 @@ import { Area, AreaChart, ResponsiveContainer, XAxis } from 'recharts'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
-type Props = {
-  total: number
-  percent: number
-  list: { date: string; '방문자 수': string }[]
-}
+import type { AnalyticsChartProps } from './types'
 
-export default function WidgetAnalyticsChart({ total, percent, list }: Props) {
+export default function WidgetAnalyticsChart({ total, percent, list }: AnalyticsChartProps) {
   return (
     <li className="col-span-2">
       <Card className="rounded-3xl border-neutral-200 py-0 shadow-sm">

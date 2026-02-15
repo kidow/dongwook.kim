@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 
 import { Card, CardContent } from '@/components/ui/card'
 
-type GithubContributionMap = Record<string, number>
+import type { GithubContributionMap } from './types'
 
 const GithubCalendarClient = dynamic(() =>
   import('./widget-github-calendar').then((m) => m.default)

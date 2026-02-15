@@ -97,33 +97,56 @@
 - [ ] `shared/utils` 폴더 제거
 - [ ] `shared` 폴더 완전 제거
 
-### Phase 3: 레이아웃 컴포넌트 리팩토링 (P1)
+### Phase 3: 레이아웃 컴포넌트 리팩토링 (P1) ✅
 
 #### 3-1. Header 컴포넌트 현대화
-- [ ] `components/Header.tsx` shadcn 기반 재작성
-  - Button, Badge 컴포넌트 활용
-  - 반응형 네비게이션 개선
-  - 타입 안전성 강화
+- [x] `components/Header.tsx` shadcn 기반 재작성
+  - Badge 컴포넌트 활용 (설명 영역 이모지 뱃지)
+  - 접근성 강화 (role="banner", aria-label, 시맨틱 태그 h1/p)
+  - 타입 안전성 강화 (상수 추출, isBlogDetail 변수 분리)
+  - focus-visible 링 스타일 추가
 
 #### 3-2. Footer 컴포넌트 현대화
-- [ ] `components/Footer.tsx` shadcn 기반 재작성
-  - 링크 스타일 통일
-  - 아이콘 처리 개선
+- [x] `components/Footer.tsx` shadcn 기반 재작성
+  - Button (variant="link") 컴포넌트 활용
+  - 접근성 강화 (role="contentinfo", rel="noopener noreferrer")
+  - shadcn 디자인 토큰 적용 (text-muted-foreground)
 
-### Phase 4: Widget 컴포넌트 리팩토링 (P1)
+### Phase 4: Widget 컴포넌트 리팩토링 (P1) ✅
 
 #### 4-1. 기본 Widget 컴포넌트 전환
-- [ ] `widget-link.tsx` → shadcn Card + Button 기반
-- [ ] `widget-quote.tsx` → shadcn Card + Blockquote 스타일
-- [ ] Widget 공통 타입 및 인터페이스 정의
+- [x] `widget-link.tsx` → shadcn Card + Button 기반
+  - 접근성 강화 (aria-label, focus-visible, 조건부 rel)
+  - shadcn 디자인 토큰 적용 (text-muted-foreground, border-border)
+  - 공통 타입 import로 전환
+- [x] `widget-quote.tsx` → shadcn Card + Blockquote 스타일
+  - `<blockquote>` 시맨틱 태그 적용
+  - shadcn 디자인 토큰 적용 (border-border, text-muted-foreground)
+  - 상수 추출 (QUOTE_TEXT)
+- [x] Widget 공통 타입 및 인터페이스 정의
+  - `components/Widget/types.ts` 생성
+  - WidgetLinkProps, WidgetCardProps, GithubContributionMap, AnalyticsChartProps 등
 
 #### 4-2. 동적 Widget 컴포넌트 전환
-- [ ] `widget-github.tsx` → shadcn Card 기반
-- [ ] `widget-github-calendar.tsx` → shadcn Card 기반
-- [ ] `widget-analytics.tsx` → shadcn Card + Chart (Tremor 대체 고려)
-- [ ] `widget-analytics-chart.tsx` → 차트 라이브러리 통합
-- [ ] `widget-scheduling.tsx` → shadcn Card 기반
-- [ ] `widget-map.tsx` → shadcn Card 기반
+- [x] `widget-github.tsx` → 공통 타입 적용
+- [x] `widget-github-calendar.tsx` → 공통 타입 적용
+- [x] `widget-analytics-chart.tsx` → 공통 타입 적용 (AnalyticsChartProps)
+- [x] `widget-scheduling.tsx` → shadcn Button 활용, 디자인 토큰 적용
+  - Button (variant="ghost") 네비게이션 버튼
+  - 상수 추출 (TIMES, WEEKDAYS, PAST_DAYS, FUTURE_DAYS)
+  - 접근성 강화 (aria-label)
+  - shadcn 디자인 토큰 (bg-primary, bg-secondary, border-border 등)
+- [x] `widget-map.tsx` → shadcn Badge 활용
+  - Badge (variant="outline") 위치 라벨
+  - 상수 추출 (LOCATION)
+  - 접근성 강화 (aria-label)
+
+#### 4-3. page.tsx 인라인 요소 전환
+- [x] 인라인 `<button>` → shadcn Button 컴포넌트
+- [x] 인라인 `<div>` 카드 → shadcn Card 컴포넌트
+- [x] `border-neutral-200` → `border-border` 디자인 토큰 통일
+- [x] `h-5 w-5` → `size-5` 클래스 통일
+- [x] iframe에 `title` 속성 추가 (접근성)
 
 ### Phase 5: 페이지 특화 컴포넌트 리팩토링 (P2)
 
@@ -203,24 +226,17 @@ dongwook.kim/
 
 ## 다음 작업 (Next Steps)
 
-### 즉시 시작 (Phase 0)
+### 즉시 시작 (Phase 5)
 
-1. **utils 폴더 생성 및 마이그레이션**
-   - `shared/utils/*` → `utils/*`로 이동
-   - 모든 import 경로 업데이트
+1. **Editor 컴포넌트 현대화 (shadcn-tiptap 활용)**
+   - shadcn-tiptap 설치 및 설정
+   - Editor/index.tsx → shadcn-tiptap 기반 재작성
+   - BubbleMenu, NodeSelector, ColorSelector, LinkSelector, SlashCommand 전환
 
-2. **shadcn/ui 초기 설정 (Phase 1)**
-   - `npx shadcn@latest init` 실행
-   - Tailwind CSS v4 호환 확인
-   - 기본 설정 완료
-
-3. **핵심 컴포넌트 5개 설치**
-   - Button, Card, Badge, Tooltip, Spinner
-   - 각 컴포넌트 동작 검증
-
-4. **첫 번째 마이그레이션 대상**
-   - `shared/ui/tooltip.tsx` → `components/ui/tooltip.tsx`
-   - 가장 간단하고 의존성이 적은 컴포넌트부터 시작
+2. **Phase 6: 최종 정리 및 최적화**
+   - 레거시 코드 정리 (중복 컴포넌트, 미사용 의존성)
+   - import 경로 최종 점검
+   - 타입 안전성 최종 검증
 
 ## 참고 사항
 
@@ -255,4 +271,4 @@ dongwook.kim/
 ---
 
 **최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 2 완료 (shared 폴더 제거 완료, shadcn/ui 기반 환경 구축 완료)
+**현재 Phase**: Phase 4 완료 (레이아웃 + Widget 컴포넌트 리팩토링 완료)
