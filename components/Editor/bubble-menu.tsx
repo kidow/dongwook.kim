@@ -10,7 +10,7 @@ import {
   StrikethroughIcon,
   UnderlineIcon
 } from 'lucide-react'
-import { cn } from '@/utils'
+import { cn } from '@/lib/utils'
 
 import { ColorSelector } from './color-selector'
 import { LinkSelector } from './link-selector'

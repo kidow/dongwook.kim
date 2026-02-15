@@ -255,4 +255,4 @@ dongwook.kim/
 ---
 
 **최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 0 (프로젝트 구조 정리)
+**현재 Phase**: Phase 2 완료 (shared 폴더 제거 완료, shadcn/ui 기반 환경 구축 완료)

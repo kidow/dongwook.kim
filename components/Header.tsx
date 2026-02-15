@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { cn } from '@/utils'
+import { cn } from '@/lib/utils'
 
 function Header() {
   const pathname = usePathname()
@@ -50,10 +50,7 @@ function Header() {
             <div className="text-[32px] font-bold leading-[120%] tracking-[-1px] [view-transition-name:header-title] xl:text-[44px] xl:tracking-[-2px]">
               Kidow
             </div>
-            <div
-              className="mt-3 text-[#565656] [view-transition-name:header-description] xl:mt-3 xl:text-xl"
-              style={{ color: '#565656' }}
-            >
+            <div className="mt-3 text-muted-foreground [view-transition-name:header-description] xl:mt-3 xl:text-xl">
               비즈니스에 관심이 많은 웹 개발자 ✨
             </div>
           </div>
