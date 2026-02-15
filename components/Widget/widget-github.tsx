@@ -45,7 +45,7 @@ async function getGithubContributions(): Promise<GithubContributionMap | null> {
         `,
         variables: { userName: 'kidow' }
       }),
-      cache: 'no-store',
+      next: { revalidate: 3600 },
       signal: controller.signal
     }).finally(() => {
       clearTimeout(timeout)
