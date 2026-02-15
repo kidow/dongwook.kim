@@ -11,7 +11,8 @@ const fallbackPosts: BlogPostSummary[] = [
     title: 'Link-in-bio UI 마이그레이션 회고',
     description: 'UI 우선 이식 전략과 단계별 커밋 운영 방식을 정리한 글입니다.',
     date: '2026-02-10',
-    tags: ['migration', 'nextjs']
+    tags: ['migration', 'nextjs'],
+    thumbnailUrl: '/blog.png'
   },
   {
     id: 'fallback-2',
@@ -20,7 +21,8 @@ const fallbackPosts: BlogPostSummary[] = [
     title: 'Widget 구조화 메모',
     description: '정적 위젯과 동적 위젯을 분리해 확장하는 구조를 정리했습니다.',
     date: '2026-02-07',
-    tags: ['architecture', 'component']
+    tags: ['architecture', 'component'],
+    thumbnailUrl: '/blog.png'
   },
   {
     id: 'fallback-3',
@@ -29,7 +31,8 @@ const fallbackPosts: BlogPostSummary[] = [
     title: '디자인 토큰과 Tailwind 운영',
     description: '재사용 가능한 UI 토큰을 설계할 때 고려한 기준을 다룹니다.',
     date: '2026-02-04',
-    tags: ['tailwind', 'design-system']
+    tags: ['tailwind', 'design-system'],
+    thumbnailUrl: '/blog.png'
   }
 ]
 
@@ -82,8 +85,14 @@ export default async function BlogPage() {
         {posts.map((post) => (
           <li key={post.id}>
             <article className="group relative overflow-hidden rounded-[10px] border border-neutral-200 bg-white">
-              <div className="h-[170px] w-full bg-gradient-to-br from-slate-50 via-white to-slate-100 p-5 xl:h-[200px] xl:p-6">
-                <div className="flex flex-wrap gap-2">
+              <div className="relative h-[170px] w-full overflow-hidden xl:h-[200px]">
+                <img
+                  src={post.thumbnailUrl || '/blog.png'}
+                  alt={`${post.title} thumbnail`}
+                  className="h-full w-full object-cover duration-200 group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div className="absolute left-5 top-5 flex flex-wrap gap-2 xl:left-6 xl:top-6">
                   {post.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}

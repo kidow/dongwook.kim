@@ -21,6 +21,7 @@ export interface BlogPostSummary {
   date: string
   tags: string[]
   notionPageId: string
+  thumbnailUrl?: string
 }
 
 export type BlogBlock =
@@ -263,6 +264,22 @@ function getTagProperty(
   return []
 }
 
+function getCoverUrl(page: PageObjectResponse): string | undefined {
+  if (!page.cover) {
+    return undefined
+  }
+
+  if (page.cover.type === 'external') {
+    return page.cover.external.url
+  }
+
+  if (page.cover.type === 'file') {
+    return page.cover.file.url
+  }
+
+  return undefined
+}
+
 function getSlugProperty(
   page: PageObjectResponse,
   properties: PageObjectResponse['properties']
@@ -336,7 +353,8 @@ function mapPostSummary(page: PageObjectResponse): BlogPostSummary {
         'Summary'
       ]) || `${title} 포스트`,
     date: getDateProperty(page, properties),
-    tags: getTagProperty(properties)
+    tags: getTagProperty(properties),
+    thumbnailUrl: getCoverUrl(page)
   }
 }
 
