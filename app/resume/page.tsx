@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL)
 }
 
-export const revalidate = 60 * 60 * 24 * 7
+export const revalidate = 604800
 
 function formatUpdatedAt(value: string): string {
   const date = new Date(value)
