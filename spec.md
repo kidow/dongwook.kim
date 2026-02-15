@@ -161,9 +161,9 @@
   - ToolbarProvider 적용
   - shadcn/ui 컴포넌트 활용
 - [ ] `Editor/bubble-menu.tsx` → shadcn-tiptap BubbleMenu
-- [ ] `Editor/node-selector.tsx` → shadcn-tiptap NodeSelector 또는 shadcn Select
-- [ ] `Editor/color-selector.tsx` → shadcn-tiptap ColorSelector 또는 shadcn Popover
-- [ ] `Editor/link-selector.tsx` → shadcn-tiptap LinkSelector 또는 shadcn Popover + Input
+- [x] `Editor/node-selector.tsx` → shadcn-tiptap NodeSelector 또는 shadcn Select
+- [x] `Editor/color-selector.tsx` → shadcn-tiptap ColorSelector 또는 shadcn Popover
+- [x] `Editor/link-selector.tsx` → shadcn-tiptap LinkSelector 또는 shadcn Popover + Input
 - [x] `Editor/slash-command.tsx` → shadcn Command 컴포넌트
 
 ### Phase 6: 최종 정리 및 최적화 (P2)
@@ -271,4 +271,4 @@ dongwook.kim/
 ---
 
 **최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 5 진행 중 (Editor SlashCommand shadcn Command 전환 완료)
+**현재 Phase**: Phase 5 진행 중 (Editor selector 컴포넌트 shadcn 패턴 전환 + type-check 통과)

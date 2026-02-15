@@ -1,6 +1,6 @@
 'use client'
 
-import { Dispatch, FC, SetStateAction } from 'react'
+import type { FC } from 'react'
 import { Editor } from '@tiptap/core'
 import {
   Check,
@@ -26,13 +26,13 @@ import { BubbleMenuItem } from './bubble-menu'
 interface NodeSelectorProps {
   editor: Editor
   isOpen: boolean
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  onOpenChange: (open: boolean) => void
 }
 
 export const NodeSelector: FC<NodeSelectorProps> = ({
   editor,
   isOpen,
-  setIsOpen
+  onOpenChange
 }) => {
   const items: BubbleMenuItem[] = [
     {
@@ -106,12 +106,13 @@ export const NodeSelector: FC<NodeSelectorProps> = ({
   }
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={isOpen} onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>
         <Button
           variant="ghost"
           size="sm"
           className="gap-1 rounded-none font-medium"
+          aria-label="Select node type"
         >
           <span>{activeItem?.name}</span>
           <ChevronDown className="h-4 w-4" />
@@ -122,17 +123,17 @@ export const NodeSelector: FC<NodeSelectorProps> = ({
         className="w-48 p-1"
         onOpenAutoFocus={(event: Event) => event.preventDefault()}
       >
-        {items.map((item, index) => (
+        {items.map((item) => (
           <button
-            key={index}
+            key={item.name}
             onClick={() => {
               item.command()
-              setIsOpen(false)
+              onOpenChange(false)
             }}
-            className="flex w-full items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100"
+            className="hover:bg-accent hover:text-accent-foreground flex w-full items-center justify-between rounded-sm px-2 py-1 text-sm text-muted-foreground"
           >
             <div className="flex items-center space-x-2">
-              <div className="rounded-sm border border-stone-200 p-1">
+              <div className="rounded-sm border border-border p-1 text-foreground">
                 <item.icon className="h-3 w-3" />
               </div>
               <span>{item.name}</span>

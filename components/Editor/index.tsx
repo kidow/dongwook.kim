@@ -26,10 +26,14 @@ const inter = Inter({
 })
 
 export default function Editor() {
-  const [content, setContent] = useLocalStorage<Content>('content', {
+  const initialDoc: Content = {
     type: 'doc',
     content: [{ type: 'paragraph' }]
-  })
+  }
+  const [content, setContent, storageReady] = useLocalStorage<Content>(
+    'content',
+    initialDoc
+  )
   const [saveStatus, setSaveStatus] = useState('저장됨')
   const [hydrated, setHydrated] = useState(false)
 
@@ -47,6 +51,9 @@ export default function Editor() {
     editorProps: TiptapEditorProps,
     immediatelyRender: false,
     onUpdate: (e) => {
+      if (!storageReady || !hydrated) {
+        return
+      }
       setSaveStatus('작성 중...')
       debouncedUpdates(e)
     },
@@ -64,11 +71,11 @@ export default function Editor() {
   }
 
   useEffect(() => {
-    if (editor && content && !hydrated) {
+    if (editor && storageReady && content && !hydrated) {
       editor.commands.setContent(content)
       setHydrated(true)
     }
-  }, [editor, content, hydrated])
+  }, [editor, storageReady, content, hydrated])
   return (
     <div
       className={cn(

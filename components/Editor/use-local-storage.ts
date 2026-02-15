@@ -4,8 +4,9 @@ import { useSearchParams } from 'next/navigation'
 export function useLocalStorage<T>(
   key: string,
   initialValue: T
-): [T, (value: T) => void] {
+): [T, (value: T) => void, boolean] {
   const [storedValue, setStoredValue] = useState(initialValue)
+  const [isReady, setIsReady] = useState(false)
   const searchParams = useSearchParams()
 
   useEffect(() => {
@@ -17,11 +18,13 @@ export function useLocalStorage<T>(
     } else if (item) {
       setStoredValue(JSON.parse(item))
     }
+
+    setIsReady(true)
   }, [key, searchParams])
 
   const setValue = (value: T) => {
     setStoredValue(value)
     window.localStorage.setItem(key, JSON.stringify(value))
   }
-  return [storedValue, setValue]
+  return [storedValue, setValue, isReady]
 }

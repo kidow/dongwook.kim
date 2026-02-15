@@ -77,41 +77,58 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuComponentProps> = (props) => {
   const [isColorSelectorOpen, setIsColorSelectorOpen] = useState(false)
   const [isLinkSelectorOpen, setIsLinkSelectorOpen] = useState(false)
 
+  const handleNodeOpenChange = (open: boolean) => {
+    setIsNodeSelectorOpen(open)
+    if (open) {
+      setIsColorSelectorOpen(false)
+      setIsLinkSelectorOpen(false)
+    }
+  }
+
+  const handleLinkOpenChange = (open: boolean) => {
+    setIsLinkSelectorOpen(open)
+    if (open) {
+      setIsColorSelectorOpen(false)
+      setIsNodeSelectorOpen(false)
+    }
+  }
+
+  const handleColorOpenChange = (open: boolean) => {
+    setIsColorSelectorOpen(open)
+    if (open) {
+      setIsNodeSelectorOpen(false)
+      setIsLinkSelectorOpen(false)
+    }
+  }
+
   return (
     <BubbleMenu
       {...bubbleMenuProps}
-      className="not-prose flex w-fit divide-x divide-stone-200 rounded border border-stone-200 bg-white shadow-xl"
+      className="bg-popover not-prose flex w-fit divide-x divide-border rounded-md border border-border shadow-md"
     >
       <NodeSelector
         editor={props.editor}
         isOpen={isNodeSelectorOpen}
-        setIsOpen={() => {
-          setIsNodeSelectorOpen(!isNodeSelectorOpen)
-          setIsColorSelectorOpen(false)
-          setIsLinkSelectorOpen(false)
-        }}
+        onOpenChange={handleNodeOpenChange}
       />
       <LinkSelector
         editor={props.editor}
         isOpen={isLinkSelectorOpen}
-        setIsOpen={() => {
-          setIsLinkSelectorOpen(!isLinkSelectorOpen)
-          setIsColorSelectorOpen(false)
-          setIsNodeSelectorOpen(false)
-        }}
+        onOpenChange={handleLinkOpenChange}
       />
       <div className="flex">
-        {items.map((item, index) => (
+        {items.map((item) => (
           <Button
-            key={index}
+            key={item.name}
             variant="ghost"
             size="icon"
             onClick={item.command}
             className="h-8 w-8 rounded-none"
+            aria-label={`Toggle ${item.name}`}
           >
             <item.icon
               className={cn('h-4 w-4', {
-                'text-blue-500': item.isActive()
+                'text-primary': item.isActive()
               })}
             />
           </Button>
@@ -120,11 +137,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuComponentProps> = (props) => {
       <ColorSelector
         editor={props.editor}
         isOpen={isColorSelectorOpen}
-        setIsOpen={() => {
-          setIsColorSelectorOpen(!isColorSelectorOpen)
-          setIsNodeSelectorOpen(false)
-          setIsLinkSelectorOpen(false)
-        }}
+        onOpenChange={handleColorOpenChange}
       />
     </BubbleMenu>
   )

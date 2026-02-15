@@ -1,6 +1,6 @@
 'use client'
 
-import { Dispatch, FC, SetStateAction } from 'react'
+import type { FC } from 'react'
 import { Editor } from '@tiptap/core'
 import { Check, ChevronDown } from 'lucide-react'
 
@@ -19,7 +19,7 @@ export interface BubbleColorMenuItem {
 interface ColorSelectorProps {
   editor: Editor
   isOpen: boolean
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  onOpenChange: (open: boolean) => void
 }
 
 const TEXT_COLORS: BubbleColorMenuItem[] = [
@@ -49,7 +49,7 @@ const HIGHLIGHT_COLORS: BubbleColorMenuItem[] = [
 export const ColorSelector: FC<ColorSelectorProps> = ({
   editor,
   isOpen,
-  setIsOpen
+  onOpenChange
 }) => {
   const activeColorItem = TEXT_COLORS.find(({ color }) =>
     editor.isActive('textStyle', { color })
@@ -60,12 +60,13 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
   )
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={isOpen} onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>
         <Button
           variant="ghost"
           size="sm"
           className="gap-1 rounded-none font-medium"
+          aria-label="Select text and highlight colors"
         >
           <span
             className="rounded-sm px-1"
@@ -85,20 +86,21 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
         onOpenAutoFocus={(event: Event) => event.preventDefault()}
       >
         <div className="my-1 px-2 text-sm text-muted-foreground">Color</div>
-        {TEXT_COLORS.map(({ name, color }, index) => (
+        {TEXT_COLORS.map(({ name, color }) => (
           <button
-            key={index}
+            key={`text-${name}`}
             onClick={() => {
               editor.commands.unsetColor()
-              name !== 'Default' &&
+              if (name !== 'Default') {
                 editor.chain().focus().setColor(color).run()
-              setIsOpen(false)
+              }
+              onOpenChange(false)
             }}
-            className="flex w-full items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100"
+            className="hover:bg-accent hover:text-accent-foreground flex w-full items-center justify-between rounded-sm px-2 py-1 text-sm text-muted-foreground"
           >
             <div className="flex items-center space-x-2">
               <div
-                className="rounded-sm border border-stone-200 px-1 py-px font-medium"
+                className="rounded-sm border border-border px-1 py-px font-medium"
                 style={{ color }}
               >
                 A
@@ -115,19 +117,21 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
           Background
         </div>
 
-        {HIGHLIGHT_COLORS.map(({ name, color }, index) => (
+        {HIGHLIGHT_COLORS.map(({ name, color }) => (
           <button
-            key={index}
+            key={`highlight-${name}`}
             onClick={() => {
               editor.commands.unsetHighlight()
-              name !== 'Default' && editor.commands.setHighlight({ color })
-              setIsOpen(false)
+              if (name !== 'Default') {
+                editor.commands.setHighlight({ color })
+              }
+              onOpenChange(false)
             }}
-            className="flex w-full items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100"
+            className="hover:bg-accent hover:text-accent-foreground flex w-full items-center justify-between rounded-sm px-2 py-1 text-sm text-muted-foreground"
           >
             <div className="flex items-center space-x-2">
               <div
-                className="rounded-sm border border-stone-200 px-1 py-px font-medium"
+                className="rounded-sm border border-border px-1 py-px font-medium"
                 style={{ backgroundColor: color }}
               >
                 A
