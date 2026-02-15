@@ -34,11 +34,13 @@
 Trello 스타일 칸반 보드. 드래그 앤 드롭으로 카드를 이동하며, localStorage에 데이터를 저장하여 새로고침에도 유지.
 
 #### 1-1. 프로젝트 셋업
+
 - [ ] `app/kanban/page.tsx` 생성
 - [ ] 칸반 관련 타입 정의 (`Board`, `Column`, `Card`)
 - [ ] localStorage 훅 구현 (기존 `use-local-storage.ts` 활용 또는 확장)
 
 #### 1-2. 핵심 UI 구현
+
 - [ ] 보드 레이아웃 (수평 스크롤 가능한 컬럼 리스트)
 - [ ] 컬럼 컴포넌트 (제목, 카드 수, 추가 버튼)
 - [ ] 카드 컴포넌트 (제목, 설명, 라벨/색상)
@@ -46,15 +48,18 @@ Trello 스타일 칸반 보드. 드래그 앤 드롭으로 카드를 이동하�
 - [ ] 컬럼 추가/편집/삭제 기능
 
 #### 1-3. 드래그 앤 드롭
+
 - [ ] `@dnd-kit/core` + `@dnd-kit/sortable` 설치
 - [ ] 카드 간 드래그 앤 드롭 (같은 컬럼 내, 다른 컬럼 간)
 - [ ] 컬럼 순서 변경 드래그 앤 드롭
 
 #### 1-4. 위젯 등록
+
 - [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `KanbanIcon` 등)
 
 #### 1-5. 마무리
+
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 - [ ] 반응형 레이아웃 검증
 
@@ -67,27 +72,32 @@ Trello 스타일 칸반 보드. 드래그 앤 드롭으로 카드를 이동하�
 Fumadocs 프레임워크 기반 코드 스니펫/문서 보관소. 사전 검토 필요.
 
 #### 2-1. Fumadocs 호환성 조사
+
 - [ ] Fumadocs(https://fumadocs.dev)와 기존 Next.js 16 / App Router 호환성 확인
 - [ ] Fumadocs를 서브 라우트(`/archive`)로 통합하는 방법 조사
 - [ ] 기존 shadcn/ui 테마와의 충돌 여부 확인
 - [ ] 호환 불가 시 대안 검토 (MDX 직접 구현, Contentlayer 등)
 
 #### 2-2. Fumadocs 셋업 (호환 확인 후)
+
 - [ ] `fumadocs-core`, `fumadocs-ui` 설치
 - [ ] `app/archive/` 라우트 구성 (Fumadocs layout 적용)
 - [ ] MDX 콘텐츠 디렉토리 구조 설계 (`content/archive/`)
 - [ ] 코드 하이라이팅 설정 (Shiki 등)
 
 #### 2-3. 콘텐츠 구조
+
 - [ ] 카테고리별 분류 체계 정의 (예: React, TypeScript, CSS, Utilities 등)
 - [ ] 코드 스니펫 템플릿 MDX 작성
 - [ ] 검색 기능 연동 (Fumadocs 내장 검색)
 
 #### 2-4. 위젯 등록
+
 - [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `ArchiveIcon` 등)
 
 #### 2-5. 마무리
+
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 - [ ] 빌드 검증 (`pnpm build`)
 
@@ -100,28 +110,33 @@ Fumadocs 프레임워크 기반 코드 스니펫/문서 보관소. 사전 검토
 Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자동 만료.
 
 #### 3-1. Supabase 셋업
+
 - [ ] Supabase 프로젝트 연결 (환경변수 설정)
 - [ ] `@supabase/supabase-js` 설치
 - [ ] `urls` 테이블 스키마 정의 (`id`, `short_code`, `original_url`, `created_at`, `expires_at`)
 - [ ] 24시간 만료 로직 (Supabase Edge Function 또는 Row Level Policy + cron)
 
 #### 3-2. API 구현
+
 - [ ] `app/api/shorten/route.ts` — URL 생성 API (POST)
 - [ ] `app/api/shorten/[code]/route.ts` — URL 리다이렉트 API (GET)
 - [ ] 단축 코드 생성 로직 (nanoid 등)
 - [ ] URL 유효성 검증
 
 #### 3-3. UI 구현
+
 - [ ] `app/url-shortner/page.tsx` 생성
 - [ ] URL 입력 폼 (shadcn Input + Button)
 - [ ] 생성된 단축 URL 표시 및 복사 버튼
 - [ ] 최근 생성 목록 (만료 시간 표시)
 
 #### 3-4. 위젯 등록
+
 - [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `LinkIcon` 등)
 
 #### 3-5. 마무리
+
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 - [ ] Supabase 환경변수 fallback UI 구현
 
@@ -134,11 +149,13 @@ Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자�
 브라우저에서 코드를 작성하고 실행할 수 있는 에디터. Sandpack 또는 Codapi 활용.
 
 #### 4-1. 기술 선택 및 셋업
+
 - [ ] Sandpack(https://sandpack.codesandbox.io)과 Codapi(https://codapi.org) 비교 검토
 - [ ] 선택한 라이브러리 설치 (`@codesandbox/sandpack-react` 또는 Codapi embed)
 - [ ] 지원 언어 범위 결정 (JavaScript/TypeScript 최우선)
 
 #### 4-2. UI 구현
+
 - [ ] `app/code-editor/page.tsx` 생성
 - [ ] 코드 에디터 영역 (구문 강조, 줄 번호)
 - [ ] 실행 버튼 및 실행 결과 출력 패널
@@ -146,14 +163,17 @@ Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자�
 - [ ] 에디터 테마 설정 (라이트/다크)
 
 #### 4-3. 추가 기능
+
 - [ ] 코드 공유 (URL 파라미터 또는 클립보드 복사)
 - [ ] 코드 템플릿/예제 프리셋
 
 #### 4-4. 위젯 등록
+
 - [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `CodeIcon` 등)
 
 #### 4-5. 마무리
+
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 - [ ] 반응형 레이아웃 검증
 
@@ -166,12 +186,14 @@ Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자�
 브라우저 내에서 이미지 파일의 확장자를 변환. JPEG, PNG, WebP, AVIF 지원. 서버 없이 클라이언트 사이드 처리.
 
 #### 5-1. 핵심 변환 로직
+
 - [ ] Canvas API 기반 이미지 변환 유틸리티 구현
 - [ ] 지원 포맷: JPEG ↔ PNG ↔ WebP ↔ AVIF
 - [ ] 품질 설정 옵션 (0-100%)
 - [ ] AVIF 변환은 브라우저 호환성 확인 필요
 
 #### 5-2. UI 구현
+
 - [ ] `app/image-converter/page.tsx` 생성
 - [ ] 드래그 앤 드롭 파일 업로드 영역
 - [ ] 이미지 미리보기 (원본/변환 결과 비교)
@@ -181,10 +203,12 @@ Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자�
 - [ ] 복수 파일 일괄 변환 지원
 
 #### 5-3. 위젯 등록
+
 - [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `ImageIcon` 등)
 
 #### 5-4. 마무리
+
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 - [ ] 파일 크기 제한 및 에러 핸들링
 
@@ -197,24 +221,29 @@ Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자�
 Excalidraw와 유사한 무한 캔버스 화이트보드.
 
 #### 6-1. 라이브러리 셋업
+
 - [ ] `@excalidraw/excalidraw` 설치 및 호환성 확인
 - [ ] 또는 대안 라이브러리 검토 (tldraw 등)
 
 #### 6-2. UI 구현
+
 - [ ] `app/canvas/page.tsx` 생성
 - [ ] Excalidraw 컴포넌트 임베드 (dynamic import + SSR 비활성화)
 - [ ] 전체 화면 레이아웃 (헤더/푸터 최소화 또는 숨김)
 - [ ] 테마 연동 (shadcn 디자인 토큰 활용)
 
 #### 6-3. 데이터 저장
+
 - [ ] localStorage에 캔버스 상태 저장/복원
 - [ ] PNG/SVG 내보내기 기능
 
 #### 6-4. 위젯 등록
+
 - [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `PenToolIcon` 등)
 
 #### 6-5. 마무리
+
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 - [ ] 번들 사이즈 확인 (Excalidraw는 대형 라이브러리)
 
@@ -227,9 +256,11 @@ Excalidraw와 유사한 무한 캔버스 화이트보드.
 URL 문자열을 입력하면 QR코드를 생성하는 도구.
 
 #### 7-1. 셋업
+
 - [ ] `qrcode.react` 설치
 
 #### 7-2. UI 구현
+
 - [ ] `app/qrcode-generator/page.tsx` 생성
 - [ ] URL 입력 필드 (shadcn Input)
 - [ ] QR코드 실시간 미리보기 (`QRCodeSVG` 컴포넌트)
@@ -238,10 +269,12 @@ URL 문자열을 입력하면 QR코드를 생성하는 도구.
 - [ ] PNG/SVG 다운로드 버튼
 
 #### 7-3. 위젯 등록
+
 - [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `QrCodeIcon` 등)
 
 #### 7-4. 마무리
+
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 
 **참고**: https://www.npmjs.com/package/qrcode.react
@@ -253,10 +286,12 @@ URL 문자열을 입력하면 QR코드를 생성하는 도구.
 인보이스를 작성하고 PDF로 출력하는 도구.
 
 #### 8-1. 셋업
+
 - [ ] PDF 생성 라이브러리 선택 (`@react-pdf/renderer` 또는 브라우저 `window.print()`)
 - [ ] 인보이스 데이터 타입 정의 (`Invoice`, `InvoiceItem`, `CompanyInfo`)
 
 #### 8-2. UI 구현
+
 - [ ] `app/invoice-generator/page.tsx` 생성
 - [ ] 발신자/수신자 정보 입력 폼
 - [ ] 항목 테이블 (품목, 수량, 단가, 금액) — 동적 행 추가/삭제
@@ -265,14 +300,17 @@ URL 문자열을 입력하면 QR코드를 생성하는 도구.
 - [ ] 통화 선택 (KRW, USD 등)
 
 #### 8-3. PDF 출력
+
 - [ ] 인보이스 미리보기 레이아웃
 - [ ] PDF 다운로드/인쇄 기능
 
 #### 8-4. 위젯 등록
+
 - [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `ReceiptIcon` 등)
 
 #### 8-5. 마무리
+
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 
 **참고**: https://github.com/tuanpham-dev/react-invoice-generator
@@ -284,6 +322,7 @@ URL 문자열을 입력하면 QR코드를 생성하는 도구.
 Postman/Bruno 스타일의 브라우저 내 HTTP API 테스트 도구.
 
 #### 9-1. 핵심 기능 구현
+
 - [ ] HTTP 메서드 지원 (GET, POST, PUT, PATCH, DELETE)
 - [ ] 요청 URL 입력
 - [ ] 요청 헤더 편집 (키-값 쌍, 동적 추가/삭제)
@@ -291,6 +330,7 @@ Postman/Bruno 스타일의 브라우저 내 HTTP API 테스트 도구.
 - [ ] `fetch` API를 통한 요청 실행
 
 #### 9-2. UI 구현
+
 - [ ] `app/api-client/page.tsx` 생성
 - [ ] 메서드 선택 드롭다운 (shadcn Select) + URL 입력 바
 - [ ] 탭 UI: Headers, Body, Params (shadcn Tabs)
@@ -298,14 +338,17 @@ Postman/Bruno 스타일의 브라우저 내 HTTP API 테스트 도구.
 - [ ] 응답 시간 및 크기 표시
 
 #### 9-3. 추가 기능
+
 - [ ] 요청 히스토리 (localStorage 저장)
 - [ ] 요청 컬렉션 저장/불러오기
 
 #### 9-4. 위젯 등록
+
 - [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `SendIcon` 등)
 
 #### 9-5. 마무리
+
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 - [ ] CORS 제한 사항 안내 UI
 
@@ -318,11 +361,13 @@ Postman/Bruno 스타일의 브라우저 내 HTTP API 테스트 도구.
 노드 기반 마인드맵 에디터. `@xyflow/react`를 활용하며, localStorage에 저장.
 
 #### 10-1. 셋업
+
 - [ ] `@xyflow/react` 설치
 - [ ] 마인드맵 데이터 타입 정의 (`MindMapNode`, `MindMapEdge`)
 - [ ] localStorage 저장/복원 훅 구현
 
 #### 10-2. 핵심 UI 구현
+
 - [ ] `app/mindmap/page.tsx` 생성
 - [ ] React Flow 캔버스 (줌, 팬, 미니맵)
 - [ ] 커스텀 노드 컴포넌트 (텍스트 입력, 색상, 크기 조절)
@@ -331,15 +376,18 @@ Postman/Bruno 스타일의 브라우저 내 HTTP API 테스트 도구.
 - [ ] 자동 레이아웃 정렬 (dagre 또는 elkjs)
 
 #### 10-3. 추가 기능
+
 - [ ] 노드 색상 커스터마이징
 - [ ] PNG/SVG 내보내기
 - [ ] 키보드 단축키 (노드 추가, 삭제, 포커스 이동)
 
 #### 10-4. 위젯 등록
+
 - [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `NetworkIcon` 등)
 
 #### 10-5. 마무리
+
 - [ ] `pnpm lint` / `pnpm type-check` 통과
 - [ ] 반응형 레이아웃 검증
 
@@ -350,11 +398,13 @@ Postman/Bruno 스타일의 브라우저 내 HTTP API 테스트 도구.
 ### Phase 11: 홈페이지 위젯 통합 및 최종 정리
 
 #### 11-1. Side Projects 섹션 레이아웃 조정
+
 - [ ] 12개 위젯(기존 2 + 신규 10)에 맞는 그리드 레이아웃 검토
 - [ ] 위젯 순서 및 배치 최적화
 - [ ] 반응형 그리드 검증 (모바일/태블릿/데스크탑)
 
 #### 11-2. 공통 정리
+
 - [ ] 미사용 의존성 정리
 - [ ] 번들 사이즈 분석 및 최적화 (대형 라이브러리: Excalidraw, Sandpack, React Flow)
 - [ ] `pnpm build` 전체 빌드 성공 확인
@@ -398,18 +448,18 @@ app/
 
 ## 신규 의존성 목록 (예상)
 
-| Phase | 라이브러리 | 용도 |
-|-------|-----------|------|
-| 1 | `@dnd-kit/core`, `@dnd-kit/sortable` | 칸반 드래그 앤 드롭 |
-| 2 | `fumadocs-core`, `fumadocs-ui` | 코드 아카이브 문서 프레임워크 |
-| 3 | `@supabase/supabase-js`, `nanoid` | URL 단축 DB, 코드 생성 |
-| 4 | `@codesandbox/sandpack-react` 또는 Codapi | 코드 에디터/실행 |
-| 5 | (없음 — Canvas API 활용) | 이미지 변환 |
-| 6 | `@excalidraw/excalidraw` | 화이트보드 |
-| 7 | `qrcode.react` | QR코드 생성 |
-| 8 | `@react-pdf/renderer` (선택) | PDF 생성 |
-| 9 | (없음 — fetch API 활용) | API 클라이언트 |
-| 10 | `@xyflow/react`, `dagre` | 마인드맵 |
+| Phase | 라이브러리                                | 용도                          |
+| ----- | ----------------------------------------- | ----------------------------- |
+| 1     | `@dnd-kit/core`, `@dnd-kit/sortable`      | 칸반 드래그 앤 드롭           |
+| 2     | `fumadocs-core`, `fumadocs-ui`            | 코드 아카이브 문서 프레임워크 |
+| 3     | `@supabase/supabase-js`, `nanoid`         | URL 단축 DB, 코드 생성        |
+| 4     | `@codesandbox/sandpack-react` 또는 Codapi | 코드 에디터/실행              |
+| 5     | (없음 — Canvas API 활용)                  | 이미지 변환                   |
+| 6     | `@excalidraw/excalidraw`                  | 화이트보드                    |
+| 7     | `qrcode.react`                            | QR코드 생성                   |
+| 8     | `@react-pdf/renderer` (선택)              | PDF 생성                      |
+| 9     | (없음 — fetch API 활용)                   | API 클라이언트                |
+| 10    | `@xyflow/react`, `dagre`                  | 마인드맵                      |
 
 ## 작업 원칙
 
@@ -424,6 +474,7 @@ app/
 ## 완료 기준 (Definition of Done)
 
 각 Phase 완료 시:
+
 - [ ] `pnpm lint` 통과
 - [ ] `pnpm type-check` 통과
 - [ ] 기능 정상 동작 확인 (`pnpm dev`)
@@ -433,6 +484,7 @@ app/
 - [ ] spec.md 갱신
 
 프로젝트 전체 완료 시:
+
 - [ ] 모든 10개 라우트 정상 동작
 - [ ] `pnpm build` 성공
 - [ ] 번들 사이즈 적정 수준

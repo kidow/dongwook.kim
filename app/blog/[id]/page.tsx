@@ -68,7 +68,10 @@ function renderBlocks(blocks: BlogBlock[]) {
     }
 
     elements.push(
-      <ul key={`list-${elements.length}`} className="list-disc space-y-1 pl-5 text-neutral-700">
+      <ul
+        key={`list-${elements.length}`}
+        className="list-disc space-y-1 pl-5 text-neutral-700"
+      >
         {listBuffer.map((item) => (
           <li key={`${item}-${Math.random()}`}>{item}</li>
         ))}
@@ -87,7 +90,10 @@ function renderBlocks(blocks: BlogBlock[]) {
 
     if (block.type === 'heading_2') {
       elements.push(
-        <h2 key={`h2-${index}`} className="text-xl font-semibold text-neutral-900">
+        <h2
+          key={`h2-${index}`}
+          className="text-xl font-semibold text-neutral-900"
+        >
           {block.text}
         </h2>
       )
@@ -96,7 +102,10 @@ function renderBlocks(blocks: BlogBlock[]) {
 
     if (block.type === 'heading_3') {
       elements.push(
-        <h3 key={`h3-${index}`} className="pt-2 text-base font-semibold text-neutral-900">
+        <h3
+          key={`h3-${index}`}
+          className="pt-2 text-base font-semibold text-neutral-900"
+        >
           {block.text}
         </h3>
       )
@@ -104,11 +113,7 @@ function renderBlocks(blocks: BlogBlock[]) {
     }
 
     if (block.type === 'paragraph') {
-      elements.push(
-        <p key={`p-${index}`}>
-          {block.text}
-        </p>
-      )
+      elements.push(<p key={`p-${index}`}>{block.text}</p>)
       return
     }
 
@@ -172,20 +177,29 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
       </Link>
 
       <header className="space-y-3">
-        <p className="text-xs uppercase text-neutral-400">{postResult.ok ? 'Notion Post' : 'Static Blog Skeleton'}</p>
-        <h1 className="text-3xl font-bold tracking-tight text-neutral-900">{post.title}</h1>
+        <p className="text-xs uppercase text-neutral-400">
+          {postResult.ok ? 'Notion Post' : 'Static Blog Skeleton'}
+        </p>
+        <h1 className="text-3xl font-bold tracking-tight text-neutral-900">
+          {post.title}
+        </h1>
         <p className="text-sm text-neutral-500">{post.date} · 약 5분</p>
       </header>
 
       <hr className="border-neutral-200" />
 
-      <section className="space-y-4 text-sm leading-7 text-neutral-700">{renderBlocks(post.blocks)}</section>
+      <section className="space-y-4 text-sm leading-7 text-neutral-700">
+        {renderBlocks(post.blocks)}
+      </section>
 
       <section className="grid gap-4 xl:grid-cols-2">
         <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-          <h4 className="text-sm font-semibold text-neutral-800">Share (Placeholder)</h4>
+          <h4 className="text-sm font-semibold text-neutral-800">
+            Share (Placeholder)
+          </h4>
           <p className="mt-2 text-xs leading-5 text-neutral-500">
-            링크 복사, SNS 공유 버튼이 들어갈 영역입니다. 현재는 UI 스켈레톤만 배치되어 있습니다.
+            링크 복사, SNS 공유 버튼이 들어갈 영역입니다. 현재는 UI 스켈레톤만
+            배치되어 있습니다.
           </p>
           <div className="mt-3 flex gap-2">
             <span className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] text-neutral-500">
@@ -198,9 +212,12 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
         </div>
 
         <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-          <h4 className="text-sm font-semibold text-neutral-800">Comments (Placeholder)</h4>
+          <h4 className="text-sm font-semibold text-neutral-800">
+            Comments (Placeholder)
+          </h4>
           <p className="mt-2 text-xs leading-5 text-neutral-500">
-            댓글 시스템 연동 전 단계입니다. 추후 API 연결 시 입력 폼과 목록이 이 영역으로 대체됩니다.
+            댓글 시스템 연동 전 단계입니다. 추후 API 연결 시 입력 폼과 목록이 이
+            영역으로 대체됩니다.
           </p>
           <div className="mt-3 rounded-md border border-dashed border-neutral-300 bg-white px-3 py-2 text-[11px] text-neutral-400">
             댓글 기능 준비 중입니다.

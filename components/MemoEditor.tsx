@@ -5,14 +5,18 @@ import { useEffect, useState } from 'react'
 
 type TiptapLib = {
   EditorContent: React.ComponentType<{ editor: unknown }>
-  useEditor: (...args: [{
-    extensions: unknown[]
-    content: unknown
-    editorProps?: {
-      attributes?: Record<string, string>
-    }
-    onUpdate?: (...args: [{ editor: { getJSON: () => unknown } }]) => void
-  }]) => {
+  useEditor: (
+    ...args: [
+      {
+        extensions: unknown[]
+        content: unknown
+        editorProps?: {
+          attributes?: Record<string, string>
+        }
+        onUpdate?: (...args: [{ editor: { getJSON: () => unknown } }]) => void
+      }
+    ]
+  ) => {
     commands: {
       setContent: (...args: [unknown]) => void
       clearContent: (...args: [boolean?]) => void
@@ -67,7 +71,9 @@ const loadTiptap = async (): Promise<TiptapLib> => {
   ) as (...args: [string]) => Promise<unknown>
 
   const [reactModule, starterKitModule, placeholderModule] = await Promise.all([
-    dynamicImport('https://esm.sh/@tiptap/react@2.11.5?external=react,react-dom'),
+    dynamicImport(
+      'https://esm.sh/@tiptap/react@2.11.5?external=react,react-dom'
+    ),
     dynamicImport('https://esm.sh/@tiptap/starter-kit@2.11.5'),
     dynamicImport('https://esm.sh/@tiptap/extension-placeholder@2.11.5')
   ])
@@ -77,7 +83,9 @@ const loadTiptap = async (): Promise<TiptapLib> => {
     useEditor: TiptapLib['useEditor']
   }
   const starterTyped = starterKitModule as { default: unknown }
-  const placeholderTyped = placeholderModule as { default: TiptapLib['Placeholder'] }
+  const placeholderTyped = placeholderModule as {
+    default: TiptapLib['Placeholder']
+  }
 
   return {
     EditorContent: reactTyped.EditorContent,
@@ -113,7 +121,10 @@ function TiptapMemoEditor({
         return
       }
 
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(currentEditor.getJSON()))
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(currentEditor.getJSON())
+      )
       setSaveStatus('로컬 저장됨 (Tiptap)')
     }
   })
@@ -193,13 +204,12 @@ export default function MemoEditor() {
   return (
     <section className="w-full">
       <h1 className="mb-2 text-2xl font-bold text-stone-800">메모</h1>
-      <p className="mb-4 text-sm text-stone-500">로컬 저장 기반 메모장 (Tiptap 우선)</p>
+      <p className="mb-4 text-sm text-stone-500">
+        로컬 저장 기반 메모장 (Tiptap 우선)
+      </p>
 
       {tiptap ? (
-        <TiptapMemoEditor
-          tiptap={tiptap}
-          setSaveStatus={setSaveStatus}
-        />
+        <TiptapMemoEditor tiptap={tiptap} setSaveStatus={setSaveStatus} />
       ) : (
         <textarea
           className="memo-editor min-h-[360px] w-full resize-y rounded-xl border border-stone-300 p-4 text-stone-800 outline-none focus:border-stone-400"
@@ -211,7 +221,8 @@ export default function MemoEditor() {
 
       {isTiptapFailed && (
         <p className="mt-2 text-xs text-amber-700">
-          현재 네트워크 환경에서 Tiptap 모듈을 불러오지 못해 textarea 대체 모드로 동작합니다.
+          현재 네트워크 환경에서 Tiptap 모듈을 불러오지 못해 textarea 대체
+          모드로 동작합니다.
         </p>
       )}
 

@@ -61,7 +61,10 @@ function getTroubleshootingSteps(errorMessage: string): string[] {
 
 export default async function BlogPage() {
   const postResult = await getNotionBlogPosts(20)
-  const posts = postResult.ok && postResult.data.length > 0 ? postResult.data : fallbackPosts
+  const posts =
+    postResult.ok && postResult.data.length > 0
+      ? postResult.data
+      : fallbackPosts
   const showNotice = !postResult.ok
 
   return (
@@ -69,7 +72,9 @@ export default async function BlogPage() {
       <h1 className="text-4xl font-bold tracking-tight xl:text-5xl">블로그</h1>
       {showNotice ? (
         <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-          <p className="font-semibold">Notion API 연동에 실패해 fallback 목록을 표시 중입니다.</p>
+          <p className="font-semibold">
+            Notion API 연동에 실패해 fallback 목록을 표시 중입니다.
+          </p>
           <p className="mt-1 break-all">원인: {postResult.error}</p>
           <ul className="mt-2 list-disc pl-5">
             {getTroubleshootingSteps(postResult.error).map((step) => (
@@ -109,7 +114,9 @@ export default async function BlogPage() {
                     {post.title}
                   </span>
                 </h2>
-                <p className="line-clamp-2 text-slate-500">{post.description}</p>
+                <p className="line-clamp-2 text-slate-500">
+                  {post.description}
+                </p>
                 <time dateTime={post.date} className="text-sm text-slate-400">
                   {post.date}
                 </time>

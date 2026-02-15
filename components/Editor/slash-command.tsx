@@ -1,7 +1,14 @@
 'use client'
 /* eslint-disable no-unused-vars */
 
-import React, { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from 'react'
 import { Extension, type Editor, type Range } from '@tiptap/core'
 import { ReactRenderer } from '@tiptap/react'
 import Suggestion from '@tiptap/suggestion'
@@ -21,7 +28,13 @@ import {
 } from 'lucide-react'
 import tippy, { type Instance, type Props as TippyProps } from 'tippy.js'
 
-import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandList
+} from '@/components/ui/command'
 
 interface CommandProps {
   editor: Editor
@@ -105,7 +118,12 @@ const getSuggestionItems = ({ query }: { query: string }): SuggestionItem[] => {
       searchTerms: ['title', 'big', 'large'],
       icon: <Heading1 size={18} />,
       command: ({ editor, range }) => {
-        editor.chain().focus().deleteRange(range).setNode('heading', { level: 1 }).run()
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setNode('heading', { level: 1 })
+          .run()
       }
     },
     {
@@ -114,7 +132,12 @@ const getSuggestionItems = ({ query }: { query: string }): SuggestionItem[] => {
       searchTerms: ['subtitle', 'medium'],
       icon: <Heading2 size={18} />,
       command: ({ editor, range }) => {
-        editor.chain().focus().deleteRange(range).setNode('heading', { level: 2 }).run()
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setNode('heading', { level: 2 })
+          .run()
       }
     },
     {
@@ -123,7 +146,12 @@ const getSuggestionItems = ({ query }: { query: string }): SuggestionItem[] => {
       searchTerms: ['subtitle', 'small'],
       icon: <Heading3 size={18} />,
       command: ({ editor, range }) => {
-        editor.chain().focus().deleteRange(range).setNode('heading', { level: 3 }).run()
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .setNode('heading', { level: 3 })
+          .run()
       }
     },
     {
@@ -236,7 +264,8 @@ export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
 const CommandListView = ({ items, command }: SuggestionRenderProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const commandListContainer = useRef<HTMLDivElement>(null)
-  const activeIndex = items.length > 0 ? Math.min(selectedIndex, items.length - 1) : 0
+  const activeIndex =
+    items.length > 0 ? Math.min(selectedIndex, items.length - 1) : 0
 
   const selectItem = useCallback(
     (index: number) => {
@@ -296,7 +325,9 @@ const CommandListView = ({ items, command }: SuggestionRenderProps) => {
     >
       <CommandList ref={commandListContainer} className="max-h-[330px] p-1">
         {items.length === 0 ? (
-          <CommandEmpty className="text-muted-foreground">No command found.</CommandEmpty>
+          <CommandEmpty className="text-muted-foreground">
+            No command found.
+          </CommandEmpty>
         ) : (
           <CommandGroup>
             {items.map((item, index) => (
@@ -311,7 +342,9 @@ const CommandListView = ({ items, command }: SuggestionRenderProps) => {
                 </div>
                 <div className="min-w-0">
                   <p className="text-foreground font-medium">{item.title}</p>
-                  <p className="text-muted-foreground text-xs leading-5">{item.description}</p>
+                  <p className="text-muted-foreground text-xs leading-5">
+                    {item.description}
+                  </p>
                 </div>
               </CommandItem>
             ))}

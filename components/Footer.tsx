@@ -10,7 +10,12 @@ function Footer() {
     >
       <p>
         This project inspired by{' '}
-        <Button variant="link" size="xs" className="h-auto p-0 text-sm text-muted-foreground" asChild>
+        <Button
+          variant="link"
+          size="xs"
+          className="h-auto p-0 text-sm text-muted-foreground"
+          asChild
+        >
           <a
             href="https://bento.me/?ref=dongwook.kim"
             target="_blank"

@@ -81,7 +81,12 @@ export default function Editor() {
   }
 
   useEffect(() => {
-    if (editor && storageReady && content && !initialContentAppliedRef.current) {
+    if (
+      editor &&
+      storageReady &&
+      content &&
+      !initialContentAppliedRef.current
+    ) {
       initialContentAppliedRef.current = true
       isHydratingRef.current = true
       editor.commands.setContent(content)

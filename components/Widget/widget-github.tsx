@@ -53,13 +53,20 @@ async function getGithubContributions(): Promise<GithubContributionMap | null> {
 
     if (!response.ok) {
       const message = await response.text()
-      console.error('[WidgetGithub] GitHub API error', response.status, message.slice(0, 200))
+      console.error(
+        '[WidgetGithub] GitHub API error',
+        response.status,
+        message.slice(0, 200)
+      )
       return null
     }
 
     const json = await response.json()
     if (Array.isArray(json?.errors) && json.errors.length > 0) {
-      console.error('[WidgetGithub] GitHub GraphQL errors', json.errors[0]?.message)
+      console.error(
+        '[WidgetGithub] GitHub GraphQL errors',
+        json.errors[0]?.message
+      )
       return null
     }
 

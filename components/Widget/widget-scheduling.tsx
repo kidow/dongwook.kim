@@ -21,7 +21,12 @@ export default function WidgetScheduling() {
         <CardContent className="flex h-full divide-x divide-border p-0">
           <div className="flex w-1/2 flex-col p-10">
             <span className="flex h-20 w-20 items-center justify-center rounded-xl border border-border">
-              <Image src="/google-meet.png" alt="Google Meet" width={40} height={40} />
+              <Image
+                src="/google-meet.png"
+                alt="Google Meet"
+                width={40}
+                height={40}
+              />
             </span>
             <div className="mt-8">
               <p className="text-[24px] leading-[1.2]">화상 미팅</p>
@@ -30,9 +35,16 @@ export default function WidgetScheduling() {
               </p>
             </div>
             <div className="mt-12 flex items-center justify-between">
-              <p className="text-[48px] font-semibold leading-none">2026년 2월</p>
+              <p className="text-[48px] font-semibold leading-none">
+                2026년 2월
+              </p>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon-lg" disabled aria-label="이전 달">
+                <Button
+                  variant="ghost"
+                  size="icon-lg"
+                  disabled
+                  aria-label="이전 달"
+                >
                   <ChevronLeftIcon className="size-10 text-muted-foreground" />
                 </Button>
                 <Button variant="ghost" size="icon-lg" aria-label="다음 달">
@@ -49,7 +61,9 @@ export default function WidgetScheduling() {
               {PAST_DAYS.map((day) => (
                 <span key={day}>{day}</span>
               ))}
-              <span className="rounded-full bg-primary py-4 text-primary-foreground">14</span>
+              <span className="rounded-full bg-primary py-4 text-primary-foreground">
+                14
+              </span>
             </div>
             <div className="mt-2 grid grid-cols-7 gap-2 text-center text-[32px] leading-none">
               {FUTURE_DAYS.map((day) => (
@@ -63,8 +77,12 @@ export default function WidgetScheduling() {
             </div>
           </div>
           <div className="w-1/2 overflow-hidden p-10">
-            <h3 className="text-[52px] font-semibold leading-none">시간 선택</h3>
-            <p className="mt-6 text-[36px] font-semibold leading-none">2월 14일 토요일</p>
+            <h3 className="text-[52px] font-semibold leading-none">
+              시간 선택
+            </h3>
+            <p className="mt-6 text-[36px] font-semibold leading-none">
+              2월 14일 토요일
+            </p>
             <div className="mt-8 space-y-6">
               {TIMES.map((time) => (
                 <div

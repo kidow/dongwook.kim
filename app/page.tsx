@@ -1,6 +1,11 @@
 import { Suspense } from 'react'
 import Image from 'next/image'
-import { FileTextIcon, MailIcon, StickyNoteIcon, UtensilsCrossedIcon } from 'lucide-react'
+import {
+  FileTextIcon,
+  MailIcon,
+  StickyNoteIcon,
+  UtensilsCrossedIcon
+} from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -20,7 +25,11 @@ export default async function Home() {
         icon={<Icon.Github />}
         title="Github"
         button={
-          <Button variant="outline" size="sm" className="pointer-events-none text-xs font-bold">
+          <Button
+            variant="outline"
+            size="sm"
+            className="pointer-events-none text-xs font-bold"
+          >
             Follow
           </Button>
         }

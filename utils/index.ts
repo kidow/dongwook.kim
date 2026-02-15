@@ -32,7 +32,10 @@ class Toast {
 export const toast = new Toast()
 
 export function copyText(text: string): Promise<string> | undefined {
-  if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
+  if (
+    typeof window === 'undefined' ||
+    typeof window.navigator === 'undefined'
+  ) {
     return
   }
 

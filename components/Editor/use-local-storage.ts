@@ -25,8 +25,7 @@ export function useLocalStorage<T>(
   })
 
   const setValue: Dispatch<SetStateAction<T>> = (value) => {
-    const nextValue =
-      value instanceof Function ? value(storedValue) : value
+    const nextValue = value instanceof Function ? value(storedValue) : value
 
     setStoredValue(nextValue)
     window.localStorage.setItem(key, JSON.stringify(nextValue))

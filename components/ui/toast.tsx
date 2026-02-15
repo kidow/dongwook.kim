@@ -44,12 +44,18 @@ export function Toast() {
           <li
             key={item.id}
             onClick={() =>
-              setList((prev) => prev.filter((currentItem) => currentItem.id !== item.id))
+              setList((prev) =>
+                prev.filter((currentItem) => currentItem.id !== item.id)
+              )
             }
             className="animate-toast-open bg-card text-card-foreground relative w-80 cursor-pointer select-none rounded-lg border border-border p-4"
             role="alert"
           >
-            <button className="absolute top-2 right-2" type="button" aria-label="Close toast">
+            <button
+              className="absolute top-2 right-2"
+              type="button"
+              aria-label="Close toast"
+            >
               ×
             </button>
             <div className="flex items-start gap-3">
@@ -59,7 +65,9 @@ export function Toast() {
                 {item.type === 'warn' && '⚠️'}
                 {item.type === 'error' && '⛔'}
               </span>
-              <p className="text-foreground flex-1 break-keep pr-4">{item.message}</p>
+              <p className="text-foreground flex-1 break-keep pr-4">
+                {item.message}
+              </p>
             </div>
           </li>
         ))}

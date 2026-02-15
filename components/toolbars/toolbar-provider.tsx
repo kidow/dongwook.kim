@@ -17,7 +17,11 @@ interface ToolbarProviderProps {
 }
 
 export const ToolbarProvider = ({ editor, children }: ToolbarProviderProps) => {
-  return <ToolbarContext.Provider value={{ editor }}>{children}</ToolbarContext.Provider>
+  return (
+    <ToolbarContext.Provider value={{ editor }}>
+      {children}
+    </ToolbarContext.Provider>
+  )
 }
 
 export const useToolbar = () => {

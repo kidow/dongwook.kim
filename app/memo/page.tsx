@@ -29,7 +29,11 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Suspense fallback={<div className="text-sm text-stone-400">에디터를 불러오는 중...</div>}>
+    <Suspense
+      fallback={
+        <div className="text-sm text-stone-400">에디터를 불러오는 중...</div>
+      }
+    >
       <Editor />
     </Suspense>
   )

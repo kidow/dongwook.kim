@@ -21,7 +21,9 @@ export default function WidgetLink({
   const isExternal = target === '_blank'
 
   return (
-    <li className={cn('overflow-hidden transition-all duration-150', className)}>
+    <li
+      className={cn('overflow-hidden transition-all duration-150', className)}
+    >
       <Link
         href={href}
         target={target}
