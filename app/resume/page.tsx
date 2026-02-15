@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { getNotionResumeData } from '@/shared/utils/api/notion'
+import { getNotionResumeData } from '@/utils/api/notion'
 
 const fallbackExperiences = [
   {

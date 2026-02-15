@@ -5,7 +5,7 @@ import {
   getNotionBlogPostBySlug,
   type BlogBlock,
   type BlogPostDetail
-} from '@/shared/utils/api/notion'
+} from '@/utils/api/notion'
 
 interface BlogDetailPageProps {
   params: Promise<{

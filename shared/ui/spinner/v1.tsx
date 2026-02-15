@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { cn } from '@/shared/utils'
+import { cn } from '@/utils'
 
 export interface SpinnerV1Props {
   className?: string

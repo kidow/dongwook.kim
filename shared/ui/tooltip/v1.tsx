@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/shared/utils'
+import { cn } from '@/utils'
 
 type Position = 'top' | 'right' | 'bottom' | 'left'
 

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { getNotionBlogPosts } from '@/shared/utils/api/notion'
+import { getNotionBlogPosts } from '@/utils/api/notion'
 
 export async function GET() {
   const postsResult = await getNotionBlogPosts()

@@ -3,7 +3,7 @@ import { Agentation } from 'agentation'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { Toast } from '@/shared/ui'
-import { cn } from '@/shared/utils'
+import { cn } from '@/utils'
 import { Inter } from 'next/font/google'
 import './globals.css'
 

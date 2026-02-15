@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { Editor } from '@tiptap/core'
 import { Check, Trash } from 'lucide-react'
-import { cn } from 'utils'
+import { cn } from '@/utils'
 
 interface LinkSelectorProps {
   editor: Editor

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { EventListener } from '@/shared/utils'
+import { EventListener } from '@/utils'
 
 function ToastV2() {
   const [list, setList] = useState<NToast.Item[]>([])

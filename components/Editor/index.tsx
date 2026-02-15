@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 import localFont from 'next/font/local'
 import { EditorContent, useEditor, type Content } from '@tiptap/react'
 import { useDebouncedCallback } from 'use-debounce'
-import { cn, toast } from 'utils'
+import { cn, toast } from '@/utils'
 
 import { EditorBubbleMenu } from './bubble-menu'
 import { TiptapExtensions } from './extensions'

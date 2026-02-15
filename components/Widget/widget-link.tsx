@@ -3,7 +3,7 @@
 import type { ReactNode, HTMLAttributeAnchorTarget } from 'react'
 import Link from 'next/link'
 
-import { cn } from '@/shared/utils'
+import { cn } from '@/utils'
 
 interface WidgetLinkProps {
   href: string

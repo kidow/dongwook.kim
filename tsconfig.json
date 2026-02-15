@@ -30,7 +30,7 @@
         "./shared/ui"
       ],
       "utils": [
-        "./shared/utils"
+        "./utils"
       ]
     }
   },
