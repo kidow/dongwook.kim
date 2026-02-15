@@ -5,12 +5,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
 const AVATAR_SIZE = { mobile: 120, desktop: 184 } as const
 const SITE_TITLE = 'Kidow'
-const SITE_DESCRIPTION = '비즈니스에 관심이 많은 웹 개발자'
+const SITE_DESCRIPTION = '비즈니스에 관심이 많은 웹 개발자 ✨'
 
 function Header() {
   const pathname = usePathname()
@@ -33,9 +32,7 @@ function Header() {
           }}
         >
           <div
-            className={cn(
-              'h-[120px] w-[120px] xl:h-[184px] xl:w-[184px]'
-            )}
+            className={cn('h-[120px] w-[120px] xl:h-[184px] xl:w-[184px]')}
             style={{
               transform: 'rotateZ(0deg)',
               transition: 'transform 1s cubic-bezier(0.2, 1.18, 0.47, 1) 0s'
@@ -62,10 +59,7 @@ function Header() {
               {SITE_TITLE}
             </h1>
             <p className="mt-3 text-muted-foreground [view-transition-name:header-description] xl:mt-3 xl:text-xl">
-              {SITE_DESCRIPTION}{' '}
-              <Badge variant="secondary" className="align-middle text-xs">
-                ✨
-              </Badge>
+              {SITE_DESCRIPTION}
             </p>
           </div>
         </div>
