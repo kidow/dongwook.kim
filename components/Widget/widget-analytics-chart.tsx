@@ -48,6 +48,7 @@ export default function WidgetAnalyticsChart({
   percent,
   list
 }: AnalyticsChartProps) {
+  const lineColor = '#3B82F6'
   const edgeTicks =
     list.length > 1
       ? [list[0]?.date, list[list.length - 1]?.date]
@@ -80,15 +81,11 @@ export default function WidgetAnalyticsChart({
             <AreaChart data={list}>
               <defs>
                 <linearGradient id="colorVisitors" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={lineColor} stopOpacity={0.28} />
                   <stop
-                    offset="5%"
-                    stopColor="hsl(var(--primary))"
-                    stopOpacity={0.3}
-                  />
-                  <stop
-                    offset="95%"
-                    stopColor="hsl(var(--primary))"
-                    stopOpacity={0}
+                    offset="100%"
+                    stopColor={lineColor}
+                    stopOpacity={0.03}
                   />
                 </linearGradient>
               </defs>
@@ -118,11 +115,18 @@ export default function WidgetAnalyticsChart({
                 }}
               />
               <Area
-                type="monotone"
+                type="linear"
                 dataKey="방문자 수"
-                stroke="hsl(var(--primary))"
+                stroke={lineColor}
                 fill="url(#colorVisitors)"
                 strokeWidth={2}
+                isAnimationActive={false}
+                activeDot={{
+                  r: 7,
+                  fill: lineColor,
+                  stroke: '#ffffff',
+                  strokeWidth: 3
+                }}
               />
               <Tooltip
                 cursor={{ stroke: 'hsl(var(--border))', strokeWidth: 1 }}
