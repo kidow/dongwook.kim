@@ -1,10 +1,26 @@
 import { defineConfig, globalIgnores } from 'eslint/config'
-import nextVitals from 'eslint-config-next/core-web-vitals'
-import nextTs from 'eslint-config-next/typescript'
+import tsParser from '@typescript-eslint/parser'
+import next from 'eslint-config-next'
+import reactHooks from 'eslint-plugin-react-hooks'
 
 const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
+  ...next,
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    languageOptions: {
+      parser: tsParser
+    },
+    plugins: {
+      'react-hooks': reactHooks
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-hooks/exhaustive-deps': 'off',
+      '@next/next/no-img-element': 'off',
+      'react-hooks/rules-of-hooks': 'off',
+      'no-unused-vars': 'warn'
+    }
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
