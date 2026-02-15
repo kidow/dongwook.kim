@@ -1,13 +1,6 @@
 'use client'
 
-import React, {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState
-} from 'react'
+import React, { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Extension, type Editor, type Range } from '@tiptap/core'
 import { ReactRenderer } from '@tiptap/react'
 import Suggestion from '@tiptap/suggestion'
@@ -25,40 +18,32 @@ import {
   TextQuote,
   WrapTextIcon
 } from 'lucide-react'
-import tippy from 'tippy.js'
+import tippy, { type Instance, type Props as TippyProps } from 'tippy.js'
 
-const getPrevText = (
-  editor: Editor,
-  {
-    chars,
-    offset = 0
-  }: {
-    chars: number
-    offset?: number
-  }
-) => {
-  // for now, we're using textBetween for now until we can figure out a way to stream markdown text
-  // with proper formatting: https://github.com/steven-tey/novel/discussions/7
-  return editor.state.doc.textBetween(
-    Math.max(0, editor.state.selection.from - chars),
-    editor.state.selection.from - offset,
-    '\n'
-  )
-  // complete(editor.storage.markdown.getMarkdown());
-}
-
-interface CommandItemProps {
-  title: string
-  description: string
-  icon: ReactNode
-}
+import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
 
 interface CommandProps {
   editor: Editor
   range: Range
 }
 
-const Command = Extension.create({
+interface SuggestionItem {
+  title: string
+  description: string
+  searchTerms?: string[]
+  icon: ReactNode
+  command: (props: CommandProps) => void
+}
+
+interface SuggestionRenderProps {
+  editor: Editor
+  clientRect?: DOMRect | null
+  items: SuggestionItem[]
+  command: (item: SuggestionItem) => void
+  range: Range
+}
+
+const SlashCommandExtension = Extension.create({
   name: 'slash-command',
   addOptions() {
     return {
@@ -71,7 +56,7 @@ const Command = Extension.create({
         }: {
           editor: Editor
           range: Range
-          props: any
+          props: SuggestionItem
         }) => {
           props.command({ editor, range })
         }
@@ -88,14 +73,14 @@ const Command = Extension.create({
   }
 })
 
-const getSuggestionItems = ({ query }: { query: string }) => {
-  return [
+const getSuggestionItems = ({ query }: { query: string }): SuggestionItem[] => {
+  const items: SuggestionItem[] = [
     {
       title: 'Text',
       description: 'Just start typing with plain text.',
       searchTerms: ['p', 'paragraph'],
       icon: <Text size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({ editor, range }) => {
         editor
           .chain()
           .focus()
@@ -109,7 +94,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Track tasks with a to-do list.',
       searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
       icon: <CheckSquare size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({ editor, range }) => {
         editor.chain().focus().deleteRange(range).toggleTaskList().run()
       }
     },
@@ -118,13 +103,8 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Big section heading.',
       searchTerms: ['title', 'big', 'large'],
       icon: <Heading1 size={18} />,
-      command: ({ editor, range }: CommandProps) => {
-        editor
-          .chain()
-          .focus()
-          .deleteRange(range)
-          .setNode('heading', { level: 1 })
-          .run()
+      command: ({ editor, range }) => {
+        editor.chain().focus().deleteRange(range).setNode('heading', { level: 1 }).run()
       }
     },
     {
@@ -132,13 +112,8 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Medium section heading.',
       searchTerms: ['subtitle', 'medium'],
       icon: <Heading2 size={18} />,
-      command: ({ editor, range }: CommandProps) => {
-        editor
-          .chain()
-          .focus()
-          .deleteRange(range)
-          .setNode('heading', { level: 2 })
-          .run()
+      command: ({ editor, range }) => {
+        editor.chain().focus().deleteRange(range).setNode('heading', { level: 2 }).run()
       }
     },
     {
@@ -146,13 +121,8 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Small section heading.',
       searchTerms: ['subtitle', 'small'],
       icon: <Heading3 size={18} />,
-      command: ({ editor, range }: CommandProps) => {
-        editor
-          .chain()
-          .focus()
-          .deleteRange(range)
-          .setNode('heading', { level: 3 })
-          .run()
+      command: ({ editor, range }) => {
+        editor.chain().focus().deleteRange(range).setNode('heading', { level: 3 }).run()
       }
     },
     {
@@ -160,7 +130,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Create a simple bullet list.',
       searchTerms: ['unordered', 'point'],
       icon: <List size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({ editor, range }) => {
         editor.chain().focus().deleteRange(range).toggleBulletList().run()
       }
     },
@@ -169,7 +139,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Create a list with numbering.',
       searchTerms: ['ordered'],
       icon: <ListOrdered size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({ editor, range }) => {
         editor.chain().focus().deleteRange(range).toggleOrderedList().run()
       }
     },
@@ -178,7 +148,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Capture a quote.',
       searchTerms: ['blockquote'],
       icon: <TextQuote size={18} />,
-      command: ({ editor, range }: CommandProps) =>
+      command: ({ editor, range }) => {
         editor
           .chain()
           .focus()
@@ -186,31 +156,31 @@ const getSuggestionItems = ({ query }: { query: string }) => {
           .toggleNode('paragraph', 'paragraph')
           .toggleBlockquote()
           .run()
+      }
     },
     {
       title: 'Code',
       description: 'Capture a code snippet.',
       searchTerms: ['codeblock'],
       icon: <Code size={18} />,
-      command: ({ editor, range }: CommandProps) =>
+      command: ({ editor, range }) => {
         editor.chain().focus().deleteRange(range).toggleCodeBlock().run()
+      }
     },
     {
       title: 'Image',
       description: 'Upload an image from your computer.',
       searchTerms: ['photo', 'picture', 'media'],
       icon: <ImageIcon size={18} />,
-      command: ({ editor, range }: CommandProps) => {
+      command: ({ editor, range }) => {
         editor.chain().focus().deleteRange(range).run()
-        // upload image
         const input = document.createElement('input')
         input.type = 'file'
         input.accept = 'image/*'
         input.onchange = async () => {
           if (input.files?.length) {
-            const file = input.files[0]
-            const pos = editor.view.state.selection.from
-            // startImageUpload(file, editor.view, pos)
+            const _file = input.files[0]
+            // image upload logic can be wired here in a follow-up step
           }
         }
         input.click()
@@ -221,34 +191,38 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       description: 'Create a simple table.',
       searchTerms: ['table'],
       icon: <TableIcon size={18} />,
-      command: ({ editor, range }: CommandProps) =>
+      command: ({ editor, range }) => {
         editor.chain().focus().deleteRange(range).insertTable().run()
+      }
     },
     {
       title: 'Hard Break',
       description: 'Forcibly moves out and to the next line.',
       searchTerms: ['hard break'],
       icon: <WrapTextIcon size={18} />,
-      command: ({ editor }: CommandProps) => editor.commands.setHardBreak()
+      command: ({ editor }) => {
+        editor.commands.setHardBreak()
+      }
     }
-  ].filter((item) => {
-    if (typeof query === 'string' && query.length > 0) {
-      const search = query.toLowerCase()
-      return (
-        item.title.toLowerCase().includes(search) ||
-        item.description.toLowerCase().includes(search) ||
-        (item.searchTerms &&
-          item.searchTerms.some((term: string) => term.includes(search)))
-      )
-    }
-    return true
+  ]
+
+  if (!query) {
+    return items
+  }
+
+  const search = query.toLowerCase()
+  return items.filter((item) => {
+    return (
+      item.title.toLowerCase().includes(search) ||
+      item.description.toLowerCase().includes(search) ||
+      item.searchTerms?.some((term) => term.includes(search))
+    )
   })
 }
 
 export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
   const containerHeight = container.offsetHeight
-  const itemHeight = item ? item.offsetHeight : 0
-
+  const itemHeight = item.offsetHeight
   const top = item.offsetTop
   const bottom = top + itemHeight
 
@@ -259,23 +233,13 @@ export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
   }
 }
 
-const CommandList = ({
-  items,
-  command,
-  editor,
-  range
-}: {
-  items: CommandItemProps[]
-  command: any
-  editor: any
-  range: any
-}) => {
+const CommandListView = ({ items, command }: SuggestionRenderProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
+  const commandListContainer = useRef<HTMLDivElement>(null)
 
   const selectItem = useCallback(
     (index: number) => {
       const item = items[index]
-      //   va.track('Slash Command Used', { command: item.title })
       if (item) {
         command(item)
       }
@@ -284,88 +248,91 @@ const CommandList = ({
   )
 
   useEffect(() => {
-    const navigationKeys = ['ArrowUp', 'ArrowDown', 'Enter']
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (navigationKeys.includes(e.key)) {
-        e.preventDefault()
-        if (e.key === 'ArrowUp') {
-          setSelectedIndex((selectedIndex + items.length - 1) % items.length)
-          return true
-        }
-        if (e.key === 'ArrowDown') {
-          setSelectedIndex((selectedIndex + 1) % items.length)
-          return true
-        }
-        if (e.key === 'Enter') {
-          selectItem(selectedIndex)
-          return true
-        }
-        return false
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (!['ArrowUp', 'ArrowDown', 'Enter'].includes(event.key)) {
+        return
+      }
+
+      event.preventDefault()
+
+      if (event.key === 'ArrowUp') {
+        setSelectedIndex((prev) => (prev + items.length - 1) % items.length)
+        return
+      }
+
+      if (event.key === 'ArrowDown') {
+        setSelectedIndex((prev) => (prev + 1) % items.length)
+        return
+      }
+
+      if (event.key === 'Enter') {
+        selectItem(selectedIndex)
       }
     }
+
     document.addEventListener('keydown', onKeyDown)
-    return () => {
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [items, selectedIndex, setSelectedIndex, selectItem])
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [items, selectedIndex, selectItem])
 
   useEffect(() => {
     setSelectedIndex(0)
   }, [items])
 
-  const commandListContainer = useRef<HTMLDivElement>(null)
-
   useLayoutEffect(() => {
-    const container = commandListContainer?.current
-
-    const item = container?.children[selectedIndex] as HTMLElement
-
-    if (item && container) updateScrollView(container, item)
+    const container = commandListContainer.current
+    const item = container?.children[selectedIndex] as HTMLElement | undefined
+    if (container && item) {
+      updateScrollView(container, item)
+    }
   }, [selectedIndex])
 
-  return items.length > 0 ? (
-    <div
-      id="slash-command"
-      ref={commandListContainer}
-      className="z-50 h-auto max-h-[330px] w-72 overflow-y-auto rounded-md border border-stone-200 bg-white px-1 py-2 shadow-md transition-all"
-    >
-      {items.map((item: CommandItemProps, index: number) => {
-        return (
-          <button
-            className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${
-              index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
-            }`}
-            key={index}
-            onClick={() => selectItem(index)}
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-md border border-stone-200 bg-white">
-              {item.icon}
-            </div>
-            <div>
-              <p className="font-medium">{item.title}</p>
-              <p className="text-xs text-stone-500">{item.description}</p>
-            </div>
-          </button>
-        )
-      })}
-    </div>
-  ) : null
+  return (
+    <Command className="z-50 w-80 rounded-md border border-border shadow-md">
+      <CommandList ref={commandListContainer} className="max-h-[330px] p-1">
+        {items.length === 0 ? (
+          <CommandEmpty className="text-muted-foreground">No command found.</CommandEmpty>
+        ) : (
+          <CommandGroup>
+            {items.map((item, index) => (
+              <CommandItem
+                key={item.title}
+                data-selected={index === selectedIndex}
+                onClick={() => selectItem(index)}
+                className="h-auto items-start gap-2 px-2 py-2 text-left"
+              >
+                <div className="bg-background mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md border border-border">
+                  {item.icon}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-foreground font-medium">{item.title}</p>
+                  <p className="text-muted-foreground text-xs leading-5">{item.description}</p>
+                </div>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
+      </CommandList>
+    </Command>
+  )
 }
 
 const renderItems = () => {
   let component: ReactRenderer | null = null
-  let popup: any | null = null
+  let popup: Instance<TippyProps>[] | null = null
 
   return {
-    onStart: (props: { editor: Editor; clientRect: DOMRect }) => {
-      component = new ReactRenderer(CommandList, {
+    onStart: (props: SuggestionRenderProps) => {
+      if (!props.clientRect) {
+        return
+      }
+
+      component = new ReactRenderer(CommandListView, {
         props,
         editor: props.editor
       })
 
-      // @ts-ignore
       popup = tippy('body', {
-        getReferenceClientRect: props.clientRect,
+        getReferenceClientRect: () => props.clientRect ?? new DOMRect(),
         appendTo: () => document.body,
         content: component.element,
         showOnCreate: true,
@@ -374,23 +341,24 @@ const renderItems = () => {
         placement: 'bottom-start'
       })
     },
-    onUpdate: (props: { editor: Editor; clientRect: DOMRect }) => {
+    onUpdate: (props: SuggestionRenderProps) => {
       component?.updateProps(props)
 
-      popup &&
-        popup[0].setProps({
-          getReferenceClientRect: props.clientRect
-        })
+      if (!props.clientRect || !popup) {
+        return
+      }
+
+      popup[0].setProps({
+        getReferenceClientRect: () => props.clientRect ?? new DOMRect()
+      })
     },
     onKeyDown: (props: { event: KeyboardEvent }) => {
       if (props.event.key === 'Escape') {
         popup?.[0].hide()
-
         return true
       }
 
-      // @ts-ignore
-      return component?.ref?.onKeyDown(props)
+      return false
     },
     onExit: () => {
       popup?.[0].destroy()
@@ -399,7 +367,7 @@ const renderItems = () => {
   }
 }
 
-const SlashCommand = Command.configure({
+const SlashCommand = SlashCommandExtension.configure({
   suggestion: {
     items: getSuggestionItems,
     render: renderItems

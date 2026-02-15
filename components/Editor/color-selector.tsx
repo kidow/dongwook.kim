@@ -82,7 +82,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
       <PopoverContent
         align="start"
         className="w-48 p-1"
-        onOpenAutoFocus={(e) => e.preventDefault()}
+        onOpenAutoFocus={(event: Event) => event.preventDefault()}
       >
         <div className="my-1 px-2 text-sm text-muted-foreground">Color</div>
         {TEXT_COLORS.map(({ name, color }, index) => (

@@ -59,7 +59,7 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
       <PopoverContent
         align="start"
         className="w-60 p-1"
-        onOpenAutoFocus={(e) => e.preventDefault()}
+        onOpenAutoFocus={(event: Event) => event.preventDefault()}
       >
         <form
           onSubmit={(e) => {

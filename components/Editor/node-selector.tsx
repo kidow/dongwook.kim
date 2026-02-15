@@ -120,7 +120,7 @@ export const NodeSelector: FC<NodeSelectorProps> = ({
       <PopoverContent
         align="start"
         className="w-48 p-1"
-        onOpenAutoFocus={(e) => e.preventDefault()}
+        onOpenAutoFocus={(event: Event) => event.preventDefault()}
       >
         {items.map((item, index) => (
           <button

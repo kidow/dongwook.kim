@@ -164,7 +164,7 @@
 - [ ] `Editor/node-selector.tsx` → shadcn-tiptap NodeSelector 또는 shadcn Select
 - [ ] `Editor/color-selector.tsx` → shadcn-tiptap ColorSelector 또는 shadcn Popover
 - [ ] `Editor/link-selector.tsx` → shadcn-tiptap LinkSelector 또는 shadcn Popover + Input
-- [ ] `Editor/slash-command.tsx` → shadcn Command 컴포넌트
+- [x] `Editor/slash-command.tsx` → shadcn Command 컴포넌트
 
 ### Phase 6: 최종 정리 및 최적화 (P2)
 
@@ -271,4 +271,4 @@ dongwook.kim/
 ---
 
 **최종 업데이트**: 2026-02-15
-**현재 Phase**: Phase 4 완료 (레이아웃 + Widget 컴포넌트 리팩토링 완료)
+**현재 Phase**: Phase 5 진행 중 (Editor SlashCommand shadcn Command 전환 완료)
