@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @source "../node_modules/@tremor/react/dist/**/*.{js,ts,jsx,tsx}";
+@import "./memo/index.css";
 
 :root {
   --background: #ffffff;

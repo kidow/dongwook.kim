@@ -18,6 +18,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
+import { ToolbarProvider } from '@/components/toolbars/toolbar-provider'
 import { EditorBubbleMenu } from './bubble-menu'
 import { TiptapExtensions } from './extensions'
 import { TiptapEditorProps } from './props'
@@ -101,10 +102,16 @@ export default function Editor() {
           </CardAction>
         </CardHeader>
         <CardContent className="relative px-0">
-          {editor && <EditorBubbleMenu editor={editor} />}
-          <div className="min-h-[500px] px-6 py-5">
-            <EditorContent editor={editor} />
-          </div>
+          {editor ? (
+            <ToolbarProvider editor={editor}>
+              <EditorBubbleMenu editor={editor} />
+              <div className="min-h-[500px] px-6 py-5">
+                <EditorContent editor={editor} />
+              </div>
+            </ToolbarProvider>
+          ) : (
+            <div className="min-h-[500px] px-6 py-5" />
+          )}
         </CardContent>
         <CardFooter className="border-t border-border py-4">
           <div className="flex items-center gap-2 text-sm">

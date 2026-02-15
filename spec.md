@@ -153,11 +153,11 @@
 #### 5-1. ~~Tools & Skills 컴포넌트~~ (삭제됨 - 미사용)
 
 #### 5-2. Editor 컴포넌트 현대화 (shadcn-tiptap 활용)
-- [ ] shadcn-tiptap 설치 및 설정
+- [x] shadcn-tiptap 설치 및 설정
   - `npx shadcn add https://tiptap.niazmorshed.dev/r/toolbar-provider.json`
   - ToolbarProvider 컴포넌트 통합
   - 에디터 스타일 globals.css에 추가
-- [ ] `Editor/index.tsx` → shadcn-tiptap 기반 재작성
+- [x] `Editor/index.tsx` → shadcn-tiptap 기반 재작성
   - ToolbarProvider 적용
   - shadcn/ui 컴포넌트 활용
   - 진행: shadcn Card 레이아웃 적용 + localStorage hydration race-condition 보완
