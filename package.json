@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "fumadocs-mdx",
     "dev": "next dev",
-    "build": "next build",
+    "prebuild": "fumadocs-mdx",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
+    "pretype-check": "fumadocs-mdx",
     "type-check": "tsc --noEmit --skipLibCheck",
     "format": "prettier --write ."
   },

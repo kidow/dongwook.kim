@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Inter } from 'next/font/google'
 import localFont from 'next/font/local'
 import { EditorContent, useEditor, type Content } from '@tiptap/react'
 import { useDebouncedCallback } from 'use-debounce'
@@ -27,11 +26,6 @@ import { useLocalStorage } from './use-local-storage'
 const cal = localFont({
   src: './CalSans-SemiBold.otf',
   variable: '--font-display'
-})
-
-const inter = Inter({
-  variable: '--font-default',
-  subsets: ['latin']
 })
 
 export default function Editor() {
@@ -98,7 +92,7 @@ export default function Editor() {
   const isEditorReady = Boolean(editor) && storageReady
 
   return (
-    <div className={cn('relative pb-24', cal.variable, inter.variable)}>
+    <div className={cn('relative pb-24', cal.variable)}>
       <Card className="gap-0 overflow-hidden border-0">
         <CardHeader className="border-b border-border py-4">
           <CardTitle className="font-display text-2xl">메모</CardTitle>

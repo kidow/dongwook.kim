@@ -3,6 +3,24 @@ import type { google } from '@google-analytics/data/build/protos/protos'
 import dayjs from 'dayjs'
 import WidgetAnalyticsChart from './widget-analytics-chart'
 
+async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject(new Error(`Timeout after ${ms}ms`))
+    }, ms)
+
+    promise
+      .then((value) => {
+        clearTimeout(timeout)
+        resolve(value)
+      })
+      .catch((error) => {
+        clearTimeout(timeout)
+        reject(error)
+      })
+  })
+}
+
 export default async function WidgetAnalytics() {
   const projectId = process.env.GOOGLE_ANAYLTICS_PROJECT_ID
   const clientEmail = process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL
@@ -26,30 +44,42 @@ export default async function WidgetAnalytics() {
     keepEmptyRows: false
   }
 
-  const reports = await Promise.all([
-    analyticsDataClient.runReport({
-      ...request,
-      dateRanges: [
+  const reports = await withTimeout(
+    Promise.all([
+      analyticsDataClient.runReport(
         {
-          startDate: dayjs().add(-1, 'month').format('YYYY-MM-DD'),
-          endDate: 'today'
-        }
-      ]
-    }),
-    analyticsDataClient.runReport({
-      ...request,
-      dateRanges: [
+          ...request,
+          dateRanges: [
+            {
+              startDate: dayjs().add(-1, 'month').format('YYYY-MM-DD'),
+              endDate: 'today'
+            }
+          ]
+        },
+        { timeout: 5000 }
+      ),
+      analyticsDataClient.runReport(
         {
-          startDate: dayjs().add(-2, 'month').format('YYYY-MM-DD'),
-          endDate: dayjs().add(-1, 'month').format('YYYY-MM-DD')
-        }
-      ]
-    }),
-    analyticsDataClient.runReport({
-      ...request,
-      dateRanges: [{ startDate: '2015-08-14', endDate: 'today' }]
-    })
-  ]).catch(() => null)
+          ...request,
+          dateRanges: [
+            {
+              startDate: dayjs().add(-2, 'month').format('YYYY-MM-DD'),
+              endDate: dayjs().add(-1, 'month').format('YYYY-MM-DD')
+            }
+          ]
+        },
+        { timeout: 5000 }
+      ),
+      analyticsDataClient.runReport(
+        {
+          ...request,
+          dateRanges: [{ startDate: '2015-08-14', endDate: 'today' }]
+        },
+        { timeout: 5000 }
+      )
+    ]),
+    7000
+  ).catch(() => null)
 
   if (!reports) return null
 

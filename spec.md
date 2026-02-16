@@ -100,8 +100,8 @@ Fumadocs 프레임워크 기반 코드 스니펫/문서 보관소. 사전 검토
 #### 2-5. 마무리
 
 - [x] `pnpm lint` / `pnpm type-check` 통과
-- [ ] 빌드 검증 (`pnpm build`)
-- 메모: `next build`가 `Creating an optimized production build ...` 단계에서 장시간 정지되어 추가 원인 분석 필요
+- [x] 빌드 검증 (`pnpm build`)
+- 메모: `pnpm build`는 webpack 모드로 검증 완료
 
 **참고**: https://fumadocs.dev — 호환성 사전 검증 필수
 
@@ -495,4 +495,4 @@ app/
 ---
 
 **최종 업데이트**: 2026-02-16
-**현재 Phase**: Phase 2-5 진행 중 (Archive lint/type-check/build 검증)
+**현재 Phase**: Phase 3-1 진행 중 (URL Shortner Supabase 셋업)

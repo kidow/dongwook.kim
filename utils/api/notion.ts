@@ -63,7 +63,10 @@ function getClient(): ApiResult<Client> {
 
   return {
     ok: true,
-    data: new Client({ auth: envResult.data.NOTION_SECRET_KEY })
+    data: new Client({
+      auth: envResult.data.NOTION_SECRET_KEY,
+      timeoutMs: 5000
+    })
   }
 }
 

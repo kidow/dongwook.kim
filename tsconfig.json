@@ -20,8 +20,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "utils": ["./utils"],
-      "fumadocs-mdx:collections/*": ["./.source/*"]
+      "utils": ["./utils"]
     }
   },
   "include": [

@@ -214,7 +214,10 @@ async function getResumeData(): Promise<{
   }
 
   const pageId = notionEnv.resumePageId ?? FALLBACK_RESUME_PAGE_ID
-  const client = new Client({ auth: notionEnv.secretKey })
+  const client = new Client({
+    auth: notionEnv.secretKey,
+    timeoutMs: 5000
+  })
 
   try {
     const [page, blocks] = await Promise.all([
