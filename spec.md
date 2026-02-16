@@ -1,10 +1,10 @@
 # dongwook.kim Side Projects 확장 스펙
 
-이 문서는 `dongwook.kim` 프로젝트에 10개의 새로운 Side Project 도구를 추가하는 작업을 관리하기 위한 단일 기준 문서입니다.
+이 문서는 `dongwook.kim` 프로젝트에 11개의 새로운 Side Project 도구를 추가하는 작업을 관리하기 위한 단일 기준 문서입니다.
 
 ## 목표
 
-- **Side Projects 섹션에 10개의 유틸리티 도구 추가**: 각 도구는 독립된 라우트(`/kanban`, `/archive`, `/url-shortner`, `/code-editor`, `/image-converter`, `/canvas`, `/qrcode-generator`, `/invoice-generator`, `/api-client`, `/mindmap`)로 제공
+- **Side Projects 섹션에 11개의 유틸리티 도구 추가**: 각 도구는 독립된 라우트(`/kanban`, `/archive`, `/url-shortner`, `/code-editor`, `/image-converter`, `/canvas`, `/qrcode-generator`, `/invoice-generator`, `/api-client`, `/mindmap`, `/erd-editor`)로 제공
 - **일관된 UI/UX**: shadcn/ui 기반 컴포넌트 시스템 유지
 - **홈페이지 위젯 연동**: 각 도구는 `app/page.tsx`의 Side Projects 섹션에 `WidgetLink` 위젯으로 노출
 - **점진적 개발**: 라우트 단위로 독립적으로 개발 및 배포 가능
@@ -111,7 +111,7 @@ Fumadocs 프레임워크 기반 코드 스니펫/문서 보관소. 사전 검토
 
 Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자동 만료.
 
-> 우선순위 조정: `/url-shortner`는 가장 마지막(Phase 11 완료 후)으로 연기합니다.
+> 우선순위 조정: `/url-shortner`는 가장 마지막(Phase 12 완료 후)으로 연기합니다.
 
 #### 3-1. Supabase 셋업
 
@@ -418,11 +418,47 @@ Postman/Bruno 스타일의 브라우저 내 HTTP API 테스트 도구.
 
 ---
 
+### Phase 12: `/erd-editor` — ERD 에디터
+
+drawDB의 기본 사용 경험을 참고하여, 가상 화이트보드 위에서 데이터베이스 다이어그램(ERD)을 그릴 수 있는 편집기.
+
+#### 12-1. 기본 레이아웃 및 캔버스
+
+- [ ] `app/erd-editor/page.tsx` 라우트 추가
+- [ ] 툴바/캔버스 2단 구성 레이아웃
+- [ ] 테이블 노드 추가/선택/이동 기본 상호작용
+
+#### 12-2. 핵심 ERD 편집 기능 (MVP)
+
+- [ ] 테이블 생성/삭제, 테이블명 수정
+- [ ] 컬럼 추가/수정/삭제 (이름, 타입, nullable 최소 지원)
+- [ ] 관계선 연결/삭제 (1:1, 1:N 기본 관계)
+- [ ] 확대/축소, 팬 이동 등 캔버스 기본 제스처 지원
+
+#### 12-3. 로컬 저장/복원
+
+- [ ] ERD 상태를 `localStorage`에 저장
+- [ ] 페이지 재진입 시 저장된 다이어그램 자동 복원
+- [ ] 초기화(Reset) 액션 및 저장 스키마 버전 키 관리
+
+#### 12-4. 위젯 등록
+
+- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [ ] 적절한 아이콘 선정 (lucide-react `DatabaseIcon` 등)
+
+#### 12-5. 참고 오픈 소스
+
+- [ ] drawDB의 핵심 UX/동작 흐름 벤치마킹
+
+**참고**: https://github.com/drawdb-io/drawdb
+
+---
+
 ## 프로젝트 구조 (예상)
 
 ```
 app/
-├── page.tsx                  # 홈 (Side Projects 위젯 12개)
+├── page.tsx                  # 홈 (Side Projects 위젯 13개)
 ├── memo/                     # 기존 - 메모 에디터
 ├── lunch/                    # 기존 - 점심 추천
 ├── kanban/                   # Phase 1 - 칸반 보드
@@ -445,6 +481,8 @@ app/
 │   └── page.tsx
 ├── mindmap/                  # Phase 10 - 마인드맵
 │   └── page.tsx
+├── erd-editor/               # Phase 12 - ERD 에디터
+│   └── page.tsx
 └── api/
     └── shorten/              # Phase 3 - URL 단축 API
         ├── route.ts
@@ -466,6 +504,7 @@ app/
 | 8     | `@react-pdf/renderer` (선택)              | PDF 생성                      |
 | 9     | (없음 — fetch API 활용)                   | API 클라이언트                |
 | 10    | `@xyflow/react`, `dagre`                  | 마인드맵                      |
+| 12    | (검토) `@xyflow/react` 또는 Canvas 기반 구현 | ERD 편집기                    |
 
 ## 작업 원칙
 
@@ -492,7 +531,7 @@ app/
 
 프로젝트 전체 완료 시:
 
-- [ ] 모든 10개 라우트 정상 동작
+- [ ] 모든 11개 라우트 정상 동작
 - [ ] `pnpm build` 성공
 - [ ] 번들 사이즈 적정 수준
 - [ ] Side Projects 섹션 UI/UX 일관성
