@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import Image from 'next/image'
 import {
+  ArchiveIcon,
   FileTextIcon,
   KanbanIcon,
   MailIcon,
@@ -181,6 +182,18 @@ export default async function Home() {
         }
         title="Kanban"
         description="칸반 보드"
+      />
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        href="/archive"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <ArchiveIcon className="size-5" />
+          </span>
+        }
+        title="Archive"
+        description="코드 아카이브"
       />
     </ul>
   )
