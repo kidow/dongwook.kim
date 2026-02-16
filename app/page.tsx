@@ -8,6 +8,7 @@ import {
   KanbanIcon,
   MailIcon,
   PenToolIcon,
+  QrCodeIcon,
   StickyNoteIcon,
   UtensilsCrossedIcon
 } from 'lucide-react'
@@ -233,6 +234,18 @@ export default async function Home() {
         }
         title="Canvas"
         description="가상 화이트보드"
+      />
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        href="/qrcode-generator"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <QrCodeIcon className="size-5" />
+          </span>
+        }
+        title="QR Code"
+        description="QR코드 생성기"
       />
     </ul>
   )

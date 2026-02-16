@@ -263,25 +263,25 @@ URL 문자열을 입력하면 QR코드를 생성하는 도구.
 
 #### 7-1. 셋업
 
-- [ ] `qrcode.react` 설치
+- [x] `qrcode.react` 설치
 
 #### 7-2. UI 구현
 
-- [ ] `app/qrcode-generator/page.tsx` 생성
-- [ ] URL 입력 필드 (shadcn Input)
-- [ ] QR코드 실시간 미리보기 (`QRCodeSVG` 컴포넌트)
-- [ ] QR코드 크기 조절 옵션
-- [ ] 색상 커스터마이징 (전경/배경)
-- [ ] PNG/SVG 다운로드 버튼
+- [x] `app/qrcode-generator/page.tsx` 생성
+- [x] URL 입력 필드 (shadcn Input)
+- [x] QR코드 실시간 미리보기 (`QRCodeSVG` 컴포넌트)
+- [x] QR코드 크기 조절 옵션
+- [x] 색상 커스터마이징 (전경/배경)
+- [x] PNG/SVG 다운로드 버튼
 
 #### 7-3. 위젯 등록
 
-- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
-- [ ] 적절한 아이콘 선정 (lucide-react `QrCodeIcon` 등)
+- [x] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [x] 적절한 아이콘 선정 (lucide-react `QrCodeIcon`)
 
 #### 7-4. 마무리
 
-- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [x] `pnpm lint` / `pnpm type-check` 통과
 
 **참고**: https://www.npmjs.com/package/qrcode.react
 
@@ -538,5 +538,5 @@ app/
 
 ---
 
-**최종 업데이트**: 2026-02-16
-**현재 Phase**: Phase 6 완료 → Phase 7 진행 예정 (QR Code Generator)
+**최종 업데이트**: 2026-02-17
+**현재 Phase**: Phase 7 완료 → Phase 8 진행 예정 (Invoice Generator)
