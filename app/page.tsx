@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import Image from 'next/image'
 import {
   FileTextIcon,
+  KanbanIcon,
   MailIcon,
   StickyNoteIcon,
   UtensilsCrossedIcon
@@ -168,6 +169,18 @@ export default async function Home() {
         }
         title="Lunch"
         description="점심 뭐 먹지?"
+      />
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        href="/kanban"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <KanbanIcon className="size-5" />
+          </span>
+        }
+        title="Kanban"
+        description="칸반 보드"
       />
     </ul>
   )
