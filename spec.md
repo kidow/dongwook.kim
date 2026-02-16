@@ -107,9 +107,11 @@ Fumadocs 프레임워크 기반 코드 스니펫/문서 보관소. 사전 검토
 
 ---
 
-### Phase 3: `/url-shortner` — URL 단축기
+### Phase 3: `/url-shortner` — URL 단축기 (Deferred)
 
 Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자동 만료.
+
+> 우선순위 조정: `/url-shortner`는 가장 마지막(Phase 11 완료 후)으로 연기합니다.
 
 #### 3-1. Supabase 셋업
 
@@ -496,4 +498,4 @@ app/
 ---
 
 **최종 업데이트**: 2026-02-16
-**현재 Phase**: Phase 3-1 진행 중 (URL Shortner Supabase 셋업)
+**현재 Phase**: Phase 4-1 진행 중 (Code Editor 기술 선택 및 셋업)
