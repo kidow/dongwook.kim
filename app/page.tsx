@@ -7,6 +7,7 @@ import {
   ImageIcon,
   KanbanIcon,
   MailIcon,
+  PenToolIcon,
   StickyNoteIcon,
   UtensilsCrossedIcon
 } from 'lucide-react'
@@ -220,6 +221,18 @@ export default async function Home() {
         }
         title="Image Converter"
         description="이미지 포맷 변환"
+      />
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        href="/canvas"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <PenToolIcon className="size-5" />
+          </span>
+        }
+        title="Canvas"
+        description="가상 화이트보드"
       />
     </ul>
   )

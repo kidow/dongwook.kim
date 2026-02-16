@@ -228,30 +228,30 @@ Excalidraw와 유사한 무한 캔버스 화이트보드.
 
 #### 6-1. 라이브러리 셋업
 
-- [ ] `@excalidraw/excalidraw` 설치 및 호환성 확인
-- [ ] 또는 대안 라이브러리 검토 (tldraw 등)
+- [x] `@excalidraw/excalidraw` 설치 및 호환성 확인
+- [x] 또는 대안 라이브러리 검토 (tldraw 등)
 
 #### 6-2. UI 구현
 
-- [ ] `app/canvas/page.tsx` 생성
-- [ ] Excalidraw 컴포넌트 임베드 (dynamic import + SSR 비활성화)
-- [ ] 전체 화면 레이아웃 (헤더/푸터 최소화 또는 숨김)
-- [ ] 테마 연동 (shadcn 디자인 토큰 활용)
+- [x] `app/canvas/page.tsx` 생성
+- [x] Canvas 화이트보드 컴포넌트 임베드 (dynamic import + SSR 비활성화)
+- [x] 전체 화면 레이아웃 (헤더/푸터 최소화 또는 숨김)
+- [x] 테마 연동 (shadcn 디자인 토큰 활용)
 
 #### 6-3. 데이터 저장
 
-- [ ] localStorage에 캔버스 상태 저장/복원
-- [ ] PNG/SVG 내보내기 기능
+- [x] localStorage에 캔버스 상태 저장/복원
+- [x] PNG/SVG 내보내기 기능
 
 #### 6-4. 위젯 등록
 
-- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
-- [ ] 적절한 아이콘 선정 (lucide-react `PenToolIcon` 등)
+- [x] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [x] 적절한 아이콘 선정 (lucide-react `PenToolIcon` 등)
 
 #### 6-5. 마무리
 
-- [ ] `pnpm lint` / `pnpm type-check` 통과
-- [ ] 번들 사이즈 확인 (Excalidraw는 대형 라이브러리)
+- [x] `pnpm lint` / `pnpm type-check` 통과
+- [x] 번들 사이즈 확인 (Excalidraw 동적 로딩 적용)
 
 **참고**: `@excalidraw/excalidraw` (대안: `tldraw`)
 
@@ -500,4 +500,4 @@ app/
 ---
 
 **최종 업데이트**: 2026-02-16
-**현재 Phase**: Phase 5 완료 → Phase 6 진행 예정 (Canvas)
+**현재 Phase**: Phase 6 완료 → Phase 7 진행 예정 (QR Code Generator)
