@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import defaultMdxComponents from 'fumadocs-ui/mdx'
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page'
 import type { ComponentType } from 'react'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
 
 import { source } from '@/lib/source'
 
@@ -13,8 +13,6 @@ type ArchivePageProps = {
 type ArchivePageData = {
   title?: string
   description?: string
-  full?: boolean
-  toc?: unknown
   body: ComponentType<{ components?: Record<string, unknown> }>
 }
 
@@ -30,13 +28,22 @@ export default async function Page(props: ArchivePageProps) {
   const MDX = pageData.body
 
   return (
-    <DocsPage>
-      <DocsTitle>{pageData.title}</DocsTitle>
-      <DocsDescription>{pageData.description}</DocsDescription>
-      <DocsBody>
-        <MDX components={defaultMdxComponents} />
-      </DocsBody>
-    </DocsPage>
+    <article className="space-y-6 pb-10">
+      <header className="space-y-3">
+        <Badge variant="secondary" className="w-fit">
+          Code Archive
+        </Badge>
+        <h1 className="text-3xl font-bold tracking-tight">{pageData.title}</h1>
+        {pageData.description && (
+          <p className="text-muted-foreground text-base">{pageData.description}</p>
+        )}
+      </header>
+      <Card className="border-border">
+        <CardContent className="prose prose-neutral max-w-none p-6">
+          <MDX />
+        </CardContent>
+      </Card>
+    </article>
   )
 }
 
