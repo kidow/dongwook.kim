@@ -4,6 +4,7 @@ import {
   ArchiveIcon,
   CodeXmlIcon,
   FileTextIcon,
+  ImageIcon,
   KanbanIcon,
   MailIcon,
   StickyNoteIcon,
@@ -207,6 +208,18 @@ export default async function Home() {
         }
         title="Code Editor"
         description="코드 실행기"
+      />
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        href="/image-converter"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <ImageIcon className="size-5" />
+          </span>
+        }
+        title="Image Converter"
+        description="이미지 포맷 변환"
       />
     </ul>
   )

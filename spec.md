@@ -193,30 +193,30 @@ Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자�
 
 #### 5-1. 핵심 변환 로직
 
-- [ ] Canvas API 기반 이미지 변환 유틸리티 구현
-- [ ] 지원 포맷: JPEG ↔ PNG ↔ WebP ↔ AVIF
-- [ ] 품질 설정 옵션 (0-100%)
-- [ ] AVIF 변환은 브라우저 호환성 확인 필요
+- [x] Canvas API 기반 이미지 변환 유틸리티 구현
+- [x] 지원 포맷: JPEG ↔ PNG ↔ WebP ↔ AVIF
+- [x] 품질 설정 옵션 (0-100%)
+- [x] AVIF 변환은 브라우저 호환성 확인 필요
 
 #### 5-2. UI 구현
 
-- [ ] `app/image-converter/page.tsx` 생성
-- [ ] 드래그 앤 드롭 파일 업로드 영역
-- [ ] 이미지 미리보기 (원본/변환 결과 비교)
-- [ ] 출력 포맷 선택 (shadcn Select)
-- [ ] 품질 슬라이더 (shadcn Slider)
-- [ ] 변환 및 다운로드 버튼
-- [ ] 복수 파일 일괄 변환 지원
+- [x] `app/image-converter/page.tsx` 생성
+- [x] 드래그 앤 드롭 파일 업로드 영역
+- [x] 이미지 미리보기 (원본/변환 결과 비교)
+- [x] 출력 포맷 선택 (shadcn Select)
+- [x] 품질 슬라이더 (shadcn Slider)
+- [x] 변환 및 다운로드 버튼
+- [x] 복수 파일 일괄 변환 지원
 
 #### 5-3. 위젯 등록
 
-- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
-- [ ] 적절한 아이콘 선정 (lucide-react `ImageIcon` 등)
+- [x] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [x] 적절한 아이콘 선정 (lucide-react `ImageIcon` 등)
 
 #### 5-4. 마무리
 
-- [ ] `pnpm lint` / `pnpm type-check` 통과
-- [ ] 파일 크기 제한 및 에러 핸들링
+- [x] `pnpm lint` / `pnpm type-check` 통과
+- [x] 파일 크기 제한 및 에러 핸들링
 
 **참고**: https://floo.app — 클라이언트 사이드 변환, 서버 불필요
 
@@ -500,4 +500,4 @@ app/
 ---
 
 **최종 업데이트**: 2026-02-16
-**현재 Phase**: Phase 4 완료 → Phase 5 진행 예정 (Image Converter)
+**현재 Phase**: Phase 5 완료 → Phase 6 진행 예정 (Canvas)
