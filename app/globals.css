@@ -138,3 +138,25 @@ body {
 .archive-highlight .hljs-selector-tag {
   color: #70cff8;
 }
+
+@media print {
+  header,
+  footer {
+    display: none !important;
+  }
+
+  main {
+    min-height: auto !important;
+  }
+
+  main > div > div > div:first-child {
+    display: none !important;
+  }
+
+  .invoice-preview {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+}

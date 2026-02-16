@@ -293,31 +293,31 @@ URL 문자열을 입력하면 QR코드를 생성하는 도구.
 
 #### 8-1. 셋업
 
-- [ ] PDF 생성 라이브러리 선택 (`@react-pdf/renderer` 또는 브라우저 `window.print()`)
-- [ ] 인보이스 데이터 타입 정의 (`Invoice`, `InvoiceItem`, `CompanyInfo`)
+- [x] PDF 생성 라이브러리 선택 — `window.print()` + CSS `@media print` (추가 의존성 없음)
+- [x] 인보이스 데이터 타입 정의 (`InvoiceData`, `InvoiceItem`, `CompanyInfo`, `Currency`)
 
 #### 8-2. UI 구현
 
-- [ ] `app/invoice-generator/page.tsx` 생성
-- [ ] 발신자/수신자 정보 입력 폼
-- [ ] 항목 테이블 (품목, 수량, 단가, 금액) — 동적 행 추가/삭제
-- [ ] 소계/세금/합계 자동 계산
-- [ ] 인보이스 번호, 발행일, 만기일 입력
-- [ ] 통화 선택 (KRW, USD 등)
+- [x] `app/invoice-generator/page.tsx` 생성
+- [x] 발신자/수신자 정보 입력 폼
+- [x] 항목 테이블 (품목, 수량, 단가, 금액) — 동적 행 추가/삭제
+- [x] 소계/세금/합계 자동 계산
+- [x] 인보이스 번호, 발행일, 만기일 입력
+- [x] 통화 선택 (KRW, USD)
 
 #### 8-3. PDF 출력
 
-- [ ] 인보이스 미리보기 레이아웃
-- [ ] PDF 다운로드/인쇄 기능
+- [x] 인보이스 미리보기 레이아웃
+- [x] PDF 다운로드/인쇄 기능 (`window.print()` + `@media print` CSS)
 
 #### 8-4. 위젯 등록
 
-- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
-- [ ] 적절한 아이콘 선정 (lucide-react `ReceiptIcon` 등)
+- [x] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [x] 적절한 아이콘 선정 (lucide-react `ReceiptIcon`)
 
 #### 8-5. 마무리
 
-- [ ] `pnpm lint` / `pnpm type-check` 통과
+- [x] `pnpm lint` / `pnpm type-check` 통과
 
 **참고**: https://github.com/tuanpham-dev/react-invoice-generator
 
@@ -539,4 +539,4 @@ app/
 ---
 
 **최종 업데이트**: 2026-02-17
-**현재 Phase**: Phase 7 완료 → Phase 8 진행 예정 (Invoice Generator)
+**현재 Phase**: Phase 8 완료 → Phase 9 진행 예정 (API Client)
