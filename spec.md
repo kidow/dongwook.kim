@@ -154,34 +154,36 @@ Supabase 연동 URL 단축 서비스. 생성된 단축 URL은 24시간 후 자�
 
 #### 4-1. 기술 선택 및 셋업
 
-- [ ] Sandpack(https://sandpack.codesandbox.io)과 Codapi(https://codapi.org) 비교 검토
-- [ ] 선택한 라이브러리 설치 (`@codesandbox/sandpack-react` 또는 Codapi embed)
-- [ ] 지원 언어 범위 결정 (JavaScript/TypeScript 최우선)
+- [x] Sandpack(https://sandpack.codesandbox.io)과 Codapi(https://codapi.org) 비교 검토
+- [x] 선택한 라이브러리 설치 (`@codesandbox/sandpack-react` 또는 Codapi embed)
+- [x] 지원 언어 범위 결정 (JavaScript/TypeScript 최우선)
+- 선택: Sandpack (`@codesandbox/sandpack-react` v2.20.0) — 클라이언트 사이드 실행, React 네이티브 컴포넌트
 
 #### 4-2. UI 구현
 
-- [ ] `app/code-editor/page.tsx` 생성
-- [ ] 코드 에디터 영역 (구문 강조, 줄 번호)
-- [ ] 실행 버튼 및 실행 결과 출력 패널
-- [ ] 언어 선택 드롭다운 (shadcn Select)
-- [ ] 에디터 테마 설정 (라이트/다크)
+- [x] `app/code-editor/page.tsx` 생성
+- [x] 코드 에디터 영역 (구문 강조, 줄 번호)
+- [x] 실행 버튼 및 실행 결과 출력 패널
+- [x] 언어 선택 드롭다운 (shadcn Select)
+- [x] 에디터 테마 설정 (라이트/다크)
 
 #### 4-3. 추가 기능
 
-- [ ] 코드 공유 (URL 파라미터 또는 클립보드 복사)
-- [ ] 코드 템플릿/예제 프리셋
+- [x] 코드 공유 (URL 파라미터 또는 클립보드 복사)
+- [x] 코드 템플릿/예제 프리셋
 
 #### 4-4. 위젯 등록
 
-- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
-- [ ] 적절한 아이콘 선정 (lucide-react `CodeIcon` 등)
+- [x] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [x] 적절한 아이콘 선정 (lucide-react `CodeXmlIcon`)
 
 #### 4-5. 마무리
 
-- [ ] `pnpm lint` / `pnpm type-check` 통과
-- [ ] 반응형 레이아웃 검증
+- [x] `pnpm lint` / `pnpm type-check` 통과
+- [x] 반응형 레이아웃 검증
+- 메모: `pnpm build`는 webpack 모드로 검증 완료
 
-**참고**: https://codapi.org, https://sandpack.codesandbox.io
+**참고**: https://sandpack.codesandbox.io
 
 ---
 
@@ -498,4 +500,4 @@ app/
 ---
 
 **최종 업데이트**: 2026-02-16
-**현재 Phase**: Phase 4-1 진행 중 (Code Editor 기술 선택 및 셋업)
+**현재 Phase**: Phase 4 완료 → Phase 5 진행 예정 (Image Converter)

@@ -114,6 +114,11 @@ types/                      # 글로벌 타입 선언 (.d.ts)
 
 스코프 예: `blog`, `notion`, `widget`, `resume`, `spec`
 
+### 작업 완료 시 커밋 메시지 출력
+
+매 작업 완료 시 마지막에 Conventional Commits 규칙에 따른 한 줄 커밋 메시지를 제안한다.
+예: `feat(code-editor): add run button and refresh control to sandbox output panel`
+
 ## Environment Variables
 
 | 변수                            | 용도               |
