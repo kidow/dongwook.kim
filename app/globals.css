@@ -89,3 +89,52 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+.archive-highlight {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: 'JetBrainsMono', monospace;
+}
+
+.archive-highlight .hljs-comment,
+.archive-highlight .hljs-quote {
+  color: #616161;
+}
+
+.archive-highlight .hljs-variable,
+.archive-highlight .hljs-template-variable,
+.archive-highlight .hljs-attribute,
+.archive-highlight .hljs-tag,
+.archive-highlight .hljs-name,
+.archive-highlight .hljs-regexp,
+.archive-highlight .hljs-link,
+.archive-highlight .hljs-selector-id,
+.archive-highlight .hljs-selector-class {
+  color: #f98181;
+}
+
+.archive-highlight .hljs-number,
+.archive-highlight .hljs-meta,
+.archive-highlight .hljs-built_in,
+.archive-highlight .hljs-builtin-name,
+.archive-highlight .hljs-literal,
+.archive-highlight .hljs-type,
+.archive-highlight .hljs-params {
+  color: #fbbc88;
+}
+
+.archive-highlight .hljs-string,
+.archive-highlight .hljs-symbol,
+.archive-highlight .hljs-bullet {
+  color: #b9f18d;
+}
+
+.archive-highlight .hljs-title,
+.archive-highlight .hljs-section {
+  color: #faf594;
+}
+
+.archive-highlight .hljs-keyword,
+.archive-highlight .hljs-selector-tag {
+  color: #70cff8;
+}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import hljs from 'highlight.js/lib/common'
 import { ArchiveIcon, ExternalLinkIcon, SearchIcon } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
@@ -16,6 +17,7 @@ type ArchiveSnippet = {
   description: string
   category: ArchiveCategory
   tags: string[]
+  language: string
   code: string
   referenceUrl?: string
 }
@@ -28,6 +30,7 @@ const SNIPPETS: ArchiveSnippet[] = [
       'use-debounce를 이용해 입력 즉시 렌더링 부담을 줄이는 패턴입니다.',
     category: 'React',
     tags: ['use-debounce', 'input', 'performance'],
+    language: 'typescript',
     code: `const [query, setQuery] = useState('')\nconst [debouncedQuery] = useDebounce(query, 300)\n\nuseEffect(() => {\n  fetchPosts(debouncedQuery)\n}, [debouncedQuery])`
   },
   {
@@ -37,6 +40,7 @@ const SNIPPETS: ArchiveSnippet[] = [
       '유니온 타입 분기 누락을 컴파일 단계에서 잡는 타입 안전 패턴입니다.',
     category: 'TypeScript',
     tags: ['union', 'never', 'strict'],
+    language: 'typescript',
     code: `function assertNever(value: never): never {\n  throw new Error(\`Unexpected value: \${value}\`)\n}\n\nswitch (status) {\n  case 'idle':\n  case 'loading':\n  case 'success':\n    return status\n  default:\n    return assertNever(status)\n}`
   },
   {
@@ -46,6 +50,7 @@ const SNIPPETS: ArchiveSnippet[] = [
       '긴 텍스트를 2~3줄로 제한할 때 사용하는 Tailwind line-clamp 예시입니다.',
     category: 'CSS',
     tags: ['tailwind', 'line-clamp', 'ui'],
+    language: 'xml',
     code: `<p className="line-clamp-3 text-sm text-muted-foreground">\n  {description}\n</p>`
   },
   {
@@ -55,6 +60,7 @@ const SNIPPETS: ArchiveSnippet[] = [
       'API 실패 시 UI가 깨지지 않도록 fallback을 반환하는 유틸 함수입니다.',
     category: 'Utilities',
     tags: ['fetch', 'fallback', 'error-handling'],
+    language: 'typescript',
     code: `export async function safeJson<T>(input: RequestInfo, init?: RequestInit) {\n  try {\n    const response = await fetch(input, init)\n    if (!response.ok) return null\n    return (await response.json()) as T\n  } catch {\n    return null\n  }\n}`,
     referenceUrl: 'https://developer.mozilla.org/docs/Web/API/Fetch_API'
   }
@@ -68,23 +74,42 @@ const CATEGORIES: Array<ArchiveCategory | 'All'> = [
   'Utilities'
 ]
 
+function highlightCode(code: string, language: string) {
+  try {
+    return hljs.highlight(code, { language, ignoreIllegals: true }).value
+  } catch {
+    return hljs.highlightAuto(code).value
+  }
+}
+
 export default function ArchivePage() {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<ArchiveCategory | 'All'>('All')
 
-  const filteredSnippets = useMemo(() => {
-    return SNIPPETS.filter((snippet) => {
-      const byCategory = category === 'All' || snippet.category === category
-      const keyword = query.trim().toLowerCase()
-      const byKeyword =
-        keyword.length === 0 ||
-        snippet.title.toLowerCase().includes(keyword) ||
-        snippet.description.toLowerCase().includes(keyword) ||
-        snippet.tags.some((tag) => tag.toLowerCase().includes(keyword))
+  const filteredSnippets = useMemo(
+    () =>
+      SNIPPETS.filter((snippet) => {
+        const byCategory = category === 'All' || snippet.category === category
+        const keyword = query.trim().toLowerCase()
+        const byKeyword =
+          keyword.length === 0 ||
+          snippet.title.toLowerCase().includes(keyword) ||
+          snippet.description.toLowerCase().includes(keyword) ||
+          snippet.tags.some((tag) => tag.toLowerCase().includes(keyword))
 
-      return byCategory && byKeyword
-    })
-  }, [category, query])
+        return byCategory && byKeyword
+      }),
+    [category, query]
+  )
+
+  const renderedSnippets = useMemo(
+    () =>
+      filteredSnippets.map((snippet) => ({
+        ...snippet,
+        highlightedCode: highlightCode(snippet.code, snippet.language)
+      })),
+    [filteredSnippets]
+  )
 
   return (
     <section className="space-y-6">
@@ -131,7 +156,7 @@ export default function ArchivePage() {
       </div>
 
       <ul className="grid gap-3 lg:grid-cols-2">
-        {filteredSnippets.map((snippet) => (
+        {renderedSnippets.map((snippet) => (
           <li key={snippet.id}>
             <Card className="h-full border-border">
               <CardHeader className="space-y-2">
@@ -151,8 +176,11 @@ export default function ArchivePage() {
                     </Badge>
                   ))}
                 </div>
-                <pre className="bg-muted overflow-x-auto rounded-md p-3 text-xs leading-relaxed">
-                  <code>{snippet.code}</code>
+                <pre className="archive-highlight overflow-x-auto rounded-md p-3 text-xs leading-relaxed">
+                  <code
+                    className={`hljs language-${snippet.language}`}
+                    dangerouslySetInnerHTML={{ __html: snippet.highlightedCode }}
+                  />
                 </pre>
                 {snippet.referenceUrl && (
                   <a
