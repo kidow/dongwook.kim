@@ -5,14 +5,14 @@ import { useSandpack } from '@codesandbox/sandpack-react'
 import { Button } from '@/components/ui/button'
 
 export default function RunButton() {
-  const { dispatch } = useSandpack()
+  const { sandpack } = useSandpack()
 
   return (
     <div className="flex items-center gap-1 border-b border-border px-3 py-2">
       <Button
         size="sm"
         className="gap-1.5"
-        onClick={() => dispatch({ type: 'start' })}
+        onClick={() => sandpack.runSandpack()}
       >
         <PlayIcon className="size-3.5" />
         실행
@@ -22,7 +22,8 @@ export default function RunButton() {
         size="sm"
         className="gap-1.5"
         onClick={() => {
-          dispatch({ type: 'refresh' })
+          sandpack.resetAllFiles()
+          sandpack.runSandpack()
         }}
       >
         <RotateCcwIcon className="size-3.5" />
