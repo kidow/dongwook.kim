@@ -82,13 +82,13 @@ Fumadocs 프레임워크 기반 코드 스니펫/문서 보관소. 사전 검토
 
 - [ ] `fumadocs-core`, `fumadocs-ui` 설치
 - [x] `app/archive/` 라우트 구성 (임시 스니펫 아카이브 UI, Fumadocs 전환 전 단계)
-- [ ] MDX 콘텐츠 디렉토리 구조 설계 (`content/archive/`)
+- [x] MDX 콘텐츠 디렉토리 구조 설계 (`content/archive/`)
 - [ ] 코드 하이라이팅 설정 (Shiki 등)
 
 #### 2-3. 콘텐츠 구조
 
 - [x] 카테고리별 분류 체계 정의 (React, TypeScript, CSS, Utilities)
-- [ ] 코드 스니펫 템플릿 MDX 작성
+- [x] 코드 스니펫 템플릿 MDX 작성
 - [x] 검색 기능 연동 (임시 로컬 필터 검색)
 
 #### 2-4. 위젯 등록
@@ -493,4 +493,4 @@ app/
 ---
 
 **최종 업데이트**: 2026-02-16
-**현재 Phase**: 시작 전 (계획 수립 완료)
+**현재 Phase**: Phase 2-2 진행 중 (Archive MDX 콘텐츠 구조 초안 추가)
