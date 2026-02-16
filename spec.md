@@ -329,34 +329,34 @@ Postman/Bruno 스타일의 브라우저 내 HTTP API 테스트 도구.
 
 #### 9-1. 핵심 기능 구현
 
-- [ ] HTTP 메서드 지원 (GET, POST, PUT, PATCH, DELETE)
-- [ ] 요청 URL 입력
-- [ ] 요청 헤더 편집 (키-값 쌍, 동적 추가/삭제)
-- [ ] 요청 바디 편집 (JSON, Form Data)
-- [ ] `fetch` API를 통한 요청 실행
+- [x] HTTP 메서드 지원 (GET, POST, PUT, PATCH, DELETE)
+- [x] 요청 URL 입력
+- [x] 요청 헤더 편집 (키-값 쌍, 동적 추가/삭제)
+- [x] 요청 바디 편집 (JSON, Form Data)
+- [x] `fetch` API를 통한 요청 실행
 
 #### 9-2. UI 구현
 
-- [ ] `app/api-client/page.tsx` 생성
-- [ ] 메서드 선택 드롭다운 (shadcn Select) + URL 입력 바
-- [ ] 탭 UI: Headers, Body, Params (shadcn Tabs)
-- [ ] 응답 뷰어: Status, Headers, Body (JSON 구문 강조)
-- [ ] 응답 시간 및 크기 표시
+- [x] `app/api-client/page.tsx` 생성
+- [x] 메서드 선택 드롭다운 (shadcn Select) + URL 입력 바
+- [x] 탭 UI: Headers, Body, Params (shadcn Tabs)
+- [x] 응답 뷰어: Status, Headers, Body (JSON 구문 강조)
+- [x] 응답 시간 및 크기 표시
 
 #### 9-3. 추가 기능
 
-- [ ] 요청 히스토리 (localStorage 저장)
-- [ ] 요청 컬렉션 저장/불러오기
+- [x] 요청 히스토리 (localStorage 저장)
+- [x] 요청 컬렉션 저장/불러오기
 
 #### 9-4. 위젯 등록
 
-- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
-- [ ] 적절한 아이콘 선정 (lucide-react `SendIcon` 등)
+- [x] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [x] 적절한 아이콘 선정 (lucide-react `SendIcon`)
 
 #### 9-5. 마무리
 
-- [ ] `pnpm lint` / `pnpm type-check` 통과
-- [ ] CORS 제한 사항 안내 UI
+- [x] `pnpm lint` / `pnpm type-check` 통과
+- [x] CORS 제한 사항 안내 UI
 
 **참고**: https://github.com/usebruno/bruno
 
@@ -539,4 +539,4 @@ app/
 ---
 
 **최종 업데이트**: 2026-02-17
-**현재 Phase**: Phase 8 완료 → Phase 9 진행 예정 (API Client)
+**현재 Phase**: Phase 9 완료 → Phase 10 진행 예정 (Mindmap)

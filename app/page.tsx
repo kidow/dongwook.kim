@@ -10,6 +10,7 @@ import {
   PenToolIcon,
   QrCodeIcon,
   ReceiptIcon,
+  SendIcon,
   StickyNoteIcon,
   UtensilsCrossedIcon
 } from 'lucide-react'
@@ -259,6 +260,18 @@ export default async function Home() {
         }
         title="Invoice"
         description="인보이스 생성기"
+      />
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        href="/api-client"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <SendIcon className="size-5" />
+          </span>
+        }
+        title="API Client"
+        description="API 테스트 도구"
       />
     </ul>
   )
