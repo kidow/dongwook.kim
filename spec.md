@@ -55,7 +55,7 @@ Trello 스타일 칸반 보드. 드래그 앤 드롭으로 카드를 이동하�
 
 #### 1-4. 위젯 등록
 
-- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [x] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
 - [ ] 적절한 아이콘 선정 (lucide-react `KanbanIcon` 등)
 
 #### 1-5. 마무리
@@ -81,20 +81,20 @@ Fumadocs 프레임워크 기반 코드 스니펫/문서 보관소. 사전 검토
 #### 2-2. Fumadocs 셋업 (호환 확인 후)
 
 - [ ] `fumadocs-core`, `fumadocs-ui` 설치
-- [ ] `app/archive/` 라우트 구성 (Fumadocs layout 적용)
+- [x] `app/archive/` 라우트 구성 (임시 스니펫 아카이브 UI, Fumadocs 전환 전 단계)
 - [ ] MDX 콘텐츠 디렉토리 구조 설계 (`content/archive/`)
 - [ ] 코드 하이라이팅 설정 (Shiki 등)
 
 #### 2-3. 콘텐츠 구조
 
-- [ ] 카테고리별 분류 체계 정의 (예: React, TypeScript, CSS, Utilities 등)
+- [x] 카테고리별 분류 체계 정의 (React, TypeScript, CSS, Utilities)
 - [ ] 코드 스니펫 템플릿 MDX 작성
-- [ ] 검색 기능 연동 (Fumadocs 내장 검색)
+- [x] 검색 기능 연동 (임시 로컬 필터 검색)
 
 #### 2-4. 위젯 등록
 
-- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
-- [ ] 적절한 아이콘 선정 (lucide-react `ArchiveIcon` 등)
+- [x] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [x] 적절한 아이콘 선정 (lucide-react `ArchiveIcon`)
 
 #### 2-5. 마무리
 
