@@ -426,7 +426,13 @@ async function renderResumeBlocks(
 
 export default async function ResumePage() {
   const { title, updatedAt, blocks, client } = await getResumeData()
-  const renderedBlocks = await renderResumeBlocks(blocks, client)
+  let renderedBlocks: ReactNode[]
+
+  try {
+    renderedBlocks = await renderResumeBlocks(blocks, client)
+  } catch {
+    renderedBlocks = await renderResumeBlocks(FALLBACK_BLOCKS, null)
+  }
 
   return (
     <div className="prose-sm prose-neutral !max-w-none xl:prose">

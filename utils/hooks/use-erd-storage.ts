@@ -29,21 +29,18 @@ export const useErdStorage = () => {
         if (stored) {
           const parsed = JSON.parse(stored)
           if (parsed.version === STORAGE_VERSION) {
-            
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setData(parsed)
           } else {
-            
             setData(getDefaultData())
           }
         } else {
-          
           setData(getDefaultData())
         }
       } catch {
-        
         setData(getDefaultData())
       }
-      
+
       setIsLoaded(true)
     }
   }, [])

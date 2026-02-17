@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
-import { Suspense } from 'react'
-
-import ErdEditor from './ErdEditor'
+import ErdEditorClient from './erd-editor-client'
 
 const TITLE = 'ERD Editor | Kidow'
 const DESCRIPTION =
@@ -28,15 +26,5 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return (
-    <Suspense
-      fallback={
-        <div className="text-sm text-stone-400">
-          에디터를 불러오는 중...
-        </div>
-      }
-    >
-      <ErdEditor />
-    </Suspense>
-  )
+  return <ErdEditorClient />
 }

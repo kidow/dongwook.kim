@@ -24,9 +24,92 @@ import * as Icon from '@/components/icons'
 import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
 import WidgetAnalytics from '@/components/Widget/widget-analytics'
 
+const SIDE_PROJECTS = [
+  {
+    href: '/memo',
+    title: 'MEMO',
+    description: '내용이 사라지지 않는',
+    icon: <StickyNoteIcon className="size-5" />
+  },
+  {
+    href: '/lunch',
+    title: 'Lunch',
+    description: '점심 뭐 먹지?',
+    icon: <UtensilsCrossedIcon className="size-5" />
+  },
+  {
+    href: '/kanban',
+    title: 'Kanban',
+    description: '칸반 보드',
+    icon: <KanbanIcon className="size-5" />
+  },
+  {
+    href: '/archive',
+    title: 'Archive',
+    description: '코드 아카이브',
+    icon: <ArchiveIcon className="size-5" />
+  },
+  {
+    href: '/code-editor',
+    title: 'Code Editor',
+    description: '코드 실행기',
+    icon: <CodeXmlIcon className="size-5" />
+  },
+  {
+    href: '/api-client',
+    title: 'API Client',
+    description: 'API 테스트 도구',
+    icon: <SendIcon className="size-5" />
+  },
+  {
+    href: '/image-converter',
+    title: 'Image Converter',
+    description: '이미지 포맷 변환',
+    icon: <ImageIcon className="size-5" />
+  },
+  {
+    href: '/qrcode-generator',
+    title: 'QR Code',
+    description: 'QR코드 생성기',
+    icon: <QrCodeIcon className="size-5" />
+  },
+  {
+    href: '/canvas',
+    title: 'Canvas',
+    description: '가상 화이트보드',
+    icon: <PenToolIcon className="size-5" />
+  },
+  {
+    href: '/invoice-generator',
+    title: 'Invoice',
+    description: '인보이스 생성기',
+    icon: <ReceiptIcon className="size-5" />
+  },
+  {
+    href: '/mindmap',
+    title: 'Mindmap',
+    description: '마인드맵 생성기',
+    icon: <NetworkIcon className="size-5" />
+  },
+  {
+    href: '/erd-editor',
+    title: 'ERD Editor',
+    description: 'ERD 다이어그램 편집기',
+    icon: <DatabaseIcon className="size-5" />
+  }
+] as const
+
+function SideProjectIcon({ children }: ReactProps) {
+  return (
+    <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+      {children}
+    </span>
+  )
+}
+
 export default async function Home() {
   return (
-    <ul className="duration-400 grid grid-cols-2 gap-6 xl:grid-cols-4 xl:gap-10">
+    <ul className="duration-400 grid grid-cols-2 gap-6 lg:gap-8 xl:grid-cols-4 xl:gap-10">
       <WidgetLink
         className="col-span-2 xl:col-span-4 xl:hover:rotate-1"
         size="h-[178px] w-full hover:bg-neutral-50 xl:h-[175px] xl:w-[820px]"
@@ -152,153 +235,31 @@ export default async function Home() {
         <WidgetAnalytics />
       </Suspense>
 
-      <li className="col-span-2 p-4 xl:col-span-4">
-        <h3 className="px-2 font-semibold uppercase">Side Projects 👨🏻‍💻</h3>
+      <li className="col-span-2 xl:col-span-4">
+        <section className="rounded-3xl border border-border bg-white p-4 shadow-sm xl:p-6">
+          <div className="px-2">
+            <h3 className="font-semibold uppercase">Side Projects 👨🏻‍💻</h3>
+            <p className="mt-1 text-xs text-muted-foreground">
+              12개 툴을 모바일부터 데스크탑까지 일관된 카드 그리드로 제공합니다.
+            </p>
+          </div>
+          <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {SIDE_PROJECTS.map((project) => (
+              <WidgetLink
+                key={project.href}
+                className="hover:-translate-y-0.5 xl:hover:rotate-1"
+                size="h-[178px] w-full hover:bg-neutral-50"
+                href={project.href}
+                icon={
+                  <SideProjectIcon>{project.icon}</SideProjectIcon>
+                }
+                title={project.title}
+                description={project.description}
+              />
+            ))}
+          </ul>
+        </section>
       </li>
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/memo"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <StickyNoteIcon className="size-5" />
-          </span>
-        }
-        title="MEMO"
-        description="내용이 사라지지 않는"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/lunch"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <UtensilsCrossedIcon className="size-5" />
-          </span>
-        }
-        title="Lunch"
-        description="점심 뭐 먹지?"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/kanban"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <KanbanIcon className="size-5" />
-          </span>
-        }
-        title="Kanban"
-        description="칸반 보드"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/archive"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <ArchiveIcon className="size-5" />
-          </span>
-        }
-        title="Archive"
-        description="코드 아카이브"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/code-editor"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <CodeXmlIcon className="size-5" />
-          </span>
-        }
-        title="Code Editor"
-        description="코드 실행기"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/image-converter"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <ImageIcon className="size-5" />
-          </span>
-        }
-        title="Image Converter"
-        description="이미지 포맷 변환"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/canvas"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <PenToolIcon className="size-5" />
-          </span>
-        }
-        title="Canvas"
-        description="가상 화이트보드"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/qrcode-generator"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <QrCodeIcon className="size-5" />
-          </span>
-        }
-        title="QR Code"
-        description="QR코드 생성기"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/invoice-generator"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <ReceiptIcon className="size-5" />
-          </span>
-        }
-        title="Invoice"
-        description="인보이스 생성기"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/api-client"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <SendIcon className="size-5" />
-          </span>
-        }
-        title="API Client"
-        description="API 테스트 도구"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/mindmap"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <NetworkIcon className="size-5" />
-          </span>
-        }
-        title="Mindmap"
-        description="마인드맵 생성기"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
-        href="/erd-editor"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <DatabaseIcon className="size-5" />
-          </span>
-        }
-        title="ERD Editor"
-        description="ERD 다이어그램 편집기"
-      />
     </ul>
   )
 }

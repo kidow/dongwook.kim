@@ -10,6 +10,7 @@ import {
   useEdgesState,
   addEdge,
   Connection,
+  ReactFlowProvider,
   useReactFlow,
   MiniMap
 } from '@xyflow/react'
@@ -26,7 +27,7 @@ const nodeTypes = {
   mindmapNode: MindmapNode
 }
 
-export default function MindmapEditor() {
+function MindmapEditorInner() {
   const { data: storageData, isLoaded, save, reset: resetStorage } = useMindmapStorage()
   const { fitView } = useReactFlow()
   const [nodes, setNodesState, onNodesChange] = useNodesState<MindMapNode>([])
@@ -173,5 +174,13 @@ export default function MindmapEditor() {
         </ReactFlow>
       </div>
     </div>
+  )
+}
+
+export default function MindmapEditor() {
+  return (
+    <ReactFlowProvider>
+      <MindmapEditorInner />
+    </ReactFlowProvider>
   )
 }

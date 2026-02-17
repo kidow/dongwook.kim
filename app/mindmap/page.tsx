@@ -1,12 +1,5 @@
-'use client'
-
-import { ReactFlowProvider } from '@xyflow/react'
-import MindmapEditor from './MindmapEditor'
+import MindmapClient from './mindmap-client'
 
 export default function MindmapPage() {
-  return (
-    <ReactFlowProvider>
-      <MindmapEditor />
-    </ReactFlowProvider>
-  )
+  return <MindmapClient />
 }
