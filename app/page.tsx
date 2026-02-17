@@ -7,6 +7,7 @@ import {
   ImageIcon,
   KanbanIcon,
   MailIcon,
+  NetworkIcon,
   PenToolIcon,
   QrCodeIcon,
   ReceiptIcon,
@@ -272,6 +273,18 @@ export default async function Home() {
         }
         title="API Client"
         description="API 테스트 도구"
+      />
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        href="/mindmap"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <NetworkIcon className="size-5" />
+          </span>
+        }
+        title="Mindmap"
+        description="마인드맵 생성기"
       />
     </ul>
   )
