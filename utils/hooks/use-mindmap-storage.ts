@@ -25,18 +25,16 @@ export const useMindmapStorage = () => {
   const [data, setData] = useState<MindMapData | null>(null)
   const [isLoaded, setIsLoaded] = useState(false)
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
         const stored = localStorage.getItem(STORAGE_KEY)
         const parsed = stored ? JSON.parse(stored) : getDefaultData()
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setData(parsed)
       } catch {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setData(getDefaultData())
       }
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLoaded(true)
     }
   }, [])

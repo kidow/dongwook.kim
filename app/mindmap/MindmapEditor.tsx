@@ -20,7 +20,7 @@ import { useMindmapStorage } from '@/utils/hooks/use-mindmap-storage'
 import { MindmapNode } from '@/components/Mindmap/MindmapNode'
 import { Download, RotateCcw } from 'lucide-react'
 import html2canvas from 'html2canvas'
-import type { MindMapNode, MindMapNodeData } from '@/types/mindmap'
+import type { MindMapNode } from '@/types/mindmap'
 
 const nodeTypes = {
   mindmapNode: MindmapNode
@@ -82,10 +82,6 @@ export default function MindmapEditor() {
     [nodes, setNodesState, setEdgesState]
   )
 
-  const handleSave = useCallback(() => {
-    save(nodes, edges)
-  }, [nodes, edges, save])
-
   const handleExport = useCallback(async () => {
     const element = document.querySelector('.react-flow__renderer')
     if (!element) return
@@ -123,12 +119,20 @@ export default function MindmapEditor() {
     fitView()
   }, [fitView])
 
+  // Auto-save whenever nodes or edges change (debounced)
+  useEffect(() => {
+    if (isLoaded && nodes.length > 0) {
+      const timer = setTimeout(() => {
+        save(nodes, edges)
+      }, 500) // Debounce save by 500ms to avoid too frequent saves
+      return () => clearTimeout(timer)
+    }
+  }, [nodes, edges, isLoaded, save])
+
   return (
     <div className="flex flex-col h-screen bg-background">
-      <div className="border-b border-border bg-card p-4 flex gap-2">
-        <Button onClick={handleSave} variant="default" size="sm">
-          Save
-        </Button>
+      <div className="border-b border-border bg-card p-4 flex gap-2 items-center">
+        <div className="text-sm text-muted-foreground">자동 저장됨</div>
         <Button onClick={handleExport} variant="outline" size="sm">
           <Download className="w-4 h-4 mr-2" />
           Export PNG
