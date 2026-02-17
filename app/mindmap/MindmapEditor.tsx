@@ -33,18 +33,20 @@ export default function MindmapEditor() {
   const [edges, setEdgesState, onEdgesChange] = useEdgesState<any>([])
   const [selectedNode, setSelectedNode] = useState<string | null>(null)
 
+  // Initialize nodes and edges from storage data (only on first load)
   useEffect(() => {
-    if (isLoaded && storageData) {
-      setNodesState(
-        storageData.nodes.map((node) => ({
-          ...node,
-          type: 'mindmapNode'
-        }))
-      )
+    if (isLoaded && storageData && nodes.length === 0) {
+      const nodesToSet = storageData.nodes.map((node: any) => ({
+        id: node.id,
+        type: 'mindmapNode',
+        data: node.data,
+        position: node.position
+      }))
+      setNodesState(nodesToSet)
       setEdgesState(storageData.edges)
       setTimeout(() => fitView(), 100)
     }
-  }, [isLoaded, storageData, setNodesState, setEdgesState, fitView])
+  }, [isLoaded, storageData, nodes.length, setNodesState, setEdgesState, fitView])
 
   const handleConnect = useCallback(
     (connection: Connection) => {
