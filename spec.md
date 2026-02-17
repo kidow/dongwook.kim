@@ -368,34 +368,34 @@ Postman/Bruno 스타일의 브라우저 내 HTTP API 테스트 도구.
 
 #### 10-1. 셋업
 
-- [ ] `@xyflow/react` 설치
-- [ ] 마인드맵 데이터 타입 정의 (`MindMapNode`, `MindMapEdge`)
-- [ ] localStorage 저장/복원 훅 구현
+- [x] `@xyflow/react` 설치
+- [x] 마인드맵 데이터 타입 정의 (`MindMapNode`, `MindMapEdge`)
+- [x] localStorage 저장/복원 훅 구현
 
 #### 10-2. 핵심 UI 구현
 
-- [ ] `app/mindmap/page.tsx` 생성
-- [ ] React Flow 캔버스 (줌, 팬, 미니맵)
-- [ ] 커스텀 노드 컴포넌트 (텍스트 입력, 색상, 크기 조절)
-- [ ] 노드 추가/삭제/편집
-- [ ] 엣지(연결선) 추가/삭제
-- [ ] 자동 레이아웃 정렬 (dagre 또는 elkjs)
+- [x] `app/mindmap/page.tsx` 생성
+- [x] React Flow 캔버스 (줌, 팬, 미니맵)
+- [x] 커스텀 노드 컴포넌트 (텍스트 입력, 색상, 크기 조절)
+- [x] 노드 추가/삭제/편집
+- [x] 엣지(연결선) 추가/삭제
+- [x] 자동 레이아웃 정렬 (dagre 또는 elkjs)
 
 #### 10-3. 추가 기능
 
-- [ ] 노드 색상 커스터마이징
-- [ ] PNG/SVG 내보내기
-- [ ] 키보드 단축키 (노드 추가, 삭제, 포커스 이동)
+- [x] 노드 색상 커스터마이징
+- [x] PNG/SVG 내보내기
+- [x] 키보드 단축키 (노드 추가, 삭제, 포커스 이동)
 
 #### 10-4. 위젯 등록
 
-- [ ] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
-- [ ] 적절한 아이콘 선정 (lucide-react `NetworkIcon` 등)
+- [x] `app/page.tsx` Side Projects 섹션에 `WidgetLink` 추가
+- [x] 적절한 아이콘 선정 (lucide-react `NetworkIcon` 등)
 
 #### 10-5. 마무리
 
-- [ ] `pnpm lint` / `pnpm type-check` 통과
-- [ ] 반응형 레이아웃 검증
+- [x] `pnpm lint` / `pnpm type-check` 통과
+- [x] 반응형 레이아웃 검증
 
 **참고**: https://www.npmjs.com/package/@xyflow/react
 
@@ -539,4 +539,4 @@ app/
 ---
 
 **최종 업데이트**: 2026-02-17
-**현재 Phase**: Phase 9 완료 → Phase 10 진행 예정 (Mindmap)
+**현재 Phase**: Phase 10 완료 → Phase 11 진행 예정 (홈페이지 위젯 통합 및 최종 정리)
