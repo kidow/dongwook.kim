@@ -250,6 +250,10 @@ export default async function Home() {
           description={project.description}
         />
       ))}
+
+      <li className="col-span-2 px-2 xl:col-span-4">
+        <h3 className="font-semibold uppercase">Mini Games 🎮</h3>
+      </li>
     </ul>
   )
 }
