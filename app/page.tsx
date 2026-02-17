@@ -3,6 +3,7 @@ import Image from 'next/image'
 import {
   ArchiveIcon,
   CodeXmlIcon,
+  DatabaseIcon,
   FileTextIcon,
   ImageIcon,
   KanbanIcon,
@@ -285,6 +286,18 @@ export default async function Home() {
         }
         title="Mindmap"
         description="마인드맵 생성기"
+      />
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px]"
+        href="/erd-editor"
+        icon={
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+            <DatabaseIcon className="size-5" />
+          </span>
+        }
+        title="ERD Editor"
+        description="ERD 다이어그램 편집기"
       />
     </ul>
   )

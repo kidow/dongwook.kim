@@ -32,7 +32,7 @@ pnpm type-check   # TypeScript 타입 검사 (tsc --noEmit --skipLibCheck)
 ```
 app/                            # Next.js App Router (라우트)
 ├── layout.tsx                  # 루트 레이아웃 (Header, Footer, Toast, Agentation)
-├── page.tsx                    # 홈 — Widget 그리드 (13개 Side Project 위젯)
+├── page.tsx                    # 홈 — Widget 그리드 (14개 Side Project 위젯)
 ├── globals.css                 # 글로벌 스타일, 테마 토큰, 애니메이션
 ├── api/posts/route.ts          # Blog API 엔드포인트
 ├── blog/[id]/                  # 블로그 목록/상세 (Notion 연동)
@@ -47,7 +47,8 @@ app/                            # Next.js App Router (라우트)
 ├── qrcode-generator/           # [Phase 7] QR코드 생성기
 ├── invoice-generator/          # [Phase 8] 인보이스 생성기
 ├── api-client/                 # [Phase 9] HTTP API 테스트 클라이언트 (Postman 스타일)
-└── mindmap/                    # [Phase 10] 마인드맵 생성기 (React Flow)
+├── mindmap/                    # [Phase 10] 마인드맵 생성기 (React Flow)
+└── erd-editor/                 # [Phase 11] ERD 에디터 (React Flow)
 
 components/
 ├── ui/                         # shadcn/ui 프리미티브 (자동 생성)
@@ -60,6 +61,7 @@ components/
 ├── InvoiceGenerator/           # 인보이스 생성 폼/미리보기
 ├── Kanban/                     # 칸반 보드 컴포넌트
 ├── Mindmap/                    # React Flow 마인드맵 노드
+├── ErdEditor/                  # ERD 에디터 컴포넌트 (React Flow)
 ├── QrCodeGenerator/            # QR코드 생성 컴포넌트
 ├── Archive/                    # Fumadocs 아카이브 래퍼
 ├── toolbars/                   # ToolbarProvider (에디터 상태)
@@ -71,7 +73,8 @@ utils/                          # 비즈니스 로직, API 래퍼
 ├── api/notion.ts               # Notion API 통합
 ├── event-listener.ts           # 커스텀 이벤트 시스템 (토스트)
 ├── hooks/                      # 커스텀 훅
-│   └── use-mindmap-storage.ts  # 마인드맵 localStorage 저장/복원
+│   ├── use-mindmap-storage.ts  # 마인드맵 localStorage 저장/복원
+│   └── use-erd-storage.ts      # ERD 에디터 localStorage 저장/복원
 ├── cn.ts                       # cn() wrapper
 └── index.ts                    # toast, cn, copyText 등 re-export
 
@@ -79,6 +82,7 @@ lib/utils.ts                    # cn() — clsx + tailwind-merge
 types/                          # 글로벌 타입 선언 (.d.ts)
 ├── global.d.ts                 # ReactProps, 전역 타입
 ├── mindmap.d.ts                # 마인드맵 라이브러리 타입
+├── erd.d.ts                    # ERD 에디터 라이브러리 타입
 ├── highlightjs-languages.d.ts  # highlight.js 언어 타입
 └── index.d.ts
 ```
@@ -128,6 +132,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 - `/invoice-generator` — 인보이스 생성
 - `/api-client` — API 테스트 클라이언트
 - `/mindmap` — 마인드맵 (React Flow)
+- `/erd-editor` — ERD 에디터 (React Flow)
 
 ## Code Conventions
 
@@ -208,7 +213,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 | `@notionhq/client`           | 5.9   | Notion API               | Core  |
 | `recharts`                   | 3.7   | 차트 시각화              | Core  |
 | `qrcode.react`               | 4.2   | QR코드 생성              | 7     |
-| `html2canvas`                | 1.4   | 캔버스 이미지 캡처       | 6,10  |
+| `html2canvas`                | 1.4   | 캔버스 이미지 캡처       | 6,10,11 |
 | `dayjs`                      | 1.11  | 날짜 포맷팅              | Multi |
 | `highlight.js`               | 11.11 | 코드 구문 강조           | 2,4   |
 | `lowlight`                   | 3.3   | Tiptap 코드블럭 강조     | Core  |
@@ -262,9 +267,11 @@ const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), { ssr: fal
 - [app/globals.css](app/globals.css) — CSS 변수, 테마 토큰, 애니메이션
 - [components/Widget/types.ts](components/Widget/types.ts) — 위젯 타입 정의
 - [utils/api/notion.ts](utils/api/notion.ts) — Notion API 통합 로직
-- [app/page.tsx](app/page.tsx) — 홈페이지 (13개 위젯 그리드)
+- [app/page.tsx](app/page.tsx) — 홈페이지 (14개 위젯 그리드)
 - [components/Editor/index.tsx](components/Editor/index.tsx) — Tiptap 리치텍스트 에디터
 - [components/ApiClient/index.tsx](components/ApiClient/index.tsx) — HTTP 요청 테스터
 - [components/CodeEditor/index.tsx](components/CodeEditor/index.tsx) — Sandpack 코드 에디터
 - [app/mindmap/MindmapEditor.tsx](app/mindmap/MindmapEditor.tsx) — React Flow 마인드맵
 - [utils/hooks/use-mindmap-storage.ts](utils/hooks/use-mindmap-storage.ts) — 마인드맵 저장소 훅
+- [app/erd-editor/ErdEditor.tsx](app/erd-editor/ErdEditor.tsx) — React Flow ERD 에디터
+- [utils/hooks/use-erd-storage.ts](utils/hooks/use-erd-storage.ts) — ERD 저장소 훅
