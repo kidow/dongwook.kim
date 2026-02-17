@@ -14,10 +14,10 @@ export default function WidgetQuote() {
         <CardContent className="p-5 xl:p-6">
           <div>
             <span className="flex h-10 w-10 items-center justify-center rounded-md border border-border">
-              <QuoteIcon className="size-5 scale-[-1] text-muted-foreground" />
+              <QuoteIcon className="size-5 scale-[-1] text-zinc-900" />
             </span>
           </div>
-          <blockquote className="mt-3 text-xl font-normal italic text-muted-foreground">
+          <blockquote className="mt-3 text-xl font-normal italic text-zinc-900">
             {QUOTE_TEXT}
           </blockquote>
         </CardContent>
