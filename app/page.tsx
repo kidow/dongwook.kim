@@ -235,31 +235,21 @@ export default async function Home() {
         <WidgetAnalytics />
       </Suspense>
 
-      <li className="col-span-2 xl:col-span-4">
-        <section className="rounded-3xl border border-border bg-white p-4 shadow-sm xl:p-6">
-          <div className="px-2">
-            <h3 className="font-semibold uppercase">Side Projects 👨🏻‍💻</h3>
-            <p className="mt-1 text-xs text-muted-foreground">
-              12개 툴을 모바일부터 데스크탑까지 일관된 카드 그리드로 제공합니다.
-            </p>
-          </div>
-          <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {SIDE_PROJECTS.map((project) => (
-              <WidgetLink
-                key={project.href}
-                className="hover:-translate-y-0.5 xl:hover:rotate-1"
-                size="h-[178px] w-full hover:bg-neutral-50"
-                href={project.href}
-                icon={
-                  <SideProjectIcon>{project.icon}</SideProjectIcon>
-                }
-                title={project.title}
-                description={project.description}
-              />
-            ))}
-          </ul>
-        </section>
+      <li className="col-span-2 px-2 xl:col-span-4">
+        <h3 className="font-semibold uppercase">Side Projects 👨🏻‍💻</h3>
       </li>
+
+      {SIDE_PROJECTS.map((project) => (
+        <WidgetLink
+          key={project.href}
+          className="xl:hover:rotate-2"
+          size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
+          href={project.href}
+          icon={<SideProjectIcon>{project.icon}</SideProjectIcon>}
+          title={project.title}
+          description={project.description}
+        />
+      ))}
     </ul>
   )
 }
