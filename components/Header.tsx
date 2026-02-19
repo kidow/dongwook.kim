@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 const AVATAR_SIZE = { mobile: 120, desktop: 184 } as const
-const SITE_TITLE = 'Kidow'
+const SITE_TITLE = 'kidow'
 const SITE_DESCRIPTION = '비즈니스에 관심이 많은 웹 개발자 ✨'
 
 function Header() {
@@ -44,7 +44,7 @@ function Header() {
               className="relative block aspect-square h-full w-full overflow-hidden rounded-full ring-offset-2 duration-300 hover:ring-2 hover:ring-lime-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <Image
-                src="/avatar.svg"
+                src="/logo.jpg"
                 alt={`${SITE_TITLE} 프로필 사진`}
                 priority
                 width={AVATAR_SIZE.desktop}

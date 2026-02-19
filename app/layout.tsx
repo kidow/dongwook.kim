@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Kidow',
+  title: 'kidow',
   description: '비즈니스에 관심이 많은 웹 개발자'
 }
 
