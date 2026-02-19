@@ -35,7 +35,9 @@ export default async function Page(props: ArchivePageProps) {
         </Badge>
         <h1 className="text-3xl font-bold tracking-tight">{pageData.title}</h1>
         {pageData.description && (
-          <p className="text-muted-foreground text-base">{pageData.description}</p>
+          <p className="text-muted-foreground text-base">
+            {pageData.description}
+          </p>
         )}
       </header>
       <Card className="border-border">
@@ -51,7 +53,9 @@ export function generateStaticParams() {
   return source.generateParams()
 }
 
-export async function generateMetadata(props: ArchivePageProps): Promise<Metadata> {
+export async function generateMetadata(
+  props: ArchivePageProps
+): Promise<Metadata> {
   const params = await props.params
   const page = source.getPage(params.slug)
 
@@ -60,7 +64,7 @@ export async function generateMetadata(props: ArchivePageProps): Promise<Metadat
   }
 
   return {
-    title: `${page.data.title} | 코드 아카이브 | Kidow`,
+    title: page.data.title,
     description: page.data.description
   }
 }

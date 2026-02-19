@@ -13,7 +13,7 @@ import type {
 
 import { getNotionEnv } from '@/utils/env'
 
-const TITLE = '이력서 | Kidow'
+const TITLE = '이력서'
 const BASE_URL = 'https://dongwook.kim/resume'
 const FALLBACK_RESUME_PAGE_ID = '81617e74c35e4a98956c89717ace443b'
 

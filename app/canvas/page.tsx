@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 
 import CanvasBoard from '@/components/Canvas'
 
-const TITLE = '캔버스 화이트보드 | Kidow'
+const TITLE = '캔버스 화이트보드'
 const DESCRIPTION =
   '브라우저에서 자유롭게 그릴 수 있는 캔버스 화이트보드입니다. 자동 저장과 PNG/SVG 내보내기를 지원합니다.'
 const BASE_URL = 'https://dongwook.kim/canvas'

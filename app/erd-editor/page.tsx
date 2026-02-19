@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import ErdEditorClient from './erd-editor-client'
 
-const TITLE = 'ERD Editor | Kidow'
+const TITLE = 'ERD Editor'
 const DESCRIPTION =
   '브라우저에서 데이터베이스 ERD를 설계할 수 있는 도구입니다.'
 const BASE_URL = 'https://dongwook.kim/erd-editor'

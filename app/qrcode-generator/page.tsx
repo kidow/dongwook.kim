@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import QrCodeGenerator from '@/components/QrCodeGenerator'
 
-const TITLE = 'QR Code Generator | Kidow'
+const TITLE = 'QR Code Generator'
 const DESCRIPTION =
   'URL을 입력하면 QR코드를 실시간으로 생성하고, PNG/SVG로 다운로드할 수 있는 도구입니다.'
 const BASE_URL = 'https://dongwook.kim/qrcode-generator'

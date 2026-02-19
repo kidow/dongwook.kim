@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 
 import KanbanBoard from '@/components/Kanban'
 
-const TITLE = '칸반 보드 | Kidow'
+const TITLE = '칸반 보드'
 const DESCRIPTION =
   'Trello 스타일 칸반 보드. 드래그 앤 드롭으로 카드를 관리하세요.'
 const BASE_URL = 'https://dongwook.kim/kanban'

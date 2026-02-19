@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 
 import CodeEditor from '@/components/CodeEditor'
 
-const TITLE = '코드 에디터 | Kidow'
+const TITLE = '코드 에디터'
 const DESCRIPTION =
   '브라우저에서 JavaScript, TypeScript 코드를 작성하고 실행할 수 있는 에디터입니다.'
 const BASE_URL = 'https://dongwook.kim/code-editor'
