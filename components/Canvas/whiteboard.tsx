@@ -40,9 +40,7 @@ function getExportFilename(extension: 'png' | 'svg') {
   return `canvas-${stamp}.${extension}`
 }
 
-function hasDrawableElements(
-  elements: OnChangeElements
-) {
+function hasDrawableElements(elements: OnChangeElements) {
   return elements.some((element) => !element.isDeleted)
 }
 
@@ -63,11 +61,7 @@ export default function Whiteboard() {
   }, [])
 
   const handleChange = useCallback(
-    (
-      elements: OnChangeElements,
-      appState: AppState,
-      files: BinaryFiles
-    ) => {
+    (elements: OnChangeElements, appState: AppState, files: BinaryFiles) => {
       if (saveTimerRef.current) {
         window.clearTimeout(saveTimerRef.current)
       }
@@ -163,7 +157,7 @@ export default function Whiteboard() {
               홈으로
             </Link>
           </Button>
-          <div className="text-sm font-medium">Canvas (Excalidraw)</div>
+          <div className="text-sm font-medium">Canvas</div>
           <div className="ml-auto flex items-center gap-1">
             <Button variant="outline" size="sm" onClick={handleClear}>
               <EraserIcon className="mr-1 size-4" />

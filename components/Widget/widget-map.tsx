@@ -17,7 +17,7 @@ export default function WidgetMap() {
     <>
       <Script
         type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c0986f45ad519044d2574ac8091cb572&libraries=services&autoload=false"
+        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
         async
         strategy="afterInteractive"
       />
