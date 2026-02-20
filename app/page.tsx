@@ -22,6 +22,7 @@ import WidgetGithub from '@/components/Widget/widget-github'
 import * as Icon from '@/components/icons'
 import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
 import WidgetAnalytics from '@/components/Widget/widget-analytics'
+import WidgetSpotifyPlayer from '@/components/Widget/widget-spotify-player'
 
 const SIDE_PROJECTS = [
   {
@@ -187,18 +188,8 @@ export default async function Home() {
         target="_blank"
         title="X"
         description="@__kidow__"
-        button={
-          <Button
-            size="sm"
-            className="pointer-events-none rounded-full bg-black text-xs font-bold text-white hover:bg-black/90"
-          >
-            Follow
-          </Button>
-        }
       />
-      <li className="col-span-2 row-span-2">
-        <Card className="h-[390px] w-full rounded-3xl border-border bg-emerald-50 py-0 shadow-sm" />
-      </li>
+      <WidgetSpotifyPlayer />
 
       <WidgetLink
         className="xl:hover:rotate-2"

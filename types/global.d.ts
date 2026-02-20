@@ -25,5 +25,6 @@ declare namespace NodeJS {
 
     SPOTIFY_CLIENT_ID: string
     SPOTIFY_CLIENT_SECRET: string
+    NEXT_PUBLIC_SPOTIFY_PLAYLIST_ID: string
   }
 }
