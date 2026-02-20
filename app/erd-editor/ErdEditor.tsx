@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
+import Link from 'next/link'
 import {
   // @ts-ignore
   ReactFlow,
@@ -23,7 +24,13 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { Download, RotateCcw, Plus, Maximize } from 'lucide-react'
+import {
+  ArrowLeftIcon,
+  Download,
+  RotateCcw,
+  Plus,
+  Maximize
+} from 'lucide-react'
 import html2canvas from 'html2canvas'
 import { useErdStorage } from '@/utils/hooks/use-erd-storage'
 import { TableNode } from '@/components/ErdEditor/table-node'
@@ -167,90 +174,105 @@ function ErdEditorInner() {
   const selectedNode = nodes.find((n) => n.id === selectedNodeId)
 
   return (
-    <div className="flex h-screen bg-background">
-      <div className="flex flex-1 flex-col">
-        {/* Toolbar */}
-        <div className="flex flex-wrap items-center gap-2 border-b border-border bg-card p-3">
-          <Button onClick={handleAddTable} variant="outline" size="sm">
-            <Plus className="mr-1 h-4 w-4" />
-            Add Table
+    <section className="fixed inset-0 z-50 flex flex-col bg-stone-50">
+      <div className="border-b border-border bg-white/95 px-4 py-3 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-2">
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/">
+              <ArrowLeftIcon className="mr-1 size-4" />
+              홈으로
+            </Link>
           </Button>
-
-          <div className="flex items-center gap-1">
-            <span className="text-xs text-muted-foreground">Relationship:</span>
-            <Select
-              value={relationshipType}
-              onValueChange={(val) =>
-                setRelationshipType(val as RelationshipType)
-              }
-            >
-              <SelectTrigger className="h-8 w-[80px] text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1:1">1:1</SelectItem>
-                <SelectItem value="1:N">1:N</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="h-4 w-px bg-border" />
-
-          <Button onClick={handleExport} variant="outline" size="sm">
-            <Download className="mr-1 h-4 w-4" />
-            Export PNG
-          </Button>
-          <Button onClick={handleFitView} variant="outline" size="sm">
-            <Maximize className="mr-1 h-4 w-4" />
-            Fit View
-          </Button>
-          <Button onClick={handleReset} variant="destructive" size="sm">
-            <RotateCcw className="mr-1 h-4 w-4" />
-            Reset
-          </Button>
-
+          <div className="text-sm font-medium">ERD Editor</div>
           <div className="ml-auto text-xs text-muted-foreground">
             {nodes.length > 0
               ? `${nodes.length} table${nodes.length > 1 ? 's' : ''} | 자동 저장됨`
               : 'Add Table로 시작하세요'}
           </div>
         </div>
-
-        {/* Canvas */}
-        <div className="relative flex-1">
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={handleConnect}
-            nodeTypes={nodeTypes}
-            edgeTypes={edgeTypes}
-            onNodeClick={(_event: any, node: any) =>
-              setSelectedNodeId(node.id)
-            }
-            onPaneClick={() => setSelectedNodeId(null)}
-            fitView
-            defaultEdgeOptions={{
-              type: 'relationship'
-            }}
-          >
-            <Background />
-            <Controls />
-            <MiniMap />
-          </ReactFlow>
-        </div>
       </div>
 
-      {/* Sidebar */}
-      {selectedNode && (
-        <TableSidebar
-          nodeId={selectedNode.id}
-          data={selectedNode.data as ErdTableData}
-          onClose={() => setSelectedNodeId(null)}
-        />
-      )}
-    </div>
+      <div className="flex-1 p-2 xl:p-4">
+        <div className="mx-auto flex h-full w-full max-w-7xl overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
+          <div className="flex flex-1 flex-col">
+            {/* Toolbar */}
+            <div className="flex flex-wrap items-center gap-2 border-b border-border bg-card p-3">
+              <Button onClick={handleAddTable} variant="outline" size="sm">
+                <Plus className="mr-1 h-4 w-4" />
+                Add Table
+              </Button>
+
+              <div className="flex items-center gap-1">
+                <span className="text-xs text-muted-foreground">Relationship:</span>
+                <Select
+                  value={relationshipType}
+                  onValueChange={(val) =>
+                    setRelationshipType(val as RelationshipType)
+                  }
+                >
+                  <SelectTrigger className="h-8 w-[80px] text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1:1">1:1</SelectItem>
+                    <SelectItem value="1:N">1:N</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="h-4 w-px bg-border" />
+
+              <Button onClick={handleExport} variant="outline" size="sm">
+                <Download className="mr-1 h-4 w-4" />
+                Export PNG
+              </Button>
+              <Button onClick={handleFitView} variant="outline" size="sm">
+                <Maximize className="mr-1 h-4 w-4" />
+                Fit View
+              </Button>
+              <Button onClick={handleReset} variant="destructive" size="sm">
+                <RotateCcw className="mr-1 h-4 w-4" />
+                Reset
+              </Button>
+            </div>
+
+            {/* Canvas */}
+            <div className="relative flex-1">
+              <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={handleConnect}
+                nodeTypes={nodeTypes}
+                edgeTypes={edgeTypes}
+                onNodeClick={(_event: any, node: any) =>
+                  setSelectedNodeId(node.id)
+                }
+                onPaneClick={() => setSelectedNodeId(null)}
+                fitView
+                defaultEdgeOptions={{
+                  type: 'relationship'
+                }}
+              >
+                <Background />
+                <Controls />
+                <MiniMap />
+              </ReactFlow>
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          {selectedNode && (
+            <TableSidebar
+              nodeId={selectedNode.id}
+              data={selectedNode.data as ErdTableData}
+              onClose={() => setSelectedNodeId(null)}
+            />
+          )}
+        </div>
+      </div>
+    </section>
   )
 }
 
