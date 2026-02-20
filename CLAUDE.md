@@ -38,7 +38,6 @@ app/                            # Next.js App Router (라우트)
 ├── blog/[id]/                  # 블로그 목록/상세 (Notion 연동)
 ├── memo/                       # 메모 에디터 (Tiptap + localStorage)
 ├── lunch/                      # 점심 추천 (Kakao Maps)
-├── resume/                     # 이력서 (Notion 연동)
 ├── kanban/                     # [Phase 1] 칸반 보드 (@dnd-kit 드래그앤드롭)
 ├── archive/                    # [Phase 2] 코드 아카이브 (Fumadocs MDX)
 ├── code-editor/                # [Phase 4] 코드 에디터 (Sandpack 실행)
@@ -96,7 +95,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 ### Data Fetching
 
-- **Notion API**: `utils/api/notion.ts` — 블로그/이력서 데이터. `next: { revalidate: 3600 }` 캐싱. 실패 시 fallback 데이터 제공
+- **Notion API**: `utils/api/notion.ts` — 블로그 데이터. `next: { revalidate: 3600 }` 캐싱. 실패 시 fallback 데이터 제공
 - **GitHub GraphQL API**: 컨트리뷰션 캘린더. AbortController 5초 타임아웃
 - **Google Analytics API**: `@google-analytics/data` — 페이지뷰 통계
 
@@ -177,7 +176,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 - `chore(scope):` — 유지보수
 - `docs(scope):` — 문서
 
-스코프 예: `blog`, `notion`, `widget`, `resume`, `spec`
+스코프 예: `blog`, `notion`, `widget`, `spec`
 
 ### 작업 완료 시 커밋 메시지 출력
 

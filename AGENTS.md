@@ -10,7 +10,6 @@
 - 핵심 기능:
   - 홈 위젯 대시보드 (`app/page.tsx` + `components/Widget/*`)
   - 블로그 목록/상세 + API (`app/blog/page.tsx`, `app/blog/[id]/page.tsx`, `app/api/posts/route.ts`)
-  - 이력서 (`app/resume/page.tsx`)
   - 메모 에디터 (`app/memo/page.tsx`, `components/Editor/*`)
   - 점심 추천 지도 (`app/lunch/page.tsx`)
   - 코드 아카이브 (`app/archive/layout.tsx`, `app/archive/[[...slug]]/page.tsx`, `content/archive/*`)
@@ -32,7 +31,6 @@
   - `app/page.tsx`
   - `app/blog/page.tsx`
   - `app/blog/[id]/page.tsx`
-  - `app/resume/page.tsx`
   - `app/memo/page.tsx`
   - `app/lunch/page.tsx`
   - `app/archive/layout.tsx`
@@ -83,7 +81,7 @@ pnpm build
 
 주요 연동 키:
 
-- Notion: `NOTION_SECRET_KEY`, `NOTION_DATABASE_ID`, `NOTION_DATA_SOURCE_ID`, `NOTION_RESUME_PAGE_ID`
+- Notion: `NOTION_SECRET_KEY`, `NOTION_DATABASE_ID`, `NOTION_DATA_SOURCE_ID`
 - GitHub Widget: `GITHUB_TOKEN`
 - GA4 Widget: `GOOGLE_ANALYTICS_PROPERTY_ID`, `GOOGLE_ANAYLTICS_PROJECT_ID`, `GOOGLE_ANALYTICS_CLIENT_EMAIL`, `GOOGLE_ANALYTICS_PRIVATE_KEY`
 - Slack Widget/연동: `SLACK_WEBHOOK_URL`
@@ -95,7 +93,6 @@ Notion 블로그 조회 우선순위:
 
 - `NOTION_DATA_SOURCE_ID`가 있으면 해당 값을 우선 사용
 - 없으면 `NOTION_DATABASE_ID`를 기준으로 Data Source ID를 해석해 조회
-- 이력서는 `NOTION_RESUME_PAGE_ID`가 없으면 코드 내 fallback page id를 사용
 
 연동 키 누락 시 일부 페이지/위젯은 fallback UI 또는 `null` 렌더링이 정상 동작입니다. 누락 자체를 에러로 간주하지 말고, 회귀 여부만 판단합니다.
 

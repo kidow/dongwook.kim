@@ -2,14 +2,11 @@ import { Client } from '@notionhq/client'
 import type {
   BlockObjectResponse,
   PageObjectResponse,
-  PropertyItemObjectResponse,
   QueryDataSourceResponse,
   RichTextItemResponse
 } from '@notionhq/client/build/src/api-endpoints'
 
 import { getNotionEnv, requireEnv, type Result } from '@/utils/env'
-
-const RESUME_FALLBACK_PAGE_ID = '81617e74c35e4a98956c89717ace443b'
 
 export type ApiResult<T> = Result<T>
 
@@ -34,18 +31,6 @@ export type BlogBlock =
 
 export interface BlogPostDetail extends BlogPostSummary {
   blocks: BlogBlock[]
-}
-
-export interface ResumeSection {
-  title: string
-  items: string[]
-}
-
-export interface ResumeData {
-  title: string
-  description: string
-  updatedAt: string
-  sections: ResumeSection[]
 }
 
 function getClient(): ApiResult<Client> {
@@ -150,10 +135,6 @@ async function getDataSourceId(client: Client): Promise<ApiResult<string>> {
           : 'Failed to resolve data source from NOTION_DATABASE_ID'
     }
   }
-}
-
-function getResumePageId(): string {
-  return getNotionEnv().resumePageId ?? RESUME_FALLBACK_PAGE_ID
 }
 
 function asText(richText: RichTextItemResponse[] = []): string {
@@ -445,72 +426,6 @@ function mapBlocks(blocks: BlockObjectResponse[]): BlogBlock[] {
   return mapped
 }
 
-function mapResumeSections(blocks: BlockObjectResponse[]): ResumeSection[] {
-  const sections: ResumeSection[] = []
-  let currentTitle = 'Summary'
-
-  const ensureCurrentSection = () => {
-    const existing = sections.find((section) => section.title === currentTitle)
-    if (existing) {
-      return existing
-    }
-
-    const section: ResumeSection = {
-      title: currentTitle,
-      items: []
-    }
-    sections.push(section)
-    return section
-  }
-
-  for (const block of blocks) {
-    if (block.type === 'heading_2') {
-      const title = asText(block.heading_2.rich_text)
-      if (title) {
-        currentTitle = title
-        ensureCurrentSection()
-      }
-      continue
-    }
-
-    if (block.type === 'heading_3') {
-      const title = asText(block.heading_3.rich_text)
-      if (title) {
-        currentTitle = title
-        ensureCurrentSection()
-      }
-      continue
-    }
-
-    if (block.type === 'paragraph') {
-      const text = asText(block.paragraph.rich_text)
-      if (text) {
-        ensureCurrentSection().items.push(text)
-      }
-      continue
-    }
-
-    if (block.type === 'bulleted_list_item') {
-      const text = asText(block.bulleted_list_item.rich_text)
-      if (text) {
-        ensureCurrentSection().items.push(text)
-      }
-    }
-  }
-
-  return sections.filter((section) => section.items.length > 0)
-}
-
-function getPageTitleFromRetrieveResult(
-  data: PropertyItemObjectResponse | PageObjectResponse
-): string {
-  if ('properties' in data) {
-    return getTitleProperty(data.properties)
-  }
-
-  return 'Résumé'
-}
-
 export async function getNotionBlogPosts(
   limit = 20
 ): Promise<ApiResult<BlogPostSummary[]>> {
@@ -599,48 +514,6 @@ export async function getNotionBlogPostBySlug(
         error instanceof Error
           ? error.message
           : 'Failed to fetch Notion post detail'
-    }
-  }
-}
-
-export async function getNotionResumeData(): Promise<ApiResult<ResumeData>> {
-  const clientResult = getClient()
-  if (!clientResult.ok) {
-    return clientResult
-  }
-
-  const pageId = getResumePageId()
-
-  try {
-    const [pageResponse, blocks] = await Promise.all([
-      clientResult.data.pages.retrieve({ page_id: pageId }),
-      getAllBlocks(clientResult.data, pageId)
-    ])
-
-    const sections = mapResumeSections(blocks)
-    const description =
-      sections.find((section) => section.title === 'Summary')?.items[0] ?? ''
-
-    return {
-      ok: true,
-      data: {
-        title: getPageTitleFromRetrieveResult(
-          pageResponse as PropertyItemObjectResponse | PageObjectResponse
-        ),
-        description,
-        updatedAt:
-          'last_edited_time' in pageResponse
-            ? pageResponse.last_edited_time.slice(0, 10)
-            : new Date().toISOString().slice(0, 10),
-        sections
-      }
-    }
-  } catch (error) {
-    return {
-      ok: false,
-      source: 'notion',
-      error:
-        error instanceof Error ? error.message : 'Failed to fetch Notion resume'
     }
   }
 }

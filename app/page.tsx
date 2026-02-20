@@ -4,7 +4,6 @@ import {
   ArchiveIcon,
   CodeXmlIcon,
   DatabaseIcon,
-  FileTextIcon,
   ImageIcon,
   KanbanIcon,
   MailIcon,

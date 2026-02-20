@@ -6,7 +6,6 @@ export interface NotionEnv {
   secretKey?: string
   databaseId?: string
   dataSourceId?: string
-  resumePageId?: string
 }
 
 function readEnv(key: string): string | undefined {
@@ -23,8 +22,7 @@ export function getNotionEnv(): NotionEnv {
   return {
     secretKey: readEnv('NOTION_SECRET_KEY'),
     databaseId: readEnv('NOTION_DATABASE_ID'),
-    dataSourceId: readEnv('NOTION_DATA_SOURCE_ID'),
-    resumePageId: readEnv('NOTION_RESUME_PAGE_ID')
+    dataSourceId: readEnv('NOTION_DATA_SOURCE_ID')
   }
 }
 

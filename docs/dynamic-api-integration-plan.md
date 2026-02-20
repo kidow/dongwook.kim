@@ -4,7 +4,7 @@ Link-in-bio의 동적 위젯(Notion, Github, Spotify, Analytics, Meeting API)을
 
 ## 1) 연동 순서
 
-1. **Notion (blog/resume 데이터 소스)**
+1. **Notion (blog 데이터 소스)**
 2. **Github (프로필/활동 요약)**
 3. **Spotify (최근 재생/트랙 카드)**
 4. **Analytics (방문 지표 카드)**
@@ -105,7 +105,7 @@ export type Result<T> =
 
 ## 6) 단계별 실행 체크리스트
 
-- [ ] Step 1: Notion API 래퍼 + blog/resume 데이터 연결
+- [ ] Step 1: Notion API 래퍼 + blog 데이터 연결
 - [ ] Step 2: Github 위젯 실제 데이터 연결
 - [ ] Step 3: Spotify 위젯 실제 데이터 연결
 - [ ] Step 4: Analytics 위젯 실제 데이터 연결
