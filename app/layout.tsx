@@ -5,6 +5,8 @@ import Header from '@/components/Header'
 import { Toast } from '@/components/ui/toast'
 import { cn } from '@/lib/utils'
 import './globals.css'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   title: {
@@ -38,6 +40,8 @@ export default function RootLayout({ children }: Readonly<ReactProps>) {
         </main>
         <Agentation />
         <Toast />
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   )
