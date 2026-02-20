@@ -83,62 +83,85 @@
 
 @keyframes playing {
   0% {
-    transform: scale(0.5);
-    opacity: 1;
+    background-color: rgba(30, 215, 96, 0.4);
+    transform: scale(0.8);
+  }
+  80% {
+    background-color: rgba(30, 215, 96, 0);
+    transform: scale(2.2);
+    filter: blur(0.4px);
   }
   100% {
-    transform: scale(1.85);
-    opacity: 0;
+    background-color: rgba(30, 215, 96, 0);
+    transform: scale(2.5);
   }
 }
 
 @keyframes note-1 {
   0% {
-    transform: translate(-50%, -50%) translate(0, 0);
+    transform: translate(0) rotate(-30deg);
+  }
+  50% {
     opacity: 1;
   }
-  100% {
-    transform: translate(-50%, -50%) translate(-14px, -20px);
+  80% {
     opacity: 0;
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-3px, -55px) rotate(10deg);
   }
 }
 
 @keyframes note-2 {
   0% {
-    transform: translate(-50%, -50%) translate(0, 0);
+    transform: translate(0) rotate(-30deg);
+  }
+  50% {
     opacity: 1;
   }
-  100% {
-    transform: translate(-50%, -50%) translate(0, -24px);
+  80% {
     opacity: 0;
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(55px, -5px) rotate(0deg);
   }
 }
 
 @keyframes note-3 {
   0% {
-    transform: translate(-50%, -50%) translate(0, 0);
+    transform: translate(0) rotate(20deg);
+  }
+  50% {
     opacity: 1;
   }
-  100% {
-    transform: translate(-50%, -50%) translate(14px, -20px);
+  80% {
     opacity: 0;
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-55px, -15px) rotate(0deg);
   }
 }
 
 .animate-playing {
-  animation: playing 1.5s ease-out infinite;
+  animation: playing 3.4s infinite;
 }
 
 .animate-note-1 {
-  animation: note-1 1.2s ease-out infinite;
+  animation: note-1 2.35s infinite;
 }
 
 .animate-note-2 {
-  animation: note-2 1.2s ease-out infinite 0.15s;
+  animation: note-2 2.35s infinite;
 }
 
 .animate-note-3 {
-  animation: note-3 1.2s ease-out infinite 0.3s;
+  animation: note-3 2.35s infinite;
 }
 
 html {
