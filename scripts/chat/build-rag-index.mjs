@@ -6,7 +6,8 @@ const DOCS_PATH = path.join(ROOT, 'content/profile/rag-documents.json')
 const OUTPUT_PATH = path.join(ROOT, 'content/profile/rag-index.json')
 const ENV_LOCAL_PATH = path.join(ROOT, '.env.local')
 
-const DEFAULT_EMBED_MODEL = process.env.GEMINI_EMBED_MODEL?.trim() || 'text-embedding-004'
+const DEFAULT_EMBED_MODEL =
+  process.env.GEMINI_EMBED_MODEL?.trim() || 'gemini-embedding-001'
 const MAX_CHARS = 460
 const OVERLAP_CHARS = 80
 
@@ -24,7 +25,10 @@ async function loadEnvLocal() {
 
       const key = trimmed.slice(0, eq).trim()
       let value = trimmed.slice(eq + 1).trim()
-      if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+      if (
+        (value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))
+      ) {
         value = value.slice(1, -1)
       }
 
@@ -121,7 +125,9 @@ async function main() {
   const model = process.env.GEMINI_EMBED_MODEL?.trim() || DEFAULT_EMBED_MODEL
 
   if (!apiKey) {
-    throw new Error('Missing GEMINI_API_KEY. Set it in .env.local or current environment.')
+    throw new Error(
+      'Missing GEMINI_API_KEY. Set it in .env.local or current environment.'
+    )
   }
 
   const raw = await fs.readFile(DOCS_PATH, 'utf8')
@@ -152,7 +158,9 @@ async function main() {
         }
       })
 
-      process.stdout.write(`Embedded ${doc.id} chunk ${index + 1}/${textChunks.length}\n`)
+      process.stdout.write(
+        `Embedded ${doc.id} chunk ${index + 1}/${textChunks.length}\n`
+      )
     }
   }
 
@@ -170,6 +178,8 @@ async function main() {
 }
 
 main().catch((error) => {
-  process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`)
+  process.stderr.write(
+    `${error instanceof Error ? error.message : String(error)}\n`
+  )
   process.exit(1)
 })
