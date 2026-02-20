@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
+import Link from 'next/link'
 import {
   // @ts-ignore
   ReactFlow,
@@ -19,7 +20,7 @@ import { nanoid } from 'nanoid'
 import { Button } from '@/components/ui/button'
 import { useMindmapStorage } from '@/utils/hooks/use-mindmap-storage'
 import { MindmapNode } from '@/components/Mindmap/MindmapNode'
-import { Download, RotateCcw } from 'lucide-react'
+import { ArrowLeftIcon, Download, RotateCcw } from 'lucide-react'
 import html2canvas from 'html2canvas'
 import type { MindMapNode } from '@/types/mindmap'
 
@@ -133,47 +134,63 @@ function MindmapEditorInner() {
   }, [nodes, edges, isLoaded, save])
 
   return (
-    <div className="flex flex-col h-screen bg-background">
-      <div className="border-b border-border bg-card p-4 flex gap-2 items-center">
-        <div className="text-sm text-muted-foreground">자동 저장됨</div>
-        <Button onClick={handleExport} variant="outline" size="sm">
-          <Download className="w-4 h-4 mr-2" />
-          Export PNG
-        </Button>
-        <Button
-          onClick={() => handleAddChild(selectedNode || '1')}
-          variant="outline"
-          size="sm"
-          disabled={!nodes.length}
-        >
-          Add Node
-        </Button>
-        <Button onClick={handleFitView} variant="outline" size="sm">
-          Fit View
-        </Button>
-        <Button onClick={handleReset} variant="destructive" size="sm">
-          <RotateCcw className="w-4 h-4 mr-2" />
-          Reset
-        </Button>
+    <section className="fixed inset-0 z-50 flex flex-col bg-stone-50">
+      <div className="border-b border-border bg-white/95 px-4 py-3 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-2">
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/">
+              <ArrowLeftIcon className="mr-1 size-4" />
+              홈으로
+            </Link>
+          </Button>
+          <div className="text-sm font-medium">Mindmap</div>
+          <div className="ml-auto text-sm text-muted-foreground">자동 저장됨</div>
+        </div>
       </div>
 
-      <div className="flex-1 relative">
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={handleConnect}
-          nodeTypes={nodeTypes}
-          onNodeClick={(_event: any, node: any) => setSelectedNode(node.id)}
-          fitView
-        >
-          <Background />
-          <Controls />
-          <MiniMap />
-        </ReactFlow>
+      <div className="flex-1 p-2 xl:p-4">
+        <div className="mx-auto flex h-full w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
+          <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-3">
+            <Button onClick={handleExport} variant="outline" size="sm">
+              <Download className="mr-2 h-4 w-4" />
+              Export PNG
+            </Button>
+            <Button
+              onClick={() => handleAddChild(selectedNode || '1')}
+              variant="outline"
+              size="sm"
+              disabled={!nodes.length}
+            >
+              Add Node
+            </Button>
+            <Button onClick={handleFitView} variant="outline" size="sm">
+              Fit View
+            </Button>
+            <Button onClick={handleReset} variant="destructive" size="sm">
+              <RotateCcw className="mr-2 h-4 w-4" />
+              Reset
+            </Button>
+          </div>
+
+          <div className="relative flex-1">
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onConnect={handleConnect}
+              nodeTypes={nodeTypes}
+              onNodeClick={(_event: any, node: any) => setSelectedNode(node.id)}
+              fitView
+            >
+              <Background />
+              <Controls />
+              <MiniMap />
+            </ReactFlow>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }
 
