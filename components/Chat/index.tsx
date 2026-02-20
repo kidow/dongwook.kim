@@ -1,7 +1,8 @@
 'use client'
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
-import { BotIcon, SendHorizontalIcon, UserIcon } from 'lucide-react'
+import Image from 'next/image'
+import { SendHorizontalIcon, UserIcon } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -278,8 +279,15 @@ export default function ChatPage() {
               className={`flex w-full gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {message.role === 'assistant' && (
-                <span className="mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border bg-white text-muted-foreground">
-                  <BotIcon className="size-3.5" />
+                <span className="mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-white text-muted-foreground">
+                  <Image
+                    src="/logo.jpg"
+                    alt="Assistant logo"
+                    width={28}
+                    height={28}
+                    className="h-full w-full object-cover"
+                    draggable={false}
+                  />
                 </span>
               )}
 
