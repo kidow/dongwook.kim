@@ -39,7 +39,11 @@
      - `scripts/chat/build-rag-index.mjs`로 Gemini 임베딩 인덱스(`content/profile/rag-index.json`) 생성
      - `/api/chat`에서 in-domain 판정, 벡터 검색(topK), strict refuse, NDJSON 스트리밍 응답 처리
      - `/chat`에서 API 연동, 스트리밍 렌더링, citations 배지, out-of-scope/오류 상태 분기, `chat-history-v1` 복원 적용
-2. Jest/Playwright 등 테스팅 프레임워크 추가
+2. Jest/Playwright 등 테스팅 프레임워크 추가 (Done: 2026-02-20)
+   - 범위: Core routes (Chat + Posts API + 홈→/chat 진입)
+   - 단위/API 테스트: Jest
+   - E2E 테스트: Playwright (Chromium, `/api/chat` mock 고정)
+   - 자동화: 로컬 스크립트만 적용 (CI 제외)
 3. 다크 모드 추가
 4. i18n 추가
 5. 미니게임 추가

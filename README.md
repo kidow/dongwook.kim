@@ -21,6 +21,8 @@ pnpm dev
 ```bash
 pnpm lint
 pnpm type-check
+pnpm test
+pnpm test:e2e
 pnpm build
 ```
 
@@ -40,3 +42,4 @@ pnpm build
 - `/Users/gimdong-ug/Documents/dev/projects/dongwook.kim/docs/components-ui-guide.md`
 - `/Users/gimdong-ug/Documents/dev/projects/dongwook.kim/docs/a11y-checklist.md`
 - `/Users/gimdong-ug/Documents/dev/projects/dongwook.kim/docs/dynamic-api-integration-plan.md`
+- `/Users/gimdong-ug/Documents/dev/projects/dongwook.kim/docs/testing.md`
