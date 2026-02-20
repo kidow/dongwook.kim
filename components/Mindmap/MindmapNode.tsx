@@ -22,13 +22,10 @@ const COLORS = [
   'rgb(239, 68, 68)',
   'rgb(245, 158, 11)',
   'rgb(14, 165, 233)',
-  'rgb(236, 72, 153)',
+  'rgb(236, 72, 153)'
 ]
 
-export function MindmapNode({
-  id,
-  data
-}: MindmapNodeProps) {
+export function MindmapNode({ id, data }: MindmapNodeProps) {
   const { getNode, setNodes, setEdges } = useReactFlow()
   const [isEditing, setIsEditing] = useState(false)
   const [editLabel, setEditLabel] = useState(data.label)
@@ -37,9 +34,7 @@ export function MindmapNode({
   const handleSave = useCallback(() => {
     setNodes((nds: any) =>
       nds.map((node: any) =>
-        node.id === id
-          ? { ...node, data: { ...data, label: editLabel } }
-          : node
+        node.id === id ? { ...node, data: { ...data, label: editLabel } } : node
       )
     )
     setIsEditing(false)
@@ -48,9 +43,7 @@ export function MindmapNode({
   const handleColorChange = (color: string) => {
     setNodes((nds: any) =>
       nds.map((node: any) =>
-        node.id === id
-          ? { ...node, data: { ...data, color } }
-          : node
+        node.id === id ? { ...node, data: { ...data, color } } : node
       )
     )
     setShowColorPicker(false)

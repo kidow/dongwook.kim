@@ -46,7 +46,9 @@ export async function GET(request: Request) {
       await setRefreshTokenCookie(tokenResponse.refresh_token)
     }
 
-    return NextResponse.redirect(new URL('/?spotify=connected', requestUrl.origin))
+    return NextResponse.redirect(
+      new URL('/?spotify=connected', requestUrl.origin)
+    )
   } catch {
     await clearOAuthStateCookie()
     return NextResponse.redirect(

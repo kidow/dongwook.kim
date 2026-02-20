@@ -38,9 +38,7 @@ function CompanyBlock({
   )
 }
 
-export default function InvoicePreview({
-  invoice
-}: InvoicePreviewProps) {
+export default function InvoicePreview({ invoice }: InvoicePreviewProps) {
   const subtotal = calculateSubtotal(invoice.items)
   const tax = calculateTax(subtotal, invoice.taxRate)
   const total = subtotal + tax
@@ -51,9 +49,7 @@ export default function InvoicePreview({
       <div className="flex items-start justify-between">
         <h2 className="text-2xl font-bold">INVOICE</h2>
         <div className="text-right text-sm">
-          <p className="font-mono font-semibold">
-            {invoice.invoiceNumber}
-          </p>
+          <p className="font-mono font-semibold">{invoice.invoiceNumber}</p>
           <p className="text-muted-foreground">
             발행일: {formatDate(invoice.issueDate)}
           </p>
@@ -136,9 +132,7 @@ export default function InvoicePreview({
           <p className="text-xs font-semibold uppercase text-muted-foreground">
             비고
           </p>
-          <p className="mt-1 whitespace-pre-wrap text-sm">
-            {invoice.notes}
-          </p>
+          <p className="mt-1 whitespace-pre-wrap text-sm">{invoice.notes}</p>
         </div>
       )}
     </div>

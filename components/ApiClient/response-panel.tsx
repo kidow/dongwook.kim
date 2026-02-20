@@ -58,7 +58,10 @@ export default function ResponsePanel({
       <div className="flex items-center gap-3">
         <Badge
           variant="outline"
-          className={cn('font-mono font-semibold', getStatusColor(response.status))}
+          className={cn(
+            'font-mono font-semibold',
+            getStatusColor(response.status)
+          )}
         >
           {response.status} {response.statusText}
         </Badge>
@@ -118,10 +121,11 @@ export default function ResponsePanel({
               </thead>
               <tbody>
                 {Object.entries(response.headers).map(([key, value]) => (
-                  <tr key={key} className="border-b border-border last:border-0">
-                    <td className="px-3 py-2 font-mono font-medium">
-                      {key}
-                    </td>
+                  <tr
+                    key={key}
+                    className="border-b border-border last:border-0"
+                  >
+                    <td className="px-3 py-2 font-mono font-medium">{key}</td>
                     <td className="break-all px-3 py-2 font-mono text-muted-foreground">
                       {value}
                     </td>

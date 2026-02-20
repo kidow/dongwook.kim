@@ -78,9 +78,7 @@ export default function QrCodeGenerator() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium">
-              크기: {size}px
-            </label>
+            <label className="text-sm font-medium">크기: {size}px</label>
             <Slider
               value={[size]}
               onValueChange={([v]) => setSize(v)}

@@ -26,11 +26,7 @@ import KanbanCardDialog from './kanban-card-dialog'
 import KanbanColumnDialog from './kanban-column-dialog'
 import KanbanColumnItem from './kanban-column'
 
-import type {
-  DragEndEvent,
-  DragOverEvent,
-  DragStartEvent
-} from '@dnd-kit/core'
+import type { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core'
 import type {
   KanbanBoard as KanbanBoardData,
   KanbanCard,
@@ -46,22 +42,16 @@ export default function KanbanBoard() {
   )
 
   const [activeId, setActiveId] = useState<KanbanId | null>(null)
-  const [activeType, setActiveType] = useState<'card' | 'column' | null>(
-    null
-  )
+  const [activeType, setActiveType] = useState<'card' | 'column' | null>(null)
 
   // Card dialog state
   const [cardDialogOpen, setCardDialogOpen] = useState(false)
   const [editingCard, setEditingCard] = useState<KanbanCard | null>(null)
-  const [targetColumnId, setTargetColumnId] = useState<KanbanId | null>(
-    null
-  )
+  const [targetColumnId, setTargetColumnId] = useState<KanbanId | null>(null)
 
   // Column dialog state
   const [columnDialogOpen, setColumnDialogOpen] = useState(false)
-  const [editingColumn, setEditingColumn] = useState<KanbanColumn | null>(
-    null
-  )
+  const [editingColumn, setEditingColumn] = useState<KanbanColumn | null>(null)
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -147,12 +137,8 @@ export default function KanbanBoard() {
 
     if (activeType === 'column') {
       // Reorder columns
-      const oldIndex = board.columns.findIndex(
-        (col) => col.id === activeIdStr
-      )
-      const newIndex = board.columns.findIndex(
-        (col) => col.id === overIdStr
-      )
+      const oldIndex = board.columns.findIndex((col) => col.id === activeIdStr)
+      const newIndex = board.columns.findIndex((col) => col.id === overIdStr)
       if (oldIndex !== -1 && newIndex !== -1) {
         setBoard((prev) => ({
           ...prev,

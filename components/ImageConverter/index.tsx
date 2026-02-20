@@ -107,9 +107,7 @@ export default function ImageConverter() {
         })
       } catch (err) {
         toast.error(
-          err instanceof Error
-            ? err.message
-            : `변환 실패: ${file.name}`
+          err instanceof Error ? err.message : `변환 실패: ${file.name}`
         )
       }
     }
@@ -120,9 +118,7 @@ export default function ImageConverter() {
     setIsConverting(false)
 
     if (newResults.length > 0) {
-      toast.success(
-        `${newResults.length}개 파일 변환 완료`
-      )
+      toast.success(`${newResults.length}개 파일 변환 완료`)
     }
   }, [files, outputFormat, quality, results])
 

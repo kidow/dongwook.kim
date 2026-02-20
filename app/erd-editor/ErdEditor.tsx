@@ -36,9 +36,15 @@ import { useErdStorage } from '@/utils/hooks/use-erd-storage'
 import { TableNode } from '@/components/ErdEditor/table-node'
 import { RelationshipEdge } from '@/components/ErdEditor/relationship-edge'
 import { TableSidebar } from '@/components/ErdEditor/table-sidebar'
-import { createDefaultTable, TABLE_COLORS } from '@/components/ErdEditor/constants'
+import {
+  createDefaultTable,
+  TABLE_COLORS
+} from '@/components/ErdEditor/constants'
 import type { ErdTableNode, ErdRelationshipEdge } from '@/types/erd'
-import type { ErdTableData, RelationshipType } from '@/components/ErdEditor/types'
+import type {
+  ErdTableData,
+  RelationshipType
+} from '@/components/ErdEditor/types'
 
 const nodeTypes = {
   tableNode: TableNode
@@ -49,12 +55,17 @@ const edgeTypes = {
 }
 
 function ErdEditorInner() {
-  const { data: storageData, isLoaded, save, reset: resetStorage } =
-    useErdStorage()
+  const {
+    data: storageData,
+    isLoaded,
+    save,
+    reset: resetStorage
+  } = useErdStorage()
   const { fitView } = useReactFlow()
   const [nodes, setNodes, onNodesChange] = useNodesState<ErdTableNode>([])
-  const [edges, setEdges, onEdgesChange] =
-    useEdgesState<ErdRelationshipEdge>([])
+  const [edges, setEdges, onEdgesChange] = useEdgesState<ErdRelationshipEdge>(
+    []
+  )
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
   const [relationshipType, setRelationshipType] =
     useState<RelationshipType>('1:N')
@@ -203,7 +214,9 @@ function ErdEditorInner() {
               </Button>
 
               <div className="flex items-center gap-1">
-                <span className="text-xs text-muted-foreground">Relationship:</span>
+                <span className="text-xs text-muted-foreground">
+                  Relationship:
+                </span>
                 <Select
                   value={relationshipType}
                   onValueChange={(val) =>

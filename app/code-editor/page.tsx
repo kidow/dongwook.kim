@@ -37,9 +37,7 @@ export default function Page() {
   return (
     <Suspense
       fallback={
-        <div className="text-sm text-stone-400">
-          에디터를 불러오는 중...
-        </div>
+        <div className="text-sm text-stone-400">에디터를 불러오는 중...</div>
       }
     >
       <CodeEditor />

@@ -29,7 +29,12 @@ const nodeTypes = {
 }
 
 function MindmapEditorInner() {
-  const { data: storageData, isLoaded, save, reset: resetStorage } = useMindmapStorage()
+  const {
+    data: storageData,
+    isLoaded,
+    save,
+    reset: resetStorage
+  } = useMindmapStorage()
   const { fitView } = useReactFlow()
   const [nodes, setNodesState, onNodesChange] = useNodesState<MindMapNode>([])
   const [edges, setEdgesState, onEdgesChange] = useEdgesState<any>([])
@@ -48,7 +53,14 @@ function MindmapEditorInner() {
       setEdgesState(storageData.edges)
       setTimeout(() => fitView(), 100)
     }
-  }, [isLoaded, storageData, nodes.length, setNodesState, setEdgesState, fitView])
+  }, [
+    isLoaded,
+    storageData,
+    nodes.length,
+    setNodesState,
+    setEdgesState,
+    fitView
+  ])
 
   const handleConnect = useCallback(
     (connection: Connection) => {
@@ -144,7 +156,9 @@ function MindmapEditorInner() {
             </Link>
           </Button>
           <div className="text-sm font-medium">Mindmap</div>
-          <div className="ml-auto text-sm text-muted-foreground">자동 저장됨</div>
+          <div className="ml-auto text-sm text-muted-foreground">
+            자동 저장됨
+          </div>
         </div>
       </div>
 

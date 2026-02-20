@@ -36,9 +36,7 @@ function KanbanColumnDialogContent({
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>
-          {column ? '컬럼 편집' : '컬럼 추가'}
-        </DialogTitle>
+        <DialogTitle>{column ? '컬럼 편집' : '컬럼 추가'}</DialogTitle>
       </DialogHeader>
       <div className="space-y-2">
         <label className="text-sm font-medium">컬럼 이름</label>

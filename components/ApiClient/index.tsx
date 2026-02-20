@@ -16,10 +16,7 @@ import HistoryPanel from './history-panel'
 import KeyValueEditor from './key-value-editor'
 import ResponsePanel from './response-panel'
 import UrlBar from './url-bar'
-import {
-  buildUrlWithParams,
-  parseResponseHeaders
-} from './utils'
+import { buildUrlWithParams, parseResponseHeaders } from './utils'
 
 import type {
   BodyType,

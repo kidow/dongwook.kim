@@ -94,9 +94,7 @@ function KanbanCardDialogContent({
                     ? 'ring-2 ring-offset-2 ring-neutral-400'
                     : 'hover:scale-110'
                 )}
-                onClick={() =>
-                  setLabel(label === color ? null : color)
-                }
+                onClick={() => setLabel(label === color ? null : color)}
               />
             ))}
           </div>

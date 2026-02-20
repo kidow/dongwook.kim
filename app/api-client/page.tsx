@@ -3,8 +3,7 @@ import type { Metadata } from 'next'
 import ApiClient from '@/components/ApiClient'
 
 const TITLE = 'API Client'
-const DESCRIPTION =
-  'Postman 스타일의 브라우저 내 HTTP API 테스트 도구입니다.'
+const DESCRIPTION = 'Postman 스타일의 브라우저 내 HTTP API 테스트 도구입니다.'
 const BASE_URL = 'https://dongwook.kim/api-client'
 
 export const metadata: Metadata = {

@@ -9,9 +9,7 @@ function parseUrlState(): ShareableState | null {
   const encoded = params.get('code')
   if (!encoded) return null
   try {
-    return JSON.parse(
-      decodeURIComponent(atob(encoded))
-    ) as ShareableState
+    return JSON.parse(decodeURIComponent(atob(encoded))) as ShareableState
   } catch {
     return null
   }

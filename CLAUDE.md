@@ -115,6 +115,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 ### Side Projects 구성 (15개 위젯)
 
 **Core Widgets** (데이터 페칭):
+
 - `widget-github.tsx` — GitHub 컨트리뷰션 캘린더
 - `widget-github-calendar.tsx` — GitHub 활동 통계
 - `widget-analytics.tsx` + `widget-analytics-chart.tsx` — Google Analytics 페이지뷰
@@ -123,6 +124,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 - `widget-spotify.tsx` — Spotify 플레이리스트 미리보기 (랜덤 4곡)
 
 **Interactive Tools** (클라이언트 사이드):
+
 - `widget-link.tsx` — 외부 링크 (GitHub, X, LinkedIn, Instagram 등)
 - `/memo` — Tiptap 메모 에디터 (localStorage)
 - `/lunch` — 점심 추천 (Kakao Maps)
@@ -190,57 +192,62 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 ## Environment Variables
 
-| 변수                            | 용도               | Phase |
-| ------------------------------- | ------------------ | ----- |
-| `GITHUB_TOKEN`                  | GitHub GraphQL API | Core  |
-| `NOTION_SECRET_KEY`             | Notion 연동        | Core  |
-| `NOTION_DATABASE_ID`            | 블로그 DB          | Core  |
-| `GOOGLE_ANALYTICS_PROPERTY_ID`  | GA4 속성           | Core  |
-| `GOOGLE_ANALYTICS_CLIENT_EMAIL` | GCP 서비스 계정    | Core  |
-| `GOOGLE_ANALYTICS_PRIVATE_KEY`  | GCP 서비스 계정 키 | Core  |
-| `NEXT_PUBLIC_KAKAO_MAP_API_KEY` | Kakao Maps         | Core  |
-| `NEXT_PUBLIC_BASE_URL`          | 공개 베이스 URL    | Core  |
-| `SPOTIFY_CLIENT_ID`             | Spotify OAuth ID   | Phase 12 |
+| 변수                            | 용도                 | Phase    |
+| ------------------------------- | -------------------- | -------- |
+| `GITHUB_TOKEN`                  | GitHub GraphQL API   | Core     |
+| `NOTION_SECRET_KEY`             | Notion 연동          | Core     |
+| `NOTION_DATABASE_ID`            | 블로그 DB            | Core     |
+| `GOOGLE_ANALYTICS_PROPERTY_ID`  | GA4 속성             | Core     |
+| `GOOGLE_ANALYTICS_CLIENT_EMAIL` | GCP 서비스 계정      | Core     |
+| `GOOGLE_ANALYTICS_PRIVATE_KEY`  | GCP 서비스 계정 키   | Core     |
+| `NEXT_PUBLIC_KAKAO_MAP_API_KEY` | Kakao Maps           | Core     |
+| `NEXT_PUBLIC_BASE_URL`          | 공개 베이스 URL      | Core     |
+| `SPOTIFY_CLIENT_ID`             | Spotify OAuth ID     | Phase 12 |
 | `SPOTIFY_CLIENT_SECRET`         | Spotify OAuth Secret | Phase 12 |
-| `SPOTIFY_REFRESH_TOKEN`         | Spotify 갱신 토큰  | Phase 12 |
+| `SPOTIFY_REFRESH_TOKEN`         | Spotify 갱신 토큰    | Phase 12 |
 
 `.env.example` 참조. 환경변수 누락 시 `utils/env.ts`의 `requireEnv()`가 fallback UI를 위한 에러 결과를 반환.
 
 ## 주요 의존성
 
-| 라이브러리                     | 버전  | 용도                     | Phase |
-| ----------------------------- | ----- | ----------------------- | ----- |
-| `@xyflow/react`              | 12.10 | 마인드맵, ERD 에디터     | 10    |
-| `@dnd-kit/core`, `sortable`  | 6.3   | 칸반 드래그앤드롭        | 1     |
-| `@codesandbox/sandpack-react`| 2.20  | 코드 에디터/실행         | 4     |
-| `@excalidraw/excalidraw`     | 0.18  | 화이트보드               | 6     |
-| `@tiptap/*`                  | 3.19  | 리치텍스트 에디터        | Core  |
-| `fumadocs-core`, `fumadocs-ui`| 16.6 | 코드 아카이브 (MDX)      | 2     |
-| `@google-analytics/data`     | 5.2   | GA4 데이터 페칭          | Core  |
-| `@notionhq/client`           | 5.9   | Notion API               | Core  |
-| `recharts`                   | 3.7   | 차트 시각화              | Core  |
-| `qrcode.react`               | 4.2   | QR코드 생성              | 7     |
-| `html2canvas`                | 1.4   | 캔버스 이미지 캡처       | 6,10,11 |
-| `dayjs`                      | 1.11  | 날짜 포맷팅              | Multi |
-| `highlight.js`               | 11.11 | 코드 구문 강조           | 2,4   |
-| `lowlight`                   | 3.3   | Tiptap 코드블럭 강조     | Core  |
-| `nanoid`                     | 5.1   | ID 생성                  | Multi |
-| `next-auth` (optional)       | 5.x   | Spotify OAuth 인증       | 12    |
+| 라이브러리                     | 버전  | 용도                 | Phase   |
+| ------------------------------ | ----- | -------------------- | ------- |
+| `@xyflow/react`                | 12.10 | 마인드맵, ERD 에디터 | 10      |
+| `@dnd-kit/core`, `sortable`    | 6.3   | 칸반 드래그앤드롭    | 1       |
+| `@codesandbox/sandpack-react`  | 2.20  | 코드 에디터/실행     | 4       |
+| `@excalidraw/excalidraw`       | 0.18  | 화이트보드           | 6       |
+| `@tiptap/*`                    | 3.19  | 리치텍스트 에디터    | Core    |
+| `fumadocs-core`, `fumadocs-ui` | 16.6  | 코드 아카이브 (MDX)  | 2       |
+| `@google-analytics/data`       | 5.2   | GA4 데이터 페칭      | Core    |
+| `@notionhq/client`             | 5.9   | Notion API           | Core    |
+| `recharts`                     | 3.7   | 차트 시각화          | Core    |
+| `qrcode.react`                 | 4.2   | QR코드 생성          | 7       |
+| `html2canvas`                  | 1.4   | 캔버스 이미지 캡처   | 6,10,11 |
+| `dayjs`                        | 1.11  | 날짜 포맷팅          | Multi   |
+| `highlight.js`                 | 11.11 | 코드 구문 강조       | 2,4     |
+| `lowlight`                     | 3.3   | Tiptap 코드블럭 강조 | Core    |
+| `nanoid`                       | 5.1   | ID 생성              | Multi   |
+| `next-auth` (optional)         | 5.x   | Spotify OAuth 인증   | 12      |
 
 ## 공통 유틸리티 및 패턴
 
 ### 토스트 알림 시스템
+
 - `utils/event-listener.ts`: 커스텀 이벤트 기반 전역 토스트
 - 사용법: `window.dispatchEvent(new CustomEvent('toast', { detail: { message, type } }))`
 
 ### 커스텀 훅
+
 - `utils/hooks/use-mindmap-storage.ts` — 마인드맵 localStorage 저장/복원
 - `components/Editor/use-local-storage.ts` — 메모 에디터 localStorage (URL 파라미터 공유)
 
 ### 타입 패턴
+
 ```typescript
 // Result 패턴 (에러 처리)
-type Result<T> = { ok: true; data: T } | { ok: false; error: string; source: string }
+type Result<T> =
+  | { ok: true; data: T }
+  | { ok: false; error: string; source: string }
 
 // Reaction Props 제네릭
 interface ReactProps {
@@ -251,10 +258,16 @@ interface ReactProps {
 ```
 
 ### 동적 Import 패턴
+
 대형 라이브러리는 동적 로딩:
+
 ```typescript
-const Excalidraw = dynamic(() => import('@excalidraw/excalidraw'), { ssr: false })
-const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), { ssr: false })
+const Excalidraw = dynamic(() => import('@excalidraw/excalidraw'), {
+  ssr: false
+})
+const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), {
+  ssr: false
+})
 ```
 
 ## 작업 단위 커밋 규칙
@@ -262,6 +275,7 @@ const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), { ssr: fal
 **Conventional Commits**: `type(scope): message`
 
 ### 예시
+
 - `feat(mindmap): add debounced auto-save to localStorage`
 - `fix(code-editor): resolve Sandpack bundle error on Firefox`
 - `refactor(api-client): extract request validation to utils`

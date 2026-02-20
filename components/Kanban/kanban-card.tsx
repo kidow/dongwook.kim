@@ -51,10 +51,7 @@ export default function KanbanCardItem({
     >
       {card.label && (
         <div
-          className={cn(
-            'h-1.5 rounded-t-lg',
-            LABEL_COLORS[card.label].bg
-          )}
+          className={cn('h-1.5 rounded-t-lg', LABEL_COLORS[card.label].bg)}
         />
       )}
       <div className="p-3">

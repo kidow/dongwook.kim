@@ -65,12 +65,8 @@ export default function CodeEditorToolbar({
           variant="outline"
           size="icon"
           className="size-9"
-          onClick={() =>
-            onThemeChange(theme === 'light' ? 'dark' : 'light')
-          }
-          title={
-            theme === 'light' ? '다크 테마로 전환' : '라이트 테마로 전환'
-          }
+          onClick={() => onThemeChange(theme === 'light' ? 'dark' : 'light')}
+          title={theme === 'light' ? '다크 테마로 전환' : '라이트 테마로 전환'}
         >
           {theme === 'light' ? (
             <MoonIcon className="size-4" />

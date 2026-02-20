@@ -75,12 +75,7 @@ export default function KeyValueEditor({
           </Button>
         </div>
       ))}
-      <Button
-        variant="outline"
-        size="sm"
-        className="w-fit"
-        onClick={handleAdd}
-      >
+      <Button variant="outline" size="sm" className="w-fit" onClick={handleAdd}>
         <PlusIcon className="size-4" />
         추가
       </Button>

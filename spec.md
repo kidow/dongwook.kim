@@ -492,18 +492,18 @@ app/
 
 ## 신규 의존성 목록 (예상)
 
-| Phase | 라이브러리                                | 용도                          |
-| ----- | ----------------------------------------- | ----------------------------- |
-| 1     | `@dnd-kit/core`, `@dnd-kit/sortable`      | 칸반 드래그 앤 드롭           |
-| 2     | `fumadocs-core`, `fumadocs-ui`            | 코드 아카이브 문서 프레임워크 |
-| 3     | `@supabase/supabase-js`, `nanoid`         | URL 단축 DB, 코드 생성        |
-| 4     | `@codesandbox/sandpack-react` 또는 Codapi | 코드 에디터/실행              |
-| 5     | (없음 — Canvas API 활용)                  | 이미지 변환                   |
-| 6     | `@excalidraw/excalidraw`                  | 화이트보드                    |
-| 7     | `qrcode.react`                            | QR코드 생성                   |
-| 8     | `@react-pdf/renderer` (선택)              | PDF 생성                      |
-| 9     | (없음 — fetch API 활용)                   | API 클라이언트                |
-| 10    | `@xyflow/react`, `dagre`                  | 마인드맵                      |
+| Phase | 라이브러리                                   | 용도                          |
+| ----- | -------------------------------------------- | ----------------------------- |
+| 1     | `@dnd-kit/core`, `@dnd-kit/sortable`         | 칸반 드래그 앤 드롭           |
+| 2     | `fumadocs-core`, `fumadocs-ui`               | 코드 아카이브 문서 프레임워크 |
+| 3     | `@supabase/supabase-js`, `nanoid`            | URL 단축 DB, 코드 생성        |
+| 4     | `@codesandbox/sandpack-react` 또는 Codapi    | 코드 에디터/실행              |
+| 5     | (없음 — Canvas API 활용)                     | 이미지 변환                   |
+| 6     | `@excalidraw/excalidraw`                     | 화이트보드                    |
+| 7     | `qrcode.react`                               | QR코드 생성                   |
+| 8     | `@react-pdf/renderer` (선택)                 | PDF 생성                      |
+| 9     | (없음 — fetch API 활용)                      | API 클라이언트                |
+| 10    | `@xyflow/react`, `dagre`                     | 마인드맵                      |
 | 11    | (검토) `@xyflow/react` 또는 Canvas 기반 구현 | ERD 편집기                    |
 
 ## 작업 원칙

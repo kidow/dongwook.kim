@@ -11,14 +11,7 @@ const BASE_URL = 'https://dongwook.kim/image-converter'
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: [
-    'image converter',
-    'jpeg',
-    'png',
-    'webp',
-    'avif',
-    'canvas api'
-  ],
+  keywords: ['image converter', 'jpeg', 'png', 'webp', 'avif', 'canvas api'],
   alternates: {
     canonical: BASE_URL
   },

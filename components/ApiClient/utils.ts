@@ -40,9 +40,7 @@ export function buildUrlWithParams(
   }
 }
 
-export function parseResponseHeaders(
-  headers: Headers
-): Record<string, string> {
+export function parseResponseHeaders(headers: Headers): Record<string, string> {
   const result: Record<string, string> = {}
   headers.forEach((value, key) => {
     result[key] = value

@@ -13,43 +13,29 @@ import { createDefaultInvoice } from './constants'
 import type { CompanyInfo, InvoiceData } from './types'
 
 export default function InvoiceGenerator() {
-  const [invoice, setInvoice] = useState<InvoiceData>(
-    createDefaultInvoice
-  )
+  const [invoice, setInvoice] = useState<InvoiceData>(createDefaultInvoice)
 
-  const handleUpdate = useCallback(
-    (partial: Partial<InvoiceData>) => {
-      setInvoice((prev) => ({ ...prev, ...partial }))
-    },
-    []
-  )
+  const handleUpdate = useCallback((partial: Partial<InvoiceData>) => {
+    setInvoice((prev) => ({ ...prev, ...partial }))
+  }, [])
 
-  const handleSenderUpdate = useCallback(
-    (partial: Partial<CompanyInfo>) => {
-      setInvoice((prev) => ({
-        ...prev,
-        sender: { ...prev.sender, ...partial }
-      }))
-    },
-    []
-  )
+  const handleSenderUpdate = useCallback((partial: Partial<CompanyInfo>) => {
+    setInvoice((prev) => ({
+      ...prev,
+      sender: { ...prev.sender, ...partial }
+    }))
+  }, [])
 
-  const handleReceiverUpdate = useCallback(
-    (partial: Partial<CompanyInfo>) => {
-      setInvoice((prev) => ({
-        ...prev,
-        receiver: { ...prev.receiver, ...partial }
-      }))
-    },
-    []
-  )
+  const handleReceiverUpdate = useCallback((partial: Partial<CompanyInfo>) => {
+    setInvoice((prev) => ({
+      ...prev,
+      receiver: { ...prev.receiver, ...partial }
+    }))
+  }, [])
 
-  const handleItemsChange = useCallback(
-    (items: InvoiceData['items']) => {
-      setInvoice((prev) => ({ ...prev, items }))
-    },
-    []
-  )
+  const handleItemsChange = useCallback((items: InvoiceData['items']) => {
+    setInvoice((prev) => ({ ...prev, items }))
+  }, [])
 
   const handlePrint = useCallback(() => {
     window.print()
@@ -96,9 +82,7 @@ export default function InvoiceGenerator() {
 
       {/* Preview */}
       <div>
-        <h3 className="mb-3 text-sm font-semibold print:hidden">
-          미리보기
-        </h3>
+        <h3 className="mb-3 text-sm font-semibold print:hidden">미리보기</h3>
         <InvoicePreview invoice={invoice} />
       </div>
     </div>

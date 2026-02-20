@@ -17,33 +17,25 @@ import type { EditorTheme, SupportedTemplate } from './types'
 
 const SandpackProvider = dynamic(
   () =>
-    import('@codesandbox/sandpack-react').then(
-      (mod) => mod.SandpackProvider
-    ),
+    import('@codesandbox/sandpack-react').then((mod) => mod.SandpackProvider),
   { ssr: false }
 )
 
 const SandpackCodeEditor = dynamic(
   () =>
-    import('@codesandbox/sandpack-react').then(
-      (mod) => mod.SandpackCodeEditor
-    ),
+    import('@codesandbox/sandpack-react').then((mod) => mod.SandpackCodeEditor),
   { ssr: false }
 )
 
 const SandpackPreview = dynamic(
   () =>
-    import('@codesandbox/sandpack-react').then(
-      (mod) => mod.SandpackPreview
-    ),
+    import('@codesandbox/sandpack-react').then((mod) => mod.SandpackPreview),
   { ssr: false }
 )
 
 const SandpackConsole = dynamic(
   () =>
-    import('@codesandbox/sandpack-react').then(
-      (mod) => mod.SandpackConsole
-    ),
+    import('@codesandbox/sandpack-react').then((mod) => mod.SandpackConsole),
   { ssr: false }
 )
 
@@ -66,18 +58,14 @@ export default function CodeEditor() {
 
   const currentCode = customCode ?? activeConfig.defaultCode
 
-  const isReactTemplate =
-    template === 'react' || template === 'react-ts'
+  const isReactTemplate = template === 'react' || template === 'react-ts'
 
-  const handleTemplateChange = useCallback(
-    (newTemplate: string) => {
-      const t = newTemplate as SupportedTemplate
-      setTemplate(t)
-      setCustomCode(null)
-      setPresetKey((k) => k + 1)
-    },
-    []
-  )
+  const handleTemplateChange = useCallback((newTemplate: string) => {
+    const t = newTemplate as SupportedTemplate
+    setTemplate(t)
+    setCustomCode(null)
+    setPresetKey((k) => k + 1)
+  }, [])
 
   const handlePresetSelect = useCallback((presetId: string) => {
     const preset = CODE_PRESETS.find((p) => p.id === presetId)
@@ -139,10 +127,7 @@ export default function CodeEditor() {
                     style={{ height: '100%' }}
                   />
                 ) : (
-                  <SandpackConsole
-                    showHeader
-                    style={{ height: '100%' }}
-                  />
+                  <SandpackConsole showHeader style={{ height: '100%' }} />
                 )}
               </div>
             </div>

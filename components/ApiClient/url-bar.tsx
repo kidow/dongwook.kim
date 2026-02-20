@@ -31,8 +31,7 @@ export default function UrlBar({
   onUrlChange,
   onSend
 }: UrlBarProps) {
-  const methodColor =
-    HTTP_METHODS.find((m) => m.value === method)?.color ?? ''
+  const methodColor = HTTP_METHODS.find((m) => m.value === method)?.color ?? ''
 
   return (
     <div className="flex items-center gap-2">

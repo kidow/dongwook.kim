@@ -23,9 +23,7 @@ export function createEmptyItem(): InvoiceItem {
 
 export function createDefaultInvoice(): InvoiceData {
   const today = new Date().toISOString().slice(0, 10)
-  const due = new Date(Date.now() + 30 * 86400000)
-    .toISOString()
-    .slice(0, 10)
+  const due = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10)
   return {
     invoiceNumber: `INV-${Date.now().toString(36).toUpperCase()}`,
     issueDate: today,

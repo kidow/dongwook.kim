@@ -94,9 +94,7 @@ export default function InvoiceForm({
         <Field label="인보이스 번호">
           <Input
             value={invoice.invoiceNumber}
-            onChange={(e) =>
-              onUpdate({ invoiceNumber: e.target.value })
-            }
+            onChange={(e) => onUpdate({ invoiceNumber: e.target.value })}
             placeholder="INV-001"
           />
         </Field>
@@ -105,18 +103,14 @@ export default function InvoiceForm({
             <Input
               type="date"
               value={invoice.issueDate}
-              onChange={(e) =>
-                onUpdate({ issueDate: e.target.value })
-              }
+              onChange={(e) => onUpdate({ issueDate: e.target.value })}
             />
           </Field>
           <Field label="만기일">
             <Input
               type="date"
               value={invoice.dueDate}
-              onChange={(e) =>
-                onUpdate({ dueDate: e.target.value })
-              }
+              onChange={(e) => onUpdate({ dueDate: e.target.value })}
             />
           </Field>
         </div>
@@ -124,9 +118,7 @@ export default function InvoiceForm({
           <Field label="통화">
             <Select
               value={invoice.currency}
-              onValueChange={(v) =>
-                onUpdate({ currency: v as Currency })
-              }
+              onValueChange={(v) => onUpdate({ currency: v as Currency })}
             >
               <SelectTrigger>
                 <SelectValue />
@@ -143,9 +135,7 @@ export default function InvoiceForm({
           <Field label="세율">
             <Select
               value={String(invoice.taxRate)}
-              onValueChange={(v) =>
-                onUpdate({ taxRate: Number(v) })
-              }
+              onValueChange={(v) => onUpdate({ taxRate: Number(v) })}
             >
               <SelectTrigger>
                 <SelectValue />

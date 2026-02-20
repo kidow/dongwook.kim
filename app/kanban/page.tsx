@@ -31,9 +31,7 @@ export default function Page() {
   return (
     <Suspense
       fallback={
-        <div className="text-sm text-stone-400">
-          보드를 불러오는 중...
-        </div>
+        <div className="text-sm text-stone-400">보드를 불러오는 중...</div>
       }
     >
       <KanbanBoard />

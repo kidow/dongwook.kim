@@ -71,7 +71,11 @@ async function getSpotifyPlaylistPreview() {
     const playlistId = normalizePlaylistId(rawPlaylist)
 
     if (!playlistId) {
-      return { tracks: [], totalSongs: 0, playlistUrl: 'https://open.spotify.com' }
+      return {
+        tracks: [],
+        totalSongs: 0,
+        playlistUrl: 'https://open.spotify.com'
+      }
     }
 
     const token = await getSpotifyAccessToken()
@@ -117,29 +121,35 @@ async function getSpotifyPlaylistPreview() {
 
     const randomTracks = pickRandomItems(
       (data.tracks?.items ?? [])
-      .map(({ track }) => track)
-      .filter((track): track is NonNullable<typeof track> => Boolean(track?.name)),
+        .map(({ track }) => track)
+        .filter((track): track is NonNullable<typeof track> =>
+          Boolean(track?.name)
+        ),
       4
     )
 
-    const tracks: SpotifyPlaylistTrack[] = randomTracks
-      .map((track) => ({
-        title: track.name ?? 'Untitled',
-        artists: (track.artists ?? [])
-          .map((artist) => artist.name)
-          .filter((name): name is string => Boolean(name)),
-        duration: track.duration_ms ?? 0,
-        thumbnail: track.album?.images?.[0]?.url ?? '/profile.webp'
-      }))
+    const tracks: SpotifyPlaylistTrack[] = randomTracks.map((track) => ({
+      title: track.name ?? 'Untitled',
+      artists: (track.artists ?? [])
+        .map((artist) => artist.name)
+        .filter((name): name is string => Boolean(name)),
+      duration: track.duration_ms ?? 0,
+      thumbnail: track.album?.images?.[0]?.url ?? '/profile.webp'
+    }))
 
     return {
       tracks,
       totalSongs: data.tracks?.total ?? tracks.length,
       playlistUrl:
-        data.external_urls?.spotify ?? `https://open.spotify.com/playlist/${playlistId}`
+        data.external_urls?.spotify ??
+        `https://open.spotify.com/playlist/${playlistId}`
     }
   } catch {
-    return { tracks: [], totalSongs: 0, playlistUrl: 'https://open.spotify.com' }
+    return {
+      tracks: [],
+      totalSongs: 0,
+      playlistUrl: 'https://open.spotify.com'
+    }
   }
 }
 

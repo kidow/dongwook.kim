@@ -179,7 +179,9 @@ export default function ArchivePage() {
                 <pre className="archive-highlight overflow-x-auto rounded-md p-3 text-xs leading-relaxed">
                   <code
                     className={`hljs language-${snippet.language}`}
-                    dangerouslySetInnerHTML={{ __html: snippet.highlightedCode }}
+                    dangerouslySetInnerHTML={{
+                      __html: snippet.highlightedCode
+                    }}
                   />
                 </pre>
                 {snippet.referenceUrl && (

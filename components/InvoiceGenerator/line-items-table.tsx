@@ -59,33 +59,20 @@ export default function LineItemsTable({
           <thead>
             <tr className="border-b border-border text-left">
               <th className="pb-2 font-medium">품목</th>
-              <th className="w-20 pb-2 text-right font-medium">
-                수량
-              </th>
-              <th className="w-28 pb-2 text-right font-medium">
-                단가
-              </th>
-              <th className="w-28 pb-2 text-right font-medium">
-                금액
-              </th>
+              <th className="w-20 pb-2 text-right font-medium">수량</th>
+              <th className="w-28 pb-2 text-right font-medium">단가</th>
+              <th className="w-28 pb-2 text-right font-medium">금액</th>
               <th className="w-10 pb-2" />
             </tr>
           </thead>
           <tbody>
             {items.map((item) => (
-              <tr
-                key={item.id}
-                className="border-b border-border"
-              >
+              <tr key={item.id} className="border-b border-border">
                 <td className="py-1.5 pr-2">
                   <Input
                     value={item.description}
                     onChange={(e) =>
-                      handleChange(
-                        item.id,
-                        'description',
-                        e.target.value
-                      )
+                      handleChange(item.id, 'description', e.target.value)
                     }
                     placeholder="품목명"
                     className="h-8 text-sm"
@@ -97,11 +84,7 @@ export default function LineItemsTable({
                     min={1}
                     value={item.quantity}
                     onChange={(e) =>
-                      handleChange(
-                        item.id,
-                        'quantity',
-                        e.target.value
-                      )
+                      handleChange(item.id, 'quantity', e.target.value)
                     }
                     className="h-8 text-right font-mono text-sm"
                   />
@@ -112,20 +95,13 @@ export default function LineItemsTable({
                     min={0}
                     value={item.unitPrice}
                     onChange={(e) =>
-                      handleChange(
-                        item.id,
-                        'unitPrice',
-                        e.target.value
-                      )
+                      handleChange(item.id, 'unitPrice', e.target.value)
                     }
                     className="h-8 text-right font-mono text-sm"
                   />
                 </td>
                 <td className="py-1.5 text-right font-mono text-sm tabular-nums">
-                  {formatCurrency(
-                    item.quantity * item.unitPrice,
-                    currency
-                  )}
+                  {formatCurrency(item.quantity * item.unitPrice, currency)}
                 </td>
                 <td className="py-1.5 pl-1">
                   <Button

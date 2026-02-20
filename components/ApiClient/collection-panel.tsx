@@ -221,9 +221,7 @@ export default function CollectionPanel({
                       !expandedIds.has(collection.id) && '-rotate-90'
                     )}
                   />
-                  <span className="text-sm font-medium">
-                    {collection.name}
-                  </span>
+                  <span className="text-sm font-medium">{collection.name}</span>
                   <span className="text-xs text-muted-foreground">
                     ({collection.requests.length})
                   </span>

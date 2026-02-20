@@ -16,6 +16,7 @@ Date: 2026-02-16
 - Current project stack matches these prerequisites.
 
 Reference:
+
 - https://www.fumadocs.dev/docs/manual-installation/next
 
 ### 2) Sub-route integration feasibility (`/archive`)
@@ -25,6 +26,7 @@ Reference:
 - Therefore, integrating under `app/archive/*` is feasible without changing unrelated routes.
 
 Reference:
+
 - https://www.fumadocs.dev/docs/manual-installation/next
 
 ### 3) Theme/style conflict risk with existing shadcn UI
@@ -34,6 +36,7 @@ Reference:
 - Risk mitigation: limit Fumadocs provider/layout/styles to archive route segment (`app/archive/layout.tsx`) and keep current root layout unchanged.
 
 Reference:
+
 - https://www.fumadocs.dev/docs/manual-installation/next
 
 ### 4) Build/config constraints
@@ -43,6 +46,7 @@ Reference:
 - Using TypeScript config is possible only with Node.js native TS resolver support (per Fumadocs guide note).
 
 Reference:
+
 - https://www.fumadocs.dev/docs/manual-installation/next
 
 ## Conclusion
