@@ -159,11 +159,14 @@ export default async function Home() {
       <WidgetMap />
       <li className="row-span-2 h-[178px] w-[178px] overflow-hidden xl:col-span-2 xl:h-[390px] xl:w-[390px]">
         <Card className="h-full w-full overflow-hidden rounded-3xl border-border py-0 shadow-sm">
-          <iframe
-            src="https://giphy.com/embed/fWrDTtdw9nDVWmWrlq"
-            className="giphy-embed h-full w-full"
-            title="Coding GIF"
-            allowFullScreen
+          <video
+            src="/piyong.mov"
+            className="h-full w-full object-cover"
+            title="Piyong video"
+            autoPlay
+            loop
+            muted
+            playsInline
           />
         </Card>
       </li>
