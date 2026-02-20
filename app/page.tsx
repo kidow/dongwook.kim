@@ -22,6 +22,7 @@ import WidgetGithub from '@/components/Widget/widget-github'
 import * as Icon from '@/components/icons'
 import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
 import WidgetAnalytics from '@/components/Widget/widget-analytics'
+import WidgetChatbot from '@/components/Widget/widget-chatbot'
 import WidgetSpotifyPlayer from '@/components/Widget/widget-spotify-player'
 
 const SIDE_PROJECTS = [
@@ -228,6 +229,7 @@ export default async function Home() {
       <Suspense fallback={<li className="col-span-2" />}>
         <WidgetAnalytics />
       </Suspense>
+      <WidgetChatbot />
 
       <li className="col-span-2 px-2 xl:col-span-4">
         <h3 className="font-semibold uppercase">Side Projects 👨🏻‍💻</h3>
