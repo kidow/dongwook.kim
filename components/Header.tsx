@@ -41,7 +41,7 @@ function Header() {
             <Link
               href="/"
               aria-label={`${SITE_TITLE} 홈으로 이동`}
-              className="relative block aspect-square h-full w-full overflow-hidden rounded-full ring-offset-2 duration-300 hover:ring-2 hover:ring-lime-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="relative block aspect-square h-full w-full overflow-hidden rounded-full ring-offset-2 duration-300 hover:ring-2 hover:ring-indigo-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <Image
                 src="/logo.jpg"
