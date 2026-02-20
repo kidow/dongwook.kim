@@ -173,8 +173,8 @@ export default async function Home() {
         </Card>
       </li>
       <WidgetLink
-        className="xl:col-span-2 xl:hover:rotate-1"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[390px] hover:bg-neutral-50"
+        className="xl:hover:rotate-1"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="/blog"
         icon={
           <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white p-1">
@@ -184,6 +184,7 @@ export default async function Home() {
         title="Blog"
         description="/blog"
       />
+      <ThemeModeController />
 
       <WidgetLink
         className="xl:hover:rotate-1"
@@ -247,8 +248,6 @@ export default async function Home() {
           description={project.description}
         />
       ))}
-
-      <ThemeModeController />
     </ul>
   )
 }

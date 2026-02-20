@@ -83,16 +83,16 @@ export default function ThemeModeController() {
   )
 
   return (
-    <li className="col-span-2 xl:col-span-4">
-      <Card className="flex min-h-[88px] items-center justify-between gap-4 rounded-3xl border-border px-5 py-4 shadow-sm">
+    <li className="h-[178px] w-full xl:h-[175px] xl:w-[175px]">
+      <Card className="flex h-full w-full flex-col justify-between gap-4 rounded-3xl border-border px-4 py-4 shadow-sm">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Appearance
           </p>
-          <h3 className="text-sm font-semibold">Theme Controller</h3>
+          <h3 className="text-sm font-semibold">Theme</h3>
         </div>
 
-        <div className="flex items-center gap-2 rounded-full border border-border bg-muted/40 p-1.5">
+        <div className="flex items-center justify-between gap-1 rounded-full border border-border bg-muted/40 p-1.5">
           {items.map((item) => {
             const selected = mode === item.key
 
