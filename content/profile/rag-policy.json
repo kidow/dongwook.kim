@@ -1,0 +1,63 @@
+{
+  "allowedTopics": {
+    "ko": [
+      "이력",
+      "경력",
+      "학력",
+      "기술",
+      "스택",
+      "프로젝트",
+      "포트폴리오",
+      "사이트",
+      "블로그",
+      "연락",
+      "소개",
+      "dongwook",
+      "김동욱",
+      "next.js",
+      "react",
+      "typescript",
+      "tailwind"
+    ],
+    "en": [
+      "resume",
+      "career",
+      "experience",
+      "education",
+      "skills",
+      "stack",
+      "project",
+      "portfolio",
+      "website",
+      "blog",
+      "contact",
+      "about",
+      "dongwook",
+      "next.js",
+      "react",
+      "typescript",
+      "tailwind"
+    ]
+  },
+  "refusal": {
+    "ko": "주제와 맞지 않는 질문에는 답변할 수 없습니다. 이 챗봇은 제 이력, 프로젝트, 기술 스택, 사이트 정보에 대해서만 답변합니다.",
+    "en": "I can only answer questions about my resume, projects, tech stack, and this website."
+  },
+  "fallback": {
+    "ko": "요청을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+    "en": "I could not process your request. Please try again shortly."
+  },
+  "style": {
+    "maxSentences": 6,
+    "tone": "concise and factual",
+    "forbidden": [
+      "speculation outside provided context",
+      "long-form general knowledge explanations",
+      "medical/legal/financial advice"
+    ]
+  },
+  "retrieval": {
+    "scoreThreshold": 0.68,
+    "topK": 6
+  }
+}

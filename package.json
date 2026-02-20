@@ -11,6 +11,7 @@
     "lint": "eslint",
     "pretype-check": "fumadocs-mdx",
     "type-check": "tsc --noEmit --skipLibCheck",
+    "rag:build": "node scripts/chat/build-rag-index.mjs",
     "format": "prettier --write ."
   },
   "dependencies": {

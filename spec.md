@@ -34,6 +34,11 @@
      - 주제 외 질문에 대해 고정 응답 정책 일관 적용
      - 키 누락/에러 상황에서 UI가 깨지지 않고 안내 문구 표시
      - `pnpm lint`, `pnpm type-check` 통과
+   - 구현 메모 (2026-02-20):
+     - 로컬 프로필 문서(`content/profile/rag-documents.json`) + 정책(`content/profile/rag-policy.json`) 기반 RAG 구조 적용
+     - `scripts/chat/build-rag-index.mjs`로 Gemini 임베딩 인덱스(`content/profile/rag-index.json`) 생성
+     - `/api/chat`에서 in-domain 판정, 벡터 검색(topK), strict refuse, NDJSON 스트리밍 응답 처리
+     - `/chat`에서 API 연동, 스트리밍 렌더링, citations 배지, out-of-scope/오류 상태 분기, `chat-history-v1` 복원 적용
 2. Jest/Playwright 등 테스팅 프레임워크 추가
 3. 다크 모드 추가
 4. i18n 추가

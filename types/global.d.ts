@@ -28,5 +28,7 @@ declare namespace NodeJS {
     NEXT_PUBLIC_SPOTIFY_PLAYLIST_ID: string
 
     GEMINI_API_KEY: string
+    GEMINI_CHAT_MODEL: string
+    GEMINI_EMBED_MODEL: string
   }
 }

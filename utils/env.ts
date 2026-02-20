@@ -8,6 +8,12 @@ export interface NotionEnv {
   dataSourceId?: string
 }
 
+export interface ChatEnv {
+  apiKey?: string
+  chatModel?: string
+  embedModel?: string
+}
+
 function readEnv(key: string): string | undefined {
   const value = process.env[key]?.trim()
 
@@ -23,6 +29,14 @@ export function getNotionEnv(): NotionEnv {
     secretKey: readEnv('NOTION_SECRET_KEY'),
     databaseId: readEnv('NOTION_DATABASE_ID'),
     dataSourceId: readEnv('NOTION_DATA_SOURCE_ID')
+  }
+}
+
+export function getChatEnv(): ChatEnv {
+  return {
+    apiKey: readEnv('GEMINI_API_KEY'),
+    chatModel: readEnv('GEMINI_CHAT_MODEL'),
+    embedModel: readEnv('GEMINI_EMBED_MODEL')
   }
 }
 
