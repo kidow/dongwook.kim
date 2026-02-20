@@ -47,73 +47,12 @@ export default function SpotifyPlayerClient({
 
   const onPlay = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
-    if (!tracks?.length) return
-
-    const playableTracks = tracks.filter((track) => track.audioSnippet)
-    if (!playableTracks.length) return
-
-    if (!audio) {
-      let index = 0
-      const newAudio = new Audio(playableTracks[index].audioSnippet)
-      void newAudio.play()
-      newAudio.addEventListener('ended', () => {
-        index = index === playableTracks.length - 1 ? 0 : index + 1
-        const nextAudio = new Audio(playableTracks[index].audioSnippet)
-        void nextAudio.play()
-        setAudio(nextAudio)
-      })
-      setAudio(newAudio)
-      setIsPlayed(true)
-      return
-    }
-
-    if (isPlayed) {
-      audio.pause()
-    } else {
-      void audio.play()
-    }
-    setIsPlayed(!isPlayed)
+    window.open(playlistUrl, '_blank', 'noopener,noreferrer')
   }
 
-  const onPlayTrack = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    index: number
-  ) => {
+  const onPlayTrack = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
-    const { audioSnippet } = tracks[index]
-    if (!audioSnippet) return
-
-    if (audio?.src === audioSnippet) {
-      if (isPlayed) {
-        audio.pause()
-      } else {
-        void audio.play()
-      }
-      setIsPlayed(!isPlayed)
-      return
-    }
-
-    if (isPlayed && audio) {
-      audio.pause()
-    }
-
-    const newAudio = new Audio(audioSnippet)
-    newAudio.src = audioSnippet
-    setAudio(newAudio)
-    void newAudio.play()
-    newAudio.addEventListener('ended', () => {
-      const nextIndex = index === tracks.length - 1 ? 0 : index + 1
-      const nextSnippet = tracks[nextIndex]?.audioSnippet
-      if (!nextSnippet) {
-        setIsPlayed(false)
-        return
-      }
-
-      const nextAudio = new Audio(nextSnippet)
-      void nextAudio.play()
-      setAudio(nextAudio)
-    })
-    setIsPlayed(true)
+    window.open(playlistUrl, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -161,8 +100,8 @@ export default function SpotifyPlayerClient({
               className="xs:px-[16px] flex min-w-[86px] items-center justify-center gap-1 rounded-[18px] bg-[#1ED760] px-[10px] py-[7px] text-center text-xs font-bold text-white transition-transform will-change-transform hover:bg-[#1fdf64] active:scale-[0.95] active:bg-[#169c46] active:text-white/80"
             >
               <span className="pointer-events-auto flex flex-row items-center gap-1.5">
-                {isPlayed ? <Icon.Pause /> : <Icon.Play />}
-                <span>{isPlayed ? 'Pause' : 'Play'}</span>
+                <Icon.Play />
+                <span>Play</span>
               </span>
             </button>
           </div>
@@ -175,7 +114,7 @@ export default function SpotifyPlayerClient({
           {tracks?.map((item, key) => (
             <li className="group last:hidden xl:last:block" key={key}>
               <button
-                onClick={(e) => onPlayTrack(e, key)}
+                onClick={onPlayTrack}
                 className="group flex w-full flex-row items-center justify-between py-2 transition-transform duration-150 active:scale-[0.995] group-last:pb-0"
               >
                 <div className="flex flex-row items-center">
