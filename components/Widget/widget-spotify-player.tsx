@@ -8,6 +8,20 @@ interface SpotifyPlaylistTrack {
   audioSnippet: string
 }
 
+function pickRandomItems<T>(items: T[], count: number) {
+  if (items.length <= count) {
+    return items
+  }
+
+  const shuffled = [...items]
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+
+  return shuffled.slice(0, count)
+}
+
 function normalizePlaylistId(input?: string) {
   if (!input) return undefined
 
@@ -102,10 +116,14 @@ async function getSpotifyPlaylistPreview() {
       }
     }
 
-    const tracks: SpotifyPlaylistTrack[] = (data.tracks?.items ?? [])
+    const randomTracks = pickRandomItems(
+      (data.tracks?.items ?? [])
       .map(({ track }) => track)
-      .filter((track): track is NonNullable<typeof track> => Boolean(track?.name))
-      .slice(0, 4)
+      .filter((track): track is NonNullable<typeof track> => Boolean(track?.name)),
+      4
+    )
+
+    const tracks: SpotifyPlaylistTrack[] = randomTracks
       .map((track) => ({
         title: track.name ?? 'Untitled',
         artists: (track.artists ?? [])
