@@ -8,8 +8,8 @@ import { WidgetLink } from '@/components/Widget'
 export default function WidgetChatbot() {
   return (
     <WidgetLink
-      className="col-span-2 xl:col-span-4 xl:hover:rotate-1"
-      size="h-[178px] w-full hover:bg-neutral-50 xl:h-[175px] xl:w-full"
+      className="col-span-2 xl:hover:rotate-1"
+      size="h-[178px] w-full hover:bg-neutral-50"
       href="/chat"
       icon={
         <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
