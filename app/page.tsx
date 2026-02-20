@@ -24,6 +24,7 @@ import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
 import WidgetAnalytics from '@/components/Widget/widget-analytics'
 import WidgetChatbot from '@/components/Widget/widget-chatbot'
 import WidgetSpotifyPlayer from '@/components/Widget/widget-spotify-player'
+import ThemeModeController from '@/components/Theme/theme-mode-controller'
 
 const SIDE_PROJECTS = [
   {
@@ -247,9 +248,7 @@ export default async function Home() {
         />
       ))}
 
-      <li className="col-span-2 px-2 xl:col-span-4">
-        <h3 className="font-semibold uppercase">Mini Games 🎮</h3>
-      </li>
+      <ThemeModeController />
     </ul>
   )
 }
