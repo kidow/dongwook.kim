@@ -133,14 +133,15 @@ export default async function Home() {
       <WidgetLink
         className="xl:hover:rotate-2"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="/resume"
+        href="https://www.feedle.me"
         icon={
           <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
-            <FileTextIcon className="size-5" />
+            <img src="/feedle.png" alt="Feedle" width={20} height={20} />
           </span>
         }
-        title="Résumé"
-        description="/resume"
+        title="Feedle"
+        description="Working since 2024"
+        target="_blank"
       />
       <WidgetLink
         className="xl:hover:rotate-2"
