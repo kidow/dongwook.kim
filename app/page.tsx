@@ -203,11 +203,11 @@ export default async function Home() {
       <WidgetLink
         className="xl:hover:rotate-2"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="https://kidow.gumroad.com"
-        icon={<Icon.Gumroad />}
+        href="https://www.instagram.com/__kidow__/"
+        icon={<Icon.Instagram />}
         target="_blank"
-        title="Gumroad"
-        description="kidow.gumroad.com"
+        title="Instagram"
+        description="@__kidow__"
       />
 
       <WidgetLink
