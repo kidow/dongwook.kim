@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import ChatPage from '@/components/Chat'
+
 const TITLE = 'Chat'
 const DESCRIPTION = 'Gemini AI chat'
 const BASE_URL = 'https://dongwook.kim/chat'
@@ -23,5 +25,5 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <section />
+  return <ChatPage />
 }
