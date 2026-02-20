@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useState } from 'react'
+import Link from 'next/link'
 import {
   DndContext,
   DragOverlay,
@@ -16,7 +17,7 @@ import {
   horizontalListSortingStrategy,
   sortableKeyboardCoordinates
 } from '@dnd-kit/sortable'
-import { PlusIcon } from 'lucide-react'
+import { ArrowLeftIcon, PlusIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useLocalStorage } from '@/components/Editor/use-local-storage'
 import { cn } from '@/lib/utils'
@@ -306,90 +307,108 @@ export default function KanbanBoard() {
       : null
 
   return (
-    <section className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-lg font-semibold">칸반 보드</h2>
-          <p className="text-sm text-muted-foreground">
-            카드를 드래그하여 작업을 관리하세요
-          </p>
+    <section className="fixed inset-0 z-50 flex flex-col bg-stone-50">
+      <div className="border-b border-border bg-white/95 px-4 py-3 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-2">
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/">
+              <ArrowLeftIcon className="mr-1 size-4" />
+              홈으로
+            </Link>
+          </Button>
+          <div className="text-sm font-medium">Kanban</div>
+          <div className="ml-auto flex items-center gap-1">
+            <Button variant="outline" size="sm" onClick={handleAddColumn}>
+              <PlusIcon className="mr-1 size-4" />
+              컬럼 추가
+            </Button>
+          </div>
         </div>
-        <Button variant="outline" size="sm" onClick={handleAddColumn}>
-          <PlusIcon className="mr-1 size-4" />
-          컬럼 추가
-        </Button>
       </div>
 
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCorners}
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDragEnd={handleDragEnd}
-      >
-        <div className="flex gap-4 overflow-x-auto pb-4">
-          <SortableContext
-            items={board.columns.map((col) => col.id)}
-            strategy={horizontalListSortingStrategy}
-          >
-            {board.columns.map((column) => (
-              <KanbanColumnItem
-                key={column.id}
-                column={column}
-                cards={column.cardIds
-                  .map((id) => board.cards[id])
-                  .filter(Boolean)}
-                onAddCard={handleAddCard}
-                onEditCard={handleEditCard}
-                onDeleteCard={handleDeleteCard}
-                onEditColumn={handleEditColumn}
-                onDeleteColumn={handleDeleteColumn}
-              />
-            ))}
-          </SortableContext>
-        </div>
+      <div className="flex-1 p-2 xl:p-4">
+        <div className="mx-auto flex h-full w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
+          <div className="border-b border-border px-4 py-3">
+            <h2 className="text-base font-semibold">칸반 보드</h2>
+            <p className="text-sm text-muted-foreground">
+              카드를 드래그하여 작업을 관리하세요
+            </p>
+          </div>
 
-        <DragOverlay>
-          {activeCard && (
-            <div className="rotate-3 shadow-lg">
-              <div className="w-64 rounded-lg border border-border bg-white">
-                {activeCard.label && (
-                  <div
-                    className={cn(
-                      'h-1.5 rounded-t-lg',
-                      LABEL_COLORS[activeCard.label].bg
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCorners}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDragEnd={handleDragEnd}
+          >
+            <div className="flex-1 overflow-x-auto overflow-y-hidden p-4">
+              <div className="flex h-full min-h-full gap-4">
+                <SortableContext
+                  items={board.columns.map((col) => col.id)}
+                  strategy={horizontalListSortingStrategy}
+                >
+                  {board.columns.map((column) => (
+                    <KanbanColumnItem
+                      key={column.id}
+                      column={column}
+                      cards={column.cardIds
+                        .map((id) => board.cards[id])
+                        .filter(Boolean)}
+                      onAddCard={handleAddCard}
+                      onEditCard={handleEditCard}
+                      onDeleteCard={handleDeleteCard}
+                      onEditColumn={handleEditColumn}
+                      onDeleteColumn={handleDeleteColumn}
+                    />
+                  ))}
+                </SortableContext>
+              </div>
+            </div>
+
+            <DragOverlay>
+              {activeCard && (
+                <div className="rotate-3 shadow-lg">
+                  <div className="w-64 rounded-lg border border-border bg-white">
+                    {activeCard.label && (
+                      <div
+                        className={cn(
+                          'h-1.5 rounded-t-lg',
+                          LABEL_COLORS[activeCard.label].bg
+                        )}
+                      />
                     )}
-                  />
-                )}
-                <div className="p-3">
-                  <div className="text-sm font-medium">
-                    {activeCard.title}
+                    <div className="p-3">
+                      <div className="text-sm font-medium">
+                        {activeCard.title}
+                      </div>
+                      {activeCard.description && (
+                        <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+                          {activeCard.description}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  {activeCard.description && (
-                    <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
-                      {activeCard.description}
-                    </p>
-                  )}
                 </div>
-              </div>
-            </div>
-          )}
-          {activeColumn && (
-            <div className="rotate-3 opacity-80 shadow-lg">
-              <div className="w-72 rounded-xl border border-border bg-neutral-50 p-3">
-                <div className="mb-3 flex items-center gap-2">
-                  <h3 className="flex-1 text-sm font-semibold">
-                    {activeColumn.title}
-                  </h3>
+              )}
+              {activeColumn && (
+                <div className="rotate-3 opacity-80 shadow-lg">
+                  <div className="w-72 rounded-xl border border-border bg-neutral-50 p-3">
+                    <div className="mb-3 flex items-center gap-2">
+                      <h3 className="flex-1 text-sm font-semibold">
+                        {activeColumn.title}
+                      </h3>
+                    </div>
+                    <div className="min-h-[60px] text-center text-xs text-muted-foreground">
+                      {activeColumn.cardIds.length}개의 카드
+                    </div>
+                  </div>
                 </div>
-                <div className="min-h-[60px] text-center text-xs text-muted-foreground">
-                  {activeColumn.cardIds.length}개의 카드
-                </div>
-              </div>
-            </div>
-          )}
-        </DragOverlay>
-      </DndContext>
+              )}
+            </DragOverlay>
+          </DndContext>
+        </div>
+      </div>
 
       <KanbanCardDialog
         open={cardDialogOpen}
