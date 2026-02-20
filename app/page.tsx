@@ -223,11 +223,11 @@ export default async function Home() {
       <WidgetLink
         className="xl:hover:rotate-2"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="https://dev.to/kidow"
-        icon={<Icon.DevTo />}
+        href="https://www.threads.com/@__kidow__"
+        icon={<Icon.Threads />}
         target="_blank"
-        title="Dev.to"
-        description="/kidow"
+        title="Threads"
+        description="@__kidow__"
       />
 
       <WidgetQuote />
