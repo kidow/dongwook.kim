@@ -5,7 +5,6 @@ interface SpotifyPlaylistTrack {
   artists: string[]
   duration: number
   thumbnail: string
-  audioSnippet: string
 }
 
 function pickRandomItems<T>(items: T[], count: number) {
@@ -130,8 +129,7 @@ async function getSpotifyPlaylistPreview() {
           .map((artist) => artist.name)
           .filter((name): name is string => Boolean(name)),
         duration: track.duration_ms ?? 0,
-        thumbnail: track.album?.images?.[0]?.url ?? '/profile.webp',
-        audioSnippet: track.preview_url ?? ''
+        thumbnail: track.album?.images?.[0]?.url ?? '/profile.webp'
       }))
 
     return {
