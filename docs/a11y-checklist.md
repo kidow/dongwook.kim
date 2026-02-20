@@ -23,5 +23,5 @@ Date: 2026-02-15
 ## Remaining Recommended Checks
 
 - Run screen-reader pass on Home/Blog/Resume flow (VoiceOver/NVDA).
-- Validate color contrast in custom brand cards (`Twitter`, `LinkedIn`, `Gumroad`).
+- Validate color contrast in custom brand cards (`X`, `LinkedIn`, `Gumroad`).
 - Add automated a11y tests (axe) for critical routes.

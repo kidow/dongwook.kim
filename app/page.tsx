@@ -182,15 +182,15 @@ export default async function Home() {
       <WidgetLink
         className="xl:hover:rotate-1"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] bg-[#F5FAFE] hover:bg-[#F0F7FD]"
-        href="https://twitter.com/__kidow__"
-        icon={<Icon.Twitter />}
+        href="https://x.com/__kidow__"
+        icon={<Icon.X />}
         target="_blank"
-        title="Twitter"
+        title="X"
         description="@__kidow__"
         button={
           <Button
             size="sm"
-            className="pointer-events-none rounded-full bg-[#55acee] text-xs font-bold text-white hover:bg-[#4698d7]"
+            className="pointer-events-none rounded-full bg-black text-xs font-bold text-white hover:bg-black/90"
           >
             Follow
           </Button>
