@@ -8,6 +8,13 @@
 1. AI 챗봇 위젯 추가
    - 목표: 홈 대시보드에 AI 챗봇 위젯을 추가하고, `/chat` 전용 페이지에서 대화형 UI 제공
    - 모델: `gemini-2.5-flash-lite` (Google Gemini API)
+   - UI 컴포넌트 기준: `https://elements.ai-sdk.dev/`
+   - 컴포넌트 정책:
+     - `/chat` UI는 AI Elements에서 제공하는 컴포넌트만 사용
+     - 사용 범위는 Chatbot 관련 컴포넌트로 한정 (`conversation`, `message`, `prompt-input`, `reasoning`, `sources`, `suggestion` 등)
+     - 비허용: Code/IDE 계열 컴포넌트(`code-block`, `file-tree`, `terminal`, `checkpoint`, `plan` 등)
+     - 비허용: Voice/Audio 계열 컴포넌트(`voice`, `audio`, waveform/recording 관련 컴포넌트 전반)
+     - 초기 단계에서는 첨부/파일 업로드 UI도 제외하고 텍스트 채팅 중심으로 구성
    - 봇 역할/톤: 일반 비서형
    - 범위:
      - 홈 위젯(`WidgetLink` 또는 유사 카드)에서 `/chat`로 진입 가능
