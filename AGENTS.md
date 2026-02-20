@@ -36,13 +36,23 @@
   - `app/archive/layout.tsx`
   - `app/archive/[[...slug]]/page.tsx`
   - `app/canvas/layout.tsx`
+  - `app/kanban/layout.tsx`
+  - `app/mindmap/layout.tsx`
+  - `app/erd-editor/layout.tsx`
 - 데이터/환경
   - `utils/api/notion.ts`
   - `utils/env.ts`
   - `app/api/posts/route.ts`
+  - `app/api/spotify/_lib.ts`
+  - `app/api/spotify/login/route.ts`
+  - `app/api/spotify/callback/route.ts`
+  - `app/api/spotify/token/route.ts`
+  - `app/api/spotify/play/route.ts`
 - UI 규약
   - `components/Widget/README.md`
   - `components/Widget/widget-analytics-chart.tsx`
+  - `components/Widget/widget-spotify-player.tsx`
+  - `components/Widget/widget-spotify-player-client.tsx`
   - `docs/components-ui-guide.md`
   - `docs/a11y-checklist.md`
   - `spec.md`
@@ -86,7 +96,7 @@ pnpm build
 - GA4 Widget: `GOOGLE_ANALYTICS_PROPERTY_ID`, `GOOGLE_ANAYLTICS_PROJECT_ID`, `GOOGLE_ANALYTICS_CLIENT_EMAIL`, `GOOGLE_ANALYTICS_PRIVATE_KEY`
 - Slack Widget/연동: `SLACK_WEBHOOK_URL`
 - Google Calendar Widget/연동: `GOOGLE_CALENDAR_REFRESH_TOKEN`, `GOOGLE_CALENDAR_CLIENT_ID`, `GOOGLE_CALENDAR_CLIENT_SECRET`
-- Spotify Widget/연동: `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`
+- Spotify Widget/연동: `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `NEXT_PUBLIC_SPOTIFY_PLAYLIST_ID`
 - Client: `NEXT_PUBLIC_BASE_URL`, `NEXT_PUBLIC_KAKAO_MAP_API_KEY`
 
 Notion 블로그 조회 우선순위:
@@ -118,12 +128,6 @@ Notion 블로그 조회 우선순위:
 - 기존 fallback 동작 유지
 - 필요한 경우 문서(`spec.md`, 컴포넌트 README) 업데이트
 
-## 9) 현재 스펙 문서 상태
-
-- 현재 `spec.md`는 **Side Projects 확장 계획(Phase 1~12)** 기준 문서입니다.
-- 문서상 기준 상태: Phase 12 완료, `/url-shortner`는 Deferred 상태로 후순위 진행 예정
-- 스펙 업데이트 시 기존 UI 마이그레이션 맥락이 아니라 Side Projects 단계 진행 상태를 기준으로 갱신합니다.
-
 ## 8) 커밋 메시지 규칙 (필수)
 
 하나의 작업이 완료될 때마다, **영어 한 줄**로 `Conventional Commits` 형식의 커밋 메시지를 작성합니다.
@@ -142,3 +146,16 @@ Notion 블로그 조회 우선순위:
 - `refactor(widget): unify widget card token usage`
 
 권장 type: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`.
+
+## 9) 최근 3일 커밋 기반 작업 메모 (2026-02-19 ~ 2026-02-20)
+
+- 홈 대시보드 변경: Giphy 위젯 제거 후 `public/piyong.mov` 루프 영상으로 대체, 소셜 아이콘/링크 명칭 정리(X, Instagram, Threads SVG 반영)
+- Spotify 위젯/연동 정리: 플레이어 UI를 preview-list 중심으로 재구성하고, 재생/토큰/OAuth 콜백 API 라우트 추가 및 클릭 동작/랜덤 트랙 선택 로직 보정
+- Side Projects 레이아웃 강화: `kanban`, `mindmap`, `erd-editor` 라우트에 canvas와 동일한 fullscreen overlay 레이아웃 패턴 적용
+- 기타 운영 변경: 전역 메타데이터 템플릿으로 SEO suffix 이동, 파비콘/헤더 로고 갱신, 주요 컬러 토큰 일부(lime -> indigo) 조정
+
+## 10) 현재 스펙 문서 상태
+
+- 현재 `spec.md`는 **Side Projects 확장 계획(Phase 1~12)** 기준 문서입니다.
+- 문서상 기준 상태: Phase 12 완료, `/url-shortner`는 Deferred 상태로 후순위 진행 예정
+- 스펙 업데이트 시 기존 UI 마이그레이션 맥락이 아니라 Side Projects 단계 진행 상태를 기준으로 갱신합니다.

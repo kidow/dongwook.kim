@@ -24,21 +24,23 @@ pnpm type-check   # TypeScript 타입 검사 (tsc --noEmit --skipLibCheck)
 - **아이콘**: lucide-react
 - **지도**: react-kakao-maps-sdk (점심 추천)
 - **QR코드**: qrcode.react v4.2
+- **음악**: Spotify Web API (OAuth 기반 재생)
 - **포맷**: dayjs (날짜), html2canvas (캔버스 캡처)
 - **패키지 매니저**: pnpm
+- **테마 색상**: Indigo (Primary), Slate (Muted)
 
 ## Project Structure
 
 ```
 app/                            # Next.js App Router (라우트)
 ├── layout.tsx                  # 루트 레이아웃 (Header, Footer, Toast, Agentation)
-├── page.tsx                    # 홈 — Widget 그리드 (14개 Side Project 위젯)
+├── page.tsx                    # 홈 — Widget 그리드 (15개 Side Project 위젯)
 ├── globals.css                 # 글로벌 스타일, 테마 토큰, 애니메이션
 ├── api/posts/route.ts          # Blog API 엔드포인트
 ├── blog/[id]/                  # 블로그 목록/상세 (Notion 연동)
 ├── memo/                       # 메모 에디터 (Tiptap + localStorage)
 ├── lunch/                      # 점심 추천 (Kakao Maps)
-├── kanban/                     # [Phase 1] 칸반 보드 (@dnd-kit 드래그앤드롭)
+├── kanban/                     # [Phase 1] 칸반 보드 (@dnd-kit 드래그앤드롭) — Fullscreen Overlay
 ├── archive/                    # [Phase 2] 코드 아카이브 (Fumadocs MDX)
 ├── code-editor/                # [Phase 4] 코드 에디터 (Sandpack 실행)
 ├── image-converter/            # [Phase 5] 이미지 형식 변환 (Canvas API)
@@ -46,8 +48,9 @@ app/                            # Next.js App Router (라우트)
 ├── qrcode-generator/           # [Phase 7] QR코드 생성기
 ├── invoice-generator/          # [Phase 8] 인보이스 생성기
 ├── api-client/                 # [Phase 9] HTTP API 테스트 클라이언트 (Postman 스타일)
-├── mindmap/                    # [Phase 10] 마인드맵 생성기 (React Flow)
-└── erd-editor/                 # [Phase 11] ERD 에디터 (React Flow)
+├── mindmap/                    # [Phase 10] 마인드맵 생성기 (React Flow) — Fullscreen Overlay
+├── erd-editor/                 # [Phase 11] ERD 에디터 (React Flow) — Fullscreen Overlay
+└── spotify/                    # [Phase 12] Spotify Web Playback (OAuth + WebAPI)
 
 components/
 ├── ui/                         # shadcn/ui 프리미티브 (자동 생성)
@@ -109,7 +112,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 위젯은 `components/Widget/types.ts`에 정의된 `WidgetLinkProps` 인터페이스를 따름. `WidgetLink` 컴포넌트는 shadcn Card + Next.js Link로 구성. 홈페이지 `app/page.tsx`의 그리드에 `<li>` 요소로 배치.
 
-### Side Projects 구성 (13개 위젯)
+### Side Projects 구성 (15개 위젯)
 
 **Core Widgets** (데이터 페칭):
 - `widget-github.tsx` — GitHub 컨트리뷰션 캘린더
@@ -117,12 +120,13 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 - `widget-analytics.tsx` + `widget-analytics-chart.tsx` — Google Analytics 페이지뷰
 - `widget-quote.tsx` — 랜덤 인용구
 - `widget-map.tsx` — Kakao Maps 지도
+- `widget-spotify.tsx` — Spotify 플레이리스트 미리보기 (랜덤 4곡)
 
 **Interactive Tools** (클라이언트 사이드):
-- `widget-link.tsx` — 외부 링크 (GitHub, LinkedIn 등)
+- `widget-link.tsx` — 외부 링크 (GitHub, X, LinkedIn, Instagram 등)
 - `/memo` — Tiptap 메모 에디터 (localStorage)
 - `/lunch` — 점심 추천 (Kakao Maps)
-- `/kanban` — 칸반 보드 (@dnd-kit)
+- `/kanban` — 칸반 보드 (@dnd-kit) — Fullscreen Overlay
 - `/archive` — 코드 아카이브 (Fumadocs MDX)
 - `/code-editor` — 코드 실행 (Sandpack)
 - `/image-converter` — 이미지 형식 변환
@@ -130,8 +134,9 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 - `/qrcode-generator` — QR코드 생성
 - `/invoice-generator` — 인보이스 생성
 - `/api-client` — API 테스트 클라이언트
-- `/mindmap` — 마인드맵 (React Flow)
-- `/erd-editor` — ERD 에디터 (React Flow)
+- `/mindmap` — 마인드맵 (React Flow) — Fullscreen Overlay
+- `/erd-editor` — ERD 에디터 (React Flow) — Fullscreen Overlay
+- `/spotify` — Spotify Web Playback 플레이어 (OAuth)
 
 ## Code Conventions
 
@@ -195,6 +200,9 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 | `GOOGLE_ANALYTICS_PRIVATE_KEY`  | GCP 서비스 계정 키 | Core  |
 | `NEXT_PUBLIC_KAKAO_MAP_API_KEY` | Kakao Maps         | Core  |
 | `NEXT_PUBLIC_BASE_URL`          | 공개 베이스 URL    | Core  |
+| `SPOTIFY_CLIENT_ID`             | Spotify OAuth ID   | Phase 12 |
+| `SPOTIFY_CLIENT_SECRET`         | Spotify OAuth Secret | Phase 12 |
+| `SPOTIFY_REFRESH_TOKEN`         | Spotify 갱신 토큰  | Phase 12 |
 
 `.env.example` 참조. 환경변수 누락 시 `utils/env.ts`의 `requireEnv()`가 fallback UI를 위한 에러 결과를 반환.
 
@@ -217,6 +225,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 | `highlight.js`               | 11.11 | 코드 구문 강조           | 2,4   |
 | `lowlight`                   | 3.3   | Tiptap 코드블럭 강조     | Core  |
 | `nanoid`                     | 5.1   | ID 생성                  | Multi |
+| `next-auth` (optional)       | 5.x   | Spotify OAuth 인증       | 12    |
 
 ## 공통 유틸리티 및 패턴
 
@@ -266,11 +275,13 @@ const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), { ssr: fal
 - [app/globals.css](app/globals.css) — CSS 변수, 테마 토큰, 애니메이션
 - [components/Widget/types.ts](components/Widget/types.ts) — 위젯 타입 정의
 - [utils/api/notion.ts](utils/api/notion.ts) — Notion API 통합 로직
-- [app/page.tsx](app/page.tsx) — 홈페이지 (14개 위젯 그리드)
+- [app/page.tsx](app/page.tsx) — 홈페이지 (15개 위젯 그리드)
 - [components/Editor/index.tsx](components/Editor/index.tsx) — Tiptap 리치텍스트 에디터
 - [components/ApiClient/index.tsx](components/ApiClient/index.tsx) — HTTP 요청 테스터
 - [components/CodeEditor/index.tsx](components/CodeEditor/index.tsx) — Sandpack 코드 에디터
-- [app/mindmap/MindmapEditor.tsx](app/mindmap/MindmapEditor.tsx) — React Flow 마인드맵
+- [app/mindmap/MindmapEditor.tsx](app/mindmap/MindmapEditor.tsx) — React Flow 마인드맵 (Fullscreen Overlay)
 - [utils/hooks/use-mindmap-storage.ts](utils/hooks/use-mindmap-storage.ts) — 마인드맵 저장소 훅
-- [app/erd-editor/ErdEditor.tsx](app/erd-editor/ErdEditor.tsx) — React Flow ERD 에디터
+- [app/erd-editor/ErdEditor.tsx](app/erd-editor/ErdEditor.tsx) — React Flow ERD 에디터 (Fullscreen Overlay)
 - [utils/hooks/use-erd-storage.ts](utils/hooks/use-erd-storage.ts) — ERD 저장소 훅
+- [components/Widget/widget-spotify.tsx](components/Widget/widget-spotify.tsx) — Spotify 플레이리스트 미리보기
+- [app/spotify/page.tsx](app/spotify/page.tsx) — Spotify Web Playback 플레이어
