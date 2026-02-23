@@ -1,108 +1,74 @@
 import { NextResponse } from 'next/server'
+import { z } from 'zod'
 
-type SwimmingCallbackPayload = {
-  distance: number
-  unit: string
-  startAt: string
-  endAt: string
-  source?: string
-}
+const isoDateSchema = z
+  .string()
+  .trim()
+  .min(1, 'Date is required')
+  .transform((value) => new Date(value))
+  .refine((value) => !Number.isNaN(value.getTime()), {
+    message: 'Invalid date format'
+  })
+  .transform((value) => value.toISOString())
+
+const swimmingPayloadSchema = z.object({
+  distance: z.coerce.number().finite(),
+  unit: z.string().trim().min(1),
+  startAt: isoDateSchema,
+  endAt: isoDateSchema,
+  source: z.string().trim().min(1).optional()
+})
+
+type SwimmingCallbackPayload = z.infer<typeof swimmingPayloadSchema>
 
 type ParseResult =
-  | { ok: true; data: SwimmingCallbackPayload }
-  | { ok: false; error: string }
+  | { success: true; data: SwimmingCallbackPayload }
+  | { success: false; error: string }
 
-function getString(value: unknown): string | null {
-  if (typeof value !== 'string') {
-    return null
-  }
-
-  const trimmed = value.trim()
-  return trimmed.length > 0 ? trimmed : null
-}
-
-function getNumber(value: unknown): number | null {
-  if (typeof value === 'number' && Number.isFinite(value)) {
-    return value
-  }
-
-  if (typeof value === 'string') {
-    const parsed = Number(value.trim())
-    return Number.isFinite(parsed) ? parsed : null
-  }
-
-  return null
-}
-
-function getIsoDateString(value: unknown): string | null {
-  if (typeof value !== 'string') {
-    return null
-  }
-
-  const parsed = new Date(value)
-  if (Number.isNaN(parsed.getTime())) {
-    return null
-  }
-
-  return parsed.toISOString()
-}
-
-function parsePayload(payload: unknown): ParseResult {
+function normalizePayload(payload: unknown): unknown {
   if (!payload || typeof payload !== 'object') {
-    return { ok: false, error: 'Payload must be a JSON object.' }
+    return payload
   }
 
   const candidate = payload as Record<string, unknown>
-  const distance = getNumber(candidate.distance ?? candidate.value)
-  const unit = getString(candidate.unit)
-  const startAt = getIsoDateString(candidate.startAt ?? candidate.startDate)
-  const endAt = getIsoDateString(candidate.endAt ?? candidate.endDate)
-  const source = getString(candidate.source ?? candidate.sourceName) ?? undefined
-
-  if (distance === null) {
-    return {
-      ok: false,
-      error: 'Invalid distance. Use a number or numeric string (e.g. 1200 or "1200").'
-    }
-  }
-
-  if (!unit) {
-    return { ok: false, error: 'Invalid unit. Use a non-empty string (e.g. "m").' }
-  }
-
-  if (!startAt) {
-    return {
-      ok: false,
-      error:
-        'Invalid startAt. Use startAt/startDate with a parseable date string (e.g. ISO-8601).'
-    }
-  }
-
-  if (!endAt) {
-    return {
-      ok: false,
-      error:
-        'Invalid endAt. Use endAt/endDate with a parseable date string (e.g. ISO-8601).'
-    }
-  }
 
   return {
-    ok: true,
-    data: {
-      distance,
-      unit,
-      startAt,
-      endAt,
-      source
+    ...candidate,
+    distance: candidate.distance ?? candidate.value,
+    startAt: candidate.startAt ?? candidate.startDate,
+    endAt: candidate.endAt ?? candidate.endDate,
+    source: candidate.source ?? candidate.sourceName
+  }
+}
+
+function parsePayload(payload: unknown): ParseResult {
+  const parsed = swimmingPayloadSchema.safeParse(payload)
+
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0]
+    const path = issue?.path?.join('.') || 'payload'
+    const message = issue?.message ?? 'Invalid payload'
+
+    return {
+      success: false,
+      error: `${path}: ${message}`
     }
   }
+
+  return { success: true, data: parsed.data }
 }
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as unknown
+  const normalizedBody = normalizePayload(body)
 
-  const parsed = parsePayload(body)
-  if (!parsed.ok) {
+  console.info('[api/callback/swimming] received body:', body)
+  console.info('[api/callback/swimming] normalized body:', normalizedBody)
+
+  const parsed = parsePayload(normalizedBody)
+  if ('error' in parsed) {
+    console.warn('[api/callback/swimming] payload validation failed:', parsed.error)
+
     return NextResponse.json(
       {
         ok: false,
