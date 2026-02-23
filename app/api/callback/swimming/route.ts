@@ -67,12 +67,16 @@ export async function POST(request: Request) {
 
   const parsed = parsePayload(normalizedBody)
   if ('error' in parsed) {
-    console.warn('[api/callback/swimming] payload validation failed:', parsed.error)
+    console.warn(
+      '[api/callback/swimming] payload validation failed:',
+      parsed.error
+    )
 
     return NextResponse.json(
       {
         ok: false,
-        error: parsed.error
+        error: parsed.error,
+        body: body
       },
       { status: 400 }
     )
