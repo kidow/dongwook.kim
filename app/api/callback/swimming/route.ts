@@ -1,47 +1,65 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-const isoDateSchema = z
-  .string()
-  .trim()
-  .min(1, 'Date is required')
-  .transform((value) => new Date(value))
-  .refine((value) => !Number.isNaN(value.getTime()), {
-    message: 'Invalid date format'
-  })
-  .transform((value) => value.toISOString())
-
-const swimmingPayloadSchema = z.object({
+const swimmingPayloadItemSchema = z.object({
   distance: z.coerce.number().finite(),
   unit: z.string().trim().min(1),
-  startAt: isoDateSchema,
-  endAt: isoDateSchema,
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Use YYYY-MM-DD format'),
   source: z.string().trim().min(1).optional()
 })
 
-type SwimmingCallbackPayload = z.infer<typeof swimmingPayloadSchema>
+const swimmingPayloadSchema = z.array(swimmingPayloadItemSchema).min(1)
 
 type ParseResult =
-  | { success: true; data: SwimmingCallbackPayload }
+  | { success: true; data: z.infer<typeof swimmingPayloadSchema> }
   | { success: false; error: string }
 
-function normalizePayload(payload: unknown): unknown {
-  if (!payload || typeof payload !== 'object') {
-    return payload
+function toDateYmd(value: unknown): string | undefined {
+  if (typeof value !== 'string' || value.trim().length === 0) {
+    return undefined
   }
 
-  const candidate = payload as Record<string, unknown>
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) {
+    return undefined
+  }
 
+  return date.toISOString().slice(0, 10)
+}
+
+function normalizeItem(item: unknown): unknown {
+  if (!item || typeof item !== 'object') {
+    return item
+  }
+
+  const candidate = item as Record<string, unknown>
   return {
     ...candidate,
     distance: candidate.distance ?? candidate.value,
-    startAt: candidate.startAt ?? candidate.startDate,
-    endAt: candidate.endAt ?? candidate.endDate,
+    date:
+      candidate.date ??
+      candidate.day ??
+      toDateYmd(candidate.startAt ?? candidate.startDate),
     source: candidate.source ?? candidate.sourceName
   }
 }
 
+function normalizePayload(payload: unknown): unknown {
+  if (Array.isArray(payload)) {
+    return payload.map((item) => normalizeItem(item))
+  }
+
+  return payload
+}
+
 function parsePayload(payload: unknown): ParseResult {
+  if (!Array.isArray(payload)) {
+    return {
+      success: false,
+      error: 'payload: Expected a JSON array of daily items.'
+    }
+  }
+
   const parsed = swimmingPayloadSchema.safeParse(payload)
 
   if (!parsed.success) {
@@ -85,10 +103,10 @@ export async function POST(request: Request) {
   return NextResponse.json(
     {
       ok: true,
-      data: {
-        ...parsed.data,
-        source: parsed.data.source ?? null
-      }
+      data: parsed.data.map((item) => ({
+        ...item,
+        source: item.source ?? null
+      }))
     },
     { status: 200 }
   )
