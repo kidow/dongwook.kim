@@ -32,10 +32,7 @@ function parsePayload(payload: unknown): ParseResult {
 
 export async function POST(request: Request) {
   const configuredToken = process.env.AUTH_TOKEN
-  const authorization = request.headers.get('X-Auth-Token')
-  const bearerToken = authorization?.startsWith('Bearer ')
-    ? authorization.slice('Bearer '.length)
-    : null
+  const authToken = request.headers.get('X-Auth-Token')
 
   if (!configuredToken) {
     console.error('[api/callback/swimming] AUTH_TOKEN is not configured.')
@@ -49,7 +46,7 @@ export async function POST(request: Request) {
     )
   }
 
-  if (!bearerToken || bearerToken !== configuredToken) {
+  if (!authToken || authToken !== configuredToken) {
     console.warn('[api/callback/swimming] unauthorized request.')
 
     return NextResponse.json(
