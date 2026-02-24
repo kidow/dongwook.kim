@@ -30,5 +30,7 @@ declare namespace NodeJS {
     GEMINI_API_KEY: string
     GEMINI_CHAT_MODEL: string
     GEMINI_EMBED_MODEL: string
+
+    AUTH_TOKEN: string
   }
 }

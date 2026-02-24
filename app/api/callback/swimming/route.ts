@@ -28,6 +28,36 @@ function parsePayload(payload: unknown): ParseResult {
 }
 
 export async function POST(request: Request) {
+  const configuredToken = process.env.AUTH_TOKEN
+  const authorization = request.headers.get('X-Auth-Token')
+  const bearerToken = authorization?.startsWith('Bearer ')
+    ? authorization.slice('Bearer '.length)
+    : null
+
+  if (!configuredToken) {
+    console.error('[api/callback/swimming] AUTH_TOKEN is not configured.')
+
+    return NextResponse.json(
+      {
+        ok: false,
+        error: 'Server configuration error'
+      },
+      { status: 500 }
+    )
+  }
+
+  if (!bearerToken || bearerToken !== configuredToken) {
+    console.warn('[api/callback/swimming] unauthorized request.')
+
+    return NextResponse.json(
+      {
+        ok: false,
+        error: 'Unauthorized'
+      },
+      { status: 401 }
+    )
+  }
+
   const body = (await request.json().catch(() => null)) as unknown
 
   console.info('[api/callback/swimming] received body:', body)
