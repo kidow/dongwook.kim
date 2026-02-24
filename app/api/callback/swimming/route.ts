@@ -82,6 +82,18 @@ export async function POST(request: Request) {
     )
   }
 
+  if (parsed.data.distance === 0) {
+    return NextResponse.json(
+      {
+        ok: true,
+        skipped: true,
+        reason: 'Distance is zero, so insert was skipped',
+        data: parsed.data
+      },
+      { status: 200 }
+    )
+  }
+
   const supabase = createSupabaseServiceRoleClient()
   const { error } = await supabase.from('swim_sessions').insert({
     date: parsed.data.date,
