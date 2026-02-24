@@ -2,10 +2,8 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 const swimmingPayloadItemSchema = z.object({
-  distance: z.coerce.number().finite(),
-  unit: z.string().trim().min(1),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Use YYYY-MM-DD format'),
-  source: z.string().trim().min(1).optional()
+  date: z.string(),
+  distance: z.number()
 })
 
 const swimmingPayloadSchema = z.array(swimmingPayloadItemSchema).min(1)
@@ -103,10 +101,7 @@ export async function POST(request: Request) {
   return NextResponse.json(
     {
       ok: true,
-      data: parsed.data.map((item) => ({
-        ...item,
-        source: item.source ?? null
-      }))
+      data: parsed.data
     },
     { status: 200 }
   )
