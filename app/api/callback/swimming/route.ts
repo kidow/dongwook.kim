@@ -51,13 +51,6 @@ function normalizePayload(payload: unknown): unknown {
 }
 
 function parsePayload(payload: unknown): ParseResult {
-  if (!Array.isArray(payload)) {
-    return {
-      success: false,
-      error: 'payload: Expected a JSON array of daily items.'
-    }
-  }
-
   const parsed = swimmingPayloadSchema.safeParse(payload)
 
   if (!parsed.success) {
