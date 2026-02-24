@@ -42,14 +42,6 @@ function normalizeItem(item: unknown): unknown {
   }
 }
 
-function normalizePayload(payload: unknown): unknown {
-  if (Array.isArray(payload)) {
-    return payload.map((item) => normalizeItem(item))
-  }
-
-  return payload
-}
-
 function parsePayload(payload: unknown): ParseResult {
   const parsed = swimmingPayloadSchema.safeParse(payload)
 
@@ -69,12 +61,10 @@ function parsePayload(payload: unknown): ParseResult {
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as unknown
-  const normalizedBody = normalizePayload(body)
 
   console.info('[api/callback/swimming] received body:', body)
-  console.info('[api/callback/swimming] normalized body:', normalizedBody)
 
-  const parsed = parsePayload(normalizedBody)
+  const parsed = parsePayload(body)
   if ('error' in parsed) {
     console.warn(
       '[api/callback/swimming] payload validation failed:',
