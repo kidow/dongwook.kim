@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
+import { createSupabaseServiceRoleClient } from '@/utils/api/supabase'
+
 const swimmingPayloadSchema = z.object({
-  date: z.string(),
-  distance: z.number()
+  date: z.string().date(),
+  distance: z.number().int().min(0).max(9999),
+  source: z.literal('APPLE_WATCH').default('APPLE_WATCH')
 })
 
 type ParseResult =
@@ -76,6 +79,25 @@ export async function POST(request: Request) {
         body: body
       },
       { status: 400 }
+    )
+  }
+
+  const supabase = createSupabaseServiceRoleClient()
+  const { error } = await supabase.from('swim_sessions').insert({
+    date: parsed.data.date,
+    distance: parsed.data.distance,
+    source: parsed.data.source
+  })
+
+  if (error) {
+    console.error('[api/callback/swimming] failed to insert swim session:', error)
+
+    return NextResponse.json(
+      {
+        ok: false,
+        error: 'Failed to persist swimming data'
+      },
+      { status: 500 }
     )
   }
 
