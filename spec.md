@@ -46,6 +46,38 @@
    - 자동화: 로컬 스크립트만 적용 (CI 제외)
 3. 다크 모드 추가
 4. i18n 추가
+   - 목표: 다국어 라우팅 기반으로 콘텐츠 접근성을 높이고, 기존 Notion 기반 블로그 의존성을 제거해 저장소 내 MDX 소스로 직접 운영
+   - 배경:
+     - 현재 `/blog` 하위 경로는 `@notionhq/client` + Notion API 연동(`utils/api/notion.ts`)을 통해 글 목록/상세를 구성
+     - 외부 데이터 소스 의존성을 줄이고 버전 관리 가능한 문서 작성 흐름으로 전환 필요
+   - 콘텐츠 전략:
+     - 블로그 소스를 Notion에서 로컬 MDX로 전환
+     - 언어별 디렉터리 구조를 사용해 동일 슬러그의 번역 콘텐츠를 관리
+       - 예시: `content/blog/ko/*.mdx`, `content/blog/en/*.mdx`
+     - 기본 언어(ko) + 보조 언어(en) 2개 로케일부터 시작하고, 확장 가능한 구조 유지
+   - 라우팅/렌더링 범위:
+     - i18n 라우트 세그먼트 도입: `/{locale}/blog`, `/{locale}/blog/[slug]`
+     - 기존 `/blog` 진입 시 기본 로케일로 리다이렉트 또는 rewrite 정책 적용
+     - 목록/상세 페이지에서 locale 기반으로 MDX 파일을 조회하고 fallback(미번역 시 기본 언어 대체) 처리
+   - 메타데이터/SEO:
+     - locale별 `title`, `description`, `og` 메타데이터 분기
+     - `hreflang`/canonical 정책 명시
+     - 포스트 단위 다국어 alternate 링크 생성
+   - 구현 원칙:
+     - `@notionhq/client` 및 Notion API 호출 경로를 블로그 렌더링 경로에서 단계적으로 제거
+     - 기존 fallback UI 정책은 유지하되, 데이터 소스를 MDX 기준으로 재정의
+     - 타입 안전성을 위해 frontmatter 스키마(예: `title`, `description`, `date`, `tags`, `thumbnail`, `draft`)를 명확히 정의
+   - 단계별 작업(초안):
+     - Phase 1) i18n 설정 추가(지원 locale, 기본 locale, locale 유틸)
+     - Phase 2) MDX 블로그 컬렉션/파서 구성 및 frontmatter 타입 정의
+     - Phase 3) `/blog` 목록/상세를 locale + MDX 기반으로 교체
+     - Phase 4) 기존 Notion 연동 코드/API route 정리 및 문서 업데이트
+   - 완료 기준(DoD):
+     - `/ko/blog`, `/en/blog` 및 각 상세 페이지가 MDX 기반으로 정상 렌더링
+     - 번역 누락 콘텐츠에서 기본 언어 fallback 동작 확인
+     - Notion 환경변수 미설정 상태에서도 블로그 기능 정상 동작
+     - `pnpm lint`, `pnpm type-check` 통과
+     - `spec.md` 및 관련 문서에 i18n + MDX 운영 규칙 반영
 5. 미니게임 추가
 6. 수영 데이터 추가
    - 개요: 아이폰 건강 앱에 기록되는 수영 데이터를 단축어 앱을 이용하여 받아와서 SwimmingWidget으로 렌더링
