@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next'
+﻿import type { Metadata, Viewport } from 'next'
 import { Agentation } from 'agentation'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils'
 import './globals.css'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/next'
-import RegisterSW from '@/components/pwa/register-sw'
 
 export const viewport: Viewport = {
   themeColor: 'oklch(58.5% 0.233 277.117)'
@@ -46,10 +45,10 @@ export default function RootLayout({ children }: Readonly<ReactProps>) {
         </main>
         <Agentation />
         <Toast />
-        <RegisterSW />
         <SpeedInsights />
         <Analytics />
       </body>
     </html>
   )
 }
+

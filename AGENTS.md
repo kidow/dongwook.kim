@@ -77,13 +77,12 @@
 pnpm dev
 pnpm lint
 pnpm type-check
-pnpm build
 ```
 
 참고:
 
 - `predev`, `prebuild`, `pretype-check`에서 `fumadocs-mdx`가 자동 실행됩니다.
-- 작업 후 최소 `pnpm lint`와 `pnpm type-check`를 확인하고, 라우팅/빌드 영향 변경 시 `pnpm build`까지 확인합니다.
+- 코드 변경 작업 완료 후에는 `pnpm type-check`만 실행하고, `pnpm build`는 실행하지 않습니다.
 
 ## 5) 환경 변수 규칙
 

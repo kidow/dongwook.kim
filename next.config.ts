@@ -1,5 +1,16 @@
-import type { NextConfig } from 'next'
+﻿import type { NextConfig } from 'next'
 import { createMDX } from 'fumadocs-mdx/next'
+import withPWAInit from 'next-pwa'
+
+const withPWA = withPWAInit({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development',
+  register: true,
+  skipWaiting: true,
+  fallbacks: {
+    document: '/offline'
+  }
+})
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -15,4 +26,4 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX()
 
-export default withMDX(nextConfig)
+export default withPWA(withMDX(nextConfig))
