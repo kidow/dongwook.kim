@@ -79,6 +79,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@playwright/mcp": "^0.0.68",
     "@playwright/test": "^1.55.0",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.19",
