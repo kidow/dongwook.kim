@@ -1,6 +1,5 @@
 ﻿import type { Metadata, Viewport } from 'next'
 import { Agentation } from 'agentation'
-import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { Toast } from '@/components/ui/toast'
 import { cn } from '@/lib/utils'
@@ -41,7 +40,6 @@ export default function RootLayout({ children }: Readonly<ReactProps>) {
               </div>
             </div>
           </div>
-          <Footer />
         </main>
         <Agentation />
         <Toast />
