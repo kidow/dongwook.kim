@@ -22,8 +22,6 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: Readonly<ReactProps>) {
-  const isLocalServer = process.env.NODE_ENV === 'development'
-
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className="font-sans">
@@ -45,7 +43,7 @@ export default function RootLayout({ children }: Readonly<ReactProps>) {
           </div>
           <Footer />
         </main>
-        {isLocalServer ? <Agentation /> : null}
+        <Agentation />
         <Toast />
         <SpeedInsights />
         <Analytics />
