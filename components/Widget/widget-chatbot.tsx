@@ -17,22 +17,12 @@ export default function WidgetChatbot() {
         </span>
       }
       title="AI Chatbot"
-      description="General assistant · Gemini 2.5 Flash-Lite"
       button={
         <Badge className="mt-2 bg-[#EEF6FF] text-[#1D4ED8] hover:bg-[#EEF6FF]">
           <SparklesIcon className="mr-1 size-3.5" />
           Preview
         </Badge>
       }
-    >
-      <div className="space-y-2 pt-1">
-        <div className="rounded-lg border border-border bg-white/80 px-3 py-2 text-xs text-muted-foreground">
-          AI: 궁금한 내용을 물어보세요.
-        </div>
-        <div className="rounded-lg border border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
-          You: /chat에서 대화를 시작해보세요.
-        </div>
-      </div>
-    </WidgetLink>
+    />
   )
 }
