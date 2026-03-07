@@ -94,7 +94,7 @@ export default function ThemeModeController() {
           <h3 className="text-sm font-semibold">Theme</h3>
         </div>
 
-        <div className="flex items-center justify-between gap-1 rounded-full border border-border bg-muted/40 p-1.5">
+        <div className="grid grid-cols-3 gap-2">
           {items.map((item) => {
             const selected = mode === item.key
 
@@ -120,3 +120,5 @@ export default function ThemeModeController() {
     </li>
   )
 }
+
+
