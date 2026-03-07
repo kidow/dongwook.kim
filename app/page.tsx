@@ -228,6 +228,13 @@ export default async function Home() {
       />
 
       <WidgetQuote />
+      <li className="overflow-hidden xl:col-span-1">
+        <Card className="h-[178px] w-full rounded-3xl border-border py-0 shadow-sm xl:h-[175px]">
+          <div className="flex h-full items-center justify-center p-5 xl:p-6">
+            <span className="text-sm font-medium text-muted-foreground">Temporary Widget</span>
+          </div>
+        </Card>
+      </li>
       <Suspense fallback={<li className="col-span-2" />}>
         <WidgetAnalytics />
       </Suspense>
