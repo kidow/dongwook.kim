@@ -33,16 +33,18 @@ function applyTheme(mode: ThemeMode) {
 }
 
 export default function ThemeModeController() {
-  const [mode, setMode] = useState<ThemeMode>(() => {
-    if (typeof window === 'undefined') {
-      return 'system'
-    }
+  const [mode, setMode] = useState<ThemeMode>('system')
 
+  useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY) as ThemeMode | null
-    return saved === 'light' || saved === 'dark' || saved === 'system'
-      ? saved
-      : 'system'
-  })
+    const nextMode =
+      saved === 'light' || saved === 'dark' || saved === 'system'
+        ? saved
+        : 'system'
+
+    setMode(nextMode)
+    applyTheme(nextMode)
+  }, [])
 
   useEffect(() => {
     applyTheme(mode)
