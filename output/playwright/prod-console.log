@@ -1,0 +1,4 @@
+Total messages: 2 (Errors: 0, Warnings: 2)
+
+[WARNING] The resource https://dongwook.kim/_next/static/media/5dfb1d0134f1564c-s.p.otf was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://dongwook.kim/:0
+[WARNING] The resource https://dongwook.kim/_next/static/css/ed96be5490bb0726.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://dongwook.kim/:0

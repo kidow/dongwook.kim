@@ -1,8 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Script from 'next/script'
-import { KeyboardEvent, ReactNode, useEffect, useMemo, useState } from 'react'
+import { KeyboardEvent, ReactNode, useEffect, useState } from 'react'
 import {
   ArrowDownIcon,
   ArrowDownLeftIcon,
@@ -15,7 +14,7 @@ import {
   ExternalLinkIcon,
   SearchIcon
 } from 'lucide-react'
-import { Map, MapMarker } from 'react-kakao-maps-sdk'
+import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -68,6 +67,8 @@ const MENU_BOARD: string[][] = [
 
 const DEFAULT_CENTER = { lat: 37.5665, lng: 126.978 }
 const KAKAO_MAP_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY
+const KAKAO_MAP_SDK_URL = 'https://dapi.kakao.com/v2/maps/sdk.js'
+const KAKAO_MAP_LIBRARIES = ['services'] as const
 
 const DIRECTION_ICONS: Record<number, ReactNode> = {
   0: (
@@ -96,7 +97,12 @@ const DIRECTION_ICONS: Record<number, ReactNode> = {
   )
 }
 
-export default function LunchPage() {
+function LunchPageContent({ appKey }: { appKey: string }) {
+  const [isMapLoading, mapLoadError] = useKakaoLoader({
+    appkey: appKey,
+    libraries: [...KAKAO_MAP_LIBRARIES],
+    url: KAKAO_MAP_SDK_URL
+  })
   const [searchQuery, setSearchQuery] = useState('')
   const [results, setResults] =
     useState<kakao.maps.services.PlacesSearchResult>([])
@@ -106,8 +112,6 @@ export default function LunchPage() {
   const [map, setMap] = useState<kakao.maps.Map | null>(null)
   const [center, setCenter] = useState(DEFAULT_CENTER)
   const [isSearching, setIsSearching] = useState(false)
-
-  const hasMapKey = useMemo(() => Boolean(KAKAO_MAP_KEY), [])
 
   const searchPlaces = (keyword: string, page = 1) => {
     if (
@@ -173,7 +177,7 @@ export default function LunchPage() {
   }
 
   useEffect(() => {
-    if (!hasMapKey || !map) {
+    if (isMapLoading || mapLoadError || !map) {
       return
     }
 
@@ -197,9 +201,170 @@ export default function LunchPage() {
         toast.info('위치 접근 권한이 없어 기본 위치로 표시합니다.')
       }
     )
-  }, [hasMapKey, map])
+  }, [isMapLoading, map, mapLoadError])
 
-  if (!hasMapKey) {
+  return (
+    <section>
+      <header className="space-y-2">
+        <h1 className="text-3xl font-bold tracking-tight xl:text-4xl">
+          점심 뭐 먹지?
+        </h1>
+        <p className="text-muted-foreground mb-4 text-sm">
+          현재 위치 기준 반경 500m 내 식당을 빠르게 탐색합니다.
+        </p>
+      </header>
+
+      <Card className="overflow-hidden rounded-none border-border py-0 shadow-sm">
+        {mapLoadError ? (
+          <div className="text-muted-foreground flex h-[360px] w-full items-center justify-center bg-muted/20 text-sm xl:h-[620px]">
+            지도를 불러오지 못했습니다.
+          </div>
+        ) : isMapLoading ? (
+          <div className="text-muted-foreground flex h-[360px] w-full items-center justify-center bg-muted/20 text-sm xl:h-[620px]">
+            지도를 불러오는 중입니다.
+          </div>
+        ) : (
+          <Map
+            center={center}
+            onCreate={setMap}
+            className="h-[360px] w-full xl:h-[620px]"
+            level={4}
+          >
+            {results.map((item) => (
+              <MapMarker
+                key={item.id}
+                position={{ lat: Number(item.y), lng: Number(item.x) }}
+                onClick={() => focusPlace(item)}
+              />
+            ))}
+          </Map>
+        )}
+      </Card>
+
+      <div className="grid xl:grid-cols-[1fr_260px]">
+        <div className="grid grid-cols-3">
+          {MENU_BOARD.map((group, rowIndex) => (
+            <div
+              key={rowIndex}
+              className="grid grid-cols-[repeat(auto-fit,minmax(60px,1fr))] grid-rows-[repeat(3,minmax(60px,1fr))] odd:bg-muted/30"
+            >
+              {group.map((menu, columnIndex) => (
+                <button
+                  key={`${rowIndex}-${columnIndex}-${menu || 'empty'}`}
+                  type="button"
+                  disabled={!menu}
+                  onClick={() => {
+                    if (!menu) {
+                      return
+                    }
+
+                    setSearchQuery(menu)
+                    searchPlaces(menu)
+                  }}
+                  className={cn(
+                    'relative min-h-16 border-r border-b border-border px-2 text-center text-sm',
+                    menu
+                      ? 'hover:bg-muted/60'
+                      : 'cursor-default bg-transparent'
+                  )}
+                >
+                  {menu}
+                  {rowIndex === 4 ? DIRECTION_ICONS[columnIndex] : null}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <Card className="gap-0 rounded-none border-0 py-0 shadow-sm">
+          <div className="flex items-center gap-2 border-b border-border px-3 py-3">
+            <Input
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              onKeyDown={onSearchInputKeyDown}
+              spellCheck={false}
+              autoComplete="off"
+              placeholder="메뉴 또는 식당 검색"
+              aria-label="메뉴 또는 식당 검색"
+            />
+            <Button
+              type="button"
+              size="icon"
+              variant="outline"
+              disabled={!searchQuery.trim() || isSearching}
+              onClick={() => searchPlaces(searchQuery)}
+              aria-label="검색"
+            >
+              <SearchIcon className="size-4" />
+            </Button>
+          </div>
+
+          <div className="flex items-center justify-between border-b border-border px-3 py-2 text-xs">
+            <span className="text-muted-foreground">검색 결과</span>
+            <Badge variant="outline" className="font-normal">
+              총 {totalCount}개
+            </Badge>
+          </div>
+
+          <ul className="max-h-[478px] overflow-auto overscroll-contain">
+            {results.map((item) => (
+              <li
+                key={item.id}
+                className="cursor-pointer border-b border-border px-3 py-3 text-sm hover:bg-muted/30"
+                onClick={() => focusPlace(item)}
+              >
+                <div className="flex items-start gap-2">
+                  <span className="font-medium">{item.place_name}</span>
+                  <span className="text-muted-foreground ml-auto shrink-0 text-xs">
+                    {item.distance}m
+                  </span>
+                </div>
+                <p className="text-muted-foreground mt-1 text-xs">
+                  {item.category_name}
+                </p>
+                <div className="mt-2 flex items-center gap-2">
+                  <Link
+                    href={item.place_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground"
+                    onClick={(event) => event.stopPropagation()}
+                    aria-label={`${item.place_name} 카카오맵에서 열기`}
+                  >
+                    <ExternalLinkIcon className="size-4" />
+                  </Link>
+                  <span className="text-muted-foreground text-xs">
+                    {item.phone || '전화번호 없음'}
+                  </span>
+                </div>
+              </li>
+            ))}
+            {!results.length && !isSearching ? (
+              <li className="text-muted-foreground px-3 py-6 text-center text-sm">
+                검색 결과가 없습니다.
+              </li>
+            ) : null}
+            {hasNextPage ? (
+              <li className="p-2">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="w-full"
+                  onClick={() => searchPlaces(searchQuery, currentPage + 1)}
+                >
+                  더 보기
+                </Button>
+              </li>
+            ) : null}
+          </ul>
+        </Card>
+      </div>
+    </section>
+  )
+}
+
+export default function LunchPage() {
+  if (!KAKAO_MAP_KEY) {
     return (
       <section className="space-y-4">
         <h1 className="text-3xl font-bold tracking-tight xl:text-4xl">
@@ -220,160 +385,5 @@ export default function LunchPage() {
     )
   }
 
-  return (
-    <>
-      <Script
-        type="text/javascript"
-        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_KEY}&libraries=services&autoload=false`}
-        async
-        strategy="afterInteractive"
-      />
-      <section>
-        <header className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight xl:text-4xl">
-            점심 뭐 먹지?
-          </h1>
-          <p className="text-muted-foreground mb-4 text-sm">
-            현재 위치 기준 반경 500m 내 식당을 빠르게 탐색합니다.
-          </p>
-        </header>
-
-        <Card className="overflow-hidden rounded-none border-border py-0 shadow-sm">
-          <Map
-            center={center}
-            onCreate={setMap}
-            className="h-[360px] w-full xl:h-[620px]"
-            level={4}
-          >
-            {results.map((item) => (
-              <MapMarker
-                key={item.id}
-                position={{ lat: Number(item.y), lng: Number(item.x) }}
-                onClick={() => focusPlace(item)}
-              />
-            ))}
-          </Map>
-        </Card>
-
-        <div className="grid xl:grid-cols-[1fr_260px]">
-          <div className="grid grid-cols-3">
-            {MENU_BOARD.map((group, rowIndex) => (
-              <div
-                key={rowIndex}
-                className="grid grid-cols-[repeat(auto-fit,minmax(60px,1fr))] grid-rows-[repeat(3,minmax(60px,1fr))] odd:bg-muted/30"
-              >
-                {group.map((menu, columnIndex) => (
-                  <button
-                    key={`${rowIndex}-${columnIndex}-${menu || 'empty'}`}
-                    type="button"
-                    disabled={!menu}
-                    onClick={() => {
-                      if (!menu) {
-                        return
-                      }
-
-                      setSearchQuery(menu)
-                      searchPlaces(menu)
-                    }}
-                    className={cn(
-                      'relative min-h-16 border-r border-b border-border px-2 text-center text-sm',
-                      menu
-                        ? 'hover:bg-muted/60'
-                        : 'cursor-default bg-transparent'
-                    )}
-                  >
-                    {menu}
-                    {rowIndex === 4 ? DIRECTION_ICONS[columnIndex] : null}
-                  </button>
-                ))}
-              </div>
-            ))}
-          </div>
-
-          <Card className="gap-0 rounded-none border-0 py-0 shadow-sm">
-            <div className="flex items-center gap-2 border-b border-border px-3 py-3">
-              <Input
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                onKeyDown={onSearchInputKeyDown}
-                spellCheck={false}
-                autoComplete="off"
-                placeholder="메뉴 또는 식당 검색"
-                aria-label="메뉴 또는 식당 검색"
-              />
-              <Button
-                type="button"
-                size="icon"
-                variant="outline"
-                disabled={!searchQuery.trim() || isSearching}
-                onClick={() => searchPlaces(searchQuery)}
-                aria-label="검색"
-              >
-                <SearchIcon className="size-4" />
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-between border-b border-border px-3 py-2 text-xs">
-              <span className="text-muted-foreground">검색 결과</span>
-              <Badge variant="outline" className="font-normal">
-                총 {totalCount}개
-              </Badge>
-            </div>
-
-            <ul className="max-h-[478px] overflow-auto overscroll-contain">
-              {results.map((item) => (
-                <li
-                  key={item.id}
-                  className="cursor-pointer border-b border-border px-3 py-3 text-sm hover:bg-muted/30"
-                  onClick={() => focusPlace(item)}
-                >
-                  <div className="flex items-start gap-2">
-                    <span className="font-medium">{item.place_name}</span>
-                    <span className="text-muted-foreground ml-auto shrink-0 text-xs">
-                      {item.distance}m
-                    </span>
-                  </div>
-                  <p className="text-muted-foreground mt-1 text-xs">
-                    {item.category_name}
-                  </p>
-                  <div className="mt-2 flex items-center gap-2">
-                    <Link
-                      href={item.place_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-foreground"
-                      onClick={(event) => event.stopPropagation()}
-                      aria-label={`${item.place_name} 카카오맵에서 열기`}
-                    >
-                      <ExternalLinkIcon className="size-4" />
-                    </Link>
-                    <span className="text-muted-foreground text-xs">
-                      {item.phone || '전화번호 없음'}
-                    </span>
-                  </div>
-                </li>
-              ))}
-              {!results.length && !isSearching ? (
-                <li className="text-muted-foreground px-3 py-6 text-center text-sm">
-                  검색 결과가 없습니다.
-                </li>
-              ) : null}
-              {hasNextPage ? (
-                <li className="p-2">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="w-full"
-                    onClick={() => searchPlaces(searchQuery, currentPage + 1)}
-                  >
-                    더 보기
-                  </Button>
-                </li>
-              ) : null}
-            </ul>
-          </Card>
-        </div>
-      </section>
-    </>
-  )
+  return <LunchPageContent appKey={KAKAO_MAP_KEY} />
 }
