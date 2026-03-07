@@ -105,7 +105,7 @@ export default function ThemeModeController() {
                 aria-label={item.label}
                 title={item.label}
                 onClick={() => setMode(item.key)}
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors ${
+                className={`inline-flex aspect-square w-full items-center justify-center rounded-full border transition-colors ${
                   selected
                     ? 'border-transparent bg-primary text-primary-foreground'
                     : 'border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground'
@@ -120,5 +120,7 @@ export default function ThemeModeController() {
     </li>
   )
 }
+
+
 
 
