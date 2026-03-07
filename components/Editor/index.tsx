@@ -93,8 +93,8 @@ export default function Editor() {
 
   return (
     <div className={cn('relative pb-24', cal.variable)}>
-      <Card className="gap-0 overflow-hidden border-0">
-        <CardHeader className="border-b border-border py-4">
+      <Card className="gap-0 overflow-hidden border-0 shadow-none">
+        <CardHeader className="py-4">
           <CardTitle className="font-display text-2xl">메모</CardTitle>
           <CardAction>
             <Badge variant="secondary">{statusLabel}</Badge>
@@ -112,7 +112,7 @@ export default function Editor() {
             <div className="min-h-[500px] px-6 py-5" />
           )}
         </CardContent>
-        <CardFooter className="border-t border-border py-4">
+        <CardFooter className="py-4">
           <div className="flex items-center gap-2 text-sm">
             <Button
               variant="outline"
