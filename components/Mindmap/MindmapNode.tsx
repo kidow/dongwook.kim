@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Handle, Position, useReactFlow } from '@xyflow/react'
 import { X, Plus, Palette } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -30,6 +30,10 @@ export function MindmapNode({ id, data }: MindmapNodeProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [editLabel, setEditLabel] = useState(data.label)
   const [showColorPicker, setShowColorPicker] = useState(false)
+
+  useEffect(() => {
+    setEditLabel(data.label)
+  }, [data.label])
 
   const handleSave = useCallback(() => {
     setNodes((nds: any) =>
@@ -86,19 +90,20 @@ export function MindmapNode({ id, data }: MindmapNodeProps) {
 
   return (
     <div
-      className="relative rounded-lg border-2 p-3 shadow-md bg-white"
+      className="relative rounded-lg border-2 bg-white p-3 shadow-md"
       style={{ borderColor: bgColor }}
       onDoubleClick={() => setIsEditing(true)}
     >
       <Handle type="target" position={Position.Top} />
 
-      <div className="flex flex-col gap-2 min-w-[150px]">
+      <div className="min-w-[150px] flex flex-col gap-2">
         {isEditing ? (
           <div className="flex gap-1">
             <Input
               autoFocus
               value={editLabel}
               onChange={(e) => setEditLabel(e.target.value)}
+              onBlur={handleSave}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleSave()
                 if (e.key === 'Escape') setIsEditing(false)
@@ -108,7 +113,7 @@ export function MindmapNode({ id, data }: MindmapNodeProps) {
           </div>
         ) : (
           <div
-            className="text-sm font-medium cursor-pointer px-2 py-1 rounded"
+            className="cursor-pointer rounded px-2 py-1 text-sm font-medium"
             style={{ color: bgColor }}
           >
             {data.label}
@@ -146,11 +151,11 @@ export function MindmapNode({ id, data }: MindmapNodeProps) {
         </div>
 
         {showColorPicker && (
-          <div className="flex flex-wrap gap-1 mt-1">
+          <div className="mt-1 flex flex-wrap gap-1">
             {COLORS.map((color) => (
               <button
                 key={color}
-                className="w-5 h-5 rounded border-2"
+                className="h-5 w-5 rounded border-2"
                 style={{
                   backgroundColor: color,
                   borderColor: data.color === color ? '#000' : '#ddd'
