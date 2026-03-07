@@ -25,6 +25,7 @@ import WidgetAnalytics from '@/components/Widget/widget-analytics'
 import WidgetChatbot from '@/components/Widget/widget-chatbot'
 import WidgetSpotifyPlayer from '@/components/Widget/widget-spotify-player'
 import ThemeModeController from '@/components/Theme/theme-mode-controller'
+import WidgetI18n from '@/components/Widget/widget-i18n'
 
 const SIDE_PROJECTS = [
   {
@@ -172,18 +173,7 @@ export default async function Home() {
           />
         </Card>
       </li>
-      <WidgetLink
-        className="xl:hover:rotate-1"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="/blog"
-        icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white p-1">
-            <Image src="/blog.png" alt="blog" width={20} height={20} />
-          </span>
-        }
-        title="Blog"
-        description="/blog"
-      />
+      <WidgetI18n />
       <ThemeModeController />
 
       <WidgetLink
