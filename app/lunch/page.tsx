@@ -256,7 +256,7 @@ export default function LunchPage() {
         </Card>
 
         <div className="grid xl:grid-cols-[1fr_260px]">
-          <div className="grid grid-cols-3 border border-border">
+          <div className="grid grid-cols-3">
             {MENU_BOARD.map((group, rowIndex) => (
               <div
                 key={rowIndex}
@@ -290,7 +290,7 @@ export default function LunchPage() {
             ))}
           </div>
 
-          <Card className="gap-0 rounded-none border-border py-0 shadow-sm">
+          <Card className="gap-0 rounded-none border-0 py-0 shadow-sm">
             <div className="flex items-center gap-2 border-b border-border px-3 py-3">
               <Input
                 value={searchQuery}
