@@ -20,18 +20,19 @@ interface SwimmingTooltipProps {
 }
 
 const SWIMMING_DATA = [
-  { week: 'W1', distance: 1.2 },
-  { week: 'W2', distance: 1.8 },
-  { week: 'W3', distance: 2.4 },
-  { week: 'W4', distance: 2.1 },
-  { week: 'W5', distance: 2.9 },
-  { week: 'W6', distance: 3.4 }
+  { date: '03.04', distance: 1200 },
+  { date: '03.05', distance: 1800 },
+  { date: '03.06', distance: 2400 },
+  { date: '03.07', distance: 2100 },
+  { date: '03.08', distance: 2900 },
+  { date: '03.09', distance: 3200 },
+  { date: '03.10', distance: 3400 }
 ] as const
 
 const chartConfig = {
   distance: {
-    label: 'Distance',
-    color: '#0f766e'
+    label: 'Distance (m)',
+    color: '#0284c7'
   }
 } satisfies ChartConfig
 
@@ -48,7 +49,7 @@ function SwimmingTooltip({ active, payload, label }: SwimmingTooltipProps) {
         {label}
       </p>
       <p className="mt-1 text-sm font-semibold text-foreground">
-        {distance.toFixed(1)} km
+        {distance.toLocaleString()} m
       </p>
     </div>
   )
@@ -83,10 +84,11 @@ export default function WidgetSwimming() {
                 >
                   <CartesianGrid vertical={false} strokeDasharray="3 3" />
                   <XAxis
-                    dataKey="week"
+                    dataKey="date"
                     tickLine={false}
                     axisLine={false}
                     tickMargin={8}
+                    padding={{ left: 18, right: 8 }}
                   />
                   <YAxis hide />
                   <ChartTooltip
