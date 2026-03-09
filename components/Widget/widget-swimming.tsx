@@ -1,3 +1,5 @@
+import { unstable_cache } from 'next/cache'
+
 import { createSupabaseServiceRoleClient } from '@/utils/api/supabase'
 
 import WidgetSwimmingClient from './widget-swimming-client'
@@ -39,34 +41,38 @@ function toChartSession(session: SwimSessionRow) {
   }
 }
 
-async function getRecentSwimSessions() {
-  try {
-    const supabase = createSupabaseServiceRoleClient()
-    const { data, error } = await supabase
-      .from('swim_sessions')
-      .select('date, distance')
-      .order('date', { ascending: false })
-      .limit(7)
+const getRecentSwimSessions = unstable_cache(
+  async () => {
+    try {
+      const supabase = createSupabaseServiceRoleClient()
+      const { data, error } = await supabase
+        .from('swim_sessions')
+        .select('date, distance')
+        .order('date', { ascending: false })
+        .limit(7)
 
-    if (error || !data?.length) {
+      if (error || !data?.length) {
+        return FALLBACK_SWIMMING_DATA
+      }
+
+      const sessions = data
+        .filter((session): session is SwimSessionRow => {
+          return Boolean(session?.date) && session?.distance != null
+        })
+        .map(toChartSession)
+
+      if (!sessions.length) {
+        return FALLBACK_SWIMMING_DATA
+      }
+
+      return sessions.slice().reverse()
+    } catch {
       return FALLBACK_SWIMMING_DATA
     }
-
-    const sessions = data
-      .filter((session): session is SwimSessionRow => {
-        return Boolean(session?.date) && session?.distance != null
-      })
-      .map(toChartSession)
-
-    if (!sessions.length) {
-      return FALLBACK_SWIMMING_DATA
-    }
-
-    return sessions.slice().reverse()
-  } catch {
-    return FALLBACK_SWIMMING_DATA
-  }
-}
+  },
+  ['widget-swimming-sessions'],
+  { revalidate: 86400 }
+)
 
 export default async function WidgetSwimming() {
   const sessions = await getRecentSwimSessions()
