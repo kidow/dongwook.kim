@@ -1,14 +1,13 @@
 # Dynamic API 연동 설계 문서 (초안)
 
-Link-in-bio의 동적 위젯(Notion, Github, Spotify, Analytics, Meeting API)을 단계적으로 활성화하기 위한 설계 초안입니다.
+Link-in-bio의 동적 위젯(Github, Spotify, Analytics, Meeting API)을 단계적으로 활성화하기 위한 설계 초안입니다.
 
 ## 1) 연동 순서
 
-1. **Notion (blog 데이터 소스)**
-2. **Github (프로필/활동 요약)**
-3. **Spotify (최근 재생/트랙 카드)**
-4. **Analytics (방문 지표 카드)**
-5. **Meeting API (일정/예약 카드)**
+1. **Github (프로필/활동 요약)**
+2. **Spotify (최근 재생/트랙 카드)**
+3. **Analytics (방문 지표 카드)**
+4. **Meeting API (일정/예약 카드)**
 
 > 원칙: 한 번에 하나의 API만 활성화하고, 각 단계에서 fallback UI + 빌드/런타임 검증을 통과한 뒤 다음 단계로 진행한다.
 
@@ -37,11 +36,6 @@ export type Result<T> =
 ---
 
 ## 3) 환경변수 스키마 (초안)
-
-### Notion
-
-- `NOTION_SECRET_KEY`
-- `NOTION_DATABASE_ID`
 
 ### Github
 
@@ -105,8 +99,7 @@ export type Result<T> =
 
 ## 6) 단계별 실행 체크리스트
 
-- [ ] Step 1: Notion API 래퍼 + blog 데이터 연결
-- [ ] Step 2: Github 위젯 실제 데이터 연결
-- [ ] Step 3: Spotify 위젯 실제 데이터 연결
-- [ ] Step 4: Analytics 위젯 실제 데이터 연결
-- [ ] Step 5: Meeting/Scheduling 위젯 실제 데이터 연결
+- [ ] Step 1: Github 위젯 실제 데이터 연결
+- [ ] Step 2: Spotify 위젯 실제 데이터 연결
+- [ ] Step 3: Analytics 위젯 실제 데이터 연결
+- [ ] Step 4: Meeting/Scheduling 위젯 실제 데이터 연결

@@ -9,7 +9,7 @@
 - 오프라인/저속 네트워크에서 핵심 화면의 기본 접근성 확보
 - 설치 가능한 웹앱(Installable Web App) 구성
 - 캐시 전략을 통해 재방문 성능 개선
-- 기존 외부 연동(Notion/Spotify/GA 등) 실패 fallback 동작은 유지
+- 기존 외부 연동(Spotify/GA 등) 실패 fallback 동작은 유지
 
 ### 범위
 

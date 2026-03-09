@@ -1,4 +1,4 @@
-import { getChatEnv, getNotionEnv, requireEnv } from '@/utils/env'
+import { getChatEnv, requireEnv } from '@/utils/env'
 
 describe('utils/env', () => {
   const originalEnv = process.env
@@ -24,18 +24,6 @@ describe('utils/env', () => {
       ok: false,
       source: 'chat',
       error: 'Missing required env: BAR'
-    })
-  })
-
-  it('reads and trims notion env values', () => {
-    process.env.NOTION_SECRET_KEY = '  secret  '
-    process.env.NOTION_DATABASE_ID = '  db-id  '
-    process.env.NOTION_DATA_SOURCE_ID = '   '
-
-    expect(getNotionEnv()).toEqual({
-      secretKey: 'secret',
-      databaseId: 'db-id',
-      dataSourceId: undefined
     })
   })
 

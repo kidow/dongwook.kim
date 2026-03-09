@@ -2,12 +2,6 @@ export type Result<T> =
   | { ok: true; data: T }
   | { ok: false; error: string; source: string }
 
-export interface NotionEnv {
-  secretKey?: string
-  databaseId?: string
-  dataSourceId?: string
-}
-
 export interface ChatEnv {
   apiKey?: string
   chatModel?: string
@@ -22,14 +16,6 @@ function readEnv(key: string): string | undefined {
   }
 
   return value
-}
-
-export function getNotionEnv(): NotionEnv {
-  return {
-    secretKey: readEnv('NOTION_SECRET_KEY'),
-    databaseId: readEnv('NOTION_DATABASE_ID'),
-    dataSourceId: readEnv('NOTION_DATA_SOURCE_ID')
-  }
 }
 
 export function getChatEnv(): ChatEnv {

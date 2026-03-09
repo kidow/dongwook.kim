@@ -40,7 +40,6 @@
   - `app/mindmap/layout.tsx`
   - `app/erd-editor/layout.tsx`
 - 데이터/환경
-  - `utils/api/notion.ts`
   - `utils/env.ts`
   - `app/api/posts/route.ts`
   - `app/api/spotify/_lib.ts`
@@ -65,7 +64,7 @@
   - `components/Widget/`: 홈 카드/위젯
   - `components/Editor/`: 메모 에디터
   - `components/Archive/`, `components/Kanban/`, `components/CodeEditor/`, `components/ImageConverter/`, `components/Canvas/`, `components/QrCodeGenerator/`, `components/InvoiceGenerator/`, `components/ApiClient/`, `components/Mindmap/`, `components/ErdEditor/`: 사이드 프로젝트 도구 UI
-- `utils/`: 범용 유틸리티 및 Notion API 연동
+- `utils/`: 범용 유틸리티
 - `content/archive/`: Archive 라우트의 MDX 컨텐츠
 - `lib/`: 공용 helper (`lib/utils.ts`)
 - `types/`: 글로벌 타입
@@ -90,18 +89,12 @@ pnpm type-check
 
 주요 연동 키:
 
-- Notion: `NOTION_SECRET_KEY`, `NOTION_DATABASE_ID`, `NOTION_DATA_SOURCE_ID`
 - GitHub Widget: `GITHUB_TOKEN`
 - GA4 Widget: `GOOGLE_ANALYTICS_PROPERTY_ID`, `GOOGLE_ANAYLTICS_PROJECT_ID`, `GOOGLE_ANALYTICS_CLIENT_EMAIL`, `GOOGLE_ANALYTICS_PRIVATE_KEY`
 - Slack Widget/연동: `SLACK_WEBHOOK_URL`
 - Google Calendar Widget/연동: `GOOGLE_CALENDAR_REFRESH_TOKEN`, `GOOGLE_CALENDAR_CLIENT_ID`, `GOOGLE_CALENDAR_CLIENT_SECRET`
 - Spotify Widget/연동: `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `NEXT_PUBLIC_SPOTIFY_PLAYLIST_ID`
 - Client: `NEXT_PUBLIC_BASE_URL`, `NEXT_PUBLIC_KAKAO_MAP_API_KEY`
-
-Notion 블로그 조회 우선순위:
-
-- `NOTION_DATA_SOURCE_ID`가 있으면 해당 값을 우선 사용
-- 없으면 `NOTION_DATABASE_ID`를 기준으로 Data Source ID를 해석해 조회
 
 연동 키 누락 시 일부 페이지/위젯은 fallback UI 또는 `null` 렌더링이 정상 동작입니다. 누락 자체를 에러로 간주하지 말고, 회귀 여부만 판단합니다.
 
@@ -140,7 +133,7 @@ Notion 블로그 조회 우선순위:
 예시:
 
 - `docs(agents): add repository-specific working guide`
-- `feat(blog): render notion fallback cards on missing credentials`
+- `feat(blog): migrate blog posts to fumadocs mdx`
 - `fix(editor): preserve local content hydration order`
 - `refactor(widget): unify widget card token usage`
 

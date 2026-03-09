@@ -77,7 +77,7 @@ Orchestrator
 - 범위: `app/blog/*`, `app/api/posts/route.ts`, `app/archive/*`, `content/archive/*`
 - 목표:
   - 블로그/아카이브 렌더링 안정화
-  - Notion 데이터 소스 fallback 유지
+  - MDX 기반 콘텐츠 렌더링 회귀 방지
 
 ## Pod C: Tooling Pod (Side Projects)
 

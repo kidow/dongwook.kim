@@ -37,7 +37,7 @@ app/                            # Next.js App Router (라우트)
 ├── page.tsx                    # 홈 — Widget 그리드 (15개 Side Project 위젯)
 ├── globals.css                 # 글로벌 스타일, 테마 토큰, 애니메이션
 ├── api/posts/route.ts          # Blog API 엔드포인트
-├── blog/[id]/                  # 블로그 목록/상세 (Notion 연동)
+├── blog/[id]/                  # 블로그 목록/상세 (Fumadocs MDX)
 ├── memo/                       # 메모 에디터 (Tiptap + localStorage)
 ├── lunch/                      # 점심 추천 (Kakao Maps)
 ├── kanban/                     # [Phase 1] 칸반 보드 (@dnd-kit 드래그앤드롭) — Fullscreen Overlay
@@ -72,7 +72,6 @@ components/
 
 utils/                          # 비즈니스 로직, API 래퍼
 ├── env.ts                      # 환경변수 파싱/검증
-├── api/notion.ts               # Notion API 통합
 ├── event-listener.ts           # 커스텀 이벤트 시스템 (토스트)
 ├── hooks/                      # 커스텀 훅
 │   ├── use-mindmap-storage.ts  # 마인드맵 localStorage 저장/복원
@@ -98,7 +97,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 ### Data Fetching
 
-- **Notion API**: `utils/api/notion.ts` — 블로그 데이터. `next: { revalidate: 3600 }` 캐싱. 실패 시 fallback 데이터 제공
+- **Blog Content**: `content/blog/*.mdx` + `lib/blog.ts` — 정적 MDX 기반 블로그 데이터 로딩
 - **GitHub GraphQL API**: 컨트리뷰션 캘린더. AbortController 5초 타임아웃
 - **Google Analytics API**: `@google-analytics/data` — 페이지뷰 통계
 
@@ -183,7 +182,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 - `chore(scope):` — 유지보수
 - `docs(scope):` — 문서
 
-스코프 예: `blog`, `notion`, `widget`, `spec`
+스코프 예: `blog`, `widget`, `spec`, `deps`
 
 ### 작업 완료 시 커밋 메시지 출력
 
@@ -195,8 +194,6 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 | 변수                            | 용도                 | Phase    |
 | ------------------------------- | -------------------- | -------- |
 | `GITHUB_TOKEN`                  | GitHub GraphQL API   | Core     |
-| `NOTION_SECRET_KEY`             | Notion 연동          | Core     |
-| `NOTION_DATABASE_ID`            | 블로그 DB            | Core     |
 | `GOOGLE_ANALYTICS_PROPERTY_ID`  | GA4 속성             | Core     |
 | `GOOGLE_ANALYTICS_CLIENT_EMAIL` | GCP 서비스 계정      | Core     |
 | `GOOGLE_ANALYTICS_PRIVATE_KEY`  | GCP 서비스 계정 키   | Core     |
@@ -219,7 +216,6 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 | `@tiptap/*`                    | 3.19  | 리치텍스트 에디터    | Core    |
 | `fumadocs-core`, `fumadocs-ui` | 16.6  | 코드 아카이브 (MDX)  | 2       |
 | `@google-analytics/data`       | 5.2   | GA4 데이터 페칭      | Core    |
-| `@notionhq/client`             | 5.9   | Notion API           | Core    |
 | `recharts`                     | 3.7   | 차트 시각화          | Core    |
 | `qrcode.react`                 | 4.2   | QR코드 생성          | 7       |
 | `html2canvas`                  | 1.4   | 캔버스 이미지 캡처   | 6,10,11 |
@@ -288,7 +284,6 @@ const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), {
 - [components.json](components.json) — shadcn/ui 설정
 - [app/globals.css](app/globals.css) — CSS 변수, 테마 토큰, 애니메이션
 - [components/Widget/types.ts](components/Widget/types.ts) — 위젯 타입 정의
-- [utils/api/notion.ts](utils/api/notion.ts) — Notion API 통합 로직
 - [app/page.tsx](app/page.tsx) — 홈페이지 (15개 위젯 그리드)
 - [components/Editor/index.tsx](components/Editor/index.tsx) — Tiptap 리치텍스트 에디터
 - [components/ApiClient/index.tsx](components/ApiClient/index.tsx) — HTTP 요청 테스터
