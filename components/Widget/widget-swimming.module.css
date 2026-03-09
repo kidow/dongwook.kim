@@ -1,3 +1,11 @@
+.swimmerLottie {
+  width: min(220px, 54vw);
+  height: min(220px, 54vw);
+  opacity: 0.95;
+  filter: drop-shadow(0 8px 18px rgba(2, 132, 199, 0.18));
+  animation: lottieDrift 5.6s ease-in-out infinite;
+}
+
 .waveSvg path {
   animation: pathAnim 7s linear infinite;
 }
@@ -8,6 +16,17 @@
 
 .waveSvg path:nth-child(3) {
   animation-delay: 3s;
+}
+
+@keyframes lottieDrift {
+  0%,
+  100% {
+    transform: translate3d(14px, 3px, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-12px, -4px, 0) scale(1.02);
+  }
 }
 
 @keyframes pathAnim {

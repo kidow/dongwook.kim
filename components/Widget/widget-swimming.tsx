@@ -1,5 +1,6 @@
 'use client'
 
+import Lottie from 'lottie-react'
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
 
 import {
@@ -8,6 +9,7 @@ import {
   type ChartConfig
 } from '@/components/ui/chart'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import swimmerAnimation from '@/public/swimmer.json'
 
 import styles from './widget-swimming.module.css'
 
@@ -64,7 +66,7 @@ export default function WidgetSwimming() {
         <div className="relative z-10 flex h-full min-h-0 flex-col">
           <CardHeader className="gap-0 px-5 pb-2 pt-5 xl:px-6 xl:pt-6">
             <CardTitle className="text-base font-semibold tracking-tight uppercase">
-              My Swimming Routine <span className="ml-1">🏊</span>
+              My Swimming Diary <span className="ml-1">🏊</span>
             </CardTitle>
           </CardHeader>
 
@@ -110,6 +112,19 @@ export default function WidgetSwimming() {
                   />
                 </LineChart>
               </ChartContainer>
+            </div>
+
+            <div
+              data-swimming-layer="swimmer"
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 top-1/6 z-[5] -translate-x-1/2 -translate-y-1/2"
+            >
+              <Lottie
+                animationData={swimmerAnimation}
+                loop
+                autoplay
+                className={styles.swimmerLottie}
+              />
             </div>
 
             <div
