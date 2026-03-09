@@ -6,9 +6,13 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 
 describe('components/Widget/widget-swimming.tsx', () => {
-  it('defines a dedicated swimming widget with waves and chart data', () => {
-    const source = readFileSync(
+  it('loads the latest swim sessions in a server component and renders them in the client chart', () => {
+    const serverSource = readFileSync(
       path.join(process.cwd(), 'components/Widget/widget-swimming.tsx'),
+      'utf8'
+    )
+    const clientSource = readFileSync(
+      path.join(process.cwd(), 'components/Widget/widget-swimming-client.tsx'),
       'utf8'
     )
     const styleSource = readFileSync(
@@ -20,34 +24,39 @@ describe('components/Widget/widget-swimming.tsx', () => {
       'utf8'
     )
 
-    expect(source).toContain('Swimming')
-    expect(source).toContain('<svg')
-    expect(source).toContain('LineChart')
-    expect(source).toContain('SWIMMING_DATA')
-    expect(source).toContain("{ date: '03.04', distance: 1200 }")
-    expect(source).toContain("{ date: '03.10', distance: 3400 }")
-    expect(source).toContain("color: '#0284c7'")
-    expect(source).toContain("label: 'Distance (m)'")
-    expect(source).toContain('aria-hidden="true"')
-    expect(source).toContain('styles.waveSvg')
-    expect(source).toContain('group/widget-swimming')
-    expect(source).toContain('data-swimming-layer="chart"')
-    expect(source).toContain('data-swimming-layer="swimmer"')
-    expect(source).toContain('data-swimming-layer="wave"')
-    expect(source).toContain("import Lottie from 'lottie-react'")
-    expect(source).toContain("import swimmerAnimation from '@/public/swimmer.json'")
-    expect(source).toContain('animationData={swimmerAnimation}')
-    expect(source).toContain('styles.swimmerLottie')
-    expect(source).toContain('left-1/2 top-1/2')
-    expect(source).toContain('-translate-x-1/2 -translate-y-1/2')
-    expect(source).toContain('opacity-70')
-    expect(source).toContain('duration-300')
-    expect(source).toContain('group-hover/widget-swimming:opacity-100')
-    expect(source).toContain('group-hover/widget-swimming:opacity-70')
-    expect(source).toContain('group-hover/widget-swimming:z-20')
-    expect(source).toContain('dataKey="date"')
-    expect(source).toContain('padding={{ left: 18, right: 8 }}')
-    expect(source).toContain('{distance.toLocaleString()} m')
+    expect(serverSource).not.toContain("'use client'")
+    expect(serverSource).toContain('createSupabaseServiceRoleClient')
+    expect(serverSource).toContain("from('swim_sessions')")
+    expect(serverSource).toContain(".order('date', { ascending: false })")
+    expect(serverSource).toContain('.limit(7)')
+    expect(serverSource).toContain('WidgetSwimmingClient')
+    expect(serverSource).toContain('async function WidgetSwimming()')
+    expect(serverSource).toContain('return <WidgetSwimmingClient sessions={sessions} />')
+    expect(serverSource).toContain('sessions.slice().reverse()')
+    expect(clientSource).toContain("'use client'")
+    expect(clientSource).toContain('LineChart')
+    expect(clientSource).toContain("color: '#0284c7'")
+    expect(clientSource).toContain("label: 'Distance (m)'")
+    expect(clientSource).toContain('aria-hidden="true"')
+    expect(clientSource).toContain('styles.waveSvg')
+    expect(clientSource).toContain('group/widget-swimming')
+    expect(clientSource).toContain('data-swimming-layer="chart"')
+    expect(clientSource).toContain('data-swimming-layer="swimmer"')
+    expect(clientSource).toContain('data-swimming-layer="wave"')
+    expect(clientSource).toContain("import Lottie from 'lottie-react'")
+    expect(clientSource).toContain("import swimmerAnimation from '@/public/swimmer.json'")
+    expect(clientSource).toContain('animationData={swimmerAnimation}')
+    expect(clientSource).toContain('styles.swimmerLottie')
+    expect(clientSource).toContain('left-1/2 top-1/2')
+    expect(clientSource).toContain('-translate-x-1/2 -translate-y-1/2')
+    expect(clientSource).toContain('opacity-70')
+    expect(clientSource).toContain('duration-300')
+    expect(clientSource).toContain('group-hover/widget-swimming:opacity-100')
+    expect(clientSource).toContain('group-hover/widget-swimming:opacity-70')
+    expect(clientSource).toContain('group-hover/widget-swimming:z-20')
+    expect(clientSource).toContain('dataKey="date"')
+    expect(clientSource).toContain('padding={{ left: 18, right: 8 }}')
+    expect(clientSource).toContain('{distance.toLocaleString()} m')
     expect(styleSource).toContain('pathAnim')
     expect(styleSource).toContain('lottieDrift')
     expect(styleSource).toContain('.swimmerLottie')
