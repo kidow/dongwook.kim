@@ -38,6 +38,7 @@ describe('components/Widget/widget-swimming.tsx', () => {
     expect(source).toContain('padding={{ left: 18, right: 8 }}')
     expect(source).toContain('{distance.toLocaleString()} m')
     expect(styleSource).toContain('pathAnim')
+    expect(styleSource).toContain('animation-direction: reverse')
     expect(styleSource).toContain('animation-delay: 1s')
     expect(styleSource).not.toContain('animation-play-state: paused')
   })
