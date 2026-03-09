@@ -1,6 +1,5 @@
 .waveSvg path {
   animation: pathAnim 7s linear infinite;
-  animation-direction: reverse;
 }
 
 .waveSvg path:nth-child(2) {
