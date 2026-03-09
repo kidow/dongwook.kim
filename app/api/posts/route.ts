@@ -1,13 +1,10 @@
 import { NextResponse } from 'next/server'
 
-import { getNotionBlogPosts } from '@/utils/api/notion'
+import { getBlogPostSummaries } from '@/lib/blog'
 
 export async function GET() {
-  const postsResult = await getNotionBlogPosts()
-
-  if (!postsResult.ok) {
-    return NextResponse.json(postsResult, { status: 200 })
-  }
-
-  return NextResponse.json(postsResult)
+  return NextResponse.json({
+    ok: true,
+    data: getBlogPostSummaries()
+  })
 }

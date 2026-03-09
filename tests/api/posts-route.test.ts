@@ -3,46 +3,22 @@
  */
 
 import { GET } from '@/app/api/posts/route'
-import { getNotionBlogPosts } from '@/utils/api/notion'
-
-jest.mock('@/utils/api/notion', () => ({
-  getNotionBlogPosts: jest.fn()
-}))
-
-const mockedGetNotionBlogPosts = jest.mocked(getNotionBlogPosts)
 
 describe('app/api/posts/route', () => {
-  it('returns success payload as json', async () => {
-    mockedGetNotionBlogPosts.mockResolvedValueOnce({
-      ok: true,
-      data: []
-    })
-
+  it('returns published mdx blog posts as json', async () => {
     const response = await GET()
     const json = await response.json()
 
     expect(response.status).toBe(200)
-    expect(json).toEqual({
+    expect(json).toMatchObject({
       ok: true,
-      data: []
+      data: expect.any(Array)
     })
-  })
-
-  it('returns fallback payload with status 200 when notion call fails', async () => {
-    mockedGetNotionBlogPosts.mockResolvedValueOnce({
-      ok: false,
-      source: 'notion',
-      error: 'Missing required env: NOTION_SECRET_KEY'
+    expect(json.data[0]).toMatchObject({
+      slug: 'migrate-link-in-bio-ui',
+      title: 'Link-in-bio UI 마이그레이션 회고'
     })
-
-    const response = await GET()
-    const json = await response.json()
-
-    expect(response.status).toBe(200)
-    expect(json).toEqual({
-      ok: false,
-      source: 'notion',
-      error: 'Missing required env: NOTION_SECRET_KEY'
-    })
+    expect(json.data[0]).not.toHaveProperty('thumbnail')
+    expect(json.data[0]).not.toHaveProperty('tags')
   })
 })
