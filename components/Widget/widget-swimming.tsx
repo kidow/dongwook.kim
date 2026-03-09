@@ -61,50 +61,29 @@ function SwimmingTooltip({
 export default function WidgetSwimming() {
   return (
     <li className="col-span-2 h-[178px] xl:col-span-4 xl:w-full">
-      <Card className="relative h-full overflow-hidden rounded-3xl border-border bg-white py-0 shadow-sm">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0),rgba(226,232,240,0.24)_25%,rgba(191,219,254,0.65)_100%)]" />
-          <svg
-            className={`${styles.waveSvg} absolute inset-x-0 bottom-[-10px] h-[112%] w-full`}
-            viewBox="0 0 1320 500"
-            preserveAspectRatio="none"
-          >
-            <path
-              fill="rgba(125, 211, 252, 0.24)"
-              d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
-            />
-            <path
-              fill="rgba(56, 189, 248, 0.32)"
-              d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
-            />
-            <path
-              fill="rgba(14, 165, 233, 0.42)"
-              d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
-            />
-            <path
-              fill="rgba(2, 132, 199, 0.85)"
-              d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
-            />
-          </svg>
-        </div>
+      <Card className="group/widget-swimming relative h-full overflow-hidden rounded-3xl border-border bg-white py-0 shadow-sm">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] bg-[radial-gradient(circle_at_top,rgba(186,230,253,0.18),rgba(255,255,255,0)_68%)]" />
 
-        <div className="relative z-10 flex h-full flex-col">
+        <div className="relative z-10 flex h-full min-h-0 flex-col">
           <CardHeader className="gap-0 px-5 pb-2 pt-5 xl:px-6 xl:pt-6">
             <CardTitle className="text-base font-semibold tracking-tight uppercase">
               Swimming
             </CardTitle>
           </CardHeader>
 
-          <CardContent className="flex-1 px-3 pb-3 xl:px-4 xl:pb-4">
-            <div className="h-full rounded-[20px] border border-white/60 bg-white/35 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-[3px]">
-              <ChartContainer config={chartConfig} className="h-full w-full">
+          <CardContent className="relative min-h-0 flex-1 px-0 pb-0">
+            <div
+              data-swimming-layer="chart"
+              className="absolute inset-0 opacity-70 transition-opacity duration-300 group-hover/widget-swimming:opacity-100"
+            >
+              <ChartContainer
+                config={chartConfig}
+                className="h-full w-full px-3 pb-3 pt-2 xl:px-4 xl:pb-4"
+              >
                 <LineChart
                   accessibilityLayer
                   data={SWIMMING_DATA}
-                  margin={{ top: 10, right: 12, left: 6, bottom: 4 }}
+                  margin={{ top: 14, right: 14, left: 8, bottom: 8 }}
                 >
                   <CartesianGrid vertical={false} strokeDasharray="3 3" />
                   <XAxis
@@ -133,6 +112,36 @@ export default function WidgetSwimming() {
                   />
                 </LineChart>
               </ChartContainer>
+            </div>
+
+            <div
+              data-swimming-layer="wave"
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 z-10 overflow-hidden opacity-100 transition-opacity duration-300 group-hover/widget-swimming:opacity-70"
+            >
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0),rgba(226,232,240,0.18)_22%,rgba(191,219,254,0.58)_100%)]" />
+              <svg
+                className={`${styles.waveSvg} absolute inset-x-0 bottom-[-10px] h-[112%] w-full`}
+                viewBox="0 0 1320 500"
+                preserveAspectRatio="none"
+              >
+                <path
+                  fill="rgba(125, 211, 252, 0.24)"
+                  d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
+                />
+                <path
+                  fill="rgba(56, 189, 248, 0.32)"
+                  d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
+                />
+                <path
+                  fill="rgba(14, 165, 233, 0.42)"
+                  d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
+                />
+                <path
+                  fill="rgba(2, 132, 199, 0.85)"
+                  d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
+                />
+              </svg>
             </div>
           </CardContent>
         </div>
