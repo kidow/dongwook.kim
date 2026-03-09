@@ -6,7 +6,7 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 
 describe('home quote widget layout', () => {
-  it('uses the updated quote copy and leaves one column for a temporary widget', () => {
+  it('uses the updated quote copy and mounts the swimming widget above side projects', () => {
     const quoteSource = readFileSync(
       path.join(process.cwd(), 'components/Widget/widget-quote.tsx'),
       'utf8'
@@ -18,6 +18,7 @@ describe('home quote widget layout', () => {
 
     expect(quoteSource).toContain('더 게으르기 위해, 더 열심히 공부하기')
     expect(quoteSource).toContain('xl:col-span-3')
-    expect(homeSource).toContain('Temporary Widget')
+    expect(homeSource).toContain('WidgetSwimming')
+    expect(homeSource).not.toContain('Temporary Widget')
   })
 })

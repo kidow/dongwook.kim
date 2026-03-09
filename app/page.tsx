@@ -23,6 +23,7 @@ import * as Icon from '@/components/icons'
 import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
 import WidgetAnalytics from '@/components/Widget/widget-analytics'
 import WidgetChatbot from '@/components/Widget/widget-chatbot'
+import WidgetSwimming from '@/components/Widget/widget-swimming'
 import WidgetSpotifyPlayer from '@/components/Widget/widget-spotify-player'
 import ThemeModeController from '@/components/Theme/theme-mode-controller'
 import WidgetI18n from '@/components/Widget/widget-i18n'
@@ -234,6 +235,7 @@ export default async function Home() {
         <WidgetAnalytics />
       </Suspense>
       <WidgetChatbot />
+      <WidgetSwimming />
 
       <li className="col-span-2 px-2 xl:col-span-4">
         <h3 className="font-semibold uppercase">Side Projects 👨🏻‍💻</h3>

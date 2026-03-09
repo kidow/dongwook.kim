@@ -1,0 +1,142 @@
+'use client'
+
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
+
+import {
+  ChartContainer,
+  ChartTooltip,
+  type ChartConfig
+} from '@/components/ui/chart'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
+import styles from './widget-swimming.module.css'
+
+interface SwimmingTooltipProps {
+  active?: boolean
+  payload?: Array<{
+    value?: string | number
+  }>
+  label?: string
+}
+
+const SWIMMING_DATA = [
+  { week: 'W1', distance: 1.2 },
+  { week: 'W2', distance: 1.8 },
+  { week: 'W3', distance: 2.4 },
+  { week: 'W4', distance: 2.1 },
+  { week: 'W5', distance: 2.9 },
+  { week: 'W6', distance: 3.4 }
+] as const
+
+const chartConfig = {
+  distance: {
+    label: 'Distance',
+    color: '#0f766e'
+  }
+} satisfies ChartConfig
+
+function SwimmingTooltip({
+  active,
+  payload,
+  label
+}: SwimmingTooltipProps) {
+  if (!active || !payload?.length) {
+    return null
+  }
+
+  const distance = Number(payload[0]?.value ?? 0)
+
+  return (
+    <div className="min-w-[112px] rounded-xl border border-border bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
+      <p className="text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+        {label}
+      </p>
+      <p className="mt-1 text-sm font-semibold text-foreground">
+        {distance.toFixed(1)} km
+      </p>
+    </div>
+  )
+}
+
+export default function WidgetSwimming() {
+  return (
+    <li className="col-span-2 h-[178px] xl:col-span-4 xl:w-full">
+      <Card className="relative h-full overflow-hidden rounded-3xl border-border bg-white py-0 shadow-sm">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0),rgba(226,232,240,0.24)_25%,rgba(191,219,254,0.65)_100%)]" />
+          <svg
+            className={`${styles.waveSvg} absolute inset-x-0 bottom-[-10px] h-[112%] w-full`}
+            viewBox="0 0 1320 500"
+            preserveAspectRatio="none"
+          >
+            <path
+              fill="rgba(125, 211, 252, 0.24)"
+              d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
+            />
+            <path
+              fill="rgba(56, 189, 248, 0.32)"
+              d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
+            />
+            <path
+              fill="rgba(14, 165, 233, 0.42)"
+              d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
+            />
+            <path
+              fill="rgba(2, 132, 199, 0.85)"
+              d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
+            />
+          </svg>
+        </div>
+
+        <div className="relative z-10 flex h-full flex-col">
+          <CardHeader className="gap-0 px-5 pb-2 pt-5 xl:px-6 xl:pt-6">
+            <CardTitle className="text-base font-semibold tracking-tight uppercase">
+              Swimming
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent className="flex-1 px-3 pb-3 xl:px-4 xl:pb-4">
+            <div className="h-full rounded-[20px] border border-white/60 bg-white/35 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-[3px]">
+              <ChartContainer config={chartConfig} className="h-full w-full">
+                <LineChart
+                  accessibilityLayer
+                  data={SWIMMING_DATA}
+                  margin={{ top: 10, right: 12, left: 6, bottom: 4 }}
+                >
+                  <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="week"
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={8}
+                  />
+                  <YAxis hide />
+                  <ChartTooltip
+                    cursor={{ stroke: 'hsl(var(--border))', strokeWidth: 1 }}
+                    content={<SwimmingTooltip />}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="distance"
+                    stroke="var(--color-distance)"
+                    strokeWidth={2.5}
+                    dot={false}
+                    activeDot={{
+                      r: 5,
+                      fill: 'var(--color-distance)',
+                      stroke: '#ffffff',
+                      strokeWidth: 2
+                    }}
+                  />
+                </LineChart>
+              </ChartContainer>
+            </div>
+          </CardContent>
+        </div>
+      </Card>
+    </li>
+  )
+}
