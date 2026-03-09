@@ -35,11 +35,7 @@ const chartConfig = {
   }
 } satisfies ChartConfig
 
-function SwimmingTooltip({
-  active,
-  payload,
-  label
-}: SwimmingTooltipProps) {
+function SwimmingTooltip({ active, payload, label }: SwimmingTooltipProps) {
   if (!active || !payload?.length) {
     return null
   }
@@ -67,14 +63,14 @@ export default function WidgetSwimming() {
         <div className="relative z-10 flex h-full min-h-0 flex-col">
           <CardHeader className="gap-0 px-5 pb-2 pt-5 xl:px-6 xl:pt-6">
             <CardTitle className="text-base font-semibold tracking-tight uppercase">
-              Swimming
+              My Swimming Routine <span className="ml-1">🏊</span>
             </CardTitle>
           </CardHeader>
 
           <CardContent className="relative min-h-0 flex-1 px-0 pb-0">
             <div
               data-swimming-layer="chart"
-              className="absolute inset-0 opacity-70 transition-opacity duration-300 group-hover/widget-swimming:opacity-100"
+              className="absolute inset-0 z-0 opacity-70 transition-[opacity,z-index] duration-300 group-hover/widget-swimming:z-20 group-hover/widget-swimming:opacity-100"
             >
               <ChartContainer
                 config={chartConfig}
