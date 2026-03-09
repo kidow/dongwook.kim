@@ -10,10 +10,6 @@
   animation-delay: 3s;
 }
 
-.waveSvg path:nth-child(4) {
-  animation-play-state: paused;
-}
-
 @keyframes pathAnim {
   0% {
     d: path(

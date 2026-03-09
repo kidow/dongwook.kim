@@ -32,5 +32,6 @@ describe('components/Widget/widget-swimming.tsx', () => {
     expect(source).toContain('group-hover/widget-swimming:z-20')
     expect(styleSource).toContain('pathAnim')
     expect(styleSource).toContain('animation-delay: 1s')
+    expect(styleSource).not.toContain('animation-play-state: paused')
   })
 })
