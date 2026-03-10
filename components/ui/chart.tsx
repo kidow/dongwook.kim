@@ -13,6 +13,11 @@ export type ChartConfig = Record<
   }
 >
 
+const DEFAULT_INITIAL_DIMENSION = {
+  width: 320,
+  height: 120
+} as const
+
 interface ChartContainerProps extends React.ComponentProps<'div'> {
   config: ChartConfig
   children: React.ReactNode
@@ -45,7 +50,11 @@ export function ChartContainer({
       style={chartStyle}
       {...props}
     >
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer
+        width="100%"
+        height="100%"
+        initialDimension={DEFAULT_INITIAL_DIMENSION}
+      >
         {children}
       </ResponsiveContainer>
     </div>

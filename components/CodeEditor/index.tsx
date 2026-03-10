@@ -13,7 +13,7 @@ import {
   SUPPORTED_TEMPLATES
 } from './constants'
 
-import type { EditorTheme, SupportedTemplate } from './types'
+import type { SupportedTemplate } from './types'
 
 const SandpackProvider = dynamic(
   () =>
@@ -45,7 +45,6 @@ export default function CodeEditor() {
   const [template, setTemplate] = useState<SupportedTemplate>(
     initialState?.template ?? DEFAULT_TEMPLATE
   )
-  const [theme, setTheme] = useState<EditorTheme>('light')
   const [customCode, setCustomCode] = useState<string | null>(
     initialState?.code ?? null
   )
@@ -89,9 +88,7 @@ export default function CodeEditor() {
       <CardHeader className="border-b border-border px-4 py-3">
         <CodeEditorToolbar
           template={template}
-          theme={theme}
           onTemplateChange={handleTemplateChange}
-          onThemeChange={setTheme}
           onPresetSelect={handlePresetSelect}
           onShare={handleShare}
           onCopyCode={handleCopyCode}
@@ -101,7 +98,7 @@ export default function CodeEditor() {
         <SandpackProvider
           key={`${template}-${presetKey}`}
           template={template}
-          theme={theme === 'dark' ? 'dark' : 'light'}
+          theme="light"
           files={{
             [activeConfig.entryFile]: {
               code: currentCode,

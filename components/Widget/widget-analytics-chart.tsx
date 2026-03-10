@@ -55,8 +55,8 @@ export default function WidgetAnalyticsChart({
       : list.map((item) => item.date)
 
   return (
-    <li className="col-span-2">
-      <Card className="rounded-3xl border-border py-0 shadow-sm">
+    <li className="col-span-2 min-w-0">
+      <Card className="w-full min-w-0 rounded-3xl border-border py-0 shadow-sm">
         <CardHeader className="px-5 pt-5 xl:px-6 xl:pt-6">
           <p className="text-sm text-muted-foreground">총 방문자 수</p>
           <div className="flex items-center gap-3">
@@ -76,7 +76,7 @@ export default function WidgetAnalyticsChart({
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="px-5 pb-5 xl:px-6 xl:pb-6">
+        <CardContent className="min-w-0 px-5 pb-5 xl:px-6 xl:pb-6">
           <ResponsiveContainer width="100%" height={112}>
             <AreaChart data={list}>
               <defs>
@@ -105,8 +105,8 @@ export default function WidgetAnalyticsChart({
                     <text
                       x={x}
                       y={yPos + 12}
-                      fill="hsl(var(--muted-foreground))"
-                      fontSize={12}
+                      fill="var(--muted-foreground)"
+                      fontSize={10}
                       textAnchor={isFirst ? 'start' : isLast ? 'end' : 'middle'}
                     >
                       {payload.value}
@@ -129,7 +129,7 @@ export default function WidgetAnalyticsChart({
                 }}
               />
               <Tooltip
-                cursor={{ stroke: 'hsl(var(--border))', strokeWidth: 1 }}
+                cursor={{ stroke: 'var(--border)', strokeWidth: 1 }}
                 content={<AnalyticsTooltip />}
               />
             </AreaChart>

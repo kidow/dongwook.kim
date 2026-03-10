@@ -1,6 +1,6 @@
 'use client'
 
-import { CopyIcon, MoonIcon, Share2Icon, SunIcon } from 'lucide-react'
+import { CopyIcon, Share2Icon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -11,13 +11,11 @@ import {
 } from '@/components/ui/select'
 import { CODE_PRESETS, SUPPORTED_TEMPLATES } from './constants'
 
-import type { EditorTheme, SupportedTemplate } from './types'
+import type { SupportedTemplate } from './types'
 
 interface CodeEditorToolbarProps {
   template: SupportedTemplate
-  theme: EditorTheme
   onTemplateChange: (template: SupportedTemplate) => void
-  onThemeChange: (theme: EditorTheme) => void
   onPresetSelect: (presetId: string) => void
   onShare: () => void
   onCopyCode: () => void
@@ -25,9 +23,7 @@ interface CodeEditorToolbarProps {
 
 export default function CodeEditorToolbar({
   template,
-  theme,
   onTemplateChange,
-  onThemeChange,
   onPresetSelect,
   onShare,
   onCopyCode
@@ -61,19 +57,6 @@ export default function CodeEditorToolbar({
       </Select>
 
       <div className="ml-auto flex items-center gap-1">
-        <Button
-          variant="outline"
-          size="icon"
-          className="size-9"
-          onClick={() => onThemeChange(theme === 'light' ? 'dark' : 'light')}
-          title={theme === 'light' ? '다크 테마로 전환' : '라이트 테마로 전환'}
-        >
-          {theme === 'light' ? (
-            <MoonIcon className="size-4" />
-          ) : (
-            <SunIcon className="size-4" />
-          )}
-        </Button>
         <Button
           variant="outline"
           size="icon"

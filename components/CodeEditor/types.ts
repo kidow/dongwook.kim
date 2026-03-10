@@ -1,9 +1,6 @@
 /** Supported Sandpack template identifiers */
 export type SupportedTemplate = 'vanilla' | 'vanilla-ts' | 'react' | 'react-ts'
 
-/** Editor theme setting */
-export type EditorTheme = 'light' | 'dark'
-
 /** Template configuration for the language selector */
 export interface TemplateConfig {
   id: SupportedTemplate

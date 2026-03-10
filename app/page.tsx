@@ -25,7 +25,6 @@ import WidgetAnalytics from '@/components/Widget/widget-analytics'
 import WidgetChatbot from '@/components/Widget/widget-chatbot'
 import WidgetSwimming from '@/components/Widget/widget-swimming'
 import WidgetSpotifyPlayer from '@/components/Widget/widget-spotify-player'
-import ThemeModeController from '@/components/Theme/theme-mode-controller'
 import WidgetI18n from '@/components/Widget/widget-i18n'
 
 const SIDE_PROJECTS = [
@@ -105,7 +104,7 @@ const SIDE_PROJECTS = [
 
 function SideProjectIcon({ children }: ReactProps) {
   return (
-    <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-muted text-foreground">
+    <span className="widget-link-icon-chip flex h-10 w-10 items-center justify-center rounded-[10px] border border-border text-foreground">
       {children}
     </span>
   )
@@ -125,7 +124,7 @@ export default async function Home() {
           <Button
             variant="outline"
             size="sm"
-            className="pointer-events-none border-border text-xs font-bold dark:border-zinc-600 dark:bg-transparent dark:text-zinc-100"
+            className="pointer-events-none border-border text-xs font-bold"
           >
             Follow
           </Button>
@@ -139,7 +138,7 @@ export default async function Home() {
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="https://www.feedle.me"
         icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-muted text-foreground">
+          <span className="widget-link-icon-chip flex h-10 w-10 items-center justify-center rounded-[10px] border border-border text-foreground">
             <img src="/feedle.png" alt="Feedle" width={20} height={20} />
           </span>
         }
@@ -152,7 +151,7 @@ export default async function Home() {
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="mailto:wcgo2ling@gmail.com"
         icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-muted text-foreground">
+          <span className="widget-link-icon-chip flex h-10 w-10 items-center justify-center rounded-[10px] border border-border text-foreground">
             <MailIcon className="size-5" />
           </span>
         }
@@ -175,7 +174,6 @@ export default async function Home() {
         </Card>
       </li>
       <WidgetI18n />
-      <ThemeModeController />
 
       <WidgetLink
         className="xl:hover:rotate-1"
@@ -224,7 +222,7 @@ export default async function Home() {
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="/blog"
         icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-muted p-1 text-foreground">
+          <span className="widget-link-icon-chip flex h-10 w-10 items-center justify-center rounded-[10px] border border-border p-1 text-foreground">
             <Image src="/blog.png" alt="blog" width={20} height={20} />
           </span>
         }

@@ -55,7 +55,7 @@ function SwimmingTooltip({ active, payload, label }: SwimmingTooltipProps) {
   const distance = Number(payload[0]?.value ?? 0)
 
   return (
-    <div className="min-w-[112px] rounded-xl border border-border bg-white/95 px-3 py-2 shadow-sm backdrop-blur dark:bg-zinc-900/95">
+    <div className="min-w-[112px] rounded-xl border border-border bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
       <p className="text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
         {label}
       </p>
@@ -71,8 +71,8 @@ export default function WidgetSwimmingClient({
 }: WidgetSwimmingClientProps) {
   return (
     <li className="col-span-2 h-[178px] xl:col-span-4 xl:w-full">
-      <Card className="group/widget-swimming relative h-full overflow-hidden rounded-3xl border-border bg-white py-0 shadow-sm dark:bg-card">
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] bg-[radial-gradient(circle_at_top,rgba(186,230,253,0.18),rgba(255,255,255,0)_68%)] dark:bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.25),rgba(2,6,23,0)_68%)]" />
+      <Card className="group/widget-swimming relative h-full overflow-hidden rounded-3xl border-border bg-white py-0 shadow-sm">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] bg-[radial-gradient(circle_at_top,rgba(186,230,253,0.18),rgba(255,255,255,0)_68%)]" />
 
         <div className="relative z-10 flex h-full min-h-0 flex-col">
           <CardHeader className="gap-0 px-5 pb-2 pt-5 xl:px-6 xl:pt-6">
@@ -131,7 +131,7 @@ export default function WidgetSwimmingClient({
                   />
                   <YAxis hide />
                   <ChartTooltip
-                    cursor={{ stroke: 'hsl(var(--border))', strokeWidth: 1 }}
+                    cursor={{ stroke: 'var(--border)', strokeWidth: 1 }}
                     content={<SwimmingTooltip />}
                   />
                   <Line
@@ -169,7 +169,7 @@ export default function WidgetSwimmingClient({
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 z-10 overflow-hidden opacity-100 transition-opacity duration-300 group-hover/widget-swimming:opacity-70"
             >
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0),rgba(226,232,240,0.18)_22%,rgba(191,219,254,0.58)_100%)] dark:bg-[linear-gradient(180deg,rgba(2,6,23,0),rgba(15,23,42,0.3)_25%,rgba(14,116,144,0.48)_100%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0),rgba(226,232,240,0.18)_22%,rgba(191,219,254,0.58)_100%)]" />
               <svg
                 className={`${styles.waveSvg} absolute inset-x-0 bottom-[-10px] h-[112%] w-full`}
                 viewBox="0 0 1320 500"
@@ -177,22 +177,18 @@ export default function WidgetSwimmingClient({
               >
                 <path
                   fill="rgba(125, 211, 252, 0.24)"
-                  className="dark:fill-cyan-300/10"
                   d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
                 />
                 <path
                   fill="rgba(56, 189, 248, 0.32)"
-                  className="dark:fill-cyan-400/20"
                   d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
                 />
                 <path
                   fill="rgba(14, 165, 233, 0.42)"
-                  className="dark:fill-sky-500/30"
                   d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
                 />
                 <path
                   fill="rgba(2, 132, 199, 0.85)"
-                  className="dark:fill-sky-600/65"
                   d="M0, 192 C220, 100, 440, 100, 660, 192 C880, 290, 1100, 290, 1320, 192 L1320 500 L0 500"
                 />
               </svg>

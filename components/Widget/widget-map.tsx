@@ -26,7 +26,7 @@ function WidgetMapFrame({ children }: { children: ReactNode }) {
         {children}
         <Badge
           variant="outline"
-          className="absolute bottom-4 left-4 z-10 rounded-lg border-border bg-background/95 px-2 py-1.5 text-sm font-normal text-foreground backdrop-blur dark:bg-zinc-900/90"
+          className="absolute bottom-4 left-4 z-10 rounded-lg border-border bg-background/95 px-2 py-1.5 text-sm font-normal text-foreground backdrop-blur"
         >
           {LOCATION.label}
         </Badge>
