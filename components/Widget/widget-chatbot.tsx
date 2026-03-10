@@ -12,7 +12,7 @@ export default function WidgetChatbot() {
       size="h-full w-full hover:bg-neutral-50 [&>div]:h-full [&>div>div]:h-full"
       href="/chat"
       icon={
-        <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+        <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-muted text-foreground">
           <BotIcon className="size-5" />
         </span>
       }

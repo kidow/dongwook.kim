@@ -47,7 +47,7 @@ export default function WidgetI18n() {
     <li className="overflow-hidden transition-all duration-150 xl:hover:rotate-1">
       <Card className="h-[178px] w-full rounded-3xl border-border py-0 shadow-sm xl:h-[175px] xl:w-[175px]">
         <CardContent className="flex h-full flex-col justify-between p-5 xl:p-6">
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-muted text-foreground">
             <LanguagesIcon className="size-5" />
           </span>
 

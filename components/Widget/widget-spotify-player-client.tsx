@@ -38,7 +38,7 @@ export default function SpotifyPlayerClient({
         target="_blank"
         rel="noopener noreferrer"
         draggable={false}
-        className="flex h-[390px] w-full flex-col items-start rounded-3xl border border-neutral-200 bg-emerald-50 p-5 shadow-sm duration-150 xl:w-[390px] xl:p-6"
+        className="flex h-[390px] w-full flex-col items-start rounded-3xl border border-emerald-100 bg-emerald-50 p-5 text-emerald-950 shadow-sm duration-150 dark:border-emerald-900/70 dark:bg-emerald-950/40 dark:text-emerald-100 xl:w-[390px] xl:p-6"
       >
         <div className="flex w-full flex-1 flex-col items-start">
           <div className="flex w-full items-start justify-between">
@@ -52,7 +52,7 @@ export default function SpotifyPlayerClient({
           </div>
           <div className="mt-3 flex-1">
             <div className="text-sm uppercase">Spotify</div>
-            <p className="mt-1 text-xs text-neutral-400">
+            <p className="mt-1 text-xs text-emerald-800/60 dark:text-emerald-200/60">
               {totalSongs || 0} songs
             </p>
           </div>
@@ -79,12 +79,12 @@ export default function SpotifyPlayerClient({
                   </div>
                   <div className="mx-3 flex flex-col text-left">
                     <div className="line-clamp-1 text-sm">{item.title}</div>
-                    <div className="pointer-events-auto line-clamp-1 text-xs text-neutral-400">
+                    <div className="pointer-events-auto line-clamp-1 text-xs text-emerald-800/60 dark:text-emerald-200/60">
                       {item.artists.join(', ')}
                     </div>
                   </div>
                 </div>
-                <div className="w-fit flex-none text-sm tabular-nums text-black/40">
+                <div className="w-fit flex-none text-sm tabular-nums text-emerald-900/50 dark:text-emerald-100/50">
                   {getRunningTime(item.duration)}
                 </div>
               </button>

@@ -12,11 +12,11 @@ export default function WidgetQuote() {
       <Card className="h-[175px] w-full rounded-3xl border-border py-0 shadow-sm">
         <CardContent className="p-5 xl:p-6">
           <div>
-            <span className="flex h-10 w-10 items-center justify-center rounded-md border border-border">
-              <QuoteIcon className="size-5 scale-[-1] text-zinc-900" />
+            <span className="flex h-10 w-10 items-center justify-center rounded-md border border-border bg-muted text-foreground">
+              <QuoteIcon className="size-5 scale-[-1]" />
             </span>
           </div>
-          <blockquote className="mt-3 text-xl font-normal italic text-zinc-900">
+          <blockquote className="mt-3 text-xl font-normal italic text-foreground">
             {QUOTE_TEXT}
           </blockquote>
         </CardContent>
