@@ -25,7 +25,6 @@ import WidgetAnalytics from '@/components/Widget/widget-analytics'
 import WidgetChatbot from '@/components/Widget/widget-chatbot'
 import WidgetSwimming from '@/components/Widget/widget-swimming'
 import WidgetSpotifyPlayer from '@/components/Widget/widget-spotify-player'
-import WidgetI18n from '@/components/Widget/widget-i18n'
 
 const SIDE_PROJECTS = [
   {
@@ -173,7 +172,7 @@ export default async function Home() {
           />
         </Card>
       </li>
-      <WidgetI18n />
+      <WidgetQuote />
 
       <WidgetLink
         className="xl:hover:rotate-1"
@@ -197,27 +196,6 @@ export default async function Home() {
       />
 
       <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] bg-[#F0F6F9] xl:w-[175px] hover:bg-[#E9F4FA]"
-        href="https://www.linkedin.com/in/kidow/"
-        icon={<Icon.LinkedIn />}
-        target="_blank"
-        title="LinkedIn"
-        description="/in/kidow"
-      />
-
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="https://www.threads.com/@__kidow__"
-        icon={<Icon.Threads />}
-        target="_blank"
-        title="Threads"
-        description="@__kidow__"
-      />
-
-      <WidgetQuote />
-      <WidgetLink
         className="xl:hover:rotate-1"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="/blog"
@@ -228,6 +206,15 @@ export default async function Home() {
         }
         title="Blog"
         description="/blog"
+      />
+      <WidgetLink
+        className="xl:hover:rotate-2"
+        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
+        href="https://www.threads.com/@__kidow__"
+        icon={<Icon.Threads />}
+        target="_blank"
+        title="Threads"
+        description="@__kidow__"
       />
       <Suspense fallback={<li className="col-span-2" />}>
         <WidgetAnalytics />
