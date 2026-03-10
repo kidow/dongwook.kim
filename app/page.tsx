@@ -105,7 +105,7 @@ const SIDE_PROJECTS = [
 
 function SideProjectIcon({ children }: ReactProps) {
   return (
-    <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+    <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-muted text-foreground">
       {children}
     </span>
   )
@@ -139,7 +139,7 @@ export default async function Home() {
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="https://www.feedle.me"
         icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-muted text-foreground">
             <img src="/feedle.png" alt="Feedle" width={20} height={20} />
           </span>
         }
@@ -152,7 +152,7 @@ export default async function Home() {
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="mailto:wcgo2ling@gmail.com"
         icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white">
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-muted text-foreground">
             <MailIcon className="size-5" />
           </span>
         }
@@ -224,7 +224,7 @@ export default async function Home() {
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
         href="/blog"
         icon={
-          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-white p-1">
+          <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-border bg-muted p-1 text-foreground">
             <Image src="/blog.png" alt="blog" width={20} height={20} />
           </span>
         }
