@@ -72,7 +72,7 @@ export default function WidgetSwimmingClient({
   return (
     <li className="col-span-2 h-[178px] xl:col-span-4 xl:w-full">
       <Card className="group/widget-swimming relative h-full overflow-hidden rounded-3xl border-border bg-white py-0 shadow-sm">
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] bg-[radial-gradient(circle_at_top,rgba(186,230,253,0.18),rgba(255,255,255,0)_68%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%]" />
 
         <div className="relative z-10 flex h-full min-h-0 flex-col">
           <CardHeader className="gap-0 px-5 pb-2 pt-5 xl:px-6 xl:pt-6">

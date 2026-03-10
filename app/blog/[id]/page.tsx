@@ -40,13 +40,12 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   }
 
   return (
-    <article className="mx-auto space-y-6">
-      <header>
+    <article className="mx-auto p-3 space-y-6">
+      <header className="pb-10">
         <h1 className="font-medium text-neutral-900">{post.title}</h1>
-        <p className="text-neutral-400">{post.description}</p>
       </header>
 
-      <section className="prose prose-neutral max-w-none">
+      <section className="prose prose-h1:font-medium prose-p:text-neutral-500 prose-li:text-neutral-500 prose-h2:font-medium prose-h1:text-base prose-h2:text-base prose-neutral max-w-none">
         <MDX />
       </section>
     </article>
