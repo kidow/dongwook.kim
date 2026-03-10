@@ -1,14 +1,24 @@
 'use client'
 
 import Lottie from 'lottie-react'
+import { Maximize2 } from 'lucide-react'
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
 
+import { Button } from '@/components/ui/button'
 import {
   ChartContainer,
   ChartTooltip,
   type ChartConfig
 } from '@/components/ui/chart'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from '@/components/ui/sheet'
 import swimmerAnimation from '@/public/swimmer.json'
 
 import styles from './widget-swimming.module.css'
@@ -66,9 +76,35 @@ export default function WidgetSwimmingClient({
 
         <div className="relative z-10 flex h-full min-h-0 flex-col">
           <CardHeader className="gap-0 px-5 pb-2 pt-5 xl:px-6 xl:pt-6">
-            <CardTitle className="text-base font-semibold tracking-tight uppercase">
-              My Swimming Diary <span className="ml-1">🏊</span>
-            </CardTitle>
+            <div className="flex items-center justify-between gap-2">
+              <CardTitle className="text-base font-semibold tracking-tight uppercase">
+                My Swimming Diary <span className="ml-1">🏊</span>
+              </CardTitle>
+
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground hover:text-foreground size-7"
+                    aria-label="Open swimming diary sheet"
+                  >
+                    <Maximize2 className="size-4" />
+                  </Button>
+                </SheetTrigger>
+
+                <SheetContent side="bottom" className="rounded-t-2xl">
+                  <SheetHeader>
+                    <SheetTitle>My Swimming Diary</SheetTitle>
+                    <SheetDescription>
+                      Temporary bottom sheet for the expanded swimming widget
+                      view.
+                    </SheetDescription>
+                  </SheetHeader>
+                </SheetContent>
+              </Sheet>
+            </div>
           </CardHeader>
 
           <CardContent className="relative min-h-0 flex-1 px-0 pb-0">
