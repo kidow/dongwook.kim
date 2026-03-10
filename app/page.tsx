@@ -125,7 +125,7 @@ export default async function Home() {
           <Button
             variant="outline"
             size="sm"
-            className="pointer-events-none text-xs font-bold"
+            className="pointer-events-none border-border text-xs font-bold dark:border-zinc-600 dark:bg-transparent dark:text-zinc-100"
           >
             Follow
           </Button>

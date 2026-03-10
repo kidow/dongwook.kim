@@ -14,9 +14,9 @@ export default function GithubCalendarClient({ values }: Props) {
     <Calendar
       values={values}
       until={dayjs().format('YYYY-MM-DD')}
-      weekLabelAttributes={{}}
-      monthLabelAttributes={{}}
-      panelAttributes={{}}
+      weekLabelAttributes={{ style: { fill: "hsl(var(--muted-foreground))" } }}
+      monthLabelAttributes={{ style: { fill: "hsl(var(--muted-foreground))" } }}
+      panelAttributes={{ style: { backgroundColor: "transparent" } }}
       panelColors={['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39']}
     />
   )
