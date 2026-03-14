@@ -1,3 +1,4 @@
+import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
@@ -109,6 +110,8 @@ export async function POST(request: Request) {
       { status: 500 }
     )
   }
+
+  revalidateTag('widget-swimming-sessions', 'max')
 
   return NextResponse.json(
     {
