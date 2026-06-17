@@ -12,6 +12,7 @@ import React, {
 import { Extension, type Editor, type Range } from '@tiptap/core'
 import { ReactRenderer } from '@tiptap/react'
 import Suggestion from '@tiptap/suggestion'
+import type { SuggestionProps as TiptapSuggestionProps } from '@tiptap/suggestion'
 import {
   CheckSquare,
   Code,
@@ -49,13 +50,7 @@ interface SuggestionItem {
   command: (...args: [CommandProps]) => void
 }
 
-interface SuggestionRenderProps {
-  editor: Editor
-  clientRect?: DOMRect | null
-  items: SuggestionItem[]
-  command: (...args: [SuggestionItem]) => void
-  range: Range
-}
+type SuggestionRenderProps = TiptapSuggestionProps<SuggestionItem, SuggestionItem>
 
 const SlashCommandExtension = Extension.create({
   name: 'slash-command',
@@ -63,6 +58,8 @@ const SlashCommandExtension = Extension.create({
     return {
       suggestion: {
         char: '/',
+        items: getSuggestionItems,
+        render: renderItems,
         command: ({
           editor,
           range,
@@ -361,7 +358,8 @@ const renderItems = () => {
 
   return {
     onStart: (props: SuggestionRenderProps) => {
-      if (!props.clientRect) {
+      const clientRect = props.clientRect?.()
+      if (!clientRect) {
         return
       }
 
@@ -371,7 +369,7 @@ const renderItems = () => {
       })
 
       popup = tippy('body', {
-        getReferenceClientRect: () => props.clientRect ?? new DOMRect(),
+        getReferenceClientRect: () => clientRect,
         appendTo: () => document.body,
         content: component.element,
         showOnCreate: true,
@@ -383,12 +381,13 @@ const renderItems = () => {
     onUpdate: (props: SuggestionRenderProps) => {
       component?.updateProps(props)
 
-      if (!props.clientRect || !popup) {
+      const clientRect = props.clientRect?.()
+      if (!clientRect || !popup) {
         return
       }
 
       popup[0].setProps({
-        getReferenceClientRect: () => props.clientRect ?? new DOMRect()
+        getReferenceClientRect: () => clientRect
       })
     },
     onKeyDown: (props: { event: KeyboardEvent }) => {
@@ -406,11 +405,6 @@ const renderItems = () => {
   }
 }
 
-const SlashCommand = SlashCommandExtension.configure({
-  suggestion: {
-    items: getSuggestionItems,
-    render: renderItems
-  }
-})
+const SlashCommand = SlashCommandExtension
 
 export default SlashCommand
