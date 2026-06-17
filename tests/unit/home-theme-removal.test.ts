@@ -17,21 +17,21 @@ describe('app/page.tsx', () => {
     expect(source).not.toContain('dark:')
   })
 
-  it('moves the quote widget into the former i18n slot and the blog card into the former linkedin slot', () => {
+  it('moves the quote widget into the former i18n slot and the brain card into the former linkedin slot', () => {
     const source = readFileSync(path.join(process.cwd(), 'app/page.tsx'), 'utf8')
 
     const videoIndex = source.indexOf('<video')
     const quoteIndex = source.indexOf('<WidgetQuote />')
     const xIndex = source.indexOf('title="X"')
     const instagramIndex = source.indexOf('title="Instagram"')
-    const blogIndex = source.indexOf('title="Blog"')
+    const brainIndex = source.indexOf('title="Brain"')
     const threadsIndex = source.indexOf('title="Threads"')
     const analyticsIndex = source.indexOf('<WidgetAnalytics />')
 
     expect(quoteIndex).toBeGreaterThan(videoIndex)
     expect(quoteIndex).toBeLessThan(xIndex)
-    expect(blogIndex).toBeGreaterThan(instagramIndex)
-    expect(blogIndex).toBeLessThan(threadsIndex)
-    expect(blogIndex).toBeLessThan(analyticsIndex)
+    expect(brainIndex).toBeGreaterThan(instagramIndex)
+    expect(brainIndex).toBeLessThan(threadsIndex)
+    expect(brainIndex).toBeLessThan(analyticsIndex)
   })
 })

@@ -5,13 +5,13 @@ import ImageConverter from '@/components/ImageConverter'
 
 const TITLE = '이미지 변환기'
 const DESCRIPTION =
-  '브라우저에서 이미지 파일 포맷을 JPEG, PNG, WebP, AVIF로 변환할 수 있는 도구입니다.'
+  '이미지 파일 포맷을 JPEG, PNG, WebP, AVIF로 변환하고 animated WebP를 MP4로 변환할 수 있는 도구입니다.'
 const BASE_URL = 'https://dongwook.kim/image-converter'
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ['image converter', 'jpeg', 'png', 'webp', 'avif', 'canvas api'],
+  keywords: ['image converter', 'jpeg', 'png', 'webp', 'avif', 'mp4'],
   alternates: {
     canonical: BASE_URL
   },

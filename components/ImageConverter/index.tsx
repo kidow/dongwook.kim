@@ -3,11 +3,16 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from '@/utils'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import {
+  isAnimatedWebp,
+  validateWebpUpload
+} from '@/lib/image-converter/webp-to-mp4'
 import ImageConverterToolbar from './image-converter-toolbar'
 import DropZone from './drop-zone'
 import ImagePreview from './image-preview'
 import {
   checkFormatSupport,
+  convertAnimatedWebpToMp4,
   convertImage,
   downloadBlob,
   getOutputFilename,
@@ -18,6 +23,7 @@ import {
   DEFAULT_QUALITY,
   MAX_FILE_COUNT,
   MAX_FILE_SIZE,
+  MAX_WEBP_TO_MP4_FILE_SIZE,
   SUPPORTED_FORMATS
 } from './constants'
 
@@ -43,46 +49,64 @@ export default function ImageConverter() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleFilesSelected = useCallback((newFiles: File[]) => {
-    const promises = newFiles.map(
-      (file) =>
-        new Promise<ImageFile>((resolve, reject) => {
-          const url = URL.createObjectURL(file)
-          const img = new Image()
-          img.onload = () => {
-            resolve({
-              id: crypto.randomUUID(),
-              file,
-              name: file.name,
-              size: file.size,
-              type: file.type,
-              previewUrl: url,
-              width: img.naturalWidth,
-              height: img.naturalHeight
-            })
-          }
-          img.onerror = () => {
-            URL.revokeObjectURL(url)
-            reject(new Error(`이미지를 불러올 수 없습니다: ${file.name}`))
-          }
-          img.src = url
-        })
-    )
+  const handleFilesSelected = useCallback(
+    (newFiles: File[]) => {
+      const promises = newFiles.map(
+        (file) =>
+          new Promise<ImageFile>(async (resolve, reject) => {
+            if (outputFormat === 'mp4') {
+              const validation = validateWebpUpload(file)
+              if (!validation.ok) {
+                reject(new Error(validation.message))
+                return
+              }
 
-    Promise.allSettled(promises).then((settled) => {
-      const loaded: ImageFile[] = []
-      for (const result of settled) {
-        if (result.status === 'fulfilled') {
-          loaded.push(result.value)
-        } else {
-          toast.error(result.reason?.message ?? '이미지 로드 실패')
+              if (!isAnimatedWebp(new Uint8Array(await file.arrayBuffer()))) {
+                reject(
+                  new Error('animated WebP 파일만 MP4로 변환할 수 있습니다.')
+                )
+                return
+              }
+            }
+
+            const url = URL.createObjectURL(file)
+            const img = new Image()
+            img.onload = () => {
+              resolve({
+                id: crypto.randomUUID(),
+                file,
+                name: file.name,
+                size: file.size,
+                type: file.type,
+                previewUrl: url,
+                width: img.naturalWidth,
+                height: img.naturalHeight
+              })
+            }
+            img.onerror = () => {
+              URL.revokeObjectURL(url)
+              reject(new Error(`이미지를 불러올 수 없습니다: ${file.name}`))
+            }
+            img.src = url
+          })
+      )
+
+      Promise.allSettled(promises).then((settled) => {
+        const loaded: ImageFile[] = []
+        for (const result of settled) {
+          if (result.status === 'fulfilled') {
+            loaded.push(result.value)
+          } else {
+            toast.error(result.reason?.message ?? '이미지 로드 실패')
+          }
         }
-      }
-      if (loaded.length > 0) {
-        setFiles((prev) => [...prev, ...loaded])
-      }
-    })
-  }, [])
+        if (loaded.length > 0) {
+          setFiles((prev) => [...prev, ...loaded])
+        }
+      })
+    },
+    [outputFormat]
+  )
 
   const handleConvert = useCallback(async () => {
     if (files.length === 0) return
@@ -94,8 +118,14 @@ export default function ImageConverter() {
 
     for (const file of files) {
       try {
-        const img = await loadImage(file.file)
-        const blob = await convertImage(img, format.mimeType, quality)
+        const blob =
+          outputFormat === 'mp4'
+            ? await convertAnimatedWebpToMp4(file.file)
+            : await convertImage(
+                await loadImage(file.file),
+                format.mimeType,
+                quality
+              )
         const previewUrl = URL.createObjectURL(blob)
         newResults.push({
           sourceId: file.id,
@@ -189,7 +219,13 @@ export default function ImageConverter() {
           onFilesSelected={handleFilesSelected}
           disabled={isConverting}
           maxFileCount={MAX_FILE_COUNT}
-          maxFileSize={MAX_FILE_SIZE}
+          maxFileSize={
+            outputFormat === 'mp4' ? MAX_WEBP_TO_MP4_FILE_SIZE : MAX_FILE_SIZE
+          }
+          acceptedFormatsLabel={
+            outputFormat === 'mp4' ? 'WebP' : 'JPEG, PNG, WebP, AVIF, GIF, BMP'
+          }
+          accept={outputFormat === 'mp4' ? 'image/webp,.webp' : 'image/*'}
           currentFileCount={files.length}
         />
         {files.length > 0 && (

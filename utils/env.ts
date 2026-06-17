@@ -2,12 +2,6 @@ export type Result<T> =
   | { ok: true; data: T }
   | { ok: false; error: string; source: string }
 
-export interface ChatEnv {
-  apiKey?: string
-  chatModel?: string
-  embedModel?: string
-}
-
 function readEnv(key: string): string | undefined {
   const value = process.env[key]?.trim()
 
@@ -16,14 +10,6 @@ function readEnv(key: string): string | undefined {
   }
 
   return value
-}
-
-export function getChatEnv(): ChatEnv {
-  return {
-    apiKey: readEnv('GEMINI_API_KEY'),
-    chatModel: readEnv('GEMINI_CHAT_MODEL'),
-    embedModel: readEnv('GEMINI_EMBED_MODEL')
-  }
 }
 
 export function requireEnv(

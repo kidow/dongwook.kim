@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
-import Image from 'next/image'
 import {
   ArchiveIcon,
+  Brain as BrainIcon,
   CodeXmlIcon,
   DatabaseIcon,
   ImageIcon,
@@ -22,7 +22,6 @@ import WidgetGithub from '@/components/Widget/widget-github'
 import * as Icon from '@/components/icons'
 import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
 import WidgetAnalytics from '@/components/Widget/widget-analytics'
-import WidgetChatbot from '@/components/Widget/widget-chatbot'
 import WidgetSwimming from '@/components/Widget/widget-swimming'
 import WidgetSpotifyPlayer from '@/components/Widget/widget-spotify-player'
 
@@ -198,14 +197,15 @@ export default async function Home() {
       <WidgetLink
         className="xl:hover:rotate-1"
         size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="/blog"
+        href="https://brain.dongwook.kim"
         icon={
-          <span className="widget-link-icon-chip flex h-10 w-10 items-center justify-center rounded-[10px] border border-border p-1 text-foreground">
-            <Image src="/blog.png" alt="blog" width={20} height={20} />
+          <span className="widget-link-icon-chip flex h-10 w-10 items-center justify-center rounded-[10px] border border-border text-foreground">
+            <BrainIcon className="size-5" />
           </span>
         }
-        title="Blog"
-        description="/blog"
+        target="_blank"
+        title="Brain"
+        description="brain.dongwook.kim"
       />
       <WidgetLink
         className="xl:hover:rotate-2"
@@ -219,7 +219,6 @@ export default async function Home() {
       <Suspense fallback={<li className="col-span-2" />}>
         <WidgetAnalytics />
       </Suspense>
-      <WidgetChatbot />
       <WidgetSwimming />
 
       <li className="col-span-2 px-2 xl:col-span-4">

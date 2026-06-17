@@ -11,18 +11,12 @@ describe('widget link icon surfaces', () => {
       path.join(process.cwd(), 'app/page.tsx'),
       'utf8'
     )
-    const chatbotSource = readFileSync(
-      path.join(process.cwd(), 'components/Widget/widget-chatbot.tsx'),
-      'utf8'
-    )
     const globalsSource = readFileSync(
       path.join(process.cwd(), 'app/globals.css'),
       'utf8'
     )
 
     expect(homeSource).toContain('widget-link-icon-chip')
-
-    expect(chatbotSource).toContain('widget-link-icon-chip')
 
     expect(globalsSource).toContain('.widget-link-icon-chip')
     expect(globalsSource).toContain('background-color: #ffffff;')

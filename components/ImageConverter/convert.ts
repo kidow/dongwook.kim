@@ -55,6 +55,25 @@ export function convertImage(
   })
 }
 
+export async function convertAnimatedWebpToMp4(file: File): Promise<Blob> {
+  const formData = new FormData()
+  formData.append('file', file)
+
+  const response = await fetch('/api/image-converter/webp-to-mp4', {
+    method: 'POST',
+    body: formData
+  })
+
+  if (!response.ok) {
+    const json = (await response.json().catch(() => null)) as {
+      error?: string
+    } | null
+    throw new Error(json?.error ?? 'MP4 변환에 실패했습니다.')
+  }
+
+  return response.blob()
+}
+
 export function getOutputFilename(
   originalName: string,
   extension: string

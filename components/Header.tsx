@@ -3,7 +3,6 @@
 import { memo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 
@@ -12,16 +11,10 @@ const SITE_TITLE = 'kidow'
 const SITE_DESCRIPTION = '비즈니스에 관심이 많은 웹 개발자 ✨'
 
 function Header() {
-  const pathname = usePathname()
-  const isBlogDetail = pathname?.startsWith('/blog/')
-
   return (
     <header
       role="banner"
-      className={cn(
-        'flex h-full w-full max-w-[428px] items-center justify-center p-6 pb-0 pt-12 [view-transition-name:header] xl:absolute xl:top-0 xl:max-w-[min(100vw,1728px)] xl:items-stretch xl:justify-start xl:p-16',
-        { 'hidden xl:block': isBlogDetail }
-      )}
+      className="flex h-full w-full max-w-[428px] items-center justify-center p-6 pb-0 pt-12 [view-transition-name:header] xl:absolute xl:top-0 xl:max-w-[min(100vw,1728px)] xl:items-stretch xl:justify-start xl:p-16"
     >
       <div className="flex w-full flex-col px-4 xl:mr-20 xl:flex-1 xl:px-0">
         <div

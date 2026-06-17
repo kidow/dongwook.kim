@@ -1,4 +1,4 @@
-export type OutputFormat = 'jpeg' | 'png' | 'webp' | 'avif'
+export type OutputFormat = 'jpeg' | 'png' | 'webp' | 'avif' | 'mp4'
 
 export interface FormatConfig {
   id: OutputFormat

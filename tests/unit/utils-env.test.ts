@@ -1,4 +1,4 @@
-import { getChatEnv, requireEnv } from '@/utils/env'
+import { requireEnv } from '@/utils/env'
 
 describe('utils/env', () => {
   const originalEnv = process.env
@@ -27,15 +27,4 @@ describe('utils/env', () => {
     })
   })
 
-  it('reads and trims chat env values', () => {
-    process.env.GEMINI_API_KEY = '  key  '
-    process.env.GEMINI_CHAT_MODEL = '  model-chat  '
-    process.env.GEMINI_EMBED_MODEL = ''
-
-    expect(getChatEnv()).toEqual({
-      apiKey: 'key',
-      chatModel: 'model-chat',
-      embedModel: undefined
-    })
-  })
 })

@@ -12,6 +12,8 @@ interface DropZoneProps {
   disabled?: boolean
   maxFileCount: number
   maxFileSize: number
+  acceptedFormatsLabel?: string
+  accept?: string
   currentFileCount: number
 }
 
@@ -20,6 +22,8 @@ export default function DropZone({
   disabled,
   maxFileCount,
   maxFileSize,
+  acceptedFormatsLabel = 'JPEG, PNG, WebP, AVIF, GIF, BMP',
+  accept = 'image/*',
   currentFileCount
 }: DropZoneProps) {
   const [isDragOver, setIsDragOver] = useState(false)
@@ -121,14 +125,14 @@ export default function DropZone({
         이미지를 드래그하거나 클릭하여 업로드
       </p>
       <p className="text-xs text-muted-foreground">
-        JPEG, PNG, WebP, AVIF, GIF, BMP &middot; 최대{' '}
-        {formatFileSize(maxFileSize)} &middot; {maxFileCount}개까지
+        {acceptedFormatsLabel} &middot; 최대 {formatFileSize(maxFileSize)}{' '}
+        &middot; {maxFileCount}개까지
       </p>
       <input
         ref={inputRef}
         type="file"
         multiple
-        accept="image/*"
+        accept={accept}
         className="hidden"
         onChange={handleInputChange}
       />
