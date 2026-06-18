@@ -14,6 +14,7 @@ const withPWA = withPWAInit({
 const nextConfig: NextConfig = {
   reactCompiler: true,
   turbopack: {},
+  serverExternalPackages: ['sharp', 'ffmpeg-static'],
   images: {
     remotePatterns: [
       {

@@ -1,17 +1,16 @@
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { createRequire } from 'node:module'
 import { execa } from 'execa'
 import sharp from 'sharp'
+import ffmpegStatic from 'ffmpeg-static'
 import {
   WEBP_TO_MP4_TIMEOUT_MS,
   isAnimatedWebp,
   validateWebpUpload
 } from '@/lib/image-converter/webp-to-mp4'
 
-const require = createRequire(join(process.cwd(), 'dummy.js'))
-const ffmpegPath = require('ffmpeg-static') as string | null
+const ffmpegPath = ffmpegStatic as string | null
 
 export const maxDuration = 60
 
