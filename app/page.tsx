@@ -1,6 +1,5 @@
 import { Suspense } from 'react'
 import {
-  ArchiveIcon,
   Brain as BrainIcon,
   CodeXmlIcon,
   DatabaseIcon,
@@ -43,12 +42,6 @@ const SIDE_PROJECTS = [
     title: 'Kanban',
     description: '칸반 보드',
     icon: <KanbanIcon className="size-5" />
-  },
-  {
-    href: '/archive',
-    title: 'Archive',
-    description: '코드 아카이브',
-    icon: <ArchiveIcon className="size-5" />
   },
   {
     href: '/code-editor',

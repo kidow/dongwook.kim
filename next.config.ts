@@ -1,5 +1,4 @@
 ﻿import type { NextConfig } from 'next'
-import { createMDX } from 'fumadocs-mdx/next'
 import withPWAInit from 'next-pwa'
 
 const withPWA = withPWAInit({
@@ -14,6 +13,7 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  turbopack: {},
   images: {
     remotePatterns: [
       {
@@ -24,6 +24,4 @@ const nextConfig: NextConfig = {
   }
 }
 
-const withMDX = createMDX()
-
-export default withPWA(withMDX(nextConfig))
+export default withPWA(nextConfig)
