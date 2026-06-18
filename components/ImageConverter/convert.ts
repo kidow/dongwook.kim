@@ -56,22 +56,87 @@ export function convertImage(
 }
 
 export async function convertAnimatedWebpToMp4(file: File): Promise<Blob> {
-  const formData = new FormData()
-  formData.append('file', file)
-
-  const response = await fetch('/api/image-converter/webp-to-mp4', {
-    method: 'POST',
-    body: formData
-  })
-
-  if (!response.ok) {
-    const json = (await response.json().catch(() => null)) as {
-      error?: string
-    } | null
-    throw new Error(json?.error ?? 'MP4 변환에 실패했습니다.')
+  if (typeof ImageDecoder === 'undefined' || typeof VideoEncoder === 'undefined') {
+    throw new Error(
+      'MP4 변환은 Chrome 94 이상에서 지원됩니다. 브라우저를 업데이트해 주세요.'
+    )
   }
 
-  return response.blob()
+  const { getWebpFrameDelays } = await import('@/lib/image-converter/webp-to-mp4')
+  const { Muxer, ArrayBufferTarget } = await import('mp4-muxer')
+
+  const arrayBuffer = await file.arrayBuffer()
+  const bytes = new Uint8Array(arrayBuffer)
+  const delays = getWebpFrameDelays(bytes)
+  if (delays.length === 0) {
+    throw new Error('animated WebP 파일만 MP4로 변환할 수 있습니다.')
+  }
+
+  const decoder = new ImageDecoder({ data: arrayBuffer, type: 'image/webp' })
+  await decoder.tracks.ready
+  const track = decoder.tracks.selectedTrack
+  if (!track?.animated) {
+    throw new Error('animated WebP 파일만 MP4로 변환할 수 있습니다.')
+  }
+
+  const frameCount = Math.min(track.frameCount, delays.length)
+  const { image: first } = await decoder.decode({ frameIndex: 0 })
+  const width = first.width % 2 === 0 ? first.width : first.width - 1
+  const height = first.height % 2 === 0 ? first.height : first.height - 1
+  first.close()
+
+  const avgDelay = delays.reduce((a, b) => a + b, 0) / delays.length
+  const fps = Math.max(1, Math.round(1000 / avgDelay))
+
+  const target = new ArrayBufferTarget()
+  const muxer = new Muxer({
+    target,
+    video: { codec: 'avc', width, height },
+    fastStart: 'in-memory'
+  })
+
+  let encodeError: Error | null = null
+  const encoder = new VideoEncoder({
+    output: (chunk, meta) => muxer.addVideoChunk(chunk, meta),
+    error: (e) => { encodeError = e }
+  })
+
+  encoder.configure({
+    codec: 'avc1.42001f',
+    width,
+    height,
+    bitrate: 2_000_000,
+    framerate: fps
+  })
+
+  let timestamp = 0
+  for (let i = 0; i < frameCount; i++) {
+    if (encodeError) break
+    const { image } = await decoder.decode({ frameIndex: i })
+    const delay = delays[i] ?? avgDelay
+    const duration = Math.round(delay * 1000)
+
+    let source: ImageBitmap | OffscreenCanvas = image
+    if (image.width !== width || image.height !== height) {
+      const canvas = new OffscreenCanvas(width, height)
+      canvas.getContext('2d')!.drawImage(image, 0, 0)
+      source = canvas
+    }
+
+    const frame = new VideoFrame(source, { timestamp, duration })
+    image.close()
+    encoder.encode(frame, { keyFrame: i % 60 === 0 })
+    frame.close()
+    timestamp += duration
+  }
+
+  await encoder.flush()
+  decoder.close()
+
+  if (encodeError) throw new Error(`MP4 인코딩 실패: ${(encodeError as Error).message}`)
+
+  muxer.finalize()
+  return new Blob([target.buffer], { type: 'video/mp4' })
 }
 
 export function getOutputFilename(

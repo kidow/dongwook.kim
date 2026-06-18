@@ -79,6 +79,29 @@ export function isAnimatedWebp(bytes: Uint8Array): boolean {
   return (bytes[vp8xIndex + 8] & 0b0000_0010) !== 0
 }
 
+export function getWebpFrameDelays(bytes: Uint8Array): number[] {
+  if (bytes.length < 12 || ascii(bytes, 0, 4) !== 'RIFF' || ascii(bytes, 8, 12) !== 'WEBP') {
+    return []
+  }
+  const delays: number[] = []
+  let i = 12
+  while (i + 8 <= bytes.length) {
+    const id = ascii(bytes, i, i + 4)
+    const size =
+      bytes[i + 4] |
+      (bytes[i + 5] << 8) |
+      (bytes[i + 6] << 16) |
+      (bytes[i + 7] << 24)
+    if (id === 'ANMF' && i + 20 + 3 <= bytes.length) {
+      const delay =
+        bytes[i + 20] | (bytes[i + 21] << 8) | (bytes[i + 22] << 16)
+      delays.push(delay || 100)
+    }
+    i += 8 + size + (size % 2)
+  }
+  return delays
+}
+
 export function buildWebpToMp4Args(inputPath: string, outputPath: string) {
   return [
     '-y',
