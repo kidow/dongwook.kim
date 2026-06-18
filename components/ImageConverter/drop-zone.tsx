@@ -113,16 +113,21 @@ export default function DropZone({
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       className={cn(
-        'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed p-8 text-center transition-colors',
+        'flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed px-6 py-7 text-center transition-colors',
         isDragOver
-          ? 'border-primary bg-primary/5'
-          : 'border-border hover:border-muted-foreground',
-        disabled && 'cursor-not-allowed opacity-50'
+          ? 'border-primary/50 bg-primary/5'
+          : 'border-border hover:border-border/80 hover:bg-muted/30',
+        disabled && 'cursor-not-allowed opacity-40'
       )}
     >
-      <UploadCloudIcon className="size-10 text-muted-foreground" />
-      <p className="text-sm font-medium">
-        이미지를 드래그하거나 클릭하여 업로드
+      <UploadCloudIcon
+        className={cn(
+          'size-8 transition-colors',
+          isDragOver ? 'text-primary' : 'text-muted-foreground/60'
+        )}
+      />
+      <p className="text-sm font-medium text-foreground/80">
+        드래그하거나 클릭해서 업로드
       </p>
       <p className="text-xs text-muted-foreground">
         {acceptedFormatsLabel} &middot; 최대 {formatFileSize(maxFileSize)}{' '}

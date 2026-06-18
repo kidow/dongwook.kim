@@ -34,8 +34,10 @@ export default function ImageConverter() {
   const [outputFormat, setOutputFormat] = useState<OutputFormat>(DEFAULT_FORMAT)
   const [quality, setQuality] = useState(DEFAULT_QUALITY)
   const [results, setResults] = useState<ConvertedFile[]>([])
-  const [isConverting, setIsConverting] = useState(false)
+  const [convertingIds, setConvertingIds] = useState<Set<string>>(new Set())
   const [avifSupported, setAvifSupported] = useState(false)
+
+  const isConverting = convertingIds.size > 0
 
   useEffect(() => {
     setAvifSupported(checkFormatSupport('image/avif'))
@@ -113,7 +115,9 @@ export default function ImageConverter() {
     const format = SUPPORTED_FORMATS.find((f) => f.id === outputFormat)
     if (!format) return
 
-    setIsConverting(true)
+    const allIds = new Set(files.map((f) => f.id))
+    setConvertingIds(allIds)
+
     const newResults: ConvertedFile[] = []
 
     for (const file of files) {
@@ -139,13 +143,17 @@ export default function ImageConverter() {
         toast.error(
           err instanceof Error ? err.message : `변환 실패: ${file.name}`
         )
+      } finally {
+        setConvertingIds((prev) => {
+          const next = new Set(prev)
+          next.delete(file.id)
+          return next
+        })
       }
     }
 
-    // Revoke old result URLs
     results.forEach((r) => URL.revokeObjectURL(r.previewUrl))
     setResults(newResults)
-    setIsConverting(false)
 
     if (newResults.length > 0) {
       toast.success(`${newResults.length}개 파일 변환 완료`)
@@ -235,6 +243,7 @@ export default function ImageConverter() {
                 key={file.id}
                 source={file}
                 result={resultMap.get(file.id)}
+                isConverting={convertingIds.has(file.id)}
                 onDownload={handleDownload}
                 onRemove={handleRemove}
               />

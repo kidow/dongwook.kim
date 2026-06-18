@@ -3,14 +3,14 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createRequire } from 'node:module'
 import { execa } from 'execa'
+import sharp from 'sharp'
 import {
   WEBP_TO_MP4_TIMEOUT_MS,
-  buildWebpToMp4Args,
   isAnimatedWebp,
   validateWebpUpload
 } from '@/lib/image-converter/webp-to-mp4'
 
-const require = createRequire(import.meta.url)
+const require = createRequire(join(process.cwd(), 'dummy.js'))
 const ffmpegPath = require('ffmpeg-static') as string | null
 
 export const maxDuration = 60
@@ -47,14 +47,40 @@ export async function POST(request: Request) {
   }
 
   const dir = await mkdtemp(join(tmpdir(), 'webp-to-mp4-'))
-  const inputPath = join(dir, 'input.webp')
   const outputPath = join(dir, 'output.mp4')
 
   try {
-    await writeFile(inputPath, bytes)
-    await execa(ffmpegPath, buildWebpToMp4Args(inputPath, outputPath), {
-      timeout: WEBP_TO_MP4_TIMEOUT_MS
-    })
+    const meta = await sharp(bytes, { animated: true }).metadata()
+    const pages = meta.pages ?? 1
+    const delays = meta.delay ?? []
+    const avgDelay = delays.length
+      ? delays.reduce((a, b) => a + b, 0) / delays.length
+      : 100
+    const fps = Math.round(1000 / avgDelay)
+
+    for (let i = 0; i < pages; i++) {
+      const frameBuf = await sharp(bytes, { page: i }).png().toBuffer()
+      const framePath = join(dir, `frame${String(i).padStart(4, '0')}.png`)
+      await writeFile(framePath, frameBuf)
+    }
+
+    const framePattern = join(dir, 'frame%04d.png')
+    await execa(
+      ffmpegPath,
+      [
+        '-y',
+        '-framerate', String(fps),
+        '-i', framePattern,
+        '-movflags', '+faststart',
+        '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+        '-c:v', 'libx264',
+        '-pix_fmt', 'yuv420p',
+        '-an',
+        outputPath
+      ],
+      { timeout: WEBP_TO_MP4_TIMEOUT_MS }
+    )
+
     const output = await readFile(outputPath)
 
     return new Response(output, {
@@ -64,11 +90,13 @@ export async function POST(request: Request) {
         'Content-Type': 'video/mp4'
       }
     })
-  } catch {
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[webp-to-mp4] error:', message)
     return Response.json(
       {
-        error:
-          'MP4 변환에 실패했습니다. 파일 길이를 줄인 뒤 다시 시도해 주세요.'
+        error: 'MP4 변환에 실패했습니다. 파일 길이를 줄인 뒤 다시 시도해 주세요.',
+        debug: message
       },
       { status: 422 }
     )
