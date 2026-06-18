@@ -172,11 +172,24 @@ export default function ImageConverter() {
     [files]
   )
 
-  const handleDownloadAll = useCallback(() => {
-    for (const result of results) {
-      handleDownload(result)
+  const handleDownloadAll = useCallback(async () => {
+    if (results.length === 1) {
+      handleDownload(results[0])
+      return
     }
-  }, [results, handleDownload])
+    const JSZip = (await import('jszip')).default
+    const zip = new JSZip()
+    for (const result of results) {
+      const source = files.find((f) => f.id === result.sourceId)
+      if (!source) continue
+      const format = SUPPORTED_FORMATS.find((f) => f.id === result.format)
+      if (!format) continue
+      const filename = getOutputFilename(source.name, format.extension)
+      zip.file(filename, result.blob)
+    }
+    const blob = await zip.generateAsync({ type: 'blob' })
+    downloadBlob(blob, 'converted.zip')
+  }, [results, files, handleDownload])
 
   const handleRemove = useCallback(
     (sourceId: string) => {
