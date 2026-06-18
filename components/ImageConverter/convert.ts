@@ -81,9 +81,12 @@ export async function convertAnimatedWebpToMp4(file: File): Promise<Blob> {
 
   const frameCount = Math.min(track.frameCount, delays.length)
   const { image: first } = await decoder.decode({ frameIndex: 0 })
-  const width = first.width % 2 === 0 ? first.width : first.width - 1
-  const height = first.height % 2 === 0 ? first.height : first.height - 1
+  const rawW = first.displayWidth
+  const rawH = first.displayHeight
   first.close()
+  const width = rawW % 2 === 0 ? rawW : rawW - 1
+  const height = rawH % 2 === 0 ? rawH : rawH - 1
+  const needsCrop = rawW !== width || rawH !== height
 
   const avgDelay = delays.reduce((a, b) => a + b, 0) / delays.length
   const fps = Math.max(1, Math.round(1000 / avgDelay))
@@ -116,14 +119,14 @@ export async function convertAnimatedWebpToMp4(file: File): Promise<Blob> {
     const delay = delays[i] ?? avgDelay
     const duration = Math.round(delay * 1000)
 
-    let source: ImageBitmap | OffscreenCanvas = image
-    if (image.width !== width || image.height !== height) {
+    let frame: VideoFrame
+    if (needsCrop) {
       const canvas = new OffscreenCanvas(width, height)
-      canvas.getContext('2d')!.drawImage(image, 0, 0)
-      source = canvas
+      canvas.getContext('2d')!.drawImage(image as unknown as CanvasImageSource, 0, 0)
+      frame = new VideoFrame(canvas, { timestamp, duration })
+    } else {
+      frame = new VideoFrame(image as unknown as CanvasImageSource, { timestamp, duration })
     }
-
-    const frame = new VideoFrame(source, { timestamp, duration })
     image.close()
     encoder.encode(frame, { keyFrame: i % 60 === 0 })
     frame.close()
