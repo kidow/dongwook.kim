@@ -39,25 +39,33 @@ export default function DropZone({
       }
 
       const valid: File[] = []
-      for (let i = 0; i < fileList.length && valid.length < remaining; i++) {
+      let invalidType = 0
+      let invalidSize = 0
+      // Check at most remaining*5 files to avoid iterating thousands
+      const limit = Math.min(fileList.length, remaining * 5)
+
+      for (let i = 0; i < limit && valid.length < remaining; i++) {
         const file = fileList[i]
         if (!ACCEPTED_INPUT_TYPES.includes(file.type)) {
-          toast.error(`지원하지 않는 파일 형식입니다: ${file.name}`)
+          invalidType++
           continue
         }
         if (file.size > maxFileSize) {
-          toast.error(
-            `파일 크기가 ${formatFileSize(maxFileSize)}를 초과합니다: ${file.name}`
-          )
+          invalidSize++
           continue
         }
         valid.push(file)
       }
 
-      if (
-        fileList.length > remaining + (fileList.length - valid.length) &&
-        valid.length === remaining
-      ) {
+      if (invalidType > 0) {
+        toast.error(`지원하지 않는 파일 형식 ${invalidType}개 건너뜀`)
+      }
+      if (invalidSize > 0) {
+        toast.error(
+          `${formatFileSize(maxFileSize)} 초과 파일 ${invalidSize}개 건너뜀`
+        )
+      }
+      if (valid.length === maxFileCount && fileList.length > limit) {
         toast.warn(`최대 ${maxFileCount}개까지만 업로드됩니다.`)
       }
 

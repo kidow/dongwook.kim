@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { startTransition, useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from '@/utils'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import {
@@ -103,7 +103,9 @@ export default function ImageConverter() {
           }
         }
         if (loaded.length > 0) {
-          setFiles((prev) => [...prev, ...loaded])
+          startTransition(() => {
+            setFiles((prev) => [...prev, ...loaded])
+          })
         }
       })
     },
