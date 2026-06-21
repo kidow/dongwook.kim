@@ -138,8 +138,8 @@ export default function DropZone({
         드래그하거나 클릭해서 업로드
       </p>
       <p className="text-xs text-muted-foreground">
-        {acceptedFormatsLabel} &middot; 최대 {formatFileSize(maxFileSize)}{' '}
-        &middot; {maxFileCount}개까지
+        {acceptedFormatsLabel} &middot; 최대 {formatFileSize(maxFileSize)}
+        {isFinite(maxFileCount) && <> &middot; {maxFileCount}개까지</>}
       </p>
       <input
         ref={inputRef}
