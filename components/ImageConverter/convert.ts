@@ -91,6 +91,17 @@ export async function convertAnimatedWebpToMp4(file: File): Promise<Blob> {
   const avgDelay = delays.reduce((a, b) => a + b, 0) / delays.length
   const fps = Math.max(1, Math.round(1000 / avgDelay))
 
+  // Pick H.264 level by macroblock count (each MB = 16×16 px)
+  const mbs = Math.ceil(width / 16) * Math.ceil(height / 16)
+  const codec =
+    mbs <= 3600
+      ? 'avc1.42001f' // Baseline L3.1 — ≤921,600 px
+      : mbs <= 8192
+        ? 'avc1.640028' // High L4.0 — ≤2,097,152 px
+        : 'avc1.640032' // High L5.0 — larger
+
+  const bitrate = Math.max(2_000_000, Math.min(8_000_000, width * height * 2))
+
   const target = new ArrayBufferTarget()
   const muxer = new Muxer({
     target,
@@ -101,23 +112,25 @@ export async function convertAnimatedWebpToMp4(file: File): Promise<Blob> {
   let encodeError: Error | null = null
   const encoder = new VideoEncoder({
     output: (chunk, meta) => muxer.addVideoChunk(chunk, meta),
-    error: (e) => { encodeError = e }
+    error: (e) => {
+      encodeError = e
+    }
   })
 
-  encoder.configure({
-    codec: 'avc1.42001f',
-    width,
-    height,
-    bitrate: 2_000_000,
-    framerate: fps
-  })
+  encoder.configure({ codec, width, height, bitrate, framerate: fps })
 
   let timestamp = 0
   for (let i = 0; i < frameCount; i++) {
-    if (encodeError) break
+    if (encodeError || encoder.state !== 'configured') break
     const { image } = await decoder.decode({ frameIndex: i })
     const delay = delays[i] ?? avgDelay
     const duration = Math.round(delay * 1000)
+
+    // Re-check after async decode — error callback may have fired during await
+    if (encodeError || encoder.state !== 'configured') {
+      image.close()
+      break
+    }
 
     let frame: VideoFrame
     if (needsCrop) {
@@ -133,7 +146,7 @@ export async function convertAnimatedWebpToMp4(file: File): Promise<Blob> {
     timestamp += duration
   }
 
-  await encoder.flush()
+  if (encoder.state === 'configured') await encoder.flush()
   decoder.close()
 
   if (encodeError) throw new Error(`MP4 인코딩 실패: ${(encodeError as Error).message}`)
