@@ -8,6 +8,7 @@ import {
   MailIcon,
   NetworkIcon,
   PenToolIcon,
+  PinIcon,
   QrCodeIcon,
   ReceiptIcon,
   SendIcon,
@@ -90,6 +91,12 @@ const SIDE_PROJECTS = [
     title: 'ERD Editor',
     description: 'ERD 다이어그램 편집기',
     icon: <DatabaseIcon className="size-5" />
+  },
+  {
+    href: '/canvas-note',
+    title: 'Canvas Note',
+    description: '무한 캔버스에 자유롭게 메모 배치',
+    icon: <PinIcon className="size-5" />
   }
 ] as const
 
