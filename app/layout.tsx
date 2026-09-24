@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import Script from 'next/script'
 import { Agentation } from 'agentation'
 import { Toast } from '@/components/ui/toast'
 import { cn } from '@/lib/utils'
@@ -36,6 +37,13 @@ export default function RootLayout({ children }: Readonly<ReactProps>) {
       suppressHydrationWarning
     >
       <head>
+        {process.env.NODE_ENV === 'development' && (
+          <Script
+            src="//unpkg.com/react-grab/dist/index.global.js"
+            crossOrigin="anonymous"
+            strategy="beforeInteractive"
+          />
+        )}
         {/* ponytail: 폰트 파일 셀프호스팅이 필요하면 next/font/local로 교체 */}
         <link
           rel="stylesheet"
