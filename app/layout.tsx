@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Script from 'next/script'
-import { Agentation } from 'agentation'
+import DevTools from '@/components/DevTools'
 import { Toast } from '@/components/ui/toast'
 import { cn } from '@/lib/utils'
 import './globals.css'
@@ -44,15 +44,10 @@ export default function RootLayout({ children }: Readonly<ReactProps>) {
             strategy="beforeInteractive"
           />
         )}
-        {/* ponytail: 폰트 파일 셀프호스팅이 필요하면 next/font/local로 교체 */}
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-        />
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         {children}
-        <Agentation />
+        <DevTools />
         <Toast />
         <SpeedInsights />
         <Analytics />

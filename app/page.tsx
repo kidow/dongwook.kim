@@ -3,8 +3,8 @@ import Image from 'next/image'
 import { AtSignIcon, BrainIcon, MailIcon } from 'lucide-react'
 
 import Container from '@/components/Container'
-import Editor from '@/components/Editor'
 import GithubContributions from '@/components/Home/github-contributions'
+import Memo from '@/components/Home/memo'
 import {
   GithubIcon,
   InstagramIcon,
@@ -166,7 +166,7 @@ export default function Home() {
         </Section>
 
         <Section index={5} title="Memo">
-          <Editor />
+          <Memo />
         </Section>
       </main>
       <footer

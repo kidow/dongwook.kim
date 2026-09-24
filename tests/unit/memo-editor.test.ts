@@ -13,7 +13,7 @@ describe('home memo editor', () => {
     const homeSource = read('app/page.tsx')
 
     expect(homeSource).toContain('<Section index={5} title="Memo">')
-    expect(homeSource).toContain('<Editor />')
+    expect(homeSource).toContain('<Memo />')
     expect(existsSync(path.join(process.cwd(), 'app/memo/page.tsx'))).toBe(
       false
     )

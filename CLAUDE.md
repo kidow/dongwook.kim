@@ -20,7 +20,8 @@ pnpm type-check   # TypeScript 타입 검사 (tsc --noEmit --skipLibCheck)
 - **음악**: Spotify Web API (OAuth 기반 재생)
 - **패키지 매니저**: pnpm
 - **테마**: 다크 고정 (zinc 계열 토큰, 배경 `#09090b`) — `app/globals.css` `:root`
-- **폰트**: Geist / Geist Mono (`next/font/google`) + Pretendard (CDN, 한글 폴백)
+- **폰트**: Geist / Geist Mono (`next/font/google`), 한글은 시스템 폰트 폴백
+- **개발 도구**: Agentation(`components/DevTools.tsx`), react-grab 모두 development에서만 로드
 
 ## Project Structure
 
