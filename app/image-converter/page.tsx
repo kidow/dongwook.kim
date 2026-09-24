@@ -3,9 +3,9 @@ import { Suspense } from 'react'
 
 import ImageConverter from '@/components/ImageConverter'
 
-const TITLE = '이미지 변환기'
+const TITLE = 'Image Converter'
 const DESCRIPTION =
-  '이미지 파일 포맷을 JPEG, PNG, WebP, AVIF로 변환하고 animated WebP를 MP4로 변환할 수 있는 도구입니다.'
+  'Convert images to JPEG, PNG, WebP, or AVIF, and turn animated WebP into MP4.'
 const BASE_URL = 'https://dongwook.kim/image-converter'
 
 export const metadata: Metadata = {
@@ -31,9 +31,7 @@ export default function Page() {
   return (
     <Suspense
       fallback={
-        <div className="text-sm text-stone-400">
-          이미지 변환기를 불러오는 중...
-        </div>
+        <div className="text-sm text-stone-400">Loading image converter...</div>
       }
     >
       <ImageConverter />

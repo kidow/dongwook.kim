@@ -1,6 +1,11 @@
 'use client'
 
-import { DownloadIcon, Loader2Icon, RefreshCwIcon, Trash2Icon } from 'lucide-react'
+import {
+  DownloadIcon,
+  Loader2Icon,
+  RefreshCwIcon,
+  Trash2Icon
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -49,7 +54,7 @@ export default function ImageConverterToolbar({
       <div className="flex items-center gap-2">
         <Select value={outputFormat} onValueChange={onFormatChange}>
           <SelectTrigger className="w-[100px]">
-            <SelectValue placeholder="포맷 선택" />
+            <SelectValue placeholder="Select format" />
           </SelectTrigger>
           <SelectContent>
             {SUPPORTED_FORMATS.map((f) => (
@@ -59,7 +64,7 @@ export default function ImageConverterToolbar({
                 disabled={f.id === 'avif' && !avifSupported}
               >
                 {f.label}
-                {f.id === 'avif' && !avifSupported ? ' (미지원)' : ''}
+                {f.id === 'avif' && !avifSupported ? ' (unsupported)' : ''}
               </SelectItem>
             ))}
           </SelectContent>
@@ -67,7 +72,7 @@ export default function ImageConverterToolbar({
 
         {!qualityDisabled && (
           <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">품질</span>
+            <span className="text-xs text-muted-foreground">Quality</span>
             <Slider
               className="w-24"
               min={1}
@@ -93,12 +98,12 @@ export default function ImageConverterToolbar({
           {isConverting ? (
             <>
               <Loader2Icon className="mr-1.5 size-3.5 animate-spin" />
-              변환 중
+              Converting
             </>
           ) : (
             <>
               <RefreshCwIcon className="mr-1.5 size-3.5" />
-              변환
+              Convert
             </>
           )}
         </Button>
@@ -109,7 +114,7 @@ export default function ImageConverterToolbar({
           onClick={onDownloadAll}
         >
           <DownloadIcon className="mr-1.5 size-3.5" />
-          모두 저장
+          Save all
         </Button>
         <Button
           variant="outline"
@@ -117,7 +122,7 @@ export default function ImageConverterToolbar({
           className="size-9"
           disabled={fileCount === 0 || isConverting}
           onClick={onClearAll}
-          title="전체 삭제"
+          title="Clear all"
         >
           <Trash2Icon className="size-3.5" />
         </Button>

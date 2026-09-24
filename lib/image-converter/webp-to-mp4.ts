@@ -16,14 +16,14 @@ export function validateWebpUpload(file: UploadLike): ValidationResult {
   if (!isWebp) {
     return {
       ok: false,
-      message: 'animated WebP 파일만 MP4로 변환할 수 있습니다.'
+      message: 'Only animated WebP files can be converted to MP4.'
     }
   }
 
   if (file.size > MAX_WEBP_TO_MP4_FILE_SIZE) {
     return {
       ok: false,
-      message: 'MP4 변환은 50 MB 이하의 WebP 파일만 지원합니다.'
+      message: 'MP4 conversion supports WebP files up to 50 MB.'
     }
   }
 
@@ -80,7 +80,11 @@ export function isAnimatedWebp(bytes: Uint8Array): boolean {
 }
 
 export function getWebpFrameDelays(bytes: Uint8Array): number[] {
-  if (bytes.length < 12 || ascii(bytes, 0, 4) !== 'RIFF' || ascii(bytes, 8, 12) !== 'WEBP') {
+  if (
+    bytes.length < 12 ||
+    ascii(bytes, 0, 4) !== 'RIFF' ||
+    ascii(bytes, 8, 12) !== 'WEBP'
+  ) {
     return []
   }
   const delays: number[] = []
@@ -93,8 +97,7 @@ export function getWebpFrameDelays(bytes: Uint8Array): number[] {
       (bytes[i + 6] << 16) |
       (bytes[i + 7] << 24)
     if (id === 'ANMF' && i + 20 + 3 <= bytes.length) {
-      const delay =
-        bytes[i + 20] | (bytes[i + 21] << 8) | (bytes[i + 22] << 16)
+      const delay = bytes[i + 20] | (bytes[i + 21] << 8) | (bytes[i + 22] << 16)
       delays.push(delay || 100)
     }
     i += 8 + size + (size % 2)

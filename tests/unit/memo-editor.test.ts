@@ -23,8 +23,8 @@ describe('home memo editor', () => {
     const editorSource = read('components/Editor/index.tsx')
     const storageSource = read('components/Editor/use-local-storage.ts')
 
-    expect(editorSource).not.toContain('링크 공유')
-    expect(editorSource).toContain('비우기')
+    expect(editorSource).not.toContain('onShareLink')
+    expect(editorSource).toContain('Clear')
     expect(storageSource).not.toContain("get('c')")
   })
 

@@ -25,14 +25,14 @@ export const metadata: Metadata = {
     default: 'kidow',
     template: '%s | kidow'
   },
-  description: '비즈니스에 관심이 많은 웹 개발자',
+  description: 'A web developer who cares about business',
   manifest: '/manifest.webmanifest'
 }
 
 export default function RootLayout({ children }: Readonly<ReactProps>) {
   return (
     <html
-      lang="ko"
+      lang="en"
       className={cn(geistSans.variable, geistMono.variable)}
       suppressHydrationWarning
     >

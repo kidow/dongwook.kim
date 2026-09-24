@@ -34,7 +34,7 @@ export default function DropZone({
       if (!fileList || fileList.length === 0) return
       const remaining = maxFileCount - currentFileCount
       if (remaining <= 0) {
-        toast.warn(`최대 ${maxFileCount}개 파일만 업로드할 수 있습니다.`)
+        toast.warn(`You can upload up to ${maxFileCount} files.`)
         return
       }
 
@@ -58,15 +58,17 @@ export default function DropZone({
       }
 
       if (invalidType > 0) {
-        toast.error(`지원하지 않는 파일 형식 ${invalidType}개 건너뜀`)
+        toast.error(
+          `Skipped ${invalidType} unsupported ${invalidType === 1 ? 'file' : 'files'}`
+        )
       }
       if (invalidSize > 0) {
         toast.error(
-          `${formatFileSize(maxFileSize)} 초과 파일 ${invalidSize}개 건너뜀`
+          `Skipped ${invalidSize} ${invalidSize === 1 ? 'file' : 'files'} over ${formatFileSize(maxFileSize)}`
         )
       }
       if (valid.length === maxFileCount && fileList.length > limit) {
-        toast.warn(`최대 ${maxFileCount}개까지만 업로드됩니다.`)
+        toast.warn(`Only the first ${maxFileCount} files were added.`)
       }
 
       if (valid.length > 0) onFilesSelected(valid)
@@ -135,11 +137,11 @@ export default function DropZone({
         )}
       />
       <p className="text-sm font-medium text-foreground/80">
-        드래그하거나 클릭해서 업로드
+        Drag and drop or click to upload
       </p>
       <p className="text-xs text-muted-foreground">
-        {acceptedFormatsLabel} &middot; 최대 {formatFileSize(maxFileSize)}
-        {isFinite(maxFileCount) && <> &middot; {maxFileCount}개까지</>}
+        {acceptedFormatsLabel} &middot; Up to {formatFileSize(maxFileSize)}
+        {isFinite(maxFileCount) && <> &middot; Up to {maxFileCount} files</>}
       </p>
       <input
         ref={inputRef}

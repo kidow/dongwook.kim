@@ -29,7 +29,7 @@ describe('webp-to-mp4 conversion helpers', () => {
       })
     ).toEqual({
       ok: false,
-      message: 'animated WebP 파일만 MP4로 변환할 수 있습니다.'
+      message: 'Only animated WebP files can be converted to MP4.'
     })
 
     expect(
@@ -40,7 +40,7 @@ describe('webp-to-mp4 conversion helpers', () => {
       })
     ).toEqual({
       ok: false,
-      message: 'MP4 변환은 50 MB 이하의 WebP 파일만 지원합니다.'
+      message: 'MP4 conversion supports WebP files up to 50 MB.'
     })
   })
 

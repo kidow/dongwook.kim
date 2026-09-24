@@ -16,7 +16,7 @@ export function loadImage(file: File): Promise<HTMLImageElement> {
     }
     img.onerror = () => {
       URL.revokeObjectURL(url)
-      reject(new Error(`이미지를 불러올 수 없습니다: ${file.name}`))
+      reject(new Error(`Could not load image: ${file.name}`))
     }
     img.src = url
   })
@@ -33,7 +33,7 @@ export function convertImage(
     canvas.height = img.naturalHeight
     const ctx = canvas.getContext('2d')
     if (!ctx) {
-      reject(new Error('Canvas 2D 컨텍스트를 생성할 수 없습니다.'))
+      reject(new Error('Could not create a Canvas 2D context.'))
       return
     }
     if (mimeType === 'image/jpeg') {
@@ -44,7 +44,7 @@ export function convertImage(
     canvas.toBlob(
       (blob) => {
         if (!blob) {
-          reject(new Error('이미지 변환에 실패했습니다.'))
+          reject(new Error('Image conversion failed.'))
           return
         }
         resolve(blob)
@@ -56,27 +56,31 @@ export function convertImage(
 }
 
 export async function convertAnimatedWebpToMp4(file: File): Promise<Blob> {
-  if (typeof ImageDecoder === 'undefined' || typeof VideoEncoder === 'undefined') {
+  if (
+    typeof ImageDecoder === 'undefined' ||
+    typeof VideoEncoder === 'undefined'
+  ) {
     throw new Error(
-      'MP4 변환은 Chrome 94 이상에서 지원됩니다. 브라우저를 업데이트해 주세요.'
+      'MP4 conversion requires Chrome 94 or later. Please update your browser.'
     )
   }
 
-  const { getWebpFrameDelays } = await import('@/lib/image-converter/webp-to-mp4')
+  const { getWebpFrameDelays } =
+    await import('@/lib/image-converter/webp-to-mp4')
   const { Muxer, ArrayBufferTarget } = await import('mp4-muxer')
 
   const arrayBuffer = await file.arrayBuffer()
   const bytes = new Uint8Array(arrayBuffer)
   const delays = getWebpFrameDelays(bytes)
   if (delays.length === 0) {
-    throw new Error('animated WebP 파일만 MP4로 변환할 수 있습니다.')
+    throw new Error('Only animated WebP files can be converted to MP4.')
   }
 
   const decoder = new ImageDecoder({ data: arrayBuffer, type: 'image/webp' })
   await decoder.tracks.ready
   const track = decoder.tracks.selectedTrack
   if (!track?.animated) {
-    throw new Error('animated WebP 파일만 MP4로 변환할 수 있습니다.')
+    throw new Error('Only animated WebP files can be converted to MP4.')
   }
 
   const frameCount = Math.min(track.frameCount, delays.length)
@@ -135,10 +139,15 @@ export async function convertAnimatedWebpToMp4(file: File): Promise<Blob> {
     let frame: VideoFrame
     if (needsCrop) {
       const canvas = new OffscreenCanvas(width, height)
-      canvas.getContext('2d')!.drawImage(image as unknown as CanvasImageSource, 0, 0)
+      canvas
+        .getContext('2d')!
+        .drawImage(image as unknown as CanvasImageSource, 0, 0)
       frame = new VideoFrame(canvas, { timestamp, duration })
     } else {
-      frame = new VideoFrame(image as unknown as CanvasImageSource, { timestamp, duration })
+      frame = new VideoFrame(image as unknown as CanvasImageSource, {
+        timestamp,
+        duration
+      })
     }
     image.close()
     encoder.encode(frame, { keyFrame: i % 60 === 0 })
@@ -149,7 +158,8 @@ export async function convertAnimatedWebpToMp4(file: File): Promise<Blob> {
   if (encoder.state === 'configured') await encoder.flush()
   decoder.close()
 
-  if (encodeError) throw new Error(`MP4 인코딩 실패: ${(encodeError as Error).message}`)
+  if (encodeError)
+    throw new Error(`MP4 encoding failed: ${(encodeError as Error).message}`)
 
   muxer.finalize()
   return new Blob([target.buffer], { type: 'video/mp4' })

@@ -21,16 +21,16 @@ export default function Editor() {
     'content',
     INITIAL_DOC
   )
-  const [saveStatus, setSaveStatus] = useState('저장됨')
+  const [saveStatus, setSaveStatus] = useState('Saved')
   const initialContentAppliedRef = useRef(false)
   const isHydratingRef = useRef(true)
 
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
     const json = editor.getJSON()
-    setSaveStatus('저장 중...')
+    setSaveStatus('Saving...')
     setContent(json)
     setTimeout(() => {
-      setSaveStatus('저장됨')
+      setSaveStatus('Saved')
     }, 500)
   }, 750)
 
@@ -42,7 +42,7 @@ export default function Editor() {
       if (!storageReady || isHydratingRef.current) {
         return
       }
-      setSaveStatus('작성 중...')
+      setSaveStatus('Editing...')
       debouncedUpdates(e)
     }
   })
@@ -61,7 +61,7 @@ export default function Editor() {
     }
   }, [editor, storageReady, content])
 
-  const statusLabel = storageReady ? saveStatus : '불러오는 중...'
+  const statusLabel = storageReady ? saveStatus : 'Loading...'
   const isEditorReady = Boolean(editor) && storageReady
 
   return (
@@ -83,7 +83,7 @@ export default function Editor() {
           onClick={() => editor?.commands.clearContent(true)}
           disabled={!isEditorReady}
         >
-          비우기
+          Clear
         </Button>
         <span className="text-xs text-muted-foreground">{statusLabel}</span>
       </div>

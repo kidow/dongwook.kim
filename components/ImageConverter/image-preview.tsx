@@ -99,7 +99,7 @@ export default function ImagePreview({
           )}
 
           {isConverting && (
-            <span className="text-xs text-muted-foreground">변환 중...</span>
+            <span className="text-xs text-muted-foreground">Converting...</span>
           )}
         </div>
       </div>
@@ -111,7 +111,7 @@ export default function ImagePreview({
             size="icon"
             className="size-8"
             onClick={() => onDownload(result)}
-            title="다운로드"
+            title="Download"
           >
             <DownloadIcon className="size-3.5" />
           </Button>
@@ -121,7 +121,7 @@ export default function ImagePreview({
           size="icon"
           className="size-8 text-muted-foreground hover:text-foreground"
           onClick={() => onRemove(source.id)}
-          title="삭제"
+          title="Remove"
           disabled={isConverting}
         >
           <XIcon className="size-3.5" />

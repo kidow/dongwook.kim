@@ -82,7 +82,7 @@ export default function Home() {
         <Section index={0} className="flex items-center gap-4">
           <Image
             src="/logo.jpg"
-            alt="kidow 프로필 사진"
+            alt="kidow profile photo"
             width={88}
             height={88}
             priority
@@ -93,7 +93,7 @@ export default function Home() {
               kidow
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              비즈니스에 관심이 많은 웹 개발자
+              A web developer who cares about business
             </p>
           </div>
         </Section>
@@ -128,9 +128,10 @@ export default function Home() {
 
         <Section index={2} className="mt-10">
           <p className="leading-7 text-muted-foreground">
-            하남에 사는 웹 개발자입니다. 코드보다 그 코드가 만드는 비즈니스에 더
-            관심이 많습니다. 2024년부터 Feedle에서 일하고 있고, 쓰고 싶은 도구가
-            없으면 직접 만들어 씁니다.
+            I&apos;m a web developer based in Hanam, Korea. I care more about
+            the business that code creates than the code itself. I&apos;ve been
+            working at Feedle since 2024, and when the tool I want doesn&apos;t
+            exist, I build it myself.
           </p>
         </Section>
 

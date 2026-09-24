@@ -1,6 +1,12 @@
 'use client'
 
-import { startTransition, useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  startTransition,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import { toast } from '@/utils'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import {
@@ -65,7 +71,7 @@ export default function ImageConverter() {
 
               if (!isAnimatedWebp(new Uint8Array(await file.arrayBuffer()))) {
                 reject(
-                  new Error('animated WebP 파일만 MP4로 변환할 수 있습니다.')
+                  new Error('Only animated WebP files can be converted to MP4.')
                 )
                 return
               }
@@ -87,7 +93,7 @@ export default function ImageConverter() {
             }
             img.onerror = () => {
               URL.revokeObjectURL(url)
-              reject(new Error(`이미지를 불러올 수 없습니다: ${file.name}`))
+              reject(new Error(`Could not load image: ${file.name}`))
             }
             img.src = url
           })
@@ -99,7 +105,7 @@ export default function ImageConverter() {
           if (result.status === 'fulfilled') {
             loaded.push(result.value)
           } else {
-            toast.error(result.reason?.message ?? '이미지 로드 실패')
+            toast.error(result.reason?.message ?? 'Failed to load image')
           }
         }
         if (loaded.length > 0) {
@@ -143,7 +149,7 @@ export default function ImageConverter() {
         })
       } catch (err) {
         toast.error(
-          err instanceof Error ? err.message : `변환 실패: ${file.name}`
+          err instanceof Error ? err.message : `Conversion failed: ${file.name}`
         )
       } finally {
         setConvertingIds((prev) => {
@@ -158,7 +164,9 @@ export default function ImageConverter() {
     setResults(newResults)
 
     if (newResults.length > 0) {
-      toast.success(`${newResults.length}개 파일 변환 완료`)
+      toast.success(
+        `Converted ${newResults.length} ${newResults.length === 1 ? 'file' : 'files'}`
+      )
     }
   }, [files, outputFormat, quality, results])
 

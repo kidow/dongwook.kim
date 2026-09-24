@@ -141,7 +141,7 @@ export const TiptapExtensions = [
       if (node.type.name === 'heading') {
         return `Heading ${node.attrs.level}`
       }
-      return "명령어는 '/' 입력"
+      return "Type '/' for commands"
     },
     includeChildren: false
   }),

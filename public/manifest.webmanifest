@@ -6,7 +6,7 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "oklch(58.5% 0.233 277.117)",
-  "lang": "ko-KR",
+  "lang": "en",
   "icons": [
     {
       "src": "/icons/icon-192.png",

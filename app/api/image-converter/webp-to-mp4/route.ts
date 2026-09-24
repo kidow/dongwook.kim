@@ -20,7 +20,7 @@ export async function POST(request: Request) {
 
   if (!(file instanceof File)) {
     return Response.json(
-      { error: '변환할 WebP 파일을 선택해 주세요.' },
+      { error: 'Select a WebP file to convert.' },
       { status: 400 }
     )
   }
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
   if (!ffmpegPath) {
     return Response.json(
-      { error: '서버에서 FFmpeg 실행 파일을 찾을 수 없습니다.' },
+      { error: 'FFmpeg binary was not found on the server.' },
       { status: 500 }
     )
   }
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   const bytes = Buffer.from(await file.arrayBuffer())
   if (!isAnimatedWebp(bytes)) {
     return Response.json(
-      { error: 'animated WebP 파일만 MP4로 변환할 수 있습니다.' },
+      { error: 'Only animated WebP files can be converted to MP4.' },
       { status: 400 }
     )
   }
@@ -68,12 +68,18 @@ export async function POST(request: Request) {
       ffmpegPath,
       [
         '-y',
-        '-framerate', String(fps),
-        '-i', framePattern,
-        '-movflags', '+faststart',
-        '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
-        '-c:v', 'libx264',
-        '-pix_fmt', 'yuv420p',
+        '-framerate',
+        String(fps),
+        '-i',
+        framePattern,
+        '-movflags',
+        '+faststart',
+        '-vf',
+        'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+        '-c:v',
+        'libx264',
+        '-pix_fmt',
+        'yuv420p',
         '-an',
         outputPath
       ],
@@ -94,7 +100,7 @@ export async function POST(request: Request) {
     console.error('[webp-to-mp4] error:', message)
     return Response.json(
       {
-        error: 'MP4 변환에 실패했습니다. 파일 길이를 줄인 뒤 다시 시도해 주세요.',
+        error: 'MP4 conversion failed. Shorten the file and try again.',
         debug: message
       },
       { status: 422 }
