@@ -14,6 +14,9 @@ const withPWA = withPWAInit({
 const nextConfig: NextConfig = {
   reactCompiler: true,
   turbopack: {},
+  async redirects() {
+    return [{ source: '/memo', destination: '/', permanent: true }]
+  },
   serverExternalPackages: ['sharp', 'ffmpeg-static'],
   images: {
     remotePatterns: [

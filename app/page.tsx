@@ -1,15 +1,9 @@
 import { Suspense } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
-import {
-  ArrowUpRightIcon,
-  AtSignIcon,
-  BrainIcon,
-  MailIcon,
-  StickyNoteIcon
-} from 'lucide-react'
+import { AtSignIcon, BrainIcon, MailIcon } from 'lucide-react'
 
 import Container from '@/components/Container'
+import Editor from '@/components/Editor'
 import GithubContributions from '@/components/Home/github-contributions'
 import {
   GithubIcon,
@@ -53,15 +47,6 @@ const SOCIAL_LINKS = [
     href: 'https://brain.dongwook.kim',
     label: 'Brain',
     icon: <BrainIcon className="size-4" />
-  }
-] as const
-
-const PROJECTS = [
-  {
-    href: '/memo',
-    title: 'MEMO',
-    description: '내용이 사라지지 않는',
-    icon: StickyNoteIcon
   }
 ] as const
 
@@ -145,7 +130,7 @@ export default function Home() {
           <p className="leading-7 text-muted-foreground">
             하남에 사는 웹 개발자입니다. 코드보다 그 코드가 만드는 비즈니스에 더
             관심이 많습니다. 2024년부터 Feedle에서 일하고 있고, 쓰고 싶은 도구가
-            없으면 직접 만들어 씁니다. 아래 Projects가 그렇게 만든 것들입니다.
+            없으면 직접 만들어 씁니다.
           </p>
         </Section>
 
@@ -179,29 +164,8 @@ export default function Home() {
           </a>
         </Section>
 
-        <Section index={5} title="Projects">
-          <ul>
-            {PROJECTS.map(({ href, title, description, icon: Icon }) => (
-              <li
-                key={href}
-                className="border-b border-dashed border-border last:border-b-0"
-              >
-                <Link
-                  href={href}
-                  className="group flex items-center gap-3 px-1 py-3"
-                >
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors group-hover:text-foreground">
-                    <Icon className="size-4" />
-                  </span>
-                  <span className="shrink-0 font-medium">{title}</span>
-                  <span className="truncate text-sm text-muted-foreground">
-                    {description}
-                  </span>
-                  <ArrowUpRightIcon className="ml-auto size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <Section index={5} title="Memo">
+          <Editor />
         </Section>
       </main>
       <footer

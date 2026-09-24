@@ -1,41 +1,25 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import localFont from 'next/font/local'
 import { EditorContent, useEditor, type Content } from '@tiptap/react'
 import { useDebouncedCallback } from 'use-debounce'
-import { cn } from '@/lib/utils'
-import { toast } from '@/utils'
 
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
 import { ToolbarProvider } from '@/components/toolbars/toolbar-provider'
 import { EditorBubbleMenu } from './bubble-menu'
 import { TiptapExtensions } from './extensions'
 import { TiptapEditorProps } from './props'
 import { useLocalStorage } from './use-local-storage'
 
-const cal = localFont({
-  src: './CalSans-SemiBold.otf',
-  variable: '--font-display'
-})
+const INITIAL_DOC: Content = {
+  type: 'doc',
+  content: [{ type: 'paragraph' }]
+}
 
 export default function Editor() {
-  const initialDoc: Content = {
-    type: 'doc',
-    content: [{ type: 'paragraph' }]
-  }
   const [content, setContent, storageReady] = useLocalStorage<Content>(
     'content',
-    initialDoc
+    INITIAL_DOC
   )
   const [saveStatus, setSaveStatus] = useState('저장됨')
   const initialContentAppliedRef = useRef(false)
@@ -60,19 +44,8 @@ export default function Editor() {
       }
       setSaveStatus('작성 중...')
       debouncedUpdates(e)
-    },
-    autofocus: 'end'
-  })
-
-  const onShareLink = async () => {
-    const param = btoa(encodeURIComponent(JSON.stringify(content)))
-    if (typeof window.navigator !== 'undefined') {
-      await window.navigator.clipboard.writeText(
-        `https://dongwook.kim/memo?c=${param}`
-      )
-      toast.success('복사되었습니다.')
     }
-  }
+  })
 
   useEffect(() => {
     if (
@@ -92,47 +65,28 @@ export default function Editor() {
   const isEditorReady = Boolean(editor) && storageReady
 
   return (
-    <div className={cn('relative pb-24', cal.variable)}>
-      <Card className="gap-0 overflow-hidden border-0 shadow-none">
-        <CardHeader className="py-4">
-          <CardTitle className="font-display text-2xl">메모</CardTitle>
-          <CardAction>
-            <Badge variant="secondary">{statusLabel}</Badge>
-          </CardAction>
-        </CardHeader>
-        <CardContent className="relative px-0">
-          {editor ? (
-            <ToolbarProvider editor={editor}>
-              <EditorBubbleMenu editor={editor} />
-              <div className="min-h-[500px] px-6 py-5">
-                <EditorContent editor={editor} />
-              </div>
-            </ToolbarProvider>
-          ) : (
-            <div className="min-h-[500px] px-6 py-5" />
-          )}
-        </CardContent>
-        <CardFooter className="py-4">
-          <div className="flex items-center gap-2 text-sm">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onShareLink}
-              disabled={!isEditorReady}
-            >
-              링크 공유
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => editor?.commands.clearContent()}
-              disabled={!isEditorReady}
-            >
-              비우기
-            </Button>
-          </div>
-        </CardFooter>
-      </Card>
+    <div className="rounded-lg border border-border">
+      <div className="px-5 py-4">
+        {editor ? (
+          <ToolbarProvider editor={editor}>
+            <EditorBubbleMenu editor={editor} />
+            <EditorContent editor={editor} />
+          </ToolbarProvider>
+        ) : (
+          <div className="min-h-52" />
+        )}
+      </div>
+      <div className="flex items-center justify-between border-t border-dashed border-border px-3 py-2">
+        <Button
+          variant="outline"
+          size="xs"
+          onClick={() => editor?.commands.clearContent(true)}
+          disabled={!isEditorReady}
+        >
+          비우기
+        </Button>
+        <span className="text-xs text-muted-foreground">{statusLabel}</span>
+      </div>
     </div>
   )
 }

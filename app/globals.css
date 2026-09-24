@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
-@import './memo/index.css';
+@import '../components/Editor/editor.css';
 
 :root {
   --background: #09090b;

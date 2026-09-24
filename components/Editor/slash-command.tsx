@@ -50,7 +50,10 @@ interface SuggestionItem {
   command: (...args: [CommandProps]) => void
 }
 
-type SuggestionRenderProps = TiptapSuggestionProps<SuggestionItem, SuggestionItem>
+type SuggestionRenderProps = TiptapSuggestionProps<
+  SuggestionItem,
+  SuggestionItem
+>
 
 const SlashCommandExtension = Extension.create({
   name: 'slash-command',

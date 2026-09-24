@@ -10,18 +10,8 @@ export function useLocalStorage<T>(
       return initialValue
     }
 
-    const c = new URLSearchParams(window.location.search).get('c')
     const item = window.localStorage.getItem(key)
-
-    if (c) {
-      return JSON.parse(decodeURIComponent(atob(c)))
-    }
-
-    if (item) {
-      return JSON.parse(item)
-    }
-
-    return initialValue
+    return item ? JSON.parse(item) : initialValue
   })
 
   const setValue: Dispatch<SetStateAction<T>> = (value) => {

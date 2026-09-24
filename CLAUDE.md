@@ -27,11 +27,10 @@ pnpm type-check   # TypeScript 타입 검사 (tsc --noEmit --skipLibCheck)
 ```
 app/                            # Next.js App Router (라우트)
 ├── layout.tsx                  # 루트 레이아웃 (폰트, 배경, Toast, Agentation, Analytics)
-├── page.tsx                    # 홈 — 섹션형 1단 (Profile, About, GitHub, Work at, Projects, Footer)
+├── page.tsx                    # 홈 — 섹션형 1단 (Profile, About, GitHub, Work at, Memo, Footer)
 ├── globals.css                 # 글로벌 스타일, 테마 토큰, 애니메이션
 ├── api/posts/route.ts          # Blog API 엔드포인트
 ├── blog/[id]/                  # 블로그 목록/상세 (Fumadocs MDX)
-├── memo/                       # 메모 에디터 (Tiptap + localStorage)
 ├── image-converter/            # [Phase 5] 이미지 형식 변환 (Canvas API)
 └── spotify/                    # [Phase 12] Spotify Web Playback (OAuth + WebAPI)
 
@@ -39,7 +38,7 @@ components/
 ├── ui/                         # shadcn/ui 프리미티브 (자동 생성)
 ├── Container.tsx               # 가운데 정렬 컨테이너 (max-w-2xl)
 ├── Home/                       # 홈 전용 (GitHub 잔디, 소셜 아이콘)
-├── Editor/                     # Tiptap 리치텍스트 에디터 (메모 페이지용)
+├── Editor/                     # Tiptap 리치텍스트 에디터 (홈 Memo 섹션)
 ├── ImageConverter/             # 이미지 변환 컴포넌트
 ├── toolbars/                   # ToolbarProvider (에디터 상태)
 └── brand-icons.tsx
@@ -71,7 +70,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 ### State Management
 
-- **localStorage**: 메모 에디터 (`Editor/use-local-storage.ts`). URL 파라미터 공유 지원 (`?c=base64json`)
+- **localStorage**: 메모 에디터 (`Editor/use-local-storage.ts`, 키 `content`)
 - **이벤트 시스템**: `utils/event-listener.ts` — 전역 토스트 알림
 - **Context API**: `ToolbarProvider` — 에디터 툴바 상태
 
@@ -81,10 +80,8 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 ### Side Projects
 
-홈 Projects 섹션 리스트 (`PROJECTS` 배열):
-
-- `/memo` — Tiptap 메모 에디터 (localStorage)
-- `/image-converter` — 이미지 형식 변환
+- 홈 Memo 섹션 — Tiptap 메모 에디터 (`components/Editor`, localStorage). 예전 `/memo`는 `next.config.ts`에서 `/`로 영구 리다이렉트
+- `/image-converter` — 이미지 형식 변환 (홈에 링크 없음)
 - `/spotify` — Spotify Web Playback 플레이어 (OAuth)
 
 ## Code Conventions
@@ -172,7 +169,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 ### 커스텀 훅
 
-- `components/Editor/use-local-storage.ts` — 메모 에디터 localStorage (URL 파라미터 공유)
+- `components/Editor/use-local-storage.ts` — 메모 에디터 localStorage
 
 ### 타입 패턴
 
