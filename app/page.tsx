@@ -2,7 +2,6 @@ import { Suspense } from 'react'
 import Image from 'next/image'
 
 import Container from '@/components/Container'
-import Avatar from '@/components/Home/avatar'
 import GithubContributions from '@/components/Home/github-contributions'
 import Memo from '@/components/Home/memo'
 import SocialLinks from '@/components/Home/social-links'
@@ -38,7 +37,14 @@ export default function Home() {
     <Container>
       <main className="pb-16 pt-16 sm:pt-24">
         <Section index={0} className="flex items-center gap-4">
-          <Avatar />
+          <Image
+            src="/logo.jpg"
+            alt="kidow profile photo"
+            width={88}
+            height={88}
+            priority
+            className="size-20 shrink-0 rounded-[14px] object-cover sm:size-[88px]"
+          />
           <div>
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               kidow
