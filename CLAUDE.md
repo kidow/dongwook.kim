@@ -27,7 +27,7 @@ pnpm type-check   # TypeScript 타입 검사 (tsc --noEmit --skipLibCheck)
 ```
 app/                            # Next.js App Router (라우트)
 ├── layout.tsx                  # 루트 레이아웃 (폰트, 배경, Toast, Agentation, Analytics)
-├── page.tsx                    # 홈 — 섹션형 1단 (Profile, About, GitHub, Work at, Projects, Quote, Footer)
+├── page.tsx                    # 홈 — 섹션형 1단 (Profile, About, GitHub, Work at, Projects, Footer)
 ├── globals.css                 # 글로벌 스타일, 테마 토큰, 애니메이션
 ├── api/posts/route.ts          # Blog API 엔드포인트
 ├── blog/[id]/                  # 블로그 목록/상세 (Fumadocs MDX)

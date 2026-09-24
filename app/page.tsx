@@ -194,16 +194,10 @@ export default function Home() {
             ))}
           </ul>
         </Section>
-
-        <Section index={6}>
-          <blockquote className="border-l-2 border-border pl-4 text-lg italic text-muted-foreground">
-            “더 게으르기 위해, 더 열심히 공부하기”
-          </blockquote>
-        </Section>
       </main>
       <footer
         className="animate-enter flex items-center justify-between pb-10 font-mono text-xs text-muted-foreground"
-        style={{ animationDelay: `${7 * ENTER_STEP_MS}ms` }}
+        style={{ animationDelay: `${6 * ENTER_STEP_MS}ms` }}
       >
         <span>© {new Date().getFullYear()} kidow</span>
         <span>Hanam, KR</span>
