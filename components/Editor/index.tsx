@@ -95,7 +95,7 @@ export default function Editor() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
+                variant="ghost"
                 size="icon-xs"
                 className="pointer-coarse:size-11"
                 aria-label="Clear memo"
