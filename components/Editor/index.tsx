@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { EditorContent, useEditor, type Content } from '@tiptap/react'
 import { useDebouncedCallback } from 'use-debounce'
+import { BorderBeam } from 'border-beam'
 import { Trash2Icon } from '@animateicons/react/lucide'
 
 import { Button } from '@/components/ui/button'
@@ -75,45 +76,62 @@ export default function Editor() {
   const startClearIcon = () => clearIconRef.current?.startAnimation()
   const stopClearIcon = () => clearIconRef.current?.stopAnimation()
 
+  // Drives the border beam: on while anything inside the memo box has focus.
+  const [focused, setFocused] = useState(false)
+
   const statusLabel = storageReady ? saveStatus : 'Loading...'
   const isEditorReady = Boolean(editor) && storageReady
 
   return (
-    <div className="rounded-lg border border-border transition-colors focus-within:border-muted-foreground">
-      <div className="px-5 py-4">
-        {editor ? (
-          <ToolbarProvider editor={editor}>
-            <EditorBubbleMenu editor={editor} />
-            <EditorContent editor={editor} />
-          </ToolbarProvider>
-        ) : (
-          <div className="min-h-52" />
-        )}
+    <BorderBeam
+      active={focused}
+      colorVariant="ocean"
+      theme="dark"
+      duration={6}
+      borderRadius={8}
+    >
+      <div
+        className="rounded-lg border border-border"
+        onFocus={() => setFocused(true)}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false)
+        }}
+      >
+        <div className="px-5 py-4">
+          {editor ? (
+            <ToolbarProvider editor={editor}>
+              <EditorBubbleMenu editor={editor} />
+              <EditorContent editor={editor} />
+            </ToolbarProvider>
+          ) : (
+            <div className="min-h-52" />
+          )}
+        </div>
+        <div className="flex items-center justify-between border-t border-dashed border-border px-3 py-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon-xs"
+                  className="pointer-coarse:size-11"
+                  aria-label="Clear memo"
+                  onClick={() => editor?.commands.clearContent(true)}
+                  onMouseEnter={startClearIcon}
+                  onMouseLeave={stopClearIcon}
+                  onFocus={startClearIcon}
+                  onBlur={stopClearIcon}
+                  disabled={!isEditorReady}
+                >
+                  <Trash2Icon ref={clearIconRef} size={12} aria-hidden />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent sideOffset={4}>Clear</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <span className="text-xs text-muted-foreground">{statusLabel}</span>
+        </div>
       </div>
-      <div className="flex items-center justify-between border-t border-dashed border-border px-3 py-2">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon-xs"
-                className="pointer-coarse:size-11"
-                aria-label="Clear memo"
-                onClick={() => editor?.commands.clearContent(true)}
-                onMouseEnter={startClearIcon}
-                onMouseLeave={stopClearIcon}
-                onFocus={startClearIcon}
-                onBlur={stopClearIcon}
-                disabled={!isEditorReady}
-              >
-                <Trash2Icon ref={clearIconRef} size={12} aria-hidden />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent sideOffset={4}>Clear</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <span className="text-xs text-muted-foreground">{statusLabel}</span>
-      </div>
-    </div>
+    </BorderBeam>
   )
 }
