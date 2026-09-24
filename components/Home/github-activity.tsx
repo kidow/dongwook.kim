@@ -236,7 +236,7 @@ function ContributionGrid({
               style={{ width: cellSize }}
             >
               {month && (
-                <span className="absolute left-0 top-0 text-[10px] leading-none text-foreground/40">
+                <span className="absolute left-0 top-0 text-[10px] leading-none text-muted-foreground">
                   {month}
                 </span>
               )}

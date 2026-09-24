@@ -29,12 +29,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Suspense
-      fallback={
-        <div className="text-sm text-stone-400">Loading image converter...</div>
-      }
-    >
-      <ImageConverter />
-    </Suspense>
+    <main>
+      <h1 className="sr-only">Image Converter</h1>
+      <Suspense
+        fallback={
+          <div className="text-sm text-stone-400">
+            Loading image converter...
+          </div>
+        }
+      >
+        <ImageConverter />
+      </Suspense>
+    </main>
   )
 }

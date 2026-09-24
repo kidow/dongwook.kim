@@ -104,7 +104,7 @@ export default function ImagePreview({
         </div>
       </div>
 
-      <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100">
         {result && (
           <Button
             variant="outline"
@@ -112,6 +112,7 @@ export default function ImagePreview({
             className="size-8"
             onClick={() => onDownload(result)}
             title="Download"
+            aria-label={`Download ${source.name}`}
           >
             <DownloadIcon className="size-3.5" />
           </Button>
@@ -122,6 +123,7 @@ export default function ImagePreview({
           className="size-8 text-muted-foreground hover:text-foreground"
           onClick={() => onRemove(source.id)}
           title="Remove"
+          aria-label={`Remove ${source.name}`}
           disabled={isConverting}
         >
           <XIcon className="size-3.5" />

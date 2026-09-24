@@ -123,6 +123,7 @@ export default function ImageConverterToolbar({
           disabled={fileCount === 0 || isConverting}
           onClick={onClearAll}
           title="Clear all"
+          aria-label="Clear all"
         >
           <Trash2Icon className="size-3.5" />
         </Button>

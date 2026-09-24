@@ -2,6 +2,9 @@ import type { EditorProps } from '@tiptap/pm/view'
 
 export const TiptapEditorProps: EditorProps = {
   attributes: {
+    role: 'textbox',
+    'aria-multiline': 'true',
+    'aria-label': 'Memo',
     class:
       'prose prose-invert prose-zinc min-h-52 max-w-full focus:outline-none'
   },

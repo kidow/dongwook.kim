@@ -117,7 +117,10 @@ export default function DropZone({
       tabIndex={0}
       onClick={handleClick}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') handleClick()
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          handleClick()
+        }
       }}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
