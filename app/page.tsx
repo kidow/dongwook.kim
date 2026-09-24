@@ -91,7 +91,7 @@ export default function Home() {
               kidow
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              A web developer who cares about business
+              Dongwook Kim
             </p>
           </div>
         </Section>
