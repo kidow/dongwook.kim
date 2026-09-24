@@ -135,7 +135,7 @@ export default function Home() {
         </Section>
 
         <Section index={2} className="mt-10">
-          <p className="max-w-[65ch] leading-7 text-muted-foreground">
+          <p className="max-w-[65ch] text-pretty leading-7 text-muted-foreground">
             I&apos;m a web developer based in Hanam, Korea. I care more about
             the business that code creates than the code itself. I&apos;ve been
             working at Feedle since 2024, and when the tool I want doesn&apos;t
@@ -156,7 +156,7 @@ export default function Home() {
             href="https://www.feedle.me"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-3 rounded-lg border border-border p-3 transition-colors hover:bg-accent/50"
+            className="flex items-center gap-3 rounded-lg border border-border p-3 outline-none transition-colors hover:bg-accent/50 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
           >
             <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-white">
               <Image src="/feedle.png" alt="" width={20} height={20} />

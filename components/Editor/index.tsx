@@ -65,7 +65,7 @@ export default function Editor() {
   const isEditorReady = Boolean(editor) && storageReady
 
   return (
-    <div className="rounded-lg border border-border">
+    <div className="rounded-lg border border-border transition-colors focus-within:border-muted-foreground">
       <div className="px-5 py-4">
         {editor ? (
           <ToolbarProvider editor={editor}>

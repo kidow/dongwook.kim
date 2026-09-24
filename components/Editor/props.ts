@@ -24,10 +24,8 @@ export const TiptapEditorProps: EditorProps = {
       event.clipboardData.files &&
       event.clipboardData.files[0]
     ) {
+      // Image upload is not supported; swallow pasted files.
       event.preventDefault()
-      const file = event.clipboardData.files[0]
-      console.log('file', file)
-      //   startImageUpload(file, _view, _view.state.selection.from)
       return true
     }
     return false
@@ -39,14 +37,8 @@ export const TiptapEditorProps: EditorProps = {
       event.dataTransfer.files &&
       event.dataTransfer.files[0]
     ) {
+      // Image upload is not supported; swallow dropped files.
       event.preventDefault()
-      const file = event.dataTransfer.files[0]
-      console.log('file', file)
-      //   startImageUpload(
-      //     file,
-      //     _view,
-      //     _view.posAtCoords({ left: event.clientX, top: event.clientY })?.pos - 1
-      //   )
       return true
     }
     return false
