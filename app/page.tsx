@@ -66,9 +66,7 @@ function Section({ index, title, className, children }: SectionProps) {
       style={{ animationDelay: `${index * ENTER_STEP_MS}ms` }}
     >
       {title && (
-        <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">
-          {title}
-        </h2>
+        <h2 className="mb-4 text-xl font-semibold tracking-tight">{title}</h2>
       )}
       {children}
     </section>
@@ -89,7 +87,7 @@ export default function Home() {
             className="size-20 shrink-0 rounded-[14px] object-cover sm:size-[88px]"
           />
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               kidow
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -137,7 +135,7 @@ export default function Home() {
         </Section>
 
         <Section index={2} className="mt-10">
-          <p className="leading-7 text-muted-foreground">
+          <p className="max-w-[65ch] leading-7 text-muted-foreground">
             I&apos;m a web developer based in Hanam, Korea. I care more about
             the business that code creates than the code itself. I&apos;ve been
             working at Feedle since 2024, and when the tool I want doesn&apos;t
@@ -169,7 +167,7 @@ export default function Home() {
                 Web Developer
               </span>
             </span>
-            <span className="ml-auto font-mono text-xs text-muted-foreground">
+            <span className="ml-auto text-sm tabular-nums text-muted-foreground">
               2024 — Now
             </span>
           </a>
@@ -180,7 +178,7 @@ export default function Home() {
         </Section>
       </main>
       <footer
-        className="animate-enter flex items-center justify-between pb-10 font-mono text-xs text-muted-foreground"
+        className="animate-enter flex items-center justify-between pb-10 text-sm text-muted-foreground"
         style={{ animationDelay: `${6 * ENTER_STEP_MS}ms` }}
       >
         <span>© {new Date().getFullYear()} kidow</span>
