@@ -46,6 +46,7 @@ export default function RootLayout({ children }: Readonly<ReactProps>) {
         )}
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+        <div aria-hidden className="page-backdrop" />
         {children}
         <DevTools />
         <Toast />

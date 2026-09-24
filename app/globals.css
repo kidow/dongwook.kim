@@ -98,6 +98,26 @@ body {
   color: var(--foreground);
 }
 
+/* Top glow in the GitHub-grass green plus a faint grain. CSS only. */
+.page-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 45% at 50% -8%, rgb(57 211 83 / 0.1), transparent 70%),
+    radial-gradient(40% 30% at 85% 0%, rgb(250 250 250 / 0.05), transparent 70%);
+}
+
+.page-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 @keyframes enter {
   from {
     opacity: 0;
