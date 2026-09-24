@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   BrainIcon,
   GithubIcon,
@@ -8,7 +8,7 @@ import {
   LinkedinIcon,
   MailIcon
 } from '@animateicons/react/lucide'
-import { AtSignIcon } from 'lucide-react'
+import { AtSignIcon, CheckIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -17,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
 
 import type {
   ComponentType,
@@ -125,22 +126,78 @@ function SocialLink({
   )
 }
 
-export default function SocialLinks() {
+const EMAIL = 'wcgo2ling@gmail.com'
+const COPIED_MS = 1600
+const SWAP =
+  'transition-[translate,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
+
+/** Copies the email address and briefly swaps the label to "Copied". */
+function ContactButton() {
   const { ref, handlers } = useIconAnimation()
+  const [copied, setCopied] = useState(false)
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
+
+  useEffect(() => () => clearTimeout(timer.current), [])
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL)
+    } catch {
+      // Clipboard blocked (e.g. insecure context): fall back to the mail app.
+      window.location.href = `mailto:${EMAIL}`
+      return
+    }
+    setCopied(true)
+    clearTimeout(timer.current)
+    timer.current = setTimeout(() => setCopied(false), COPIED_MS)
+  }
 
   return (
     <>
       <Button
-        asChild
         variant="outline"
         size="sm"
-        className="pointer-coarse:h-11"
+        className={cn(
+          'relative overflow-hidden pointer-coarse:h-11',
+          copied && 'border-green-400/40'
+        )}
+        aria-label={`Contact: copy email address ${EMAIL}`}
+        onClick={copy}
+        {...handlers}
       >
-        <a href="mailto:wcgo2ling@gmail.com" {...handlers}>
+        <span
+          className={cn(
+            'inline-flex items-center gap-1.5',
+            SWAP,
+            copied && '-translate-y-full opacity-0'
+          )}
+        >
           <MailIcon ref={ref} size={ICON_SIZE} aria-hidden />
           Contact
-        </a>
+        </span>
+        <span
+          aria-hidden
+          className={cn(
+            'absolute inset-0 flex items-center justify-center gap-1.5 text-green-400',
+            SWAP,
+            copied ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
+          )}
+        >
+          <CheckIcon className="size-4" />
+          Copied
+        </span>
       </Button>
+      <span role="status" aria-live="polite" className="sr-only">
+        {copied ? 'Email address copied' : ''}
+      </span>
+    </>
+  )
+}
+
+export default function SocialLinks() {
+  return (
+    <>
+      <ContactButton />
       <TooltipProvider>
         {SOCIAL_LINKS.map((link) => (
           <SocialLink key={link.href} {...link} />
