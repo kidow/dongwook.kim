@@ -5,19 +5,8 @@ import {
   ArrowUpRightIcon,
   AtSignIcon,
   BrainIcon,
-  CodeXmlIcon,
-  DatabaseIcon,
-  ImageIcon,
-  KanbanIcon,
   MailIcon,
-  NetworkIcon,
-  PenToolIcon,
-  PinIcon,
-  QrCodeIcon,
-  ReceiptIcon,
-  SendIcon,
-  StickyNoteIcon,
-  UtensilsCrossedIcon
+  StickyNoteIcon
 } from 'lucide-react'
 
 import Container from '@/components/Container'
@@ -74,72 +63,6 @@ const PROJECTS = [
     title: 'MEMO',
     description: '내용이 사라지지 않는',
     icon: StickyNoteIcon
-  },
-  {
-    href: '/lunch',
-    title: 'Lunch',
-    description: '점심 뭐 먹지?',
-    icon: UtensilsCrossedIcon
-  },
-  {
-    href: '/kanban',
-    title: 'Kanban',
-    description: '칸반 보드',
-    icon: KanbanIcon
-  },
-  {
-    href: '/code-editor',
-    title: 'Code Editor',
-    description: '코드 실행기',
-    icon: CodeXmlIcon
-  },
-  {
-    href: '/api-client',
-    title: 'API Client',
-    description: 'API 테스트 도구',
-    icon: SendIcon
-  },
-  {
-    href: '/image-converter',
-    title: 'Image Converter',
-    description: '이미지 포맷 변환',
-    icon: ImageIcon
-  },
-  {
-    href: '/qrcode-generator',
-    title: 'QR Code',
-    description: 'QR코드 생성기',
-    icon: QrCodeIcon
-  },
-  {
-    href: '/canvas',
-    title: 'Canvas',
-    description: '가상 화이트보드',
-    icon: PenToolIcon
-  },
-  {
-    href: '/invoice-generator',
-    title: 'Invoice',
-    description: '인보이스 생성기',
-    icon: ReceiptIcon
-  },
-  {
-    href: '/mindmap',
-    title: 'Mindmap',
-    description: '마인드맵 생성기',
-    icon: NetworkIcon
-  },
-  {
-    href: '/erd-editor',
-    title: 'ERD Editor',
-    description: 'ERD 다이어그램 편집기',
-    icon: DatabaseIcon
-  },
-  {
-    href: '/canvas-note',
-    title: 'Canvas Note',
-    description: '무한 캔버스에 자유롭게 메모 배치',
-    icon: PinIcon
   }
 ] as const
 

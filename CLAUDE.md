@@ -16,15 +16,8 @@ pnpm type-check   # TypeScript 타입 검사 (tsc --noEmit --skipLibCheck)
 - **React Compiler** 활성화 (`next.config.ts`: `reactCompiler: true`)
 - **MDX 지원**: Fumadocs MDX (`fumadocs-mdx`, `fumadocs-core`, `fumadocs-ui`)
 - **리치텍스트**: Tiptap v3.19 + tiptap-markdown
-- **코드 에디터**: Sandpack v2.20 (CodeSandbox 임베드)
-- **캔버스**: Excalidraw v0.18 (무한 화이트보드)
-- **그래프**: React Flow v12.10 + Dagre (마인드맵 자동 레이아웃)
-- **드래그앤드롭**: @dnd-kit (칸반 보드)
 - **아이콘**: lucide-react
-- **지도**: react-kakao-maps-sdk (점심 추천)
-- **QR코드**: qrcode.react v4.2
 - **음악**: Spotify Web API (OAuth 기반 재생)
-- **포맷**: dayjs (날짜), html2canvas (캔버스 캡처)
 - **패키지 매니저**: pnpm
 - **테마**: 다크 고정 (zinc 계열 토큰, 배경 `#09090b`) — `app/globals.css` `:root`
 - **폰트**: Geist / Geist Mono (`next/font/google`) + Pretendard (CDN, 한글 폴백)
@@ -39,17 +32,7 @@ app/                            # Next.js App Router (라우트)
 ├── api/posts/route.ts          # Blog API 엔드포인트
 ├── blog/[id]/                  # 블로그 목록/상세 (Fumadocs MDX)
 ├── memo/                       # 메모 에디터 (Tiptap + localStorage)
-├── lunch/                      # 점심 추천 (Kakao Maps)
-├── kanban/                     # [Phase 1] 칸반 보드 (@dnd-kit 드래그앤드롭) — Fullscreen Overlay
-├── archive/                    # [Phase 2] 코드 아카이브 (Fumadocs MDX)
-├── code-editor/                # [Phase 4] 코드 에디터 (Sandpack 실행)
 ├── image-converter/            # [Phase 5] 이미지 형식 변환 (Canvas API)
-├── canvas/                     # [Phase 6] 화이트보드 (Excalidraw)
-├── qrcode-generator/           # [Phase 7] QR코드 생성기
-├── invoice-generator/          # [Phase 8] 인보이스 생성기
-├── api-client/                 # [Phase 9] HTTP API 테스트 클라이언트 (Postman 스타일)
-├── mindmap/                    # [Phase 10] 마인드맵 생성기 (React Flow) — Fullscreen Overlay
-├── erd-editor/                 # [Phase 11] ERD 에디터 (React Flow) — Fullscreen Overlay
 └── spotify/                    # [Phase 12] Spotify Web Playback (OAuth + WebAPI)
 
 components/
@@ -57,33 +40,19 @@ components/
 ├── Container.tsx               # 가운데 정렬 컨테이너 (max-w-2xl)
 ├── Home/                       # 홈 전용 (KST 시계, GitHub 잔디, 소셜 아이콘)
 ├── Editor/                     # Tiptap 리치텍스트 에디터 (메모 페이지용)
-├── ApiClient/                  # API 클라이언트 컴포넌트
-├── CodeEditor/                 # 코드 에디터 컴포넌트 (Sandpack 래퍼)
 ├── ImageConverter/             # 이미지 변환 컴포넌트
-├── Canvas/                     # Excalidraw 화이트보드 래퍼
-├── InvoiceGenerator/           # 인보이스 생성 폼/미리보기
-├── Kanban/                     # 칸반 보드 컴포넌트
-├── Mindmap/                    # React Flow 마인드맵 노드
-├── ErdEditor/                  # ERD 에디터 컴포넌트 (React Flow)
-├── QrCodeGenerator/            # QR코드 생성 컴포넌트
-├── Archive/                    # Fumadocs 아카이브 래퍼
 ├── toolbars/                   # ToolbarProvider (에디터 상태)
-└── icons.tsx, brand-icons.tsx
+└── brand-icons.tsx
 
 utils/                          # 비즈니스 로직, API 래퍼
 ├── env.ts                      # 환경변수 파싱/검증
 ├── event-listener.ts           # 커스텀 이벤트 시스템 (토스트)
-├── hooks/                      # 커스텀 훅
-│   ├── use-mindmap-storage.ts  # 마인드맵 localStorage 저장/복원
-│   └── use-erd-storage.ts      # ERD 에디터 localStorage 저장/복원
 ├── cn.ts                       # cn() wrapper
 └── index.ts                    # toast, cn, copyText 등 re-export
 
 lib/utils.ts                    # cn() — clsx + tailwind-merge
 types/                          # 글로벌 타입 선언 (.d.ts)
 ├── global.d.ts                 # ReactProps, 전역 타입
-├── mindmap.d.ts                # 마인드맵 라이브러리 타입
-├── erd.d.ts                    # ERD 에디터 라이브러리 타입
 ├── highlightjs-languages.d.ts  # highlight.js 언어 타입
 └── index.d.ts
 ```
@@ -115,17 +84,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 홈 Projects 섹션 리스트 (`PROJECTS` 배열):
 
 - `/memo` — Tiptap 메모 에디터 (localStorage)
-- `/lunch` — 점심 추천 (Kakao Maps)
-- `/kanban` — 칸반 보드 (@dnd-kit) — Fullscreen Overlay
-- `/archive` — 코드 아카이브 (Fumadocs MDX)
-- `/code-editor` — 코드 실행 (Sandpack)
 - `/image-converter` — 이미지 형식 변환
-- `/canvas` — 화이트보드 (Excalidraw)
-- `/qrcode-generator` — QR코드 생성
-- `/invoice-generator` — 인보이스 생성
-- `/api-client` — API 테스트 클라이언트
-- `/mindmap` — 마인드맵 (React Flow) — Fullscreen Overlay
-- `/erd-editor` — ERD 에디터 (React Flow) — Fullscreen Overlay
 - `/spotify` — Spotify Web Playback 플레이어 (OAuth)
 
 ## Code Conventions
@@ -176,7 +135,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 ### 작업 완료 시 커밋 메시지 출력
 
 매 작업 완료 시 마지막에 Conventional Commits 규칙에 따른 한 줄 커밋 메시지를 제안한다.
-예: `feat(code-editor): add run button and refresh control to sandbox output panel`
+예: `feat(memo): add markdown export to editor toolbar`
 
 ## Environment Variables
 
@@ -186,7 +145,6 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 | `GOOGLE_ANALYTICS_PROPERTY_ID`  | GA4 속성             | Core     |
 | `GOOGLE_ANALYTICS_CLIENT_EMAIL` | GCP 서비스 계정      | Core     |
 | `GOOGLE_ANALYTICS_PRIVATE_KEY`  | GCP 서비스 계정 키   | Core     |
-| `NEXT_PUBLIC_KAKAO_MAP_API_KEY` | Kakao Maps           | Core     |
 | `NEXT_PUBLIC_BASE_URL`          | 공개 베이스 URL      | Core     |
 | `SPOTIFY_CLIENT_ID`             | Spotify OAuth ID     | Phase 12 |
 | `SPOTIFY_CLIENT_SECRET`         | Spotify OAuth Secret | Phase 12 |
@@ -198,18 +156,11 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 | 라이브러리                     | 버전  | 용도                 | Phase   |
 | ------------------------------ | ----- | -------------------- | ------- |
-| `@xyflow/react`                | 12.10 | 마인드맵, ERD 에디터 | 10      |
-| `@dnd-kit/core`, `sortable`    | 6.3   | 칸반 드래그앤드롭    | 1       |
-| `@codesandbox/sandpack-react`  | 2.20  | 코드 에디터/실행     | 4       |
 | `@excalidraw/excalidraw`       | 0.18  | 화이트보드           | 6       |
 | `@tiptap/*`                    | 3.19  | 리치텍스트 에디터    | Core    |
 | `fumadocs-core`, `fumadocs-ui` | 16.6  | 코드 아카이브 (MDX)  | 2       |
-| `qrcode.react`                 | 4.2   | QR코드 생성          | 7       |
-| `html2canvas`                  | 1.4   | 캔버스 이미지 캡처   | 6,10,11 |
-| `dayjs`                        | 1.11  | 날짜 포맷팅          | Multi   |
-| `highlight.js`                 | 11.11 | 코드 구문 강조       | 2,4     |
+| `highlight.js`                 | 11.11 | 코드 구문 강조       | Core    |
 | `lowlight`                     | 3.3   | Tiptap 코드블럭 강조 | Core    |
-| `nanoid`                       | 5.1   | ID 생성              | Multi   |
 | `next-auth` (optional)         | 5.x   | Spotify OAuth 인증   | 12      |
 
 ## 공통 유틸리티 및 패턴
@@ -221,7 +172,6 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 ### 커스텀 훅
 
-- `utils/hooks/use-mindmap-storage.ts` — 마인드맵 localStorage 저장/복원
 - `components/Editor/use-local-storage.ts` — 메모 에디터 localStorage (URL 파라미터 공유)
 
 ### 타입 패턴
@@ -245,12 +195,7 @@ interface ReactProps {
 대형 라이브러리는 동적 로딩:
 
 ```typescript
-const Excalidraw = dynamic(() => import('@excalidraw/excalidraw'), {
-  ssr: false
-})
-const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), {
-  ssr: false
-})
+const Heavy = dynamic(() => import('heavy-library'), { ssr: false })
 ```
 
 ## 작업 단위 커밋 규칙
@@ -259,10 +204,9 @@ const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), {
 
 ### 예시
 
-- `feat(mindmap): add debounced auto-save to localStorage`
-- `fix(code-editor): resolve Sandpack bundle error on Firefox`
-- `refactor(api-client): extract request validation to utils`
-- `style(invoice): adjust page break for PDF print layout`
+- `feat(memo): add debounced auto-save to localStorage`
+- `fix(image-converter): select H.264 level by resolution`
+- `refactor(home): extract section component`
 - `chore(deps): update @xyflow/react to v12.10`
 
 ## Key Files
@@ -273,10 +217,4 @@ const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), {
 - [app/page.tsx](app/page.tsx) — 홈페이지 (섹션형 1단)
 - [components/Container.tsx](components/Container.tsx) — 가운데 정렬 컨테이너
 - [components/Editor/index.tsx](components/Editor/index.tsx) — Tiptap 리치텍스트 에디터
-- [components/ApiClient/index.tsx](components/ApiClient/index.tsx) — HTTP 요청 테스터
-- [components/CodeEditor/index.tsx](components/CodeEditor/index.tsx) — Sandpack 코드 에디터
-- [app/mindmap/MindmapEditor.tsx](app/mindmap/MindmapEditor.tsx) — React Flow 마인드맵 (Fullscreen Overlay)
-- [utils/hooks/use-mindmap-storage.ts](utils/hooks/use-mindmap-storage.ts) — 마인드맵 저장소 훅
-- [app/erd-editor/ErdEditor.tsx](app/erd-editor/ErdEditor.tsx) — React Flow ERD 에디터 (Fullscreen Overlay)
-- [utils/hooks/use-erd-storage.ts](utils/hooks/use-erd-storage.ts) — ERD 저장소 훅
 - [app/spotify/page.tsx](app/spotify/page.tsx) — Spotify Web Playback 플레이어
