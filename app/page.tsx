@@ -11,7 +11,11 @@ import {
 
 import Container from '@/components/Container'
 import GithubContributions from '@/components/Home/github-contributions'
-import { GithubIcon, InstagramIcon } from '@/components/Home/social-icons'
+import {
+  GithubIcon,
+  InstagramIcon,
+  LinkedInIcon
+} from '@/components/Home/social-icons'
 import { Button } from '@/components/ui/button'
 import {
   Tooltip,
@@ -28,6 +32,11 @@ const SOCIAL_LINKS = [
     href: 'https://github.com/kidow',
     label: 'GitHub',
     icon: <GithubIcon className="size-4" />
+  },
+  {
+    href: 'https://www.linkedin.com/in/kidow/',
+    label: 'LinkedIn',
+    icon: <LinkedInIcon className="size-4" />
   },
   {
     href: 'https://www.instagram.com/__kidow__/',
