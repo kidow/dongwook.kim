@@ -143,7 +143,7 @@ export default function Home() {
           </p>
         </Section>
 
-        <Section index={3} title="GitHub">
+        <Section index={3}>
           <Suspense
             fallback={<div className="aspect-[7/1] w-full" aria-hidden />}
           >
