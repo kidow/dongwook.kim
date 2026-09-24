@@ -89,7 +89,7 @@ export default function Home() {
             <span className="flex flex-col">
               <span className="font-medium">Feedle</span>
               <span className="text-sm text-muted-foreground">
-                Reptile adoption and rehoming platform
+                Reptile marketplace
               </span>
             </span>
             <span className="ml-auto shrink-0 whitespace-nowrap text-sm tabular-nums text-muted-foreground">
