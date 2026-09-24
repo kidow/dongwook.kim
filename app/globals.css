@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 @import '../components/Editor/editor.css';
+@import 'atropos/atropos.css';
 
 :root {
   --background: #09090b;
