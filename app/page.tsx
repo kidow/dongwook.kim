@@ -168,7 +168,7 @@ export default function Home() {
               </span>
             </span>
             <span className="ml-auto text-sm tabular-nums text-muted-foreground">
-              2024 — Now
+              Since 2024
             </span>
           </a>
         </Section>
