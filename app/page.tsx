@@ -5,6 +5,7 @@ import Container from '@/components/Container'
 import GithubContributions from '@/components/Home/github-contributions'
 import Memo from '@/components/Home/memo'
 import SocialLinks from '@/components/Home/social-links'
+import { CometCard } from '@/components/ui/comet-card'
 import { cn } from '@/lib/utils'
 
 import type { ReactNode } from 'react'
@@ -37,14 +38,16 @@ export default function Home() {
     <Container>
       <main className="pb-16 pt-16 sm:pt-24">
         <Section index={0} className="flex items-center gap-4">
-          <Image
-            src="/logo.jpg"
-            alt="kidow profile photo"
-            width={88}
-            height={88}
-            priority
-            className="size-20 shrink-0 rounded-[14px] object-cover sm:size-[88px]"
-          />
+          <CometCard translateDepth={4} className="shrink-0">
+            <Image
+              src="/logo.jpg"
+              alt="kidow profile photo"
+              width={88}
+              height={88}
+              priority
+              className="size-20 rounded-[14px] object-cover sm:size-[88px]"
+            />
+          </CometCard>
           <div>
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               kidow
