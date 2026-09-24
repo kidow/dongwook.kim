@@ -7,6 +7,7 @@ declare global {
   interface Window {
     $crisp?: CrispCommand[] & {
       get?: (key: string) => unknown
+      is?: (key: string) => boolean
     }
     CRISP_WEBSITE_ID?: string
   }
@@ -16,6 +17,22 @@ export const CRISP_WEBSITE_ID = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID
 
 function push(...command: CrispCommand) {
   window.$crisp?.push(command)
+}
+
+// Crisp keeps one callback per event, so availability fans out from here.
+const availabilityListeners = new Set<(online: boolean) => void>()
+
+function notifyAvailability(online: boolean) {
+  availabilityListeners.forEach((listener) => listener(online))
+}
+
+/** Subscribes to whether I'm online in Crisp. Returns an unsubscribe function. */
+export function subscribeAvailability(listener: (online: boolean) => void) {
+  availabilityListeners.add(listener)
+  if (window.$crisp?.is) listener(window.$crisp.is('website:available'))
+  return () => {
+    availabilityListeners.delete(listener)
+  }
 }
 
 /** Injects the Crisp script once and applies the site configuration. */
@@ -39,7 +56,11 @@ export function loadCrisp() {
     if (Number(window.$crisp?.get?.('chat:unread:count')) > 0) {
       push('do', 'chat:show')
     }
+    notifyAvailability(Boolean(window.$crisp?.is?.('website:available')))
   })
+  push('on', 'website:availability:changed', (online: boolean) =>
+    notifyAvailability(online)
+  )
 
   const script = document.createElement('script')
   script.src = 'https://client.crisp.chat/l.js'
