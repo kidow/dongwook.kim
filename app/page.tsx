@@ -1,54 +1,13 @@
 import { Suspense } from 'react'
 import Image from 'next/image'
-import { AtSignIcon, BrainIcon, MailIcon } from 'lucide-react'
 
 import Container from '@/components/Container'
 import GithubContributions from '@/components/Home/github-contributions'
 import Memo from '@/components/Home/memo'
-import {
-  GithubIcon,
-  InstagramIcon,
-  LinkedInIcon
-} from '@/components/Home/social-icons'
-import { Button } from '@/components/ui/button'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/components/ui/tooltip'
+import SocialLinks from '@/components/Home/social-links'
 import { cn } from '@/lib/utils'
 
 import type { ReactNode } from 'react'
-
-const SOCIAL_LINKS = [
-  {
-    href: 'https://github.com/kidow',
-    label: 'GitHub',
-    icon: <GithubIcon className="size-4" />
-  },
-  {
-    href: 'https://www.linkedin.com/in/kidow/',
-    label: 'LinkedIn',
-    icon: <LinkedInIcon className="size-4" />
-  },
-  {
-    href: 'https://www.instagram.com/__kidow__/',
-    label: 'Instagram',
-    icon: <InstagramIcon className="size-4" />
-  },
-  {
-    href: 'https://www.threads.com/@__kidow__',
-    label: 'Threads',
-    // ponytail: 공식 Threads 글리프가 필요하면 simple-icons path로 교체
-    icon: <AtSignIcon className="size-4" />
-  },
-  {
-    href: 'https://brain.dongwook.kim',
-    label: 'Brain',
-    icon: <BrainIcon className="size-4" />
-  }
-] as const
 
 const ENTER_STEP_MS = 80
 
@@ -90,48 +49,12 @@ export default function Home() {
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               kidow
             </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Dongwook Kim
-            </p>
+            <p className="mt-1 text-sm text-muted-foreground">Dongwook Kim</p>
           </div>
         </Section>
 
         <Section index={1} className="mt-6 flex flex-wrap items-center gap-2">
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-            className="pointer-coarse:h-11"
-          >
-            <a href="mailto:wcgo2ling@gmail.com">
-              <MailIcon />
-              Contact
-            </a>
-          </Button>
-          <TooltipProvider>
-            {SOCIAL_LINKS.map(({ href, label, icon }) => (
-              <Tooltip key={href}>
-                <TooltipTrigger asChild>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="icon-sm"
-                    className="pointer-coarse:size-11"
-                  >
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={label}
-                    >
-                      {icon}
-                    </a>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent sideOffset={4}>{label}</TooltipContent>
-              </Tooltip>
-            ))}
-          </TooltipProvider>
+          <SocialLinks />
         </Section>
 
         <Section index={2} className="mt-10">

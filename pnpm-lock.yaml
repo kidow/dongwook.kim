@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@animateicons/react':
+        specifier: ^0.5.0
+        version: 0.5.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@next/third-parties':
         specifier: 16.2.9
         version: 16.2.9(next@16.2.9(@babel/core@7.29.7(supports-color@8.1.1))(@playwright/test@1.61.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(sass@1.51.0))(react@19.2.7)
@@ -241,6 +244,13 @@ packages:
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+
+  '@animateicons/react@0.5.0':
+    resolution: {integrity: sha512-dM41NHJ/3plrR0y6gJoAj98br9yXq2DyDfr4QSDHP1tIH8XKGx6sTm+iJMnv7/E8ao1u9dqckCaxvr/LlgdU4A==}
+    engines: {node: '>=18.17.0'}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
 
   '@apideck/better-ajv-errors@0.3.7':
     resolution: {integrity: sha512-TajUJwGWbDwkCx/CZi7tRE8PVB7simCvKJfHUsSdvps+aTM/PDPP4gkLmKnc+x3CE//y9i/nj74GqdL/hwk7Iw==}
@@ -6189,6 +6199,11 @@ snapshots:
   '@adobe/css-tools@4.5.0': {}
 
   '@alloc/quick-lru@5.2.0': {}
+
+  '@animateicons/react@0.5.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
 
   '@apideck/better-ajv-errors@0.3.7(ajv@8.20.0)':
     dependencies:
