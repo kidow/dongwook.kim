@@ -84,7 +84,7 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
               type="button"
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-red-600 hover:bg-red-100"
+              className="h-8 w-8 text-destructive hover:bg-destructive/10 hover:text-destructive"
               onClick={() => {
                 editor.chain().focus().unsetLink().run()
                 onOpenChange(false)

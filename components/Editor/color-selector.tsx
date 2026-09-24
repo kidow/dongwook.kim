@@ -22,28 +22,30 @@ interface ColorSelectorProps {
   onOpenChange: NonNullable<ComponentProps<typeof Popover>['onOpenChange']>
 }
 
+// Tuned for the dark theme: text colors clear 7:1 on the page background,
+// highlights keep the foreground above 8:1.
 const TEXT_COLORS: BubbleColorMenuItem[] = [
-  { name: 'Default', color: '#000000' },
-  { name: 'Purple', color: '#9333EA' },
-  { name: 'Red', color: '#E00000' },
-  { name: 'Yellow', color: '#EAB308' },
-  { name: 'Blue', color: '#2563EB' },
-  { name: 'Green', color: '#008A00' },
-  { name: 'Orange', color: '#FFA500' },
-  { name: 'Pink', color: '#BA4081' },
-  { name: 'Gray', color: '#A8A29E' }
+  { name: 'Default', color: 'var(--foreground)' },
+  { name: 'Purple', color: '#c084fc' },
+  { name: 'Red', color: '#f87171' },
+  { name: 'Yellow', color: '#facc15' },
+  { name: 'Blue', color: '#60a5fa' },
+  { name: 'Green', color: '#4ade80' },
+  { name: 'Orange', color: '#fb923c' },
+  { name: 'Pink', color: '#f472b6' },
+  { name: 'Gray', color: '#a1a1aa' }
 ]
 
 const HIGHLIGHT_COLORS: BubbleColorMenuItem[] = [
-  { name: 'Default', color: '#ffffff' },
-  { name: 'Purple', color: '#f6f3f8' },
-  { name: 'Red', color: '#fdebeb' },
-  { name: 'Yellow', color: '#fbf4a2' },
-  { name: 'Blue', color: '#c1ecf9' },
-  { name: 'Green', color: '#acf79f' },
-  { name: 'Orange', color: '#faebdd' },
-  { name: 'Pink', color: '#faf1f5' },
-  { name: 'Gray', color: '#f1f1ef' }
+  { name: 'Default', color: 'transparent' },
+  { name: 'Purple', color: '#581c87' },
+  { name: 'Red', color: '#7f1d1d' },
+  { name: 'Yellow', color: '#713f12' },
+  { name: 'Blue', color: '#1e3a8a' },
+  { name: 'Green', color: '#14532d' },
+  { name: 'Orange', color: '#7c2d12' },
+  { name: 'Pink', color: '#831843' },
+  { name: 'Gray', color: '#3f3f46' }
 ]
 
 export const ColorSelector: FC<ColorSelectorProps> = ({
@@ -131,7 +133,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
           >
             <div className="flex items-center space-x-2">
               <div
-                className="rounded-sm border border-border px-1 py-px font-medium"
+                className="rounded-sm border border-border px-1 py-px font-medium text-foreground"
                 style={{ backgroundColor: color }}
               >
                 A

@@ -94,7 +94,7 @@ export const TiptapExtensions = [
     },
     horizontalRule: false,
     dropcursor: {
-      color: '#DBEAFE',
+      color: '#71717a',
       width: 4
     },
     gapcursor: false
