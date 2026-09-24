@@ -312,8 +312,7 @@ export default function GithubActivity({
     () => contributions.reduce((sum, day) => sum + day.count, 0),
     [contributions]
   )
-  const year = contributions.at(-1)?.date.slice(0, 4)
-  const heading = `${total} contributions${year ? ` in ${year}` : ''}`
+  const heading = `${total} contributions in the last year`
 
   const gap = gapFor(cellSize)
   const columns = Math.min(
