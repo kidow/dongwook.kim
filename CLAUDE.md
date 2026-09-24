@@ -38,7 +38,7 @@ app/                            # Next.js App Router (라우트)
 components/
 ├── ui/                         # shadcn/ui 프리미티브 (자동 생성)
 ├── Container.tsx               # 가운데 정렬 컨테이너 (max-w-2xl)
-├── Home/                       # 홈 전용 (KST 시계, GitHub 잔디, 소셜 아이콘)
+├── Home/                       # 홈 전용 (GitHub 잔디, 소셜 아이콘)
 ├── Editor/                     # Tiptap 리치텍스트 에디터 (메모 페이지용)
 ├── ImageConverter/             # 이미지 변환 컴포넌트
 ├── toolbars/                   # ToolbarProvider (에디터 상태)
@@ -62,7 +62,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 ### Server vs Client Components
 
 - **서버 컴포넌트 (기본값)**: `app/layout.tsx`, `app/page.tsx`, 데이터 페칭 (`Home/github-contributions.tsx`)
-- **클라이언트 컴포넌트** (`'use client'`): 상태/훅 사용 시 — `Home/kst-clock.tsx`, `Editor/`
+- **클라이언트 컴포넌트** (`'use client'`): 상태/훅 사용 시 — `Home/github-activity.tsx`, `Editor/`
 
 ### Data Fetching
 
@@ -102,7 +102,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 ### Naming
 
-- **컴포넌트 파일**: PascalCase (`Container.tsx`) 또는 kebab-case (`kst-clock.tsx`)
+- **컴포넌트 파일**: PascalCase (`Container.tsx`) 또는 kebab-case (`github-activity.tsx`)
 - **유틸리티/훅**: camelCase (`use-local-storage.ts`, `event-listener.ts`)
 - **타입**: PascalCase interface (`SectionProps`, `BlogPost`)
 

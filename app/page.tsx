@@ -11,7 +11,6 @@ import {
 
 import Container from '@/components/Container'
 import GithubContributions from '@/components/Home/github-contributions'
-import KstClock from '@/components/Home/kst-clock'
 import {
   GithubIcon,
   InstagramIcon,
@@ -95,26 +94,23 @@ export default function Home() {
   return (
     <Container>
       <main className="pb-16 pt-16 sm:pt-24">
-        <Section index={0} className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-4">
-            <Image
-              src="/logo.jpg"
-              alt="kidow 프로필 사진"
-              width={88}
-              height={88}
-              priority
-              className="size-20 shrink-0 rounded-[14px] object-cover sm:size-[88px]"
-            />
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-                kidow
-              </h1>
-              <p className="mt-1 text-sm text-muted-foreground">
-                비즈니스에 관심이 많은 웹 개발자
-              </p>
-            </div>
+        <Section index={0} className="flex items-center gap-4">
+          <Image
+            src="/logo.jpg"
+            alt="kidow 프로필 사진"
+            width={88}
+            height={88}
+            priority
+            className="size-20 shrink-0 rounded-[14px] object-cover sm:size-[88px]"
+          />
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+              kidow
+            </h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              비즈니스에 관심이 많은 웹 개발자
+            </p>
           </div>
-          <KstClock />
         </Section>
 
         <Section index={1} className="mt-6 flex flex-wrap items-center gap-2">
