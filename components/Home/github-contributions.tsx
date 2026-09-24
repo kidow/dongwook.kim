@@ -1,10 +1,16 @@
-import dynamic from 'next/dynamic'
+import GithubActivity from './github-activity'
 
-export type GithubContributionMap = Record<string, number>
+import type { Contribution, ContributionLevel } from './github-activity'
 
-const GithubCalendar = dynamic(() => import('./github-calendar'))
+const LEVEL_BY_NAME: Record<string, ContributionLevel> = {
+  NONE: 0,
+  FIRST_QUARTILE: 1,
+  SECOND_QUARTILE: 2,
+  THIRD_QUARTILE: 3,
+  FOURTH_QUARTILE: 4
+}
 
-async function getGithubContributions(): Promise<GithubContributionMap | null> {
+async function getGithubContributions(): Promise<Contribution[] | null> {
   try {
     const token = process.env.GITHUB_TOKEN
     if (!token) {
@@ -31,6 +37,7 @@ async function getGithubContributions(): Promise<GithubContributionMap | null> {
                   weeks {
                     contributionDays {
                       contributionCount
+                      contributionLevel
                       date
                     }
                   }
@@ -69,15 +76,19 @@ async function getGithubContributions(): Promise<GithubContributionMap | null> {
     const weeks =
       json?.data?.user?.contributionsCollection?.contributionCalendar?.weeks ??
       []
-    const values: GithubContributionMap = {}
+    const contributions: Contribution[] = []
 
     for (const week of weeks) {
       for (const day of week.contributionDays) {
-        values[day.date] = day.contributionCount
+        contributions.push({
+          date: day.date,
+          count: day.contributionCount,
+          level: LEVEL_BY_NAME[day.contributionLevel] ?? 0
+        })
       }
     }
 
-    return values
+    return contributions
   } catch (error) {
     console.error('[GithubContributions] Unexpected error', error)
     return null
@@ -85,8 +96,8 @@ async function getGithubContributions(): Promise<GithubContributionMap | null> {
 }
 
 export default async function GithubContributions() {
-  const values = await getGithubContributions()
-  if (!values) {
+  const contributions = await getGithubContributions()
+  if (!contributions) {
     return (
       <p className="text-sm text-muted-foreground">
         Contribution data is unavailable.
@@ -94,5 +105,5 @@ export default async function GithubContributions() {
     )
   }
 
-  return <GithubCalendar values={values} />
+  return <GithubActivity contributions={contributions} showMonths />
 }
