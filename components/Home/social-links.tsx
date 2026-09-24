@@ -18,6 +18,8 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
+import ChatButton from './chat-button'
+import { useIconAnimation } from './use-icon-animation'
 
 import type {
   ComponentType,
@@ -72,22 +74,6 @@ const SOCIAL_LINKS: {
 
 function isAnimated(icon: AnimatedIcon | ComponentType): icon is AnimatedIcon {
   return icon !== ThreadsIcon
-}
-
-/** Starts the icon animation while the surrounding control is hovered or focused. */
-function useIconAnimation() {
-  const ref = useRef<IconHandle>(null)
-  const start = () => ref.current?.startAnimation()
-  const stop = () => ref.current?.stopAnimation()
-  return {
-    ref,
-    handlers: {
-      onMouseEnter: start,
-      onMouseLeave: stop,
-      onFocus: start,
-      onBlur: stop
-    }
-  }
 }
 
 function SocialLink({
@@ -198,6 +184,7 @@ export default function SocialLinks() {
   return (
     <>
       <ContactButton />
+      <ChatButton />
       <TooltipProvider>
         {SOCIAL_LINKS.map((link) => (
           <SocialLink key={link.href} {...link} />

@@ -144,6 +144,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 | `GOOGLE_ANALYTICS_CLIENT_EMAIL` | GCP 서비스 계정      | Core     |
 | `GOOGLE_ANALYTICS_PRIVATE_KEY`  | GCP 서비스 계정 키   | Core     |
 | `NEXT_PUBLIC_BASE_URL`          | 공개 베이스 URL      | Core     |
+| `NEXT_PUBLIC_CRISP_WEBSITE_ID`  | Crisp 채팅 위젯 ID   | Home     |
 | `SPOTIFY_CLIENT_ID`             | Spotify OAuth ID     | Phase 12 |
 | `SPOTIFY_CLIENT_SECRET`         | Spotify OAuth Secret | Phase 12 |
 | `SPOTIFY_REFRESH_TOKEN`         | Spotify 갱신 토큰    | Phase 12 |
