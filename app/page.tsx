@@ -57,6 +57,7 @@ export default function Home() {
               colors={{ first: '#60a5fa', second: '#dbeafe' }}
               sparklesCount={6}
               scaleRange={[0.2, 0.6]}
+              pauseRange={[2, 5]}
             >
               kidow
             </SparklesText>

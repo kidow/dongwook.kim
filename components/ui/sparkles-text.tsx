@@ -2,8 +2,10 @@
 
 // From Magic UI (https://magicui.design/docs/components/sparkles-text).
 // Local changes: renders the requested tag (the original always used a div),
-// no <strong> wrapper, a sparkle size range prop, aria-hidden sparkles, and
-// no sparkles under reduced motion.
+// no <strong> wrapper, a sparkle size range prop, aria-hidden sparkles, no
+// sparkles under reduced motion, sparkles centered on their point (the
+// original anchored the top-left corner, pushing them down-right), and a
+// random pause between twinkles.
 import {
   useEffect,
   useState,
@@ -18,23 +20,38 @@ interface Sparkle {
   y: string
   color: string
   delay: number
+  pause: number
   scale: number
   lifespan: number
 }
 
-const Sparkle: React.FC<Sparkle> = ({ id, x, y, color, delay, scale }) => {
+const Sparkle: React.FC<Sparkle> = ({
+  id,
+  x,
+  y,
+  color,
+  delay,
+  pause,
+  scale
+}) => {
   return (
     <motion.svg
       key={id}
       aria-hidden
       className="pointer-events-none absolute z-20"
-      initial={{ opacity: 0, left: x, top: y }}
+      style={{ left: x, top: y, x: '-50%', y: '-50%' }}
+      initial={{ opacity: 0, scale: 0 }}
       animate={{
         opacity: [0, 1, 0],
         scale: [0, scale, 0],
         rotate: [75, 120, 150]
       }}
-      transition={{ duration: 0.8, repeat: Infinity, delay }}
+      transition={{
+        duration: 0.8,
+        repeat: Infinity,
+        repeatDelay: pause,
+        delay
+      }}
       width="21"
       height="21"
       viewBox="0 0 21 21"
@@ -61,6 +78,8 @@ interface SparklesTextProps {
   }
   /** Min and max sparkle scale (1 = 21px). @default [0.3, 1.3] */
   scaleRange?: [number, number]
+  /** Min and max seconds a sparkle rests between twinkles. @default [0, 0] */
+  pauseRange?: [number, number]
 }
 
 export const SparklesText: React.FC<SparklesTextProps> = ({
@@ -70,24 +89,28 @@ export const SparklesText: React.FC<SparklesTextProps> = ({
   className,
   sparklesCount = 10,
   scaleRange = [0.3, 1.3],
+  pauseRange = [0, 0],
   ...props
 }) => {
   const reduceMotion = useReducedMotion()
   const [sparkles, setSparkles] = useState<Sparkle[]>([])
   const [minScale, maxScale] = scaleRange
+  const [minPause, maxPause] = pauseRange
 
   useEffect(() => {
     if (reduceMotion) return
 
     const generateStar = (): Sparkle => {
       const starX = `${Math.random() * 100}%`
-      const starY = `${Math.random() * 100}%`
+      // Keep sparkles over the glyphs rather than below the line box.
+      const starY = `${10 + Math.random() * 80}%`
       const color = Math.random() > 0.5 ? colors.first : colors.second
       const delay = Math.random() * 2
+      const pause = Math.random() * (maxPause - minPause) + minPause
       const scale = Math.random() * (maxScale - minScale) + minScale
       const lifespan = Math.random() * 10 + 5
       const id = `${starX}-${starY}-${Date.now()}`
-      return { id, x: starX, y: starY, color, delay, scale, lifespan }
+      return { id, x: starX, y: starY, color, delay, pause, scale, lifespan }
     }
 
     const initializeStars = () => {
@@ -117,6 +140,8 @@ export const SparklesText: React.FC<SparklesTextProps> = ({
     sparklesCount,
     minScale,
     maxScale,
+    minPause,
+    maxPause,
     reduceMotion
   ])
 
