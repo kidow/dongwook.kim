@@ -24,7 +24,7 @@ describe('home memo editor', () => {
     const storageSource = read('components/Editor/use-local-storage.ts')
 
     expect(editorSource).not.toContain('onShareLink')
-    expect(editorSource).toContain('Clear')
+    expect(editorSource).toContain('aria-label="Clear memo"')
     expect(storageSource).not.toContain("get('c')")
   })
 

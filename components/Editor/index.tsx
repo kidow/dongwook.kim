@@ -3,8 +3,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { EditorContent, useEditor, type Content } from '@tiptap/react'
 import { useDebouncedCallback } from 'use-debounce'
+import { Trash2Icon } from '@animateicons/react/lucide'
 
 import { Button } from '@/components/ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip'
 import { ToolbarProvider } from '@/components/toolbars/toolbar-provider'
 import { EditorBubbleMenu } from './bubble-menu'
 import { TiptapExtensions } from './extensions'
@@ -61,6 +68,13 @@ export default function Editor() {
     }
   }, [editor, storageReady, content])
 
+  const clearIconRef = useRef<{
+    startAnimation: () => void
+    stopAnimation: () => void
+  }>(null)
+  const startClearIcon = () => clearIconRef.current?.startAnimation()
+  const stopClearIcon = () => clearIconRef.current?.stopAnimation()
+
   const statusLabel = storageReady ? saveStatus : 'Loading...'
   const isEditorReady = Boolean(editor) && storageReady
 
@@ -77,15 +91,27 @@ export default function Editor() {
         )}
       </div>
       <div className="flex items-center justify-between border-t border-dashed border-border px-3 py-2">
-        <Button
-          variant="outline"
-          size="xs"
-          className="pointer-coarse:h-11 pointer-coarse:px-4"
-          onClick={() => editor?.commands.clearContent(true)}
-          disabled={!isEditorReady}
-        >
-          Clear
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon-xs"
+                className="pointer-coarse:size-11"
+                aria-label="Clear memo"
+                onClick={() => editor?.commands.clearContent(true)}
+                onMouseEnter={startClearIcon}
+                onMouseLeave={stopClearIcon}
+                onFocus={startClearIcon}
+                onBlur={stopClearIcon}
+                disabled={!isEditorReady}
+              >
+                <Trash2Icon ref={clearIconRef} size={12} aria-hidden />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent sideOffset={4}>Clear</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <span className="text-xs text-muted-foreground">{statusLabel}</span>
       </div>
     </div>
