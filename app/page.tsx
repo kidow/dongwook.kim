@@ -6,6 +6,7 @@ import GithubContributions from '@/components/Home/github-contributions'
 import Memo from '@/components/Home/memo'
 import SocialLinks from '@/components/Home/social-links'
 import { CometCard } from '@/components/ui/comet-card'
+import { SparklesText } from '@/components/ui/sparkles-text'
 import { TextShimmer } from '@/components/ui/text-shimmer'
 import { cn } from '@/lib/utils'
 
@@ -50,9 +51,15 @@ export default function Home() {
             />
           </CometCard>
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            <SparklesText
+              as="h1"
+              className="text-3xl font-semibold tracking-tight sm:text-4xl"
+              colors={{ first: '#60a5fa', second: '#dbeafe' }}
+              sparklesCount={6}
+              scaleRange={[0.2, 0.6]}
+            >
               kidow
-            </h1>
+            </SparklesText>
             <TextShimmer className="mt-1 text-sm" duration={2} repeatDelay={4}>
               Dongwook Kim, web developer
             </TextShimmer>
