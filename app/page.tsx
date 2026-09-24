@@ -81,7 +81,7 @@ export default function Home() {
             href="https://www.feedle.me"
             target="_blank"
             rel="noreferrer"
-            className="-mx-2 flex items-center gap-3.5 rounded-xl p-2 outline-none transition-colors hover:bg-accent/50 focus-visible:ring-[3px] focus-visible:ring-ring/50"
+            className="group -mx-2 flex items-center gap-3.5 rounded-xl p-2 outline-none transition-colors hover:bg-accent/50 focus-visible:ring-[3px] focus-visible:ring-ring/50"
           >
             <span className="flex size-14 shrink-0 items-center justify-center rounded-[10px] bg-[#fdfff1] p-1">
               {/* Pooding & Kingddulami, Feedle Character Guide cover (keep ratio, never flip) */}
@@ -90,7 +90,7 @@ export default function Home() {
                 alt=""
                 width={48}
                 height={33}
-                className="h-auto w-full"
+                className="h-auto w-full group-hover:animate-wiggle group-focus-visible:animate-wiggle motion-reduce:animate-none"
               />
             </span>
             <span className="flex flex-col">
