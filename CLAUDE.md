@@ -20,21 +20,21 @@ pnpm type-check   # TypeScript 타입 검사 (tsc --noEmit --skipLibCheck)
 - **캔버스**: Excalidraw v0.18 (무한 화이트보드)
 - **그래프**: React Flow v12.10 + Dagre (마인드맵 자동 레이아웃)
 - **드래그앤드롭**: @dnd-kit (칸반 보드)
-- **차트**: Recharts v3.7 (Google Analytics 시각화)
 - **아이콘**: lucide-react
 - **지도**: react-kakao-maps-sdk (점심 추천)
 - **QR코드**: qrcode.react v4.2
 - **음악**: Spotify Web API (OAuth 기반 재생)
 - **포맷**: dayjs (날짜), html2canvas (캔버스 캡처)
 - **패키지 매니저**: pnpm
-- **테마 색상**: Indigo (Primary), Slate (Muted)
+- **테마**: 다크 고정 (zinc 계열 토큰, 배경 `#09090b`) — `app/globals.css` `:root`
+- **폰트**: Geist / Geist Mono (`next/font/google`) + Pretendard (CDN, 한글 폴백)
 
 ## Project Structure
 
 ```
 app/                            # Next.js App Router (라우트)
-├── layout.tsx                  # 루트 레이아웃 (Header, Footer, Toast, Agentation)
-├── page.tsx                    # 홈 — Widget 그리드 (15개 Side Project 위젯)
+├── layout.tsx                  # 루트 레이아웃 (폰트, 배경, Toast, Agentation, Analytics)
+├── page.tsx                    # 홈 — 섹션형 1단 (Profile, About, GitHub, Work at, Projects, Quote, Footer)
 ├── globals.css                 # 글로벌 스타일, 테마 토큰, 애니메이션
 ├── api/posts/route.ts          # Blog API 엔드포인트
 ├── blog/[id]/                  # 블로그 목록/상세 (Fumadocs MDX)
@@ -54,7 +54,8 @@ app/                            # Next.js App Router (라우트)
 
 components/
 ├── ui/                         # shadcn/ui 프리미티브 (자동 생성)
-├── Widget/                     # 위젯 컴포넌트 (types.ts에 타입 정의)
+├── Container.tsx               # 가운데 정렬 컨테이너 (max-w-2xl)
+├── Home/                       # 홈 전용 (KST 시계, GitHub 잔디, 소셜 아이콘)
 ├── Editor/                     # Tiptap 리치텍스트 에디터 (메모 페이지용)
 ├── ApiClient/                  # API 클라이언트 컴포넌트
 ├── CodeEditor/                 # 코드 에디터 컴포넌트 (Sandpack 래퍼)
@@ -67,7 +68,6 @@ components/
 ├── QrCodeGenerator/            # QR코드 생성 컴포넌트
 ├── Archive/                    # Fumadocs 아카이브 래퍼
 ├── toolbars/                   # ToolbarProvider (에디터 상태)
-├── Header.tsx, Footer.tsx
 └── icons.tsx, brand-icons.tsx
 
 utils/                          # 비즈니스 로직, API 래퍼
@@ -92,14 +92,13 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 ### Server vs Client Components
 
-- **서버 컴포넌트 (기본값)**: `app/layout.tsx`, `app/page.tsx`, 데이터 페칭 위젯 (`widget-github.tsx`, `widget-analytics.tsx`)
-- **클라이언트 컴포넌트** (`'use client'`): 상태/훅 사용 시 — `Header.tsx`, `Editor/`, `widget-link.tsx`
+- **서버 컴포넌트 (기본값)**: `app/layout.tsx`, `app/page.tsx`, 데이터 페칭 (`Home/github-contributions.tsx`)
+- **클라이언트 컴포넌트** (`'use client'`): 상태/훅 사용 시 — `Home/kst-clock.tsx`, `Editor/`
 
 ### Data Fetching
 
 - **Blog Content**: `content/blog/*.mdx` + `lib/blog.ts` — 정적 MDX 기반 블로그 데이터 로딩
 - **GitHub GraphQL API**: 컨트리뷰션 캘린더. AbortController 5초 타임아웃
-- **Google Analytics API**: `@google-analytics/data` — 페이지뷰 통계
 
 ### State Management
 
@@ -107,24 +106,14 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 - **이벤트 시스템**: `utils/event-listener.ts` — 전역 토스트 알림
 - **Context API**: `ToolbarProvider` — 에디터 툴바 상태
 
-### Widget Pattern
+### Home Layout
 
-위젯은 `components/Widget/types.ts`에 정의된 `WidgetLinkProps` 인터페이스를 따름. `WidgetLink` 컴포넌트는 shadcn Card + Next.js Link로 구성. 홈페이지 `app/page.tsx`의 그리드에 `<li>` 요소로 배치.
+홈(`app/page.tsx`)은 `Container`(672px 가운데 정렬) 안에 섹션을 세로로 쌓는 구조. 각 섹션은 `Section`(`animate-enter` + 순차 `animationDelay`)으로 감싸 로드 시 순차 페이드. 하위 경로는 아직 `Container`를 적용하지 않음 (다음 단계).
 
-### Side Projects 구성 (15개 위젯)
+### Side Projects
 
-**Core Widgets** (데이터 페칭):
+홈 Projects 섹션 리스트 (`PROJECTS` 배열):
 
-- `widget-github.tsx` — GitHub 컨트리뷰션 캘린더
-- `widget-github-calendar.tsx` — GitHub 활동 통계
-- `widget-analytics.tsx` + `widget-analytics-chart.tsx` — Google Analytics 페이지뷰
-- `widget-quote.tsx` — 랜덤 인용구
-- `widget-map.tsx` — Kakao Maps 지도
-- `widget-spotify.tsx` — Spotify 플레이리스트 미리보기 (랜덤 4곡)
-
-**Interactive Tools** (클라이언트 사이드):
-
-- `widget-link.tsx` — 외부 링크 (GitHub, X, LinkedIn, Instagram 등)
 - `/memo` — Tiptap 메모 에디터 (localStorage)
 - `/lunch` — 점심 추천 (Kakao Maps)
 - `/kanban` — 칸반 보드 (@dnd-kit) — Fullscreen Overlay
@@ -154,9 +143,9 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 ### Naming
 
-- **컴포넌트 파일**: PascalCase (`Header.tsx`) 또는 kebab-case prefix (`widget-github.tsx`)
+- **컴포넌트 파일**: PascalCase (`Container.tsx`) 또는 kebab-case (`kst-clock.tsx`)
 - **유틸리티/훅**: camelCase (`use-local-storage.ts`, `event-listener.ts`)
-- **타입**: PascalCase interface (`WidgetLinkProps`, `BlogPost`)
+- **타입**: PascalCase interface (`SectionProps`, `BlogPost`)
 
 ### TypeScript
 
@@ -169,7 +158,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 - Tailwind 유틸리티 클래스 인라인 사용
 - 동적 클래스: `cn()` 유틸리티 (`lib/utils.ts`)
 - shadcn 디자인 토큰: `text-muted-foreground`, `border-border`, `bg-primary` 등
-- 반응형: 모바일 우선 + `xl:` 브레이크포인트
+- 반응형: 모바일 우선 + `sm:` 브레이크포인트 (홈)
 
 ## Git Conventions
 
@@ -182,7 +171,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 - `chore(scope):` — 유지보수
 - `docs(scope):` — 문서
 
-스코프 예: `blog`, `widget`, `spec`, `deps`
+스코프 예: `blog`, `home`, `spec`, `deps`
 
 ### 작업 완료 시 커밋 메시지 출력
 
@@ -215,8 +204,6 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 | `@excalidraw/excalidraw`       | 0.18  | 화이트보드           | 6       |
 | `@tiptap/*`                    | 3.19  | 리치텍스트 에디터    | Core    |
 | `fumadocs-core`, `fumadocs-ui` | 16.6  | 코드 아카이브 (MDX)  | 2       |
-| `@google-analytics/data`       | 5.2   | GA4 데이터 페칭      | Core    |
-| `recharts`                     | 3.7   | 차트 시각화          | Core    |
 | `qrcode.react`                 | 4.2   | QR코드 생성          | 7       |
 | `html2canvas`                  | 1.4   | 캔버스 이미지 캡처   | 6,10,11 |
 | `dayjs`                        | 1.11  | 날짜 포맷팅          | Multi   |
@@ -283,8 +270,8 @@ const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), {
 - [spec.md](spec.md) — Side Projects 확장 작업 계획 및 Phase 진행 상황
 - [components.json](components.json) — shadcn/ui 설정
 - [app/globals.css](app/globals.css) — CSS 변수, 테마 토큰, 애니메이션
-- [components/Widget/types.ts](components/Widget/types.ts) — 위젯 타입 정의
-- [app/page.tsx](app/page.tsx) — 홈페이지 (15개 위젯 그리드)
+- [app/page.tsx](app/page.tsx) — 홈페이지 (섹션형 1단)
+- [components/Container.tsx](components/Container.tsx) — 가운데 정렬 컨테이너
 - [components/Editor/index.tsx](components/Editor/index.tsx) — Tiptap 리치텍스트 에디터
 - [components/ApiClient/index.tsx](components/ApiClient/index.tsx) — HTTP 요청 테스터
 - [components/CodeEditor/index.tsx](components/CodeEditor/index.tsx) — Sandpack 코드 에디터
@@ -292,5 +279,4 @@ const Sandpack = dynamic(() => import('@codesandbox/sandpack-react'), {
 - [utils/hooks/use-mindmap-storage.ts](utils/hooks/use-mindmap-storage.ts) — 마인드맵 저장소 훅
 - [app/erd-editor/ErdEditor.tsx](app/erd-editor/ErdEditor.tsx) — React Flow ERD 에디터 (Fullscreen Overlay)
 - [utils/hooks/use-erd-storage.ts](utils/hooks/use-erd-storage.ts) — ERD 저장소 훅
-- [components/Widget/widget-spotify.tsx](components/Widget/widget-spotify.tsx) — Spotify 플레이리스트 미리보기
 - [app/spotify/page.tsx](app/spotify/page.tsx) — Spotify Web Playback 플레이어

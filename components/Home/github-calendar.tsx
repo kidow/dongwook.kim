@@ -3,13 +3,15 @@
 import dayjs from 'dayjs'
 import Calendar from 'react-github-contribution-calendar'
 
-import type { GithubContributionMap } from './types'
+import type { GithubContributionMap } from './github-contributions'
 
 interface Props {
   values: GithubContributionMap
 }
 
-export default function GithubCalendarClient({ values }: Props) {
+const PANEL_COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
+
+export default function GithubCalendar({ values }: Props) {
   return (
     <Calendar
       values={values}
@@ -20,8 +22,8 @@ export default function GithubCalendarClient({ values }: Props) {
       monthLabelAttributes={{
         style: { fill: 'var(--muted-foreground)', fontSize: '10px' }
       }}
-      panelAttributes={{ style: { backgroundColor: "transparent" } }}
-      panelColors={['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39']}
+      panelAttributes={{ style: { backgroundColor: 'transparent' } }}
+      panelColors={PANEL_COLORS}
     />
   )
 }

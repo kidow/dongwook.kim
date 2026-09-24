@@ -1,18 +1,14 @@
 import dynamic from 'next/dynamic'
 
-import { Card, CardContent } from '@/components/ui/card'
+export type GithubContributionMap = Record<string, number>
 
-import type { GithubContributionMap } from './types'
-
-const GithubCalendarClient = dynamic(() =>
-  import('./widget-github-calendar').then((m) => m.default)
-)
+const GithubCalendar = dynamic(() => import('./github-calendar'))
 
 async function getGithubContributions(): Promise<GithubContributionMap | null> {
   try {
     const token = process.env.GITHUB_TOKEN
     if (!token) {
-      console.error('[WidgetGithub] Missing GITHUB_TOKEN')
+      console.error('[GithubContributions] Missing GITHUB_TOKEN')
       return null
     }
 
@@ -54,7 +50,7 @@ async function getGithubContributions(): Promise<GithubContributionMap | null> {
     if (!response.ok) {
       const message = await response.text()
       console.error(
-        '[WidgetGithub] GitHub API error',
+        '[GithubContributions] GitHub API error',
         response.status,
         message.slice(0, 200)
       )
@@ -64,7 +60,7 @@ async function getGithubContributions(): Promise<GithubContributionMap | null> {
     const json = await response.json()
     if (Array.isArray(json?.errors) && json.errors.length > 0) {
       console.error(
-        '[WidgetGithub] GitHub GraphQL errors',
+        '[GithubContributions] GitHub GraphQL errors',
         json.errors[0]?.message
       )
       return null
@@ -83,24 +79,20 @@ async function getGithubContributions(): Promise<GithubContributionMap | null> {
 
     return values
   } catch (error) {
-    console.error('[WidgetGithub] Unexpected error', error)
+    console.error('[GithubContributions] Unexpected error', error)
     return null
   }
 }
 
-export default async function WidgetGithub() {
+export default async function GithubContributions() {
   const values = await getGithubContributions()
   if (!values) {
     return (
-      <Card className="rounded-3xl border-border py-0 shadow-sm">
-        <CardContent className="p-5 xl:p-6">
-          <p className="text-xs text-muted-foreground">
-            Contribution data is unavailable.
-          </p>
-        </CardContent>
-      </Card>
+      <p className="text-sm text-muted-foreground">
+        Contribution data is unavailable.
+      </p>
     )
   }
 
-  return <GithubCalendarClient values={values} />
+  return <GithubCalendar values={values} />
 }

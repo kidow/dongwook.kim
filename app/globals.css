@@ -3,25 +3,25 @@
 @import './memo/index.css';
 
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --card: #ffffff;
-  --card-foreground: #0a0a0a;
-  --popover: #ffffff;
-  --popover-foreground: #0a0a0a;
-  --primary: #171717;
-  --primary-foreground: #fafafa;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #171717;
-  --muted: #f5f5f5;
-  --muted-foreground: #737373;
-  --accent: #f5f5f5;
-  --accent-foreground: #171717;
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #09090b;
+  --card-foreground: #fafafa;
+  --popover: #18181b;
+  --popover-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #18181b;
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
   --destructive: #ef4444;
   --destructive-foreground: #fafafa;
-  --border: #e5e5e5;
-  --input: #e5e5e5;
-  --ring: #0a0a0a;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #d4d4d8;
   --radius: 0.5rem;
 }
 
@@ -50,11 +50,11 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --font-sans:
-    'Inter', 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', sans-serif;
+    var(--font-geist-sans), 'Pretendard Variable', Pretendard, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono:
-    'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
+    var(--font-geist-mono), 'SFMono-Regular', Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
 }
 
 @keyframes toast-open {
@@ -81,22 +81,39 @@
   animation: toast-open 0.6s linear;
 }
 
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+}
+
 html {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
-  /* background-color: var(--background);
-  background-image: url('/noise.jpg');
-  background-position: center;
-  background-repeat: repeat;
-  background-size: 180px 180px;
-  background-attachment: fixed; */
+  background-color: var(--background);
   color: var(--foreground);
 }
 
-.widget-link-icon-chip {
-  background-color: #ffffff;
+@keyframes enter {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(8px);
+  }
+}
+
+.animate-enter {
+  animation: enter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-enter {
+    animation: none;
+  }
 }
 
 .archive-highlight {
@@ -156,10 +173,6 @@ body {
 
   main {
     min-height: auto !important;
-  }
-
-  main > div > div > div:first-child {
-    display: none !important;
   }
 
   .invoice-preview {

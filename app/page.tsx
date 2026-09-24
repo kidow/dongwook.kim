@@ -1,6 +1,10 @@
 import { Suspense } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 import {
-  Brain as BrainIcon,
+  ArrowUpRightIcon,
+  AtSignIcon,
+  BrainIcon,
   CodeXmlIcon,
   DatabaseIcon,
   ImageIcon,
@@ -16,226 +20,284 @@ import {
   UtensilsCrossedIcon
 } from 'lucide-react'
 
+import Container from '@/components/Container'
+import GithubContributions from '@/components/Home/github-contributions'
+import KstClock from '@/components/Home/kst-clock'
+import {
+  GithubIcon,
+  InstagramIcon,
+  XIcon
+} from '@/components/Home/social-icons'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import WidgetGithub from '@/components/Widget/widget-github'
-import * as Icon from '@/components/icons'
-import { WidgetLink, WidgetMap, WidgetQuote } from '@/components/Widget'
-import WidgetAnalytics from '@/components/Widget/widget-analytics'
-import WidgetSwimming from '@/components/Widget/widget-swimming'
-import WidgetSpotifyPlayer from '@/components/Widget/widget-spotify-player'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
 
-const SIDE_PROJECTS = [
+import type { ReactNode } from 'react'
+
+const SOCIAL_LINKS = [
+  {
+    href: 'https://github.com/kidow',
+    label: 'GitHub',
+    icon: <GithubIcon className="size-4" />
+  },
+  {
+    href: 'https://x.com/__kidow__',
+    label: 'X',
+    icon: <XIcon className="size-3.5" />
+  },
+  {
+    href: 'https://www.instagram.com/__kidow__/',
+    label: 'Instagram',
+    icon: <InstagramIcon className="size-4" />
+  },
+  {
+    href: 'https://www.threads.com/@__kidow__',
+    label: 'Threads',
+    // ponytail: 공식 Threads 글리프가 필요하면 simple-icons path로 교체
+    icon: <AtSignIcon className="size-4" />
+  },
+  {
+    href: 'https://brain.dongwook.kim',
+    label: 'Brain',
+    icon: <BrainIcon className="size-4" />
+  }
+] as const
+
+const PROJECTS = [
   {
     href: '/memo',
     title: 'MEMO',
     description: '내용이 사라지지 않는',
-    icon: <StickyNoteIcon className="size-5" />
+    icon: StickyNoteIcon
   },
   {
     href: '/lunch',
     title: 'Lunch',
     description: '점심 뭐 먹지?',
-    icon: <UtensilsCrossedIcon className="size-5" />
+    icon: UtensilsCrossedIcon
   },
   {
     href: '/kanban',
     title: 'Kanban',
     description: '칸반 보드',
-    icon: <KanbanIcon className="size-5" />
+    icon: KanbanIcon
   },
   {
     href: '/code-editor',
     title: 'Code Editor',
     description: '코드 실행기',
-    icon: <CodeXmlIcon className="size-5" />
+    icon: CodeXmlIcon
   },
   {
     href: '/api-client',
     title: 'API Client',
     description: 'API 테스트 도구',
-    icon: <SendIcon className="size-5" />
+    icon: SendIcon
   },
   {
     href: '/image-converter',
     title: 'Image Converter',
     description: '이미지 포맷 변환',
-    icon: <ImageIcon className="size-5" />
+    icon: ImageIcon
   },
   {
     href: '/qrcode-generator',
     title: 'QR Code',
     description: 'QR코드 생성기',
-    icon: <QrCodeIcon className="size-5" />
+    icon: QrCodeIcon
   },
   {
     href: '/canvas',
     title: 'Canvas',
     description: '가상 화이트보드',
-    icon: <PenToolIcon className="size-5" />
+    icon: PenToolIcon
   },
   {
     href: '/invoice-generator',
     title: 'Invoice',
     description: '인보이스 생성기',
-    icon: <ReceiptIcon className="size-5" />
+    icon: ReceiptIcon
   },
   {
     href: '/mindmap',
     title: 'Mindmap',
     description: '마인드맵 생성기',
-    icon: <NetworkIcon className="size-5" />
+    icon: NetworkIcon
   },
   {
     href: '/erd-editor',
     title: 'ERD Editor',
     description: 'ERD 다이어그램 편집기',
-    icon: <DatabaseIcon className="size-5" />
+    icon: DatabaseIcon
   },
   {
     href: '/canvas-note',
     title: 'Canvas Note',
     description: '무한 캔버스에 자유롭게 메모 배치',
-    icon: <PinIcon className="size-5" />
+    icon: PinIcon
   }
 ] as const
 
-function SideProjectIcon({ children }: ReactProps) {
+const ENTER_STEP_MS = 80
+
+interface SectionProps {
+  index: number
+  title?: string
+  className?: string
+  children: ReactNode
+}
+
+function Section({ index, title, className, children }: SectionProps) {
   return (
-    <span className="widget-link-icon-chip flex h-10 w-10 items-center justify-center rounded-[10px] border border-border text-foreground">
+    <section
+      className={cn('animate-enter', className ?? 'mt-12')}
+      style={{ animationDelay: `${index * ENTER_STEP_MS}ms` }}
+    >
+      {title && (
+        <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">
+          {title}
+        </h2>
+      )}
       {children}
-    </span>
+    </section>
   )
 }
 
-export default async function Home() {
+export default function Home() {
   return (
-    <ul className="duration-400 grid grid-cols-2 gap-6 lg:gap-8 xl:grid-cols-4 xl:gap-10">
-      <WidgetLink
-        className="col-span-2 xl:col-span-4 xl:hover:rotate-1"
-        size="h-[178px] w-full hover:bg-neutral-50 xl:h-[175px] xl:w-[820px]"
-        href="https://github.com/kidow"
-        target="_blank"
-        icon={<Icon.Github />}
-        title="Github"
-        button={
-          <Button
-            variant="outline"
-            size="sm"
-            className="pointer-events-none border-border text-xs font-bold"
-          >
-            Follow
+    <Container>
+      <main className="pb-16 pt-16 sm:pt-24">
+        <Section index={0} className="flex items-start justify-between gap-3">
+          <div className="flex items-center gap-4">
+            <Image
+              src="/logo.jpg"
+              alt="kidow 프로필 사진"
+              width={88}
+              height={88}
+              priority
+              className="size-20 shrink-0 rounded-[14px] object-cover sm:size-[88px]"
+            />
+            <div>
+              <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+                kidow
+              </h1>
+              <p className="mt-1 text-sm text-muted-foreground">
+                비즈니스에 관심이 많은 웹 개발자
+              </p>
+            </div>
+          </div>
+          <KstClock />
+        </Section>
+
+        <Section index={1} className="mt-6 flex flex-wrap items-center gap-2">
+          <Button asChild variant="outline" size="sm">
+            <a href="mailto:wcgo2ling@gmail.com">
+              <MailIcon />
+              Contact
+            </a>
           </Button>
-        }
+          <TooltipProvider>
+            {SOCIAL_LINKS.map(({ href, label, icon }) => (
+              <Tooltip key={href}>
+                <TooltipTrigger asChild>
+                  <Button asChild variant="outline" size="icon-sm">
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={label}
+                    >
+                      {icon}
+                    </a>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent sideOffset={4}>{label}</TooltipContent>
+              </Tooltip>
+            ))}
+          </TooltipProvider>
+        </Section>
+
+        <Section index={2} className="mt-10">
+          <p className="leading-7 text-muted-foreground">
+            하남에 사는 웹 개발자입니다. 코드보다 그 코드가 만드는 비즈니스에 더
+            관심이 많습니다. 2024년부터 Feedle에서 일하고 있고, 쓰고 싶은 도구가
+            없으면 직접 만들어 씁니다. 아래 Projects가 그렇게 만든 것들입니다.
+          </p>
+        </Section>
+
+        <Section index={3} title="GitHub">
+          <Suspense
+            fallback={<div className="aspect-[7/1] w-full" aria-hidden />}
+          >
+            <GithubContributions />
+          </Suspense>
+        </Section>
+
+        <Section index={4} title="Work at">
+          <a
+            href="https://www.feedle.me"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-3 rounded-lg border border-border p-3 transition-colors hover:bg-accent/50"
+          >
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-white">
+              <Image src="/feedle.png" alt="" width={20} height={20} />
+            </span>
+            <span className="flex flex-col">
+              <span className="font-medium">Feedle</span>
+              <span className="text-sm text-muted-foreground">
+                Web Developer
+              </span>
+            </span>
+            <span className="ml-auto font-mono text-xs text-muted-foreground">
+              2024 — Now
+            </span>
+          </a>
+        </Section>
+
+        <Section index={5} title="Projects">
+          <ul>
+            {PROJECTS.map(({ href, title, description, icon: Icon }) => (
+              <li
+                key={href}
+                className="border-b border-dashed border-border last:border-b-0"
+              >
+                <Link
+                  href={href}
+                  className="group flex items-center gap-3 px-1 py-3"
+                >
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors group-hover:text-foreground">
+                    <Icon className="size-4" />
+                  </span>
+                  <span className="shrink-0 font-medium">{title}</span>
+                  <span className="truncate text-sm text-muted-foreground">
+                    {description}
+                  </span>
+                  <ArrowUpRightIcon className="ml-auto size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section index={6}>
+          <blockquote className="border-l-2 border-border pl-4 text-lg italic text-muted-foreground">
+            “더 게으르기 위해, 더 열심히 공부하기”
+          </blockquote>
+        </Section>
+      </main>
+      <footer
+        className="animate-enter flex items-center justify-between pb-10 font-mono text-xs text-muted-foreground"
+        style={{ animationDelay: `${7 * ENTER_STEP_MS}ms` }}
       >
-        <WidgetGithub />
-      </WidgetLink>
-
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="https://www.feedle.me"
-        icon={
-          <span className="widget-link-icon-chip flex h-10 w-10 items-center justify-center rounded-[10px] border border-border text-foreground">
-            <img src="/feedle.png" alt="Feedle" width={20} height={20} />
-          </span>
-        }
-        title="Feedle"
-        description="Working since 2024"
-        target="_blank"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="mailto:wcgo2ling@gmail.com"
-        icon={
-          <span className="widget-link-icon-chip flex h-10 w-10 items-center justify-center rounded-[10px] border border-border text-foreground">
-            <MailIcon className="size-5" />
-          </span>
-        }
-        title="Gmail"
-        description="wcgo2ling@gmail.com"
-      />
-
-      <WidgetMap />
-      <li className="row-span-2 h-[178px] w-[178px] overflow-hidden xl:col-span-2 xl:h-[390px] xl:w-[390px]">
-        <Card className="h-full w-full overflow-hidden rounded-3xl border-border py-0 shadow-sm">
-          <video
-            src="/piyong.mov"
-            className="h-full w-full object-cover"
-            title="Piyong video"
-            autoPlay
-            loop
-            muted
-            playsInline
-          />
-        </Card>
-      </li>
-      <WidgetQuote />
-
-      <WidgetLink
-        className="xl:hover:rotate-1"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] bg-[#F5FAFE] hover:bg-[#F0F7FD]"
-        href="https://x.com/__kidow__"
-        icon={<Icon.X />}
-        target="_blank"
-        title="X"
-        description="@__kidow__"
-      />
-      <WidgetSpotifyPlayer />
-
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="https://www.instagram.com/__kidow__/"
-        icon={<Icon.Instagram />}
-        target="_blank"
-        title="Instagram"
-        description="@__kidow__"
-      />
-
-      <WidgetLink
-        className="xl:hover:rotate-1"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="https://brain.dongwook.kim"
-        icon={
-          <span className="widget-link-icon-chip flex h-10 w-10 items-center justify-center rounded-[10px] border border-border text-foreground">
-            <BrainIcon className="size-5" />
-          </span>
-        }
-        target="_blank"
-        title="Brain"
-        description="brain.dongwook.kim"
-      />
-      <WidgetLink
-        className="xl:hover:rotate-2"
-        size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-        href="https://www.threads.com/@__kidow__"
-        icon={<Icon.Threads />}
-        target="_blank"
-        title="Threads"
-        description="@__kidow__"
-      />
-      <Suspense fallback={<li className="col-span-2" />}>
-        <WidgetAnalytics />
-      </Suspense>
-      <WidgetSwimming />
-
-      <li className="col-span-2 px-2 xl:col-span-4">
-        <h3 className="font-semibold uppercase">Side Projects 👨🏻‍💻</h3>
-      </li>
-
-      {SIDE_PROJECTS.map((project) => (
-        <WidgetLink
-          key={project.href}
-          className="xl:hover:rotate-2"
-          size="h-[178px] w-full xl:h-[175px] xl:w-[175px] hover:bg-neutral-50"
-          href={project.href}
-          icon={<SideProjectIcon>{project.icon}</SideProjectIcon>}
-          title={project.title}
-          description={project.description}
-        />
-      ))}
-    </ul>
+        <span>© {new Date().getFullYear()} kidow</span>
+        <span>Hanam, KR</span>
+      </footer>
+    </Container>
   )
 }
