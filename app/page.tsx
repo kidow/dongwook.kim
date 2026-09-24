@@ -6,6 +6,7 @@ import GithubContributions from '@/components/Home/github-contributions'
 import Memo from '@/components/Home/memo'
 import SocialLinks from '@/components/Home/social-links'
 import { CometCard } from '@/components/ui/comet-card'
+import { TextShimmer } from '@/components/ui/text-shimmer'
 import { cn } from '@/lib/utils'
 
 import type { ReactNode } from 'react'
@@ -52,9 +53,9 @@ export default function Home() {
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               kidow
             </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <TextShimmer className="mt-1 text-sm" duration={2} repeatDelay={4}>
               Dongwook Kim, web developer
-            </p>
+            </TextShimmer>
           </div>
         </Section>
 
