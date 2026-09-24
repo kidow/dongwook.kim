@@ -14,14 +14,6 @@ export function GithubIcon(props: IconProps) {
   )
 }
 
-export function XIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
-      <path d="M18.244 2H21.308L14.6 9.67L22.488 22H16.312L11.474 14.537L4.944 22H1.878L9.552 13.281L2 2H8.334L12.71 8.541L18.244 2ZM17.168 20.032H18.866L7.412 3.865H5.59L17.168 20.032Z" />
-    </svg>
-  )
-}
-
 export function InstagramIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
