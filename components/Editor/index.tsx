@@ -80,6 +80,7 @@ export default function Editor() {
         <Button
           variant="outline"
           size="xs"
+          className="pointer-coarse:h-11 pointer-coarse:px-4"
           onClick={() => editor?.commands.clearContent(true)}
           disabled={!isEditorReady}
         >

@@ -109,7 +109,7 @@ export default function ImagePreview({
           <Button
             variant="outline"
             size="icon"
-            className="size-8"
+            className="size-8 pointer-coarse:size-11"
             onClick={() => onDownload(result)}
             title="Download"
             aria-label={`Download ${source.name}`}
@@ -120,7 +120,7 @@ export default function ImagePreview({
         <Button
           variant="ghost"
           size="icon"
-          className="size-8 text-muted-foreground hover:text-foreground"
+          className="size-8 text-muted-foreground hover:text-foreground pointer-coarse:size-11"
           onClick={() => onRemove(source.id)}
           title="Remove"
           aria-label={`Remove ${source.name}`}

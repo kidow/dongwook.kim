@@ -53,7 +53,7 @@ export default function ImageConverterToolbar({
     <div className="flex flex-wrap items-center gap-3">
       <div className="flex items-center gap-2">
         <Select value={outputFormat} onValueChange={onFormatChange}>
-          <SelectTrigger className="w-[100px]">
+          <SelectTrigger className="w-[100px] pointer-coarse:h-11">
             <SelectValue placeholder="Select format" />
           </SelectTrigger>
           <SelectContent>
@@ -93,7 +93,7 @@ export default function ImageConverterToolbar({
           size="sm"
           disabled={fileCount === 0 || isConverting}
           onClick={onConvert}
-          className="min-w-[72px]"
+          className="min-w-[72px] pointer-coarse:h-11"
         >
           {isConverting ? (
             <>
@@ -112,6 +112,7 @@ export default function ImageConverterToolbar({
           size="sm"
           disabled={resultCount === 0 || isConverting}
           onClick={onDownloadAll}
+          className="pointer-coarse:h-11"
         >
           <DownloadIcon className="mr-1.5 size-3.5" />
           Save all
@@ -119,7 +120,7 @@ export default function ImageConverterToolbar({
         <Button
           variant="outline"
           size="icon"
-          className="size-9"
+          className="size-9 pointer-coarse:size-11"
           disabled={fileCount === 0 || isConverting}
           onClick={onClearAll}
           title="Clear all"

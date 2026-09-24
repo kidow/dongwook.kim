@@ -99,7 +99,12 @@ export default function Home() {
         </Section>
 
         <Section index={1} className="mt-6 flex flex-wrap items-center gap-2">
-          <Button asChild variant="outline" size="sm">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="pointer-coarse:h-11"
+          >
             <a href="mailto:wcgo2ling@gmail.com">
               <MailIcon />
               Contact
@@ -109,7 +114,12 @@ export default function Home() {
             {SOCIAL_LINKS.map(({ href, label, icon }) => (
               <Tooltip key={href}>
                 <TooltipTrigger asChild>
-                  <Button asChild variant="outline" size="icon-sm">
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="icon-sm"
+                    className="pointer-coarse:size-11"
+                  >
                     <a
                       href={href}
                       target="_blank"

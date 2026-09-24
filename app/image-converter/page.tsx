@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
+import Container from '@/components/Container'
 import ImageConverter from '@/components/ImageConverter'
 
 const TITLE = 'Image Converter'
@@ -29,17 +30,19 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main>
-      <h1 className="sr-only">Image Converter</h1>
-      <Suspense
-        fallback={
-          <div className="text-sm text-stone-400">
-            Loading image converter...
-          </div>
-        }
-      >
-        <ImageConverter />
-      </Suspense>
-    </main>
+    <Container>
+      <main className="py-16 sm:py-24">
+        <h1 className="sr-only">Image Converter</h1>
+        <Suspense
+          fallback={
+            <div className="text-sm text-muted-foreground">
+              Loading image converter...
+            </div>
+          }
+        >
+          <ImageConverter />
+        </Suspense>
+      </main>
+    </Container>
   )
 }
