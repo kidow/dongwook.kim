@@ -28,7 +28,7 @@ pnpm type-check   # TypeScript 타입 검사 (tsc --noEmit --skipLibCheck)
 ```
 app/                            # Next.js App Router (라우트)
 ├── layout.tsx                  # 루트 레이아웃 (폰트, 배경, Toast, Agentation, Analytics)
-├── page.tsx                    # 홈 — 섹션형 1단 (Profile, About, GitHub, Work at, Memo, Footer)
+├── page.tsx                    # 홈 — 섹션형 1단 (Profile, About, GitHub, Swimming, Work at, Memo, Footer)
 ├── globals.css                 # 글로벌 스타일, 테마 토큰, 애니메이션
 ├── api/posts/route.ts          # Blog API 엔드포인트
 ├── blog/[id]/                  # 블로그 목록/상세 (Fumadocs MDX)
@@ -38,7 +38,7 @@ app/                            # Next.js App Router (라우트)
 components/
 ├── ui/                         # shadcn/ui 프리미티브 (자동 생성)
 ├── Container.tsx               # 가운데 정렬 컨테이너 (max-w-2xl)
-├── Home/                       # 홈 전용 (GitHub 잔디, 소셜 아이콘)
+├── Home/                       # 홈 전용 (GitHub 잔디, 수영 차트, 소셜 아이콘)
 ├── Editor/                     # Tiptap 리치텍스트 에디터 (홈 Memo 섹션)
 ├── ImageConverter/             # 이미지 변환 컴포넌트
 ├── toolbars/                   # ToolbarProvider (에디터 상태)
@@ -68,6 +68,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 - **Blog Content**: `content/blog/*.mdx` + `lib/blog.ts` — 정적 MDX 기반 블로그 데이터 로딩
 - **GitHub GraphQL API**: 컨트리뷰션 캘린더. AbortController 5초 타임아웃
+- **수영 기록**: 애플워치 → iPhone 단축어 자동화(매일 22:00 KST)가 `POST /api/callback/swimming`(`X-Auth-Token`) → Supabase `swim_sessions`. 홈 `Home/swimming.tsx`가 `unstable_cache`(태그 `widget-swimming-sessions`, 콜백이 revalidate)로 읽고, `swimming-chart.tsx`가 수면 차트 + Lottie 수영 선수(`public/swimmer.json`, `lottie_light` 지연 로드)를 그림
 
 ### State Management
 
@@ -145,6 +146,9 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 | `GOOGLE_ANALYTICS_PRIVATE_KEY`  | GCP 서비스 계정 키   | Core     |
 | `NEXT_PUBLIC_BASE_URL`          | 공개 베이스 URL      | Core     |
 | `NEXT_PUBLIC_CRISP_WEBSITE_ID`  | Crisp 채팅 위젯 ID   | Home     |
+| `SUPABASE_URL`                  | 수영 기록 DB         | Home     |
+| `SUPABASE_SERVICE_ROLE_KEY`     | 수영 기록 DB (서버)  | Home     |
+| `AUTH_TOKEN`                    | 수영 콜백 인증       | Home     |
 | `SPOTIFY_CLIENT_ID`             | Spotify OAuth ID     | Phase 12 |
 | `SPOTIFY_CLIENT_SECRET`         | Spotify OAuth Secret | Phase 12 |
 | `SPOTIFY_REFRESH_TOKEN`         | Spotify 갱신 토큰    | Phase 12 |

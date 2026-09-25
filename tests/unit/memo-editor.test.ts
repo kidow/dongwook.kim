@@ -12,7 +12,7 @@ describe('home memo editor', () => {
   it('renders the editor inside the home Memo section', () => {
     const homeSource = read('app/page.tsx')
 
-    expect(homeSource).toContain('<Section index={5} title="Memo">')
+    expect(homeSource).toContain('title="Memo"')
     expect(homeSource).toContain('<Memo />')
     expect(existsSync(path.join(process.cwd(), 'app/memo/page.tsx'))).toBe(
       false

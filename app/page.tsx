@@ -5,6 +5,7 @@ import Container from '@/components/Container'
 import GithubContributions from '@/components/Home/github-contributions'
 import Memo from '@/components/Home/memo'
 import SocialLinks from '@/components/Home/social-links'
+import Swimming from '@/components/Home/swimming'
 import { CometCard } from '@/components/ui/comet-card'
 import { SparklesText } from '@/components/ui/sparkles-text'
 import { TextShimmer } from '@/components/ui/text-shimmer'
@@ -88,7 +89,13 @@ export default function Home() {
           </Suspense>
         </Section>
 
-        <Section index={4} title="Work at">
+        <Section index={4} title="Swimming">
+          <Suspense fallback={<div className="h-[248px] w-full" aria-hidden />}>
+            <Swimming />
+          </Suspense>
+        </Section>
+
+        <Section index={5} title="Work at">
           <a
             href="https://www.feedle.me"
             target="_blank"
@@ -117,13 +124,13 @@ export default function Home() {
           </a>
         </Section>
 
-        <Section index={5} title="Memo">
+        <Section index={6} title="Memo">
           <Memo />
         </Section>
       </main>
       <footer
         className="animate-enter flex items-center justify-between pb-10 text-sm text-muted-foreground"
-        style={{ animationDelay: `${6 * ENTER_STEP_MS}ms` }}
+        style={{ animationDelay: `${7 * ENTER_STEP_MS}ms` }}
       >
         <span>© {new Date().getFullYear()} kidow</span>
         <span>Hanam, KR</span>
