@@ -1,4 +1,4 @@
-// Generates public/grain.png: a 128px tile of per-pixel film grain for the
+// Generates assets/grain.png: a 128px tile of per-pixel film grain for the
 // page backdrop. Each pixel is a uniform random value in [-0.5, 0.5] (like
 // Componentry's Grain Gradient shader); positive values become white and
 // negative values black, with alpha proportional to the magnitude, so the
@@ -65,5 +65,5 @@ const png = Buffer.concat([
   chunk('IEND', Buffer.alloc(0))
 ])
 
-writeFileSync(new URL('../public/grain.png', import.meta.url), png)
-console.log(`public/grain.png ${png.length} bytes`)
+writeFileSync(new URL('../assets/grain.png', import.meta.url), png)
+console.log(`assets/grain.png ${png.length} bytes`)

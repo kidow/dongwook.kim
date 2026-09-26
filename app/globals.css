@@ -132,8 +132,9 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  /* One grain per CSS pixel; regenerate with scripts/generate-grain.mjs. */
-  background: url('/grain.png') 0 0 / 128px 128px;
+  /* One grain per CSS pixel; regenerate with scripts/generate-grain.mjs.
+     Imported relatively so the built URL is content-hashed (no stale cache). */
+  background: url('../assets/grain.png') 0 0 / 128px 128px;
   image-rendering: pixelated;
 }
 
