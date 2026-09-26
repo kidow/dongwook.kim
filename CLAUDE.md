@@ -68,6 +68,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 
 - **Blog Content**: `content/blog/*.mdx` + `lib/blog.ts` — 정적 MDX 기반 블로그 데이터 로딩
 - **GitHub GraphQL API**: 컨트리뷰션 캘린더. AbortController 5초 타임아웃
+- **Vercel Web Analytics API**: 홈 푸터 조회수(`Home/page-views.tsx`). 누적은 `visits/count`, 스파크라인은 `visits/aggregate` 최근 30일(Hobby는 31일까지만 조회 가능). 1시간 revalidate
 - **수영 기록**: 애플워치 → iPhone 단축어 자동화(매일 22:00 KST)가 `POST /api/callback/swimming`(`X-Auth-Token`) → Supabase `swim_sessions`. 홈 `Home/swimming.tsx`가 `unstable_cache`(태그 `widget-swimming-sessions`, 콜백이 revalidate)로 읽고, `swimming-chart.tsx`가 수면 차트 + Lottie 수영 선수(`public/swimmer.json`, `lottie_light` 지연 로드)를 그림
 
 ### State Management
@@ -146,6 +147,7 @@ types/                          # 글로벌 타입 선언 (.d.ts)
 | `GOOGLE_ANALYTICS_PRIVATE_KEY`  | GCP 서비스 계정 키   | Core     |
 | `NEXT_PUBLIC_BASE_URL`          | 공개 베이스 URL      | Core     |
 | `NEXT_PUBLIC_CRISP_WEBSITE_ID`  | Crisp 채팅 위젯 ID   | Home     |
+| `VERCEL_TOKEN`                  | Web Analytics API    | Home     |
 | `SUPABASE_URL`                  | 수영 기록 DB         | Home     |
 | `SUPABASE_SERVICE_ROLE_KEY`     | 수영 기록 DB (서버)  | Home     |
 | `AUTH_TOKEN`                    | 수영 콜백 인증       | Home     |

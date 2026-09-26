@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Container from '@/components/Container'
 import GithubContributions from '@/components/Home/github-contributions'
 import Memo from '@/components/Home/memo'
+import PageViews from '@/components/Home/page-views'
 import SocialLinks from '@/components/Home/social-links'
 import Swimming from '@/components/Home/swimming'
 import { CometCard } from '@/components/ui/comet-card'
@@ -129,10 +130,13 @@ export default function Home() {
         </Section>
       </main>
       <footer
-        className="animate-enter flex items-center justify-between pb-10 text-sm text-muted-foreground"
+        className="animate-enter flex flex-wrap items-center justify-between gap-x-4 gap-y-2 pb-10 text-sm text-muted-foreground"
         style={{ animationDelay: `${7 * ENTER_STEP_MS}ms` }}
       >
         <span>© {new Date().getFullYear()} kidow</span>
+        <Suspense fallback={null}>
+          <PageViews />
+        </Suspense>
         <span>Hanam, KR</span>
       </footer>
     </Container>
