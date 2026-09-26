@@ -111,24 +111,29 @@ body {
   color: var(--foreground);
 }
 
-/* Faint blue glow at the top plus a light grain. CSS only. */
+/*
+ * Grain gradient (after componentry.dev/docs/components/grain-gradient),
+ * static and dark: a soft curved blue field from the top-left, cut by a
+ * curved shadow from the right, under a fine monochrome film grain. CSS only.
+ */
 .page-backdrop {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(60% 45% at 50% -8%, rgb(59 130 246 / 0.12), transparent 70%),
-    radial-gradient(40% 30% at 85% 0%, rgb(147 197 253 / 0.05), transparent 70%);
+    radial-gradient(75% 110% at 115% 35%, #09090b 45%, transparent 75%),
+    radial-gradient(120% 85% at -10% -10%, rgb(96 165 250 / 0.3), rgb(37 99 235 / 0.14) 40%, transparent 70%),
+    radial-gradient(90% 60% at 20% 110%, rgb(30 64 175 / 0.12), transparent 70%),
+    #09090b;
 }
 
 .page-backdrop::after {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.07;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @keyframes enter {
