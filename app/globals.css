@@ -114,7 +114,7 @@ body {
 /*
  * Grain gradient (after componentry.dev/docs/components/grain-gradient),
  * static and dark: a soft curved blue field from the top-left, cut by a
- * curved shadow from the right, under a fine monochrome film grain. CSS only.
+ * curved shadow from the right, under per-pixel monochrome film grain.
  */
 .page-backdrop {
   position: fixed;
@@ -132,8 +132,9 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.13;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* One grain per CSS pixel; regenerate with scripts/generate-grain.mjs. */
+  background: url('/grain.png') 0 0 / 128px 128px;
+  image-rendering: pixelated;
 }
 
 @keyframes enter {
