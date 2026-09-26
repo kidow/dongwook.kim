@@ -1,16 +1,15 @@
 // Vercel Web Analytics (https://vercel.com/docs/analytics/web-analytics-api).
 // The Hobby plan only serves the latest 31 days of daily data, so the
 // sparkline covers 30 days and the total uses the all-time count endpoint.
+import PageViewsSparkline from './page-views-sparkline'
+
+import type { DailyViews } from './page-views-sparkline'
+
 const API = 'https://api.vercel.com/v1/query/web-analytics/visits'
 const TEAM_ID = 'team_uvT6jIboIaN9h8qLLQCu5wBy'
 const PROJECT_ID = 'prj_IlFWv2T0ezR61mMtlg86tVtNwJUK'
 const DAYS = 30
 const DAY_MS = 86_400_000
-
-interface DailyViews {
-  date: string
-  pageviews: number
-}
 
 interface PageViewsData {
   total: number
@@ -76,35 +75,16 @@ async function getPageViews(): Promise<PageViewsData | null> {
   }
 }
 
-const monthDay = (date: string) =>
-  new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric'
-  })
-
 export default async function PageViews() {
   const data = await getPageViews()
   if (!data) return null
 
   const { total, daily } = data
-  const max = Math.max(...daily.map((d) => d.pageviews), 1)
   const recent = daily.reduce((sum, d) => sum + d.pageviews, 0)
 
   return (
-    <span
-      className="inline-flex items-center gap-2 tabular-nums"
-      title={`${recent.toLocaleString('en-US')} views in the last ${DAYS} days`}
-    >
-      <span aria-hidden className="flex h-[18px] items-end gap-px">
-        {daily.map((d) => (
-          <span
-            key={d.date}
-            title={`${d.pageviews} views · ${monthDay(d.date)}`}
-            className="w-px min-h-px rounded-[1px] bg-[#60a5fa]/80 sm:w-[3px]"
-            style={{ height: `${Math.max(6, (d.pageviews / max) * 100)}%` }}
-          />
-        ))}
-      </span>
+    <span className="inline-flex items-center gap-2 tabular-nums">
+      <PageViewsSparkline daily={daily} />
       <span>
         {total.toLocaleString('en-US')} views
         <span className="sr-only">
