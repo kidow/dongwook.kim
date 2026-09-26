@@ -137,7 +137,6 @@ export default function Home() {
         <Suspense fallback={null}>
           <PageViews />
         </Suspense>
-        <span>Hanam, KR</span>
       </footer>
     </Container>
   )
