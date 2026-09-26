@@ -91,7 +91,7 @@ export default function Editor() {
       borderRadius={8}
     >
       <div
-        className="rounded-lg border border-border"
+        className="rounded-lg border border-border bg-black"
         onFocus={() => setFocused(true)}
         onBlur={(e) => {
           if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false)
